@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.santander"
+        applicationId "com.ecom.santander"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

@@ -1,4 +1,4 @@
-package com.santander;
+package com.ecom.santander;
 
 import com.facebook.react.ReactActivity;
 
