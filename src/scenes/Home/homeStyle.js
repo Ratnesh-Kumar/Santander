@@ -9,7 +9,7 @@ export default (styles = StyleSheet.create({
     backgroundColor: colorConstants.WHITE_COLOR,
   },
   viewContainer: {
-    flex: 1
+    flex: 1, justifyContent: 'center', alignItems:'center'
   },
   seperateLine: {
     flex: 1,
@@ -41,6 +41,6 @@ export default (styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    color: 'black',
+    color: colorConstants.LOGIN_BUTTON_BLUE,
   },
 }));
