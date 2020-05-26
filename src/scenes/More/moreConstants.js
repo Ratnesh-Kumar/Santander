@@ -1,0 +1,1 @@
+export const MORE_SCREEN = "More Screen";
