@@ -3,7 +3,6 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import homeStyle from './homeStyle';
-var constants = require('../../config/Constants');
 var homeConstants = require('./homeConstants')
 
 export default class HomeScreen extends Component {
