@@ -1,1 +1,1 @@
-export const SETTINGS_SCREEN = "Settings Screen";
+export const SETTINGS_SCREEN = "Shop Screen";
