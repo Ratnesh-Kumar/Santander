@@ -54,5 +54,4 @@ fastlane/screenshots
 
 
 ios/Pilgrim/PilgrimManager.swift
-.env
 ios/Info.plist
