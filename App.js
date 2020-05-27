@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Router, Scene, ActionConst } from 'react-native-router-flux';
 import splashscreen from './src/scenes/Splash';
-
+import Config from 'react-native-config'
 import {
   GoogleAnalyticsTracker,
   GoogleAnalyticsSettings,
@@ -64,6 +64,7 @@ export default class App extends Component {
 
   }
   componentDidMount() {
+    console.log('##### Config.APP_ID:  ',Config.APP_ID)
     tracker.trackScreenView('Home Screen');
     GoogleAnalyticsSettings.setDispatchInterval(30);
   }
