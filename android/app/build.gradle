@@ -122,7 +122,6 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    flavorDimensions "default"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -165,20 +164,6 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
-
-    productFlavors {
-        dev {
-            applicationId "com.ecom.santander"
-        }
-        preprod {
-            applicationId "com.ecom.santander.preprod"
-        }
-        prod {
-            applicationId "com.ecom.santander.prod"
-        }
-    }
-
-
 
     packagingOptions {
         pickFirst "lib/armeabi-v7a/libc++_shared.so"

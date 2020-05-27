@@ -8,10 +8,7 @@
     "start": "react-native start",
     "postinstall": "patch-package",
     "test": "jest",
-    "lint": "eslint .",
-    "build-android-dev_release": "cd android && ./gradlew assembleDevRelease",
-    "build-android-preprod_release": "cd android && ./gradlew assemblePreprodRelease",
-    "build-android-prod_release": "cd android && ./gradlew assembleProdRelease"
+    "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-community/eslint-plugin": "^1.0.0",
