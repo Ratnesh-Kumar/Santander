@@ -1,9 +1,11 @@
 import { Dimensions } from 'react-native';
+import Environment from './EnvironmentDefinition';
+var env = new Environment();
 
 //API keys that are not able to keep on the .evn files for security reasons
 //Environment definition  options sqm or sqs or prod
 //*****************************************************************//
-
+export const ENV = env.getEnvironment();
 export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const FETCHING_TODOS = 'FETCHING_TODOS';
