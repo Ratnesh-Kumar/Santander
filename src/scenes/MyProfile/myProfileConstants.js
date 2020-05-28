@@ -1,1 +1,1 @@
-export const MY_PROFILE = "Home Screen";
+export const MY_PROFILE = "Order Screen";
