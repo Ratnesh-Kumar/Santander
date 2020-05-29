@@ -6,6 +6,7 @@ var env = new Environment();
 //Environment definition  options sqm or sqs or prod
 //*****************************************************************//
 export const ENV = env.getEnvironment();
+export const COLLECTION_NAME = ENV.collectionName;
 export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const FETCHING_TODOS = 'FETCHING_TODOS';
@@ -24,4 +25,8 @@ export const LABEL_USERNAME = "Username";
 export const EYE_ICON = require('../public/images/eye_icon.png');
 export const DEFAULT_CITY_IMG = 'https://images.pexels.com/photos/59519/pexels-photo-59519.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb';
 export const PRIMARY_TEXT_COLOR = "#e6e6ff";
+
+export const LOCALE_EN = "en";
+export const LOCALE_ES = "es";
+
 

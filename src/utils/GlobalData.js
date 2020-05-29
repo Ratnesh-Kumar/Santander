@@ -4,6 +4,8 @@ import {
 } from 'react-native';
 var singleInstance = null;
 var userData = false;
+var isFirebaseInitialize = false;
+var verifyEmail = false;
 
 export class GlobalData extends Component {
     constructor() {
@@ -21,6 +23,22 @@ export class GlobalData extends Component {
 
     getUserData(){
         return userData;
+    }
+
+    setFirebaseInitialize(flag){
+        isFirebaseInitialize = flag;
+    }
+
+    isFirebaseInitialize(){
+        return isFirebaseInitialize;
+    }
+
+    setVerifyEmail(flag){
+        verifyEmail = flag;
+    }
+
+    isVerifyEmail(){
+        return verifyEmail;
     }
 }
 

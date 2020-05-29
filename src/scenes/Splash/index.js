@@ -6,8 +6,14 @@ import { TBC_COLOR } from '../../config/colorConstant';
 var colorConstant = require('../../config/colorConstant')
 import splashStyle from './splashStyle'
 var splashConstant = require('./splashConstants');
+import {initializeApp} from '../../config/firebaseFirestore';
 
 export default class splashscreen extends Component {
+
+  constructor(props){
+    super(props)
+    initializeApp(); // initializing firebase app
+  }
 
   componentDidMount() {
     setTimeout(function () {
