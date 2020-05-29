@@ -106,7 +106,7 @@ export default class App extends Component {
 
         {/* Tab and it's scenes */}
         <Scene key="myProfileTab" title="HOME" icon={TabIcon}  initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
-          <Scene key="myProfile" component={MyProfileScreen} title="Blue" hideNavBar />
+          <Scene key="myProfile" component={HomeScreen} title="Blue" hideNavBar />
           <Scene key="fbai" component={FBaseWrite} title="FB Add Item" />
           <Scene key="fbri" component={FBaseReadItems} title="FB Read" />
         </Scene>
@@ -116,7 +116,7 @@ export default class App extends Component {
         </Scene>
 
         <Scene key="shopTab" title="ORDER" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
-          <Scene key="home" component={HomeScreen} title="home" />
+          <Scene key="home" component={MyProfileScreen} title="home" />
         </Scene>
 
         <Scene key="settingsTab" title="SHOP" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
