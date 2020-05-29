@@ -29,7 +29,7 @@ export const BLACK_COLOR = '#273039'; //TOP HEADER BLACK
 export const PLACEHOLDER_TEXT_COLOR='#ffffff';
 export const TBC_COLOR='#225aa9';
 
-
+export const SANTANDAR_COLOR = '#119e99';
 export const GREY_DARK_COLOR1 = '#4E555D';
 export const GREY_DARK_COLOR_A = "#707070"
 export const BLUE_COLOR = "#1E5A99"; //BUTTON, TEXT, BORDERS, BACKGROUND
@@ -37,5 +37,5 @@ export const RED_TEXT_COLOR = "#B30000"; // PRICING, RMP BADGE
 export const GOLD_COLOR = "#EBC132";//RATING
 export const GRAY_LIGHT_COLOR = "#F1F3F4";//HOME LOGGGED VIEW BACKGROUND 
 export const GREEN_COLOR = "#287255";//double check the green color 2E773B
-export const RED_COLOR = "#B30000";//
+export const RED_COLOR = "#e6350e";//
 

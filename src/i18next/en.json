@@ -1,5 +1,22 @@
 {
     "screens": {
       "homeScreen": "Home Screen"
+    },
+    "loginScreen": {
+      "digiShopTitle": "DigiShop",
+      "digiShopSubTitle": "Sign in to Santander Digital accounts to\naccess all our products.",
+      "forgotPasswordTitle": "Forgot Password?",
+      "SignInButtonText":"Sign In with email",
+      "SignUpButttonText":"Sign Up",
+      "UpdatedText":"Updated on 1 January 2020",
+      "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
+      "TermsConditionTitle1":" Terms ",
+      "TermsConditionTitle2":"and have acknowledged\n our",
+      "TermsConditionSubTitle":" privacy",
+      "TermsConditionSubTitle1":"statement",
+      "UserTextInput":"Username",
+      "UserTextInputError":"Please enter your username/email",
+      "PasswordTextInput":"Password",
+      "PasswordTextInputError":"Please enter your password"
     }
 }

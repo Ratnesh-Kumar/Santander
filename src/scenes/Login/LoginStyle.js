@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 var colorConstant = require('../../config/colorConstant')
 var constants = require('../../config/Constants')
 const DEVICE_WIDTH = Dimensions.get('window').width;
-const MARGIN = 40;
+const MARGIN = 50;
 
 // eslint-disable-next-line no-undef
 export default (styles = StyleSheet.create({
@@ -47,16 +47,22 @@ export default (styles = StyleSheet.create({
   iconEye: {
     width: 25,
     height: 25,
-    tintColor: 'rgba(0,0,0,0.2)',
-    marginTop:-25
+    //tintColor: 'rgba(0,0,0,0.2)',
+    marginTop:-35
   },
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colorConstant.TBC_COLOR,
+    backgroundColor: colorConstant.RED_COLOR,
     height: MARGIN,
-    borderRadius: 0,
-    paddingTop:3, paddingBottom:5,
+    paddingTop:3, paddingBottom:5,borderWidth:2,borderRadius: 20, borderColor:'transparent'
+  },
+  signInButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    height: MARGIN,
+    paddingTop:3, paddingBottom:5,borderWidth:1,borderRadius: 20, borderColor:colorConstant.BLACK_COLOR
   },
   circle: {
     height: MARGIN,
@@ -78,17 +84,32 @@ export default (styles = StyleSheet.create({
   touchIdLinkView: {
     fontWeight: 'bold', fontSize: 18, textDecorationLine: 'underline', color: colorConstant.TBC_COLOR
   },
+  forgotTitleText:{
+    fontSize: 18, color: colorConstant.SANTANDAR_COLOR 
+  },
   loginTitleView:{
     height: constants.SCREEN_HEIGHT / 3, justifyContent: 'center', alignItems: 'center'
   },
   loginTitleText:{
-    fontSize: 32, color: colorConstant.TBC_COLOR 
+    fontSize: 28, color: colorConstant.BLACK_COLOR ,  fontWeight: 'bold'
+  },
+  loginTitleSubText:{
+    fontSize: 15, color: colorConstant.BLACK_COLOR , margin: 30 , textAlign:'center'
   },
   loginSumbitButtonView:{
-    paddingLeft: 30, paddingRight: 30, marginTop: 60 
+    paddingLeft: 20, paddingRight: 20
   },
   loginSubmitButtonText:{
-    color: colorConstant.WHITE_COLOR, fontSize: 20, fontWeight: 'bold'
+    color: colorConstant.WHITE_COLOR, fontSize: 20, fontWeight: 'bold', 
+  },
+  signUpButtonText:{
+    color: colorConstant.GREY_DARK_COLOR, fontSize: 20,fontWeight: 'bold', 
+  },
+  termsAndConditionView:{
+   margin: 25 , alignItems:'center'
+  },
+  UpdatedView:{
+    alignItems:'center',flex:1
   },
   validFormViewContainer:{
     alignItems: 'center'
