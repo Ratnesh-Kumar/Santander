@@ -13,6 +13,9 @@ const ENV_PRD = 'prod'; //production
 const PROTOCOL = 'https://';
 const OD_DOMAIN = '.santander.com';
 
+const DEV_COLLECTION_NAME = "santander_dev";
+const PROD_COLLECTION_NAME = "santander_prod";
+
 export default class Environment extends Component {
 
     constructor() {
@@ -29,16 +32,18 @@ export default class Environment extends Component {
         var environment = {}
         if (envType == ENV_DEV) {
             environment = {
-
+                collectionName: DEV_COLLECTION_NAME
             };
 
         } else if (envType == ENV_PREPROD) {
 
             environment = {
-
+                collectionName: DEV_COLLECTION_NAME
             };
         } else if (envType == ENV_PRD) {
-
+            environment = {
+                collectionName: PROD_COLLECTION_NAME
+            };
         }
         environment.envType = envType;
         //Pass to Module ios and android

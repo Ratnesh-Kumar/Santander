@@ -18,7 +18,7 @@ import PropTypes from 'prop-types';
 import Constants from '../../config/Constants';
 
 import { Actions } from 'react-native-router-flux';
-import { getFBRealtimeDBFeatureFlags } from '../../config/firebasequery'
+// import { getFBRealtimeDBFeatureFlags } from '../../config/firebasequery'
 // import Realm from 'realm';
 import { TBC_COLOR } from '../../config/colorConstant';
 import TouchID from 'react-native-touch-id';
@@ -61,12 +61,12 @@ export default class LoginView extends Component {
   }
 
   componentDidMount(){
-    Actions.tabbar();
+    // Actions.tabbar();
   }
 
   async getFireBaseValue() {
-    let featureFlags = await getFBRealtimeDBFeatureFlags();
-    isCaptchaDisplay = featureFlags.isCaptchaDisplay
+    // let featureFlags = await getFBRealtimeDBFeatureFlags();
+    // isCaptchaDisplay = featureFlags.isCaptchaDisplay
   }
   isTouchIdSupported() {
     const optionalConfigObject = {
