@@ -19,5 +19,8 @@
       "UserTextInputError":"Please enter your username/email",
       "PasswordTextInput":"Password",
       "PasswordTextInputError":"Please enter your password"
+    },
+    "createShop":{
+      "createDigitalShop":"Create Digital Shop"
     }
 }
