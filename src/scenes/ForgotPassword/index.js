@@ -20,6 +20,7 @@ import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import TouchID from 'react-native-touch-id';
 import forgotPasswordStyle from './ForgotPasswordStyle';
+import Header from '../../components/Header';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 
@@ -39,6 +40,7 @@ export default class ForgotPassword extends Component {
   render() {
     return (
       <View style={forgotPasswordStyle.renderContainer}>
+        <Header isleftArrowDisplay={true} title={strings('forgotScreen.ScreenTitle')} />
         {this.renderForgotTitle()}
         {this.renderEmailTextInput()}
         {/* {this.renderValidationForm()} */}
@@ -88,6 +90,7 @@ export default class ForgotPassword extends Component {
     return (
       <View style={forgotPasswordStyle.forgotTitleView}>
         <Text style={forgotPasswordStyle.forgotTitleText}>{strings('forgotScreen.forgotTitle')}</Text>
+        <Text style={forgotPasswordStyle.forgotTitleSubText}>{strings('forgotScreen.forgotSubTitle')}</Text>
       </View>
     )
   }
@@ -98,7 +101,7 @@ export default class ForgotPassword extends Component {
       <View style={forgotPasswordStyle.forgotPasswordButtonView}>
         <TouchableOpacity
           style={forgotPasswordStyle.button}
-          onPress={() => alert('dddd')}
+          onPress={() => alert('Please check your emailID.')}
           activeOpacity={1}>
           <Text
             style={forgotPasswordStyle.forgotPasswordButtonText}>

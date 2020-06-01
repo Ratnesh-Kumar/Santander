@@ -1,38 +1,58 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable react-native/no-inline-forgotPasswordStyle */
+/* eslint-disable react/no-string-refs */
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Actions } from 'react-native-router-flux';
+import {
+  View,
+  ScrollView
+} from 'react-native';
+import TextInputMaterial from '../../components/textInputMaterial';
+import PropTypes from 'prop-types';
+import { strings } from '../../i18next/i18n';
+import termsStyle from './termsAndPrivacyStyle';
 import Header from '../../components/Header';
-import termsAndPrivacyStyle from './termsAndPrivacyStyle';
-import { ScrollView } from 'react-native-gesture-handler';
-import { getTermsAndConditions, getPrivacyPolicy, getRemoteConfig } from '../../config/firebaseFirestore';
-var constants = require('../../config/Constants');
-var termsConstant = require('./termsAndPrivacyStyleConstants')
-let termsText = "";
-let privacyText = "";
-
+import { Text } from 'native-base';
+var commonConstants = require('../../config/Constants');
+var colorConstant = require('../../config/colorConstant');
 
 export default class TermsScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+    };
+  }
 
-  // async componentDidMount(){
-  //   termsText = await getTermsAndConditions(constants.LOCALE_ES);
-  //   console.log("################ termsAndConditions : "+termsText)
-  //   privacyText = await getPrivacyPolicy(constants.LOCALE_ES)
-  //   console.log("################ privacyPolicy : "+privacyText)
-  // }
+  componentDidMount(){
 
+  }
 
+  
   render() {
+    let title = this.props.selectedTitle === 'terms' ? strings('termsScreen.termsTitle') : strings('termsScreen.privacyTitle')
     return (
-      <View style={termsAndPrivacyStyle.container}>
-        <Header isleftArrowDisplay={true} title={termsConstant.TERMS_TITLE} />
-        <View style={termsAndPrivacyStyle.temsTextcontainer}>
-          <Text>{termsConstant.TERMS_TITLE}</Text>
-        </View> 
-        <ScrollView style={termsAndPrivacyStyle.textScrollView}>
-          <Text>{termsConstant.TERMS_TEXT}</Text>
-        </ScrollView>
+      <View style={termsStyle.renderContainer}>
+        <Header isleftArrowDisplay={true} title={title} />
+        {this.renderScrollView()}
       </View>
     );
   }
-}
 
+  renderScrollView(){
+    return(
+      <ScrollView style={termsStyle.textScrollView}>
+        {/* <Text>{'LOAD TERMS AND CONDITION'}</Text> */}
+      </ScrollView>  
+    );
+  }
+
+  
+}
+TermsScreen.propTypes = {
+  source: PropTypes.number.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  secureTextEntry: PropTypes.bool,
+  autoCorrect: PropTypes.bool,
+  autoCapitalize: PropTypes.string,
+  returnKeyType: PropTypes.string,
+};

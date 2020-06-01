@@ -30,7 +30,10 @@ export default (styles = StyleSheet.create({
     height: constants.SCREEN_HEIGHT / 3, justifyContent: 'center', alignItems: 'center'
   },
   forgotTitleText:{
-    fontSize: 28, color: colorConstant.BLACK_COLOR ,  fontWeight: 'bold'
+    fontSize: 18, color: colorConstant.BLACK_COLOR ,  fontWeight: 'bold'
+  },
+  forgotTitleSubText:{
+    fontSize: 15, color: colorConstant.BLACK_COLOR , margin: 30 , textAlign:'center'
   },
   validFormViewContainer:{
     alignItems: 'center'

@@ -91,14 +91,12 @@ export default class App extends Component {
           />
           <Scene
             key="forgotPassword"
-            type={ActionConst.RESET}
             component={ForgotPasswordScreen}
             title="Forgot Password"
             duration={0}
           />
           <Scene
             key="termsAndPrivacy"
-            type={ActionConst.RESET}
             component={TermsScreen}
             title="Terms"
             duration={0}

@@ -1,5 +1,6 @@
 import { StyleSheet, Platform } from 'react-native';
 var colorConstants = require('../../config/colorConstant');
+var constants = require('../../config/Constants')
 
 const header = {
   container: {
@@ -10,16 +11,17 @@ const header = {
     height: (Platform.OS === 'ios') ? 50 : 50,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colorConstants.TBC_COLOR
+    backgroundColor: colorConstants.WHITE_COLOR,
+    justifyContent:'space-between'
   },
   headerText: {
-    color: colorConstants.WHITE_COLOR,
+    color: colorConstants.RED_COLOR,
     fontSize: 18,
-    marginLeft: 20
+    fontWeight:"bold",
+    //marginLeft: 20
   },
   leftImageView:{
-    marginLeft: 20
-
+    marginLeft:20,
   }
 };
 

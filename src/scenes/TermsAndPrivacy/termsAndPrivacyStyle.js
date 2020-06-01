@@ -1,26 +1,15 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import {StyleSheet, Dimensions} from 'react-native';
+var colorConstant = require('../../config/colorConstant')
+var constants = require('../../config/Constants')
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const MARGIN = 50;
 
 // eslint-disable-next-line no-undef
 export default (styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  viewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1
-  },
-  temsTextcontainer: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    margin: 20,
-    justifyContent:'center',
-    alignItems:'center',
-    fontWeight: 'bold',
+  renderContainer: {
+    flex: 1, backgroundColor: colorConstant.WHITE_COLOR
   },
   textScrollView: {
-    flex: 1,
     paddingLeft: 10,
     paddingRight: 10,
     marginBottom: 10,
