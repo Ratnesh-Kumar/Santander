@@ -9,8 +9,8 @@ const DOCUMENT_PRIVACY_POLICY = "privacyPolicy";
 const DOCUMENT_REMOTE_CONFIG = "remoteConfig";
 
 const firebaseConfig = {
-    clientId: '605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com',
-    appId: '1:605493510042:android:d09d2d6b2281df12100423',
+    clientId: '605493510042-1kthn40k3mfdtd7884841bth69ovbumb.apps.googleusercontent.com',
+    appId: '1:605493510042:android:cbbedce9af38efc7100423',
     apiKey: 'AIzaSyBN46O-gT2sXXEbKoYFXCzZ1OwDBhu16hw',
     databaseURL: 'https://ecom-santander.firebaseio.com',
     storageBucket: 'ecom-santander.appspot.com',
