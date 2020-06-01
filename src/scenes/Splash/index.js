@@ -7,28 +7,17 @@ var colorConstant = require('../../config/colorConstant')
 import splashStyle from './splashStyle'
 var splashConstant = require('./splashConstants');
 import {initializeApp} from '../../config/firebaseFirestore';
-import BaseComponent from '../../BaseComponent';
-import GlobalData from '../../utils/GlobalData';
-var globalData = new GlobalData();
-export default class splashscreen extends BaseComponent {
+
+export default class splashscreen extends Component {
 
   constructor(props){
     super(props)
     initializeApp(); // initializing firebase app
   }
 
-  async componentDidMount() {
-    let isUserAlreadySignIn = await this.isSignedIn();
-    if(isUserAlreadySignIn){
-      let currentUserInfo = await this.getCurrentUser();
-      globalData.setGoogleUserInfo(currentUserInfo);
-    }
+  componentDidMount() {
     setTimeout(function () {
-      if(isUserAlreadySignIn){
-        Actions.tabbar();
-      }else{
-        Actions.login();
-      }
+      Actions.login();
     }, 2000);
   }
 

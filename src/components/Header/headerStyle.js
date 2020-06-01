@@ -15,7 +15,7 @@ const header = {
   headerText: {
     color: colorConstants.WHITE_COLOR,
     fontSize: 18,
-    marginLeft: 20, flex:1
+    marginLeft: 20
   },
   leftImageView:{
     marginLeft: 20

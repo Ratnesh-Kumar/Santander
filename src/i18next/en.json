@@ -1,7 +1,6 @@
 {
     "screens": {
-      "homeScreen": "Home Screen",
-      "signOut":"Sign Out"
+      "homeScreen": "Home Screen"
     },
     "loginScreen": {
       "digiShopTitle": "DigiShop",

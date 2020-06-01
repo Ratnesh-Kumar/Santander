@@ -40,6 +40,3 @@ export const GREEN_COLOR = "#287255";//double check the green color 2E773B
 export const RED_COLOR = "#e6350e";//
 export const REGISTER_TITLE_COLOR='#ec0000';
 
-//Santander color code
-export const SANT_RED_COLOR = "#ec0000"
-

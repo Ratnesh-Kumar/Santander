@@ -10,9 +10,8 @@ import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
 import { getTermsAndConditions, getPrivacyPolicy, getRemoteConfig } from '../../config/firebaseFirestore';
 import GlobalData from '../../utils/GlobalData';
-import BaseComponent from '../../BaseComponent';
 var globalData = new GlobalData();
-export default class HomeScreen extends BaseComponent {
+export default class HomeScreen extends Component {
 
   constructor(props) {
     super(props)
@@ -28,11 +27,10 @@ export default class HomeScreen extends BaseComponent {
     console.log("################ privacyPolicy : "+privacyPolicy)
   }
   render() {
+    
     return (
       <View style={homeStyle.container}>
-        <Header title={strings('screens.homeScreen')} isSignOutDisplay={true} rightText={strings('screens.signOut')} onRightPressed={() =>{
-          this.googleSignOut();
-        }}/>
+        <Header title={strings('screens.homeScreen')} />
         <View style={homeStyle.viewContainer}>
           <Text style={homeStyle.welcome}>{strings('screens.homeScreen')}</Text>
         </View>
@@ -49,15 +47,7 @@ export default class HomeScreen extends BaseComponent {
     console.log("############# : " + RNLocalize.getTimeZone());
     console.log("############# : " + RNLocalize.uses24HourClock());
   }
-
-  async googleSignOut(){
-    this.googleConfiguration();
-    await this.signOut();   
-    Actions.login();
-  }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {

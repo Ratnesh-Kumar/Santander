@@ -53,19 +53,8 @@ export default class Header extends Component {
             <View style={headerStyle.viewContainer}>
                 {this.renderLeftView(isleftArrowDisplay)}
                 <Text style={headerStyle.headerText}>{this.props.title}</Text>
-                {this.renderRightText()}
             </View>
         );
-    }
-
-    renderRightText() {
-        if (this.props.isSignOutDisplay) {
-            return (
-                <TouchableOpacity onPress={() => { this.props.onRightPressed() }}>
-                    <Text style={{ color: colorConstants.WHITE_COLOR, fontSize: 14, marginRight: 20 }}>{'Sign Out'}</Text>
-                </TouchableOpacity>
-            )
-        }
     }
 
     renderLeftView(flag) {
