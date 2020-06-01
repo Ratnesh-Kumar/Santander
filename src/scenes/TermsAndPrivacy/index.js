@@ -6,27 +6,33 @@ import {
   View,
   ScrollView
 } from 'react-native';
-import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
 import { strings } from '../../i18next/i18n';
 import termsStyle from './termsAndPrivacyStyle';
 import Header from '../../components/Header';
+import { getTermsAndConditions, getPrivacyPolicy } from '../../config/firebaseFirestore';
 import { Text } from 'native-base';
-var commonConstants = require('../../config/Constants');
-var colorConstant = require('../../config/colorConstant');
+var constants = require('../../config/Constants');
 
 export default class TermsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      termsString: "",
     };
   }
 
-  componentDidMount(){
-
+  async componentDidMount(){
+    let termStr = "";
+    if(this.props.selectedTitle === 'terms'){
+      termStr = await getTermsAndConditions(constants.LOCALE_ES);
+    }
+    else{
+      termStr = await getPrivacyPolicy(constants.LOCALE_ES)
+    }
+    this.setState({termsString:termStr })
+    
   }
-
   
   render() {
     let title = this.props.selectedTitle === 'terms' ? strings('termsScreen.termsTitle') : strings('termsScreen.privacyTitle')
@@ -41,7 +47,7 @@ export default class TermsScreen extends Component {
   renderScrollView(){
     return(
       <ScrollView style={termsStyle.textScrollView}>
-        {/* <Text>{'LOAD TERMS AND CONDITION'}</Text> */}
+        <Text style={{textAlign:'justify'}}>{this.state.termsString}</Text>
       </ScrollView>  
     );
   }

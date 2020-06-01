@@ -10,8 +10,9 @@ export default (styles = StyleSheet.create({
     flex: 1, backgroundColor: colorConstant.WHITE_COLOR
   },
   textScrollView: {
-    paddingLeft: 10,
-    paddingRight: 10,
-    marginBottom: 10,
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginTop:20,
+    marginBottom: 20,
   },
 }));
