@@ -71,12 +71,7 @@ export default class LoginView extends BaseComponent {
     this.getFireBaseValue();
   }
 
-  async googleConfiguration() {
-    GoogleSignin.configure({
-      webClientId: (Platform.OS == 'android') ? constants.WEB_CLIENT_ID : '',
-      iosClientId: (Platform.OS == 'ios') ? constants.WEB_CLIENT_ID : '',
-    });
-  }
+  
 
   componentDidMount() {
     // Actions.tabbar();
