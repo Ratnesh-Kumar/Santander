@@ -18,5 +18,11 @@
       "UserTextInputError":"Please enter your username/email",
       "PasswordTextInput":"Password",
       "PasswordTextInputError":"Please enter your password"
+    },
+    "forgotScreen": {
+      "forgotTitle": "Forgot Password",
+      "SendEmailButtonText":"Send Email",
+      "UserTextInput":"UserEmail",
+      "UserTextInputError":"Please enter your email"
     }
 }

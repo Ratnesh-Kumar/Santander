@@ -14,5 +14,11 @@
     "TermsConditionTitle2":"Y han reconocido \n nuestrar",
     "TermsConditionSubTitle":" intimidad",
     "TermsConditionSubTitle1":"declaración"
+  },
+  "forgotScreen": {
+    "forgotTitle": "olvidadoTítulo",
+    "SendEmailButtonText":"Enviar correo electrónico",
+    "UserTextInput":"UserEmail",
+    "UserTextInputError":"Por favor introduzca su correo electrónico"
   }
 }
