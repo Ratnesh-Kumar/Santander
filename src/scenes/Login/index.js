@@ -16,9 +16,9 @@ import {
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
 import Constants from '../../config/Constants';
-
+import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
-import { getFBRealtimeDBFeatureFlags } from '../../config/firebasequery'
+// import { getFBRealtimeDBFeatureFlags } from '../../config/firebasequery'
 // import Realm from 'realm';
 import { TBC_COLOR } from '../../config/colorConstant';
 import TouchID from 'react-native-touch-id';
@@ -26,6 +26,7 @@ import ConfirmGoogleCaptcha from 'react-native-google-recaptcha-v2';
 import loginStyle from './LoginStyle';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant')
+var loginConstant = require('./loginConstants.js')
 let realm;
 const siteKey = '6Le2394UAAAAAHlpjMsukQVuXNAMFLClkynBAQTh';
 const baseUrl = 'https://lami.net.in';
@@ -61,12 +62,12 @@ export default class LoginView extends Component {
   }
 
   componentDidMount(){
-    Actions.tabbar();
+    // Actions.tabbar();
   }
 
   async getFireBaseValue() {
-    let featureFlags = await getFBRealtimeDBFeatureFlags();
-    isCaptchaDisplay = featureFlags.isCaptchaDisplay
+    // let featureFlags = await getFBRealtimeDBFeatureFlags();
+    // isCaptchaDisplay = featureFlags.isCaptchaDisplay
   }
   isTouchIdSupported() {
     const optionalConfigObject = {
@@ -119,15 +120,19 @@ export default class LoginView extends Component {
       <View style={loginStyle.renderContainer}>
         {this.renderLoginTitle()}
         {this.renderValidationForm()}
-        {this.renderSubmitButton()}
-        {this.renderTouchIdAndFaceId()}
+        {this.renderForgotPassword()}
+        {this.renderSignInButton()}
+        {this.renderTermsView()}
+        {this.renderSignUpButton()}
+        {this.renderUpdateText()}
+        {/* {this.renderTouchIdAndFaceId()}
         <ConfirmGoogleCaptcha
           ref={_ref => this.captchaForm = _ref}
           siteKey={siteKey}
           baseUrl={baseUrl}
           languageCode='en'
           onMessage={()=>this.onMessage()}
-        />
+        /> */}
       </View>
     );
   }
@@ -170,10 +175,19 @@ export default class LoginView extends Component {
       });
   }
 
+  renderForgotPassword() {
+    return (
+      <View style={{ margin : 25 , alignItems:'flex-end'}}>
+        <Text style={loginStyle.forgotTitleText}>{strings('loginScreen.forgotPasswordTitle')}</Text>
+      </View>
+    )
+  }
+
   renderLoginTitle() {
     return (
       <View style={loginStyle.loginTitleView}>
-        <Text style={loginStyle.loginTitleText}>{'Login Screen'}</Text>
+        <Text style={loginStyle.loginTitleText}>{strings('loginScreen.digiShopTitle')}</Text>
+        <Text style={loginStyle.loginTitleSubText}>{strings('loginScreen.digiShopSubTitle')}</Text>
       </View>
     )
   }
@@ -187,9 +201,9 @@ export default class LoginView extends Component {
           <View style={loginStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.username}
-              refsValue={commonConstants.TEXT_INPUT_USERNAME}
-              ref={commonConstants.TEXT_INPUT_USERNAME}
-              label={commonConstants.LABEL_USERNAME}
+              refsValue={strings('loginScreen.UserTextInput')}
+              ref={strings('loginScreen.UserTextInput')}
+              label={strings('loginScreen.UserTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={username => this.setState({ username })}
@@ -201,7 +215,7 @@ export default class LoginView extends Component {
               underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
               value={this.state.username}
               textInputName={this.state.username}
-              errorText={commonConstants.ERROR_TEXT_INPUT_USERNAME}
+              errorText={strings('loginScreen.UserTextInputError')}
               underlineHeight={2}
               keyboardType="email-address"
               onSubmitEditing={event => {
@@ -212,12 +226,13 @@ export default class LoginView extends Component {
               <TextInputMaterial
                 secureTextEntry={this.state.showPass}
                 blurText={this.state.password}
-                refsValue={commonConstants.TEXT_INPUT_PASSWORD}
+                //refsValue={commonConstants.TEXT_INPUT_PASSWORD}
                 showIcon={false}
                 value={this.state.password}
                 textInputName={this.state.password}
-                ref={commonConstants.TEXT_INPUT_PASSWORD}
-                label={commonConstants.LABEL_PASSWORD}
+                refsValue={strings('loginScreen.PasswordTextInput')}
+                ref={strings('loginScreen.PasswordTextInput')}
+                label={strings('loginScreen.PasswordTextInput')}
                 maxLength={50}
                 underlineHeight={2}
                 isLoginScreen={false}
@@ -229,22 +244,22 @@ export default class LoginView extends Component {
                 style={loginStyle.input}
                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                 underlineColorAndroid={colorConstant.UNDERLINE_COLOR_ANDROID}
-                errorText={commonConstants.ERROR_TEXT_INPUT_PASSWORD}
+                errorText={strings('loginScreen.PasswordTextInputError')}
                 onFocus={() => this.inputFocused.bind(this)}
               />
             </View>
             {/* <TouchableOpacity
-                        activeOpacity={0.7}
-                        style={loginStyle.btnEye}
-                        onPress={this.showPass}>
-                        <Image source={commonConstants.EYE_ICON} style={loginStyle.iconEye} />
-                    </TouchableOpacity>  */}
+              activeOpacity={0.7}
+              style={loginStyle.btnEye}
+              onPress={this.showPass}>
+              <Image source={commonConstants.EYE_ICON} style={loginStyle.iconEye} />
+            </TouchableOpacity>  */}
           </View>
         </View>
       </KeyboardAvoidingView>
     );
   }
-  renderSubmitButton() {
+  renderSignInButton() {
     return (
       <View style={loginStyle.loginSumbitButtonView}>
         <TouchableOpacity
@@ -254,9 +269,45 @@ export default class LoginView extends Component {
           {}
           <Text
             style={loginStyle.loginSubmitButtonText}>
-            {commonConstants.LOGIN_BUTTON_TEXT}
+            {strings('loginScreen.SignInButtonText')}
           </Text>
         </TouchableOpacity>
+      </View>
+    );
+  }
+  renderTermsView() {
+    return (
+      <View style={loginStyle.termsAndConditionView}>
+        <Text style={{ fontSize: 16, textAlign: 'center' }}>
+          <Text>{strings('loginScreen.TermsConditionTitle')}</Text>
+          <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionTitle1')}</Text>
+          <Text>{strings('loginScreen.TermsConditionTitle2')}</Text>
+          <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionSubTitle')}</Text>
+          <Text>{strings('loginScreen.TermsConditionSubTitle1')}</Text>
+        </Text>
+      </View>
+    );
+  }
+  renderSignUpButton() {
+    return (
+      <View style={loginStyle.loginSumbitButtonView}>
+        <TouchableOpacity
+          style={loginStyle.signInButton}
+          onPress={() => Actions.tabbar()}
+          activeOpacity={1}>
+          {}
+          <Text
+            style={loginStyle.signUpButtonText}>
+            {strings('loginScreen.SignUpButttonText')}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  renderUpdateText(){
+    return (
+      <View style={loginStyle.UpdatedView}>
+          <Text style={{ position: 'absolute',bottom:25}}>{strings('loginScreen.UpdatedText')}</Text>
       </View>
     );
   }

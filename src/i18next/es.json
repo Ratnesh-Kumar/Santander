@@ -1,0 +1,18 @@
+{
+  "screens": {
+    "homeScreen": "Casa Pantalla"
+  },
+  "loginScreen": {
+    "digiShopTitle": "DigiShop",
+    "digiShopSubTitle": "Inicie sesión en cuentas digitales de Santander para acceder a todos nuestros productos.",
+    "forgotPasswordTitle": "¿Se te olvidó tu contraseña?",
+    "SignInButtonText":"Iniciar sesión con correo electrónico",
+    "SignUpButttonText":"Regístrate",
+    "UpdatedText":"Actualizado el 1 de enero de 2020",
+    "TermsConditionTitle":"Al hacer clic en Iniciar sesión con correo electrónico, acepta \n nuestro",
+    "TermsConditionTitle1":" Condiciones ",
+    "TermsConditionTitle2":"Y han reconocido \n nuestrar",
+    "TermsConditionSubTitle":" intimidad",
+    "TermsConditionSubTitle1":"declaración"
+  }
+}
