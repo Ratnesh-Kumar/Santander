@@ -19,6 +19,7 @@ const header = {
     fontSize: 18,
     fontWeight:"bold",
     //marginLeft: 20
+    marginLeft: 20, flex:1
   },
   leftImageView:{
     marginLeft:20,

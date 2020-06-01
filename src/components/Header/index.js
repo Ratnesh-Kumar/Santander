@@ -52,23 +52,27 @@ export default class Header extends Component {
         return (
             <View style={headerStyle.viewContainer}>
                 {this.renderLeftView(isleftArrowDisplay)}
-                <View style={{backgroundColor:colorConstants.WHITE_COLOR}}>
+                {/* <View style={{backgroundColor:colorConstants.WHITE_COLOR}}>
                     <Text style={headerStyle.headerText}>{this.props.title}</Text>
                 </View>
-                {this.renderRightView(false)}
+                {this.renderRightView(false)} */}
+                <Text style={headerStyle.headerText}>{this.props.title}</Text>
+                {this.renderRightText()}
             </View>
         );
     }
 
-    // renderBrowseHeader() {
-    //     let isleftArrowDisplay = this.props.isleftArrowDisplay === undefined ? true : this.props.isleftArrowDisplay
-    //     return (
-    //         <View style={headerStyle.viewContainer}>
-    //             {this.renderLeftView(isleftArrowDisplay)}
-    //             <Text style={headerStyle.headerText}>{this.props.title}</Text>
-    //         </View>
-    //     );
-    // }
+    
+
+    renderRightText() {
+        if (this.props.isSignOutDisplay) {
+            return (
+                <TouchableOpacity onPress={() => { this.props.onRightPressed() }}>
+                    <Text style={{ color: colorConstants.WHITE_COLOR, fontSize: 14, marginRight: 20 }}>{'Sign Out'}</Text>
+                </TouchableOpacity>
+            )
+        }
+    }
 
     renderLeftView(flag) {
         if (flag) {

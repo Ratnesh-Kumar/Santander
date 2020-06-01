@@ -12,8 +12,10 @@ import {
   Animated,
   Easing,
   Alert,
+  Platform
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
+import BaseComponent from '../../BaseComponent';
 import PropTypes from 'prop-types';
 import Constants from '../../config/Constants';
 import { strings } from '../../i18next/i18n';
@@ -23,17 +25,21 @@ import { Actions } from 'react-native-router-flux';
 import { TBC_COLOR } from '../../config/colorConstant';
 import TouchID from 'react-native-touch-id';
 import ConfirmGoogleCaptcha from 'react-native-google-recaptcha-v2';
+// import Auth from '@react-native-firebase/auth';
 import loginStyle from './LoginStyle';
-var commonConstants = require('../../config/Constants');
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from 'react-native-google-signin';
+import GlobalData from '../../utils/GlobalData';
+var globalData = new GlobalData();
+var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant')
 var loginConstant = require('./loginConstants.js')
-let realm;
-const siteKey = '6Le2394UAAAAAHlpjMsukQVuXNAMFLClkynBAQTh';
-const baseUrl = 'https://lami.net.in';
-const MARGIN = 40;
 const DEVICE_WIDTH = Dimensions.get('window').width;
 var isCaptchaDisplay = false;
-export default class LoginView extends Component {
+export default class LoginView extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,11 +50,14 @@ export default class LoginView extends Component {
       password: '',
       isTouchIdSupported: false,
       isFaceIdSupported: false,
+      googleUserInfo: '',
+      isSigninInProgress: false
     };
     this.showPass = this.showPass.bind(this);
     this.buttonAnimated = new Animated.Value(0);
     this.growAnimated = new Animated.Value(0);
-     this.onMessage = this.onMessage.bind(this);
+    this.googleConfiguration()
+    this.onMessage = this.onMessage.bind(this);
     // realm = new Realm({ path: 'UserDatabase.realm' });
     //creating temporary user logins
     // realm.write(() => {
@@ -57,12 +66,16 @@ export default class LoginView extends Component {
     //     user_password: 'admin1',
     //   });
     // });
+
     this.isTouchIdSupported()
     this.getFireBaseValue();
   }
 
-  componentDidMount(){
+  
+
+  componentDidMount() {
     // Actions.tabbar();
+    
   }
 
   async getFireBaseValue() {
@@ -98,8 +111,8 @@ export default class LoginView extends Component {
       : this.setState({ showPass: true, press: false });
   }
 
-  onMessage = event =>{
-    console.log('########## onMeassage: '+event);
+  onMessage = event => {
+    console.log('########## onMeassage: ' + event);
     if (event && event.nativeEvent.data) {
       if (['cancel', 'error', 'expired'].includes(event.nativeEvent.data)) {
         console.log('error', event.nativeEvent.data);
@@ -115,10 +128,17 @@ export default class LoginView extends Component {
     }
   };
 
+  renderHorizontalLine(margin) {
+    return (
+      <View style={{ height: 1, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, marginTop: margin, marginBottom: margin }} />
+    )
+  }
+
   render() {
     return (
       <View style={loginStyle.renderContainer}>
         {this.renderLoginTitle()}
+        {this.renderHorizontalLine(20)}
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
         {this.renderSignInButton()}
@@ -136,6 +156,43 @@ export default class LoginView extends Component {
       </View>
     );
   }
+
+  renderGoogleSignIn() {
+    return (
+      <View>
+        <GoogleSigninButton
+          style={{ width: 192, height: 48, marginTop: 20 }}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Light}
+          onPress={() => this.googleSignIn()}
+          disabled={this.state.isSigninInProgress} />
+      </View>
+    )
+  }
+
+  async googleSignIn(){
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      if(this.isValidString(userInfo)){
+        this.setState({ googleUserInfo: userInfo });
+        globalData.setGoogleUserInfo(userInfo);
+        Actions.tabbar();
+      }
+      
+    } catch (error) {
+      console.log(error.onMessage)
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
   renderTouchIdAndFaceId() {
     return (
@@ -191,6 +248,7 @@ export default class LoginView extends Component {
       <View style={loginStyle.loginTitleView}>
         <Text style={loginStyle.loginTitleText}>{strings('loginScreen.digiShopTitle')}</Text>
         <Text style={loginStyle.loginTitleSubText}>{strings('loginScreen.digiShopSubTitle')}</Text>
+        {this.renderGoogleSignIn()}
       </View>
     )
   }
@@ -215,7 +273,7 @@ export default class LoginView extends Component {
               isLoginScreen={false}
               style={loginStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
               value={this.state.username}
               textInputName={this.state.username}
               errorText={strings('loginScreen.UserTextInputError')}
@@ -229,7 +287,7 @@ export default class LoginView extends Component {
               <TextInputMaterial
                 secureTextEntry={this.state.showPass}
                 blurText={this.state.password}
-                //refsValue={commonConstants.TEXT_INPUT_PASSWORD}
+                //refsValue={constants.TEXT_INPUT_PASSWORD}
                 showIcon={false}
                 value={this.state.password}
                 textInputName={this.state.password}
@@ -255,19 +313,25 @@ export default class LoginView extends Component {
               activeOpacity={0.7}
               style={loginStyle.btnEye}
               onPress={this.showPass}>
-              <Image source={commonConstants.EYE_ICON} style={loginStyle.iconEye} />
+              <Image source={constants.EYE_ICON} style={loginStyle.iconEye} />
             </TouchableOpacity>  */}
           </View>
         </View>
       </KeyboardAvoidingView>
     );
   }
+
+ 
+
   renderSignInButton() {
     return (
       <View style={loginStyle.loginSumbitButtonView}>
         <TouchableOpacity
           style={loginStyle.button}
-          onPress={() => Actions.tabbar()}
+          onPress={() => {
+            // Actions.tabbar();
+            this.signOut()
+          }}
           activeOpacity={1}>
           {}
           <Text
@@ -307,10 +371,10 @@ export default class LoginView extends Component {
       </View>
     );
   }
-  renderUpdateText(){
+  renderUpdateText() {
     return (
       <View style={loginStyle.UpdatedView}>
-          <Text style={{ position: 'absolute',bottom:25}}>{strings('loginScreen.UpdatedText')}</Text>
+        <Text style={{ position: 'absolute', bottom: 25 }}>{strings('loginScreen.UpdatedText')}</Text>
       </View>
     );
   }
