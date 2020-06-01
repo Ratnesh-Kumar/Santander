@@ -1,1 +1,1 @@
-export const FAVOURITE_SCREEN = "Favourite Screen";
+export const FAVOURITE_SCREEN = "Product Screen";

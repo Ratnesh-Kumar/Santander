@@ -1,5 +1,5 @@
 import { Dimensions } from 'react-native';
-import Environment from './EnvironmentDefinition';
+import Environment from './Environment';
 var env = new Environment();
 
 //API keys that are not able to keep on the .evn files for security reasons
