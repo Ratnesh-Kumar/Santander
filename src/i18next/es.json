@@ -14,5 +14,23 @@
     "TermsConditionTitle2":"Y han reconocido \n nuestrar",
     "TermsConditionSubTitle":" intimidad",
     "TermsConditionSubTitle1":"declaración"
+  },
+  "registerScreen":{
+    "digiShopTitle": "DigiShop",
+    "UpdatedText":"Actualizado el 1 de enero de 2020",
+    "TermsConditionTitle":"Al hacer clic en Iniciar sesión con correo electrónico, acepta \n nuestro",
+    "TermsConditionTitle1":" Condiciones ",
+    "TermsConditionTitle2":"Y han reconocido \n nuestrar",
+    "TermsConditionSubTitle":" intimidad ",
+    "TermsConditionSubTitle1":"declaración",
+    "UserTextInput":"Nombre de usuario (correo electrónico)",
+    "UserTextInputError":"Por favor ingrese su nombre de usuario / correo electrónico",
+    "PhoneTextInput":"Número de teléfono",
+    "PhoneTextInputError":"Por favor, introduzca su número de teléfono",
+    "PasswordTextInput":"Contraseña",
+    "PasswordTextInputError":"Por favor, introduzca su contraseña",
+    "ConfirmPasswordTextInput":"Confirmar contraseña",
+    "ConfirmPasswordTextInputError":"Por favor ingrese su contraseña de confirmación",
+    "SignUpButttonText":"Regístrate"
   }
 }

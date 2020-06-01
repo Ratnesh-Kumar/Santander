@@ -18,5 +18,23 @@
       "UserTextInputError":"Please enter your username/email",
       "PasswordTextInput":"Password",
       "PasswordTextInputError":"Please enter your password"
+    },
+    "registerScreen":{
+      "digiShopTitle": "DigiShop",
+      "UpdatedText":"Updated on 1 January 2020",
+      "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
+      "TermsConditionTitle1":" Terms ",
+      "TermsConditionTitle2":"and have acknowledged\n our",
+      "TermsConditionSubTitle":" privacy ",
+      "TermsConditionSubTitle1":"statement",
+      "UserTextInput":"Username(eMail)",
+      "UserTextInputError":"Please enter your username/email",
+      "PhoneTextInput":"Phone Number",
+      "PhoneTextInputError":"Please enter your phone number",
+      "PasswordTextInput":"Password",
+      "PasswordTextInputError":"Please enter your password",
+      "ConfirmPasswordTextInput":"Confirm Password",
+      "ConfirmPasswordTextInputError":"Please enter your confirm password",
+      "SignUpButttonText":"Sign Up"
     }
 }
