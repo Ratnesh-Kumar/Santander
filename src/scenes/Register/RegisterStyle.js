@@ -44,10 +44,10 @@ export default (styles = StyleSheet.create({
         position: 'relative',
     },
     registerTitleView: {
-        height: constants.SCREEN_HEIGHT / 9,  justifyContent: 'center', alignItems: 'center'
+        paddingTop:10, height: constants.SCREEN_HEIGHT / 8,  justifyContent: 'center', 
     },
     registerTitleText: {
-        fontSize: 28, color: colorConstant.BLACK_COLOR, fontWeight: 'bold'
+        fontSize: 20, color: colorConstant.REGISTER_TITLE_COLOR, fontWeight: 'bold'
     },
     input: {
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
