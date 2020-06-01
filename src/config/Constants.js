@@ -7,6 +7,7 @@ var env = new Environment();
 //*****************************************************************//
 export const ENV = env.getEnvironment();
 export const COLLECTION_NAME = ENV.collectionName;
+export const WEB_CLIENT_ID = ENV.webClientID;
 export const SCREEN_WIDTH = Dimensions.get('window').width;
 export const SCREEN_HEIGHT = Dimensions.get('window').height;
 export const FETCHING_TODOS = 'FETCHING_TODOS';

@@ -39,3 +39,6 @@ export const GRAY_LIGHT_COLOR = "#F1F3F4";//HOME LOGGGED VIEW BACKGROUND
 export const GREEN_COLOR = "#287255";//double check the green color 2E773B
 export const RED_COLOR = "#e6350e";//
 
+//Santander color code
+export const SANT_RED_COLOR = "#ec0000"
+

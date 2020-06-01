@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-
+import GlobalData from './utils/GlobalData'
+var globalData = new GlobalData();
+import {
+    GoogleSignin,
+    GoogleSigninButton,
+    statusCodes,
+  } from 'react-native-google-signin';
 export default class BaseComponent extends Component {
 
     constructor() {
@@ -31,5 +37,27 @@ export default class BaseComponent extends Component {
         }
         return false;
     }
+
+    async signOut(){
+        try {
+          await GoogleSignin.revokeAccess();
+          await GoogleSignin.signOut();
+          globalData.setGoogleUserInfo("");
+          this.setState({ googleUserInfo: null }); // Remember to remove the user from your app's state as well
+        } catch (error) {
+          console.error(error);
+        }
+      };
+    
+      async isSignedIn(){
+        const isSignedIn = await GoogleSignin.isSignedIn();
+        return isSignedIn;
+      };
+    
+      async getCurrentUser(){
+        const currentUser = await GoogleSignin.getCurrentUser();
+        return currentUser;
+      };
+    
 
 }
