@@ -28,6 +28,7 @@ export default class splashscreen extends BaseComponent {
         Actions.tabbar();
       }else{
         Actions.login();
+        // Actions.createCampaign();
       }
     }, 2000);
   }
