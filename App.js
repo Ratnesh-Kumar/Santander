@@ -8,7 +8,8 @@ import {
   GoogleAnalyticsSettings,
 } from 'react-native-google-analytics-bridge';
 import LoginScreen from './src/scenes/Login';
-import CreateCampaign from './src/scenes/CreateCampaign'
+import ForgotPasswordScreen from './src/scenes/ForgotPassword';
+import TermsScreen from './src/scenes/TermsAndPrivacy';
 // import Realm from 'realm';
 import HomeScreen from './src/scenes/Home';
 import MyProfileScreen from './src/scenes/MyProfile';
@@ -88,10 +89,16 @@ export default class App extends Component {
             title="login"
             duration={0}
           />
-           <Scene
-            key="createCampaign"
-            component={CreateCampaign}
-            title="createCampaign"
+          <Scene
+            key="forgotPassword"
+            component={ForgotPasswordScreen}
+            title="Forgot Password"
+            duration={0}
+          />
+          <Scene
+            key="termsAndPrivacy"
+            component={TermsScreen}
+            title="Terms"
             duration={0}
           />
           {this.renderTabbar()}

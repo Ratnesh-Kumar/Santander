@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 var colorConstant = require('../../config/colorConstant')
 var constants = require('../../config/Constants')
 const DEVICE_WIDTH = Dimensions.get('window').width;
@@ -76,7 +76,7 @@ export default (styles = StyleSheet.create({
     backgroundColor: '#F035E0',
   },
   renderContainer: {
-    flex: 1, backgroundColor: colorConstant.WHITE_COLOR
+    flex: 1, backgroundColor: colorConstant.WHITE_COLOR , marginTop: (Platform.OS === 'ios') ? 50 : 20,
   },
   touchIdContainer: {
     marginTop: 20, alignItems: 'center'

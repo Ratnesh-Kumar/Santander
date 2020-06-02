@@ -15,7 +15,16 @@
     "TermsConditionSubTitle":" intimidad",
     "TermsConditionSubTitle1":"declaración"
   },
-  "createShop":{
-    "createDigitalShop":"Crear tienda digital",
+  "forgotScreen": {
+    "forgotTitle": "olvidadoTítulo",
+    "forgotSubTitle": "Ingrese su correo electrónico para restablecer la contraseña.",
+    "SendEmailButtonText":"Enviar correo electrónico",
+    "UserTextInput":"UserEmail",
+    "UserTextInputError":"Por favor introduzca su correo electrónico",
+    "ScreenTitle":"Digishop"
+  },
+  "termsScreen":{
+    "termsTitle":"Términos y condiciones",
+    "privacyTitle":"Política de privacidad"
   }
 }

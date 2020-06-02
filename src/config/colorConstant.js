@@ -37,7 +37,7 @@ export const RED_TEXT_COLOR = "#B30000"; // PRICING, RMP BADGE
 export const GOLD_COLOR = "#EBC132";//RATING
 export const GRAY_LIGHT_COLOR = "#F1F3F4";//HOME LOGGGED VIEW BACKGROUND 
 export const GREEN_COLOR = "#287255";//double check the green color 2E773B
-export const RED_COLOR = "#e6350e";//
+export const RED_COLOR = "#ec0000";//
 
 //Santander color code
 export const SANT_RED_COLOR = "#ec0000"

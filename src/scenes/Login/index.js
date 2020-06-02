@@ -234,8 +234,11 @@ export default class LoginView extends BaseComponent {
 
   renderForgotPassword() {
     return (
-      <View style={{ margin: 25, alignItems: 'flex-end' }}>
+      <View style={{ margin : 25 , alignItems:'flex-end'}}>
+        <TouchableOpacity
+          onPress={() => Actions.forgotPassword()}>
         <Text style={loginStyle.forgotTitleText}>{strings('loginScreen.forgotPasswordTitle')}</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -344,9 +347,9 @@ export default class LoginView extends BaseComponent {
       <View style={loginStyle.termsAndConditionView}>
         <Text style={{ fontSize: 16, textAlign: 'center' }}>
           <Text>{strings('loginScreen.TermsConditionTitle')}</Text>
-          <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionTitle1')}</Text>
+          <Text  onPress={() => Actions.termsAndPrivacy({selectedTitle:'terms'})} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionTitle1')}</Text>
           <Text>{strings('loginScreen.TermsConditionTitle2')}</Text>
-          <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionSubTitle')}</Text>
+          <Text  onPress={() => Actions.termsAndPrivacy({selectedTitle:'privacy'})} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionSubTitle')}</Text>
           <Text>{strings('loginScreen.TermsConditionSubTitle1')}</Text>
         </Text>
       </View>

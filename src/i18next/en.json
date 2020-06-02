@@ -13,14 +13,23 @@
       "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
       "TermsConditionTitle1":" Terms ",
       "TermsConditionTitle2":"and have acknowledged\n our",
-      "TermsConditionSubTitle":" privacy",
+      "TermsConditionSubTitle":" privacy ",
       "TermsConditionSubTitle1":"statement",
       "UserTextInput":"Username",
       "UserTextInputError":"Please enter your username/email",
       "PasswordTextInput":"Password",
       "PasswordTextInputError":"Please enter your password"
     },
-    "createShop":{
-      "createDigitalShop":"Create Digital Shop"
+    "forgotScreen": {
+      "forgotTitle": "Forgot Password",
+      "forgotSubTitle": "Please enter your email to reset the password.",
+      "SendEmailButtonText":"Submit",
+      "UserTextInput":"UserEmail",
+      "UserTextInputError":"Please enter your email",
+      "ScreenTitle":"Digishop"
+    },
+    "termsScreen":{
+      "termsTitle":"Terms And Condtions",
+      "privacyTitle":"Privacy Policy"
     }
 }

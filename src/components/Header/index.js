@@ -38,7 +38,7 @@ export default class Header extends Component {
     render() {
         return (
             <SafeAreaView style={{
-                backgroundColor: colorConstants.TBC_COLOR
+                backgroundColor: colorConstants.WHITE_COLOR
             }}>
 
                 {this.renderBrowseHeader()}
@@ -52,23 +52,60 @@ export default class Header extends Component {
         return (
             <View style={headerStyle.viewContainer}>
                 {this.renderLeftView(isleftArrowDisplay)}
-                <Text style={headerStyle.headerText}>{this.props.title}</Text>
-                {this.renderRightText()}
+                <View style={{backgroundColor:colorConstants.WHITE_COLOR}}>
+                    <Text style={headerStyle.headerText}>{this.props.title}</Text>
+                </View>
+                {this.renderRightView(true)}
+                {/* <Text style={headerStyle.headerText}>{this.props.title}</Text>
+                {this.renderRightText()} */}
             </View>
         );
     }
 
-    renderRightText() {
+    renderRightView(flag) {
         if (this.props.isSignOutDisplay) {
-            return (
-                <TouchableOpacity onPress={() => { this.props.onRightPressed() }}>
-                    <Text style={{ color: colorConstants.WHITE_COLOR, fontSize: 14, marginRight: 20 }}>{'Sign Out'}</Text>
-                </TouchableOpacity>
-            )
+            return (<TouchableOpacity  onPress={() => { this.props.onRightPressed() }}>
+                <View style={headerStyle.leftImageView}>
+                <Text style={{ color: colorConstants.WHITE_COLOR, fontSize: 14, marginRight: 20 }}>{'Sign Out'}</Text>
+                </View>
+            </TouchableOpacity>)
+        } else {
+            return <View style={headerStyle.leftImageView}></View>
         }
+
     }
 
+    
+
+    // renderRightText() {
+    //     if (this.props.isSignOutDisplay) {
+    //         return (
+    //             <TouchableOpacity onPress={() => { this.props.onRightPressed() }}>
+    //                 <Text style={{ color: colorConstants.WHITE_COLOR, fontSize: 14, marginRight: 20 }}>{'Sign Out'}</Text>
+    //             </TouchableOpacity>
+    //         )
+    //     }
+    // }
+
     renderLeftView(flag) {
+        if (flag) {
+            return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
+                Actions.pop();
+            }}>
+                <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>
+                    <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={headerConstants.LEFT_ARROW} style={{ marging: 15, height: 25, width: 20, tintColor: colorConstants.RED_COLOR }}>
+                    </Image>
+                </View>
+            </TouchableOpacity>)
+        } else {
+            return <View></View>
+        }
+
+    }
+
+    
+
+    renderRightView(flag) {
         if (flag) {
             return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
                 Actions.pop();
@@ -79,7 +116,7 @@ export default class Header extends Component {
                 </View>
             </TouchableOpacity>)
         } else {
-            return <View></View>
+            return <View style={headerStyle.leftImageView}></View>
         }
 
     }
