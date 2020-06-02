@@ -47,7 +47,7 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderCostView()}
             {this.renderSkuAndBarcode()}
             <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={()=>{
-                alert('Next button Pressed')
+                Actions.createCampaign();
             }}/>
           </ScrollView>
         </View>
