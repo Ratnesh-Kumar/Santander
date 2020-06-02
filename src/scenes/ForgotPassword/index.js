@@ -21,6 +21,7 @@ import { Actions } from 'react-native-router-flux';
 import TouchID from 'react-native-touch-id';
 import forgotPasswordStyle from './ForgotPasswordStyle';
 import Header from '../../components/Header';
+import AppButton from '../../components/AppButton'
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 
@@ -43,8 +44,10 @@ export default class ForgotPassword extends Component {
         <Header isleftArrowDisplay={true} title={strings('forgotScreen.ScreenTitle')} />
         {this.renderForgotTitle()}
         {this.renderEmailTextInput()}
-        {/* {this.renderValidationForm()} */}
-        {this.renderForgotPassButton()}
+        {/* {this.renderForgotPassButton()} */}
+        <AppButton buttonText={strings('forgotScreen.SendEmailButtonText')}onButtonPressed={()=>{
+               alert('Please check your email ')
+            }}/>
       </View>
     );
   }
@@ -59,8 +62,8 @@ export default class ForgotPassword extends Component {
           <View style={forgotPasswordStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.username}
-              refsValue={strings('forgotScreen.UserTextInput')}
-              ref={strings('forgotScreen.UserTextInput')}
+              refsValue={'emailTextInput'}
+              ref={'emailTextInput'}
               label={strings('forgotScreen.UserTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
