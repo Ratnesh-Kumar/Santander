@@ -1,0 +1,119 @@
+{
+  "project_info": {
+    "project_number": "605493510042",
+    "firebase_url": "https://ecom-santander.firebaseio.com",
+    "project_id": "ecom-santander",
+    "storage_bucket": "ecom-santander.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605493510042:android:d09d2d6b2281df12100423",
+        "android_client_info": {
+          "package_name": "com.ecom.santander"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN46O-gT2sXXEbKoYFXCzZ1OwDBhu16hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "605493510042-1r7gm2i49e7c4vcfa4jmjg1ifdflmvse.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ecom.santander.prod"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605493510042:android:87816db90ab5d6af100423",
+        "android_client_info": {
+          "package_name": "com.ecom.santander.preprod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN46O-gT2sXXEbKoYFXCzZ1OwDBhu16hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "605493510042-1r7gm2i49e7c4vcfa4jmjg1ifdflmvse.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ecom.santander.prod"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:605493510042:android:7739b90329313ca8100423",
+        "android_client_info": {
+          "package_name": "com.ecom.santander.prod"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBN46O-gT2sXXEbKoYFXCzZ1OwDBhu16hw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "605493510042-1r7gm2i49e7c4vcfa4jmjg1ifdflmvse.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.ecom.santander.prod"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

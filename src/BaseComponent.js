@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import GlobalData from './utils/GlobalData'
-var globalData = new GlobalData();
-import {
-    GoogleSignin,
-    GoogleSigninButton,
-    statusCodes,
-  } from 'react-native-google-signin';
-var constants = require('./config/Constants');
+
 export default class BaseComponent extends Component {
 
     constructor() {
@@ -38,34 +31,5 @@ export default class BaseComponent extends Component {
         }
         return false;
     }
-
-    async googleConfiguration() {
-        GoogleSignin.configure({
-          webClientId: (Platform.OS == 'android') ? constants.WEB_CLIENT_ID : '',
-          iosClientId: (Platform.OS == 'ios') ? constants.WEB_CLIENT_ID : '',
-        });
-      }
-
-    async signOut(){
-        try {
-          await GoogleSignin.revokeAccess();
-          await GoogleSignin.signOut();
-          globalData.setGoogleUserInfo("");
-          this.setState({ googleUserInfo: null }); // Remember to remove the user from your app's state as well
-        } catch (error) {
-          console.error(error);
-        }
-      };
-    
-      async isSignedIn(){
-        const isSignedIn = await GoogleSignin.isSignedIn();
-        return isSignedIn;
-      };
-    
-      async getCurrentUser(){
-        const currentUser = await GoogleSignin.getCurrentUser();
-        return currentUser;
-      };
-    
 
 }

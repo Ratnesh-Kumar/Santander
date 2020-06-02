@@ -16,10 +16,6 @@ const OD_DOMAIN = '.santander.com';
 const DEV_COLLECTION_NAME = "santander_dev";
 const PROD_COLLECTION_NAME = "santander_prod";
 
-const ANDROID_WEB_CLIENT_ID = "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com"
-const iOS_WEB_CLIENT_ID = "605493510042-gdhuu1g82n0ls5ucv6qosrg5bk2sgh8a.apps.googleusercontent.com"
-const WEB_CLIENT_ID = (Platform.OS == 'android')? ANDROID_WEB_CLIENT_ID: iOS_WEB_CLIENT_ID;
-
 export default class Environment extends Component {
 
     constructor() {
@@ -36,18 +32,17 @@ export default class Environment extends Component {
         var environment = {}
         if (envType == ENV_DEV) {
             environment = {
-                collectionName: DEV_COLLECTION_NAME,
-                webClientID: WEB_CLIENT_ID
+                collectionName: DEV_COLLECTION_NAME
             };
+
         } else if (envType == ENV_PREPROD) {
+
             environment = {
-                collectionName: DEV_COLLECTION_NAME,
-                webClientID: WEB_CLIENT_ID
+                collectionName: DEV_COLLECTION_NAME
             };
         } else if (envType == ENV_PRD) {
             environment = {
-                collectionName: PROD_COLLECTION_NAME,
-                webClientID: WEB_CLIENT_ID
+                collectionName: PROD_COLLECTION_NAME
             };
         }
         environment.envType = envType;
