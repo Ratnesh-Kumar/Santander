@@ -16,15 +16,24 @@ export default class HomeScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
-    
+    this.state={
+      isSignOutDisplay: false
+    }
   }
 
   async componentDidMount(){
+    let isUserAlreadySignIn = await this.isSignedIn();
+    if(isUserAlreadySignIn){
+      let currentUserInfo = await this.getCurrentUser();
+      this.setState({
+        isSignOutDisplay: isUserAlreadySignIn
+      })
+    }
   }
   render() {
     return (
       <View style={homeStyle.container}>
-        <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={true} rightText={strings('screens.signOut')} onRightPressed={() =>{
+        <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() =>{
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
         <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
