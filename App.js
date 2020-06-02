@@ -19,17 +19,20 @@ import SettingsScreen from './src/scenes/Settings';
 import FBaseWrite from './src/scenes/FirebaseRW/FBaseWrite';
 import FBaseReadItems from './src/scenes/FirebaseRW/FBaseReadItems';
 import TabIcon from './src/components/TabIcon';
+import Campaign from './src/scenes/Campaign'
+import CreateCampaign from './src/scenes/Campaign/createCampaign';
 
 import {
   StyleSheet
 } from 'react-native'
+import CreateCampaignShare from './src/scenes/CreateCampaignShare';
 console.disableYellowBox = true;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
     height:70
   },
-
+  
   tabBarStyle: {
     borderTopWidth:1,
     borderTopColor:'transparent',
@@ -119,22 +122,23 @@ export default class App extends Component {
         
 
         {/* Tab and it's scenes */}
-        <Scene key="myProfileTab" title="HOME" icon={TabIcon}  initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
-          <Scene key="myProfile" component={HomeScreen} title="Blue" hideNavBar />
-          <Scene key="fbai" component={FBaseWrite} title="FB Add Item" />
-          <Scene key="fbri" component={FBaseReadItems} title="FB Read" />
+        <Scene key="homeTab" title="HOME" icon={TabIcon}  initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
+          <Scene key="home" component={HomeScreen} title="Blue" hideNavBar />
+          <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
+          <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
+          <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar/>
         </Scene>
 
-        <Scene key="favouriteTab" title="PRODUCTS" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
+        <Scene key="productTab" title="PRODUCTS" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
           <Scene key="favourite" component={FavouriteScreen} title="home" />
         </Scene>
 
-        <Scene key="shopTab" title="ORDER" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
-          <Scene key="home" component={MyProfileScreen} title="home" />
+        <Scene key="orderTab" title="ORDER" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
+          <Scene key="order" component={MyProfileScreen} title="home" />
         </Scene>
 
-        <Scene key="settingsTab" title="SHOP" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
-          <Scene key="settings" component={SettingsScreen} title="home" />
+        <Scene key="shopTab" title="SHOP" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
+          <Scene key="shop" component={SettingsScreen} title="home" />
         </Scene>
 
         {/* <Scene key="homeTab" title="My Procedures" icon={TabIcon} initial={true} homeTabar={true} resource={require('./src/public/images/letter_a_icon.png')} hideNavBar>

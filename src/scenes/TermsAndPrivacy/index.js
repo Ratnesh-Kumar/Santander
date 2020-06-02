@@ -38,7 +38,7 @@ export default class TermsScreen extends Component {
     let title = this.props.selectedTitle === 'terms' ? strings('termsScreen.termsTitle') : strings('termsScreen.privacyTitle')
     return (
       <View style={termsStyle.renderContainer}>
-        <Header isleftArrowDisplay={true} title={title} />
+        <Header isleftArrowDisplay={true} title={title} isCrossIconVisible={true}/>
         {this.renderScrollView()}
       </View>
     );
