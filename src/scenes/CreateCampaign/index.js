@@ -13,7 +13,7 @@ export default class CreateCampaignScene extends Component {
   render() {
     return (
       <View style={createCampaignStyle.container}>
-        <Header title={createCampaignConstant.CREATE_STORE_SCREEN} />
+        <Header isleftArrowDisplay={false} title={createCampaignConstant.CREATE_STORE_SCREEN} />
         <View style={createCampaignStyle.viewContainer}>
           <CardView
             style={createCampaignStyle.cardViewStyle}
@@ -29,7 +29,7 @@ export default class CreateCampaignScene extends Component {
             {this.renderCreateFirstCampaignButton()}
           </CardView>
             <TouchableOpacity style={{marginTop:10}}>
-              <Text style={{fontSize:18}}>{strings("createCampaign.skipStep")}</Text>
+              <Text style={{fontSize:20, fontStyle:'italic' ,color:colorConstant.GREY_DARK_COLOR_A}}>{strings("createCampaign.skipStep")}</Text>
             </TouchableOpacity>
         </View>
       </View>

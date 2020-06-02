@@ -29,7 +29,7 @@ export default (styles = StyleSheet.create({
     paddingTop: 3, paddingBottom: 5, borderWidth: 1, borderRadius: 20
   },
   createShopButtonText: {
-    color: colorConstant.SANT_RED_COLOR, fontSize: 20, 
+    color: colorConstant.SANT_RED_COLOR, fontSize: 20, fontWeight:'bold'
   },
   cardViewStyle: {
     backgroundColor: colorConstant.WHITE_COLOR,
