@@ -329,8 +329,7 @@ export default class LoginView extends BaseComponent {
         <TouchableOpacity
           style={loginStyle.button}
           onPress={() => {
-            // Actions.tabbar();
-            this.signOut()
+            Actions.tabbar();
           }}
           activeOpacity={1}>
           {}

@@ -16,7 +16,7 @@ const header = {
   },
   headerText: {
     color: colorConstants.RED_COLOR,
-    fontSize: 18,
+    fontSize: 20,
     fontWeight:"bold",
     //marginLeft: 20
     //marginLeft: 20, flex:1
