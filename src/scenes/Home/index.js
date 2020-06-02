@@ -27,7 +27,7 @@ export default class HomeScreen extends Component {
         <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={true} rightText={strings('screens.signOut')} onRightPressed={() =>{
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
-        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.createCampaign()}}>
+        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
           <Text style={homeStyle.welcome}>{strings('screens.homeScreen')}</Text>
         </View>
       </View>

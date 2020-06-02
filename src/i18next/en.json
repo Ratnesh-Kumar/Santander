@@ -78,6 +78,23 @@
       "addDescriptionPlaceholder": "add description",
       "uploadImageText":"Upload photo of your product",
       "nextButtonText": "Next"
+    },
+    "createCampaignCategories": {
+      "trackSwitchText": "Track Quantity",
+      "allowPurchaseSwitchText": "Allow purchase when out of stock"
+    },
+    "createCampaignShare":{
+      "publishNowText": "Publish Now",
+      "campaignShareMessage": "All these campaigns shall also be published to\nthe Digishop site when ready",
+      "whatsAppText":"WhatsApp",
+      "facebookText": "FaceBook Messenger",
+      "textSmsText": "Text(SMS)",
+      "emailText":"eMail",
+      "facebookPageText": "Facebook Page",
+      "facebookShopText": "Facebook Shop",
+      "facebookMarketText": "Facebook Market Place",
+      "pinterestText": "Pinterest",
+      "instagramText": "Instagram"
     }
 
     

@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import Constants from '../../config/Constants';
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
+import AppButton from '../../components/AppButton'
 // import { getFBRealtimeDBFeatureFlags } from '../../config/firebasequery'
 // import Realm from 'realm';
 import { TBC_COLOR } from '../../config/colorConstant';
@@ -121,7 +122,10 @@ export default class LoginView extends Component {
         {this.renderLoginTitle()}
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
-        {this.renderSignInButton()}
+        {/* {this.renderSignInButton()} */}
+        <AppButton buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
+                Actions.tabbar();
+            }}/>
         {this.renderTermsView()}
         {this.renderSignUpButton()}
         {this.renderUpdateText()}

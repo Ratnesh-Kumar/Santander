@@ -1,15 +1,14 @@
 import { StyleSheet, Dimensions } from 'react-native';
 var constants = require('../../config/Constants');
 var colorConstants = require('../../config/colorConstant')
-
+const MARGIN = 50
 // eslint-disable-next-line no-undef
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colorConstants.WHITE_COLOR,
-    paddingBottom: 50
   },
-  viewContainer: {
+  renderContainer: {
   },
   seperateLine: {
     flex: 1,
@@ -42,4 +41,25 @@ export default (styles = StyleSheet.create({
   priceInputWrapper: {
     width: constants.SCREEN_WIDTH/2-10,
   },
+  textScrollView: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    marginTop:20,
+  },
+  publishButtonView:{
+    paddingLeft: 20, paddingRight: 20, paddingBottom:60
+  },
+  publishButtonText:{
+    color: colorConstants.WHITE_COLOR, fontSize: 20, fontWeight: 'bold', 
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colorConstants.SANT_RED_COLOR,
+    height: MARGIN,
+    paddingTop:3, paddingBottom:5,borderWidth:2,borderRadius: 20, borderColor:'transparent'
+  },
+  bottomTextStyle:{
+    fontSize: 15, color: colorConstants.BLACK_COLOR ,  textAlign:'center',padding:30 ,
+  }
 }));
