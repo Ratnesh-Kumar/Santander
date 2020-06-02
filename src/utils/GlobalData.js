@@ -6,7 +6,6 @@ var singleInstance = null;
 var userData = false;
 var isFirebaseInitialize = false;
 var verifyEmail = false;
-var googleUserInfo = '';
 
 export class GlobalData extends Component {
     constructor() {
@@ -40,14 +39,6 @@ export class GlobalData extends Component {
 
     isVerifyEmail(){
         return verifyEmail;
-    }
-
-    setGoogleUserInfo(userInfo){
-        googleUserInfo = userInfo;
-    }
-
-    getGoogleUserInfo(){
-        return googleUserInfo;
     }
 }
 
