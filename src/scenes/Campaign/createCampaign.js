@@ -11,6 +11,7 @@ import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
 import AppButton from '../../components/AppButton'
+import SwitchTextInput from '../../components/SwitchTextInput';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -32,12 +33,33 @@ export default class CampaignScreen extends BaseComponent {
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <View style={campaignStyle.viewContainer}>
-          <ScrollView keyboardShouldPersistTaps={'always'}>
-            <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={()=>{
-                Actions.createCampaignShare()
-            }}/>
+          <ScrollView keyboardShouldPersistTaps={'always'} style={{marginTop: 10 }}>
+          {this.renderSwitchTextInput()}
+            <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
+              Actions.createCampaignShare()
+            }} />
           </ScrollView>
         </View>
+      </View>
+    );
+  }
+
+  renderSwitchTextInput() {
+    return (
+      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
+        {this.renderSwitchFields(strings('createCampaignCategories.trackSwitchText'))}
+        {this.renderSwitchFields(strings('createCampaignCategories.allowPurchaseSwitchText'))}
+      </View>
+    );
+  }
+  renderSwitchFields(title) {
+    return (
+      <View style={{ paddingTop: 10, paddingRight: 10 }}>
+        <SwitchTextInput
+          defaultSwitchValue={true}
+          onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
+          title={title}
+        />
       </View>
     );
   }
