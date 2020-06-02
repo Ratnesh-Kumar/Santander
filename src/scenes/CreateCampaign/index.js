@@ -28,7 +28,7 @@ export default class CreateCampaignScene extends Component {
             </View>
             {this.renderCreateFirstCampaignButton()}
           </CardView>
-            <TouchableOpacity style={{marginTop:10}}>
+            <TouchableOpacity style={{marginTop:10}} onPress={() => Actions.tabbar()}>
               <Text style={{fontSize:20, fontStyle:'italic' ,color:colorConstant.GREY_DARK_COLOR_A}}>{strings("createCampaign.skipStep")}</Text>
             </TouchableOpacity>
         </View>
@@ -42,7 +42,7 @@ export default class CreateCampaignScene extends Component {
         <TouchableOpacity
           style={createCampaignStyle.button}
           onPress={() => {
-            // Actions.tabbar();
+            Actions.campaign();
           }}
           activeOpacity={1}>
           {}
