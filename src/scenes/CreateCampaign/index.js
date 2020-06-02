@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
-import createStoreStyle from './createStoreStyle';
+import createCampaignStyle from './createCampaignStyle';
 import { strings } from '../../i18next/i18n';
-var createStoreConstant = require('./createStoreConstant')
+var createCampaignConstant = require('./createCampaignConstant')
 var colorConstant = require('../../config/colorConstant')
 
-export default class CreateStoreScene extends Component {
+export default class CreateCampaignScene extends Component {
     render() {
       return (
-        <View style={createStoreStyle.container}>
-          <Header title={createStoreConstant.CREATE_STORE_SCREEN} />
-          <View style={createStoreStyle.viewContainer}>
+        <View style={createCampaignStyle.container}>
+          <Header title={createCampaignConstant.CREATE_STORE_SCREEN} />
+          <View style={createCampaignStyle.viewContainer}>
               {this.renderUserName()}
               {this.renderPhoneNumber()}
               {this.renderPassword()}
@@ -38,16 +38,16 @@ export default class CreateStoreScene extends Component {
     }
     renderCreateShopButton() {
         return (
-          <View style={createStoreStyle.createShopButtonView}>
+          <View style={createCampaignStyle.createShopButtonView}>
             <TouchableOpacity
-              style={createStoreStyle.button}
+              style={createCampaignStyle.button}
               onPress={() => {
                 // Actions.tabbar();
               }}
               activeOpacity={1}>
               {}
               <Text
-                style={createStoreStyle.createShopButtonText}>
+                style={createCampaignStyle.createShopButtonText}>
                 {strings('createShop.createDigitalShop')}
               </Text>
             </TouchableOpacity>
@@ -57,7 +57,7 @@ export default class CreateStoreScene extends Component {
 
     renderTermsView() {
         return (
-          <View style={createStoreStyle.termsAndConditionView}>
+          <View style={createCampaignStyle.termsAndConditionView}>
             <Text style={{ fontSize: 16, textAlign: 'center' }}>
               <Text>{strings('loginScreen.TermsConditionTitle')}</Text>
               <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionTitle1')}</Text>
@@ -71,7 +71,7 @@ export default class CreateStoreScene extends Component {
 
       renderUpdateText() {
         return (
-          <View style={createStoreStyle.UpdatedView}>
+          <View style={createCampaignStyle.UpdatedView}>
             <Text style={{ position: 'absolute', bottom: 25, color:'#000' }}>{strings('loginScreen.UpdatedText')}</Text>
           </View>
         );
