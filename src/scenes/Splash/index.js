@@ -27,8 +27,8 @@ export default class splashscreen extends BaseComponent {
       if(isUserAlreadySignIn){
         Actions.tabbar();
       }else{
-        Actions.login();
-        // Actions.createCampaign();
+        // Actions.login();
+        Actions.registerCreateCampaign();
       }
     }, 2000);
   }

@@ -21,11 +21,12 @@ import FBaseReadItems from './src/scenes/FirebaseRW/FBaseReadItems';
 import TabIcon from './src/components/TabIcon';
 import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
-
+import RegisterCreateCampaign from './src/scenes/CreateCampaign';
+import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 import {
   StyleSheet
 } from 'react-native'
-import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
+
 console.disableYellowBox = true;
 const styles = StyleSheet.create({
   container: {
@@ -78,32 +79,11 @@ export default class App extends Component {
       // <Provider /*store={store}*/>
       <Router hideNavBar={true}>
         <Scene key="root" hideNavBar>
-          <Scene
-            key="splash"
-            component={splashscreen}
-            initial={true}
-            title="splash"
-            duration={0}
-          />
-          <Scene
-            key="login"
-            type={ActionConst.RESET}
-            component={LoginScreen}
-            title="login"
-            duration={0}
-          />
-          <Scene
-            key="forgotPassword"
-            component={ForgotPasswordScreen}
-            title="Forgot Password"
-            duration={0}
-          />
-          <Scene
-            key="termsAndPrivacy"
-            component={TermsScreen}
-            title="Terms"
-            duration={0}
-          />
+          <Scene key="splash" component={splashscreen} initial={true} title="splash" duration={0} />
+          <Scene key="login" type={ActionConst.RESET} component={LoginScreen} title="login" duration={0} />
+          <Scene key="forgotPassword" component={ForgotPasswordScreen} title="Forgot Password" duration={0} />
+          <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
+          <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           {this.renderTabbar()}
         </Scene>
       </Router>
@@ -127,6 +107,7 @@ export default class App extends Component {
           <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
           <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
           <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar/>
+          
         </Scene>
 
         <Scene key="productTab" title="PRODUCTS" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
