@@ -267,7 +267,9 @@ export default class LoginView extends Component {
       <View style={loginStyle.loginSumbitButtonView}>
         <TouchableOpacity
           style={loginStyle.button}
-          onPress={() => Actions.tabbar()}
+          onPress={() => {
+            Actions.tabbar();
+          }}
           activeOpacity={1}>
           {}
           <Text

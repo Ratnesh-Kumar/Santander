@@ -46,8 +46,31 @@
     "UserTextInputError": "Por favor introduzca su correo electrónico",
     "ScreenTitle": "Digishop"
   },
-  "termsScreen": {
-    "termsTitle": "Términos y condiciones",
-    "privacyTitle": "Política de privacidad"
+  "termsScreen":{
+    "termsTitle":"Términos y condiciones",
+    "privacyTitle":"Política de privacidad"
+  },
+  "createCampaign": {
+    "screenTitle": "Crear campaña",
+    "campaignTextInput":"Identificación fiscal de negocios",
+    "priceTextInput":"Precio",
+    "salePriceTextInput":"Precio de venta",
+    "costTextInput":"Costo (opcional)",
+    "profitTextInput":"Lucro",
+    "marginTextInput":"Margen",
+    "skuTextInput":"SKU",
+    "barcodeTextInput":"Código de barras",
+    "campaignNameErrorText":"Por favor ingrese una identificación de impuesto comercial válida.",
+    "priceErrorText":"Por favor, introduzca precio válido.",
+    "salePriceErrorText":"Por favor, introduzca el precio de venta válido.",
+    "costErrorText":"Por favor ingrese el costo válido.",
+    "profitErrorText":"Por favor, introduzca una ganancia válida.",
+    "marginErrorText":"Por favor, introduzca un margen válido.",
+    "skuErrorText":"Por favor ingrese sku válido.",
+    "barcodeErrorText":"Por favor, introduzca un código de barras válido.",
+    "addDescriptionTitle": "Agregar descripción",
+    "addDescriptionPlaceholder": "agregar descripción",
+    "uploadImageText":"Sube foto de tu producto",
+    "nextButtonText": "Próxima"
   }
 }

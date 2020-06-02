@@ -429,7 +429,7 @@ export default class TextInputMaterial extends PureComponent {
         <View
           testID={'textinputcomponent_view_' + label}
           accessibilityLabel={'textinputcomponent_view_' + label}
-          style={{ height: 55, backgroundColor: 'white', marginBottom: 1 , borderColor:'gray', borderWidth:.5}}>
+          style={{ height: 55, backgroundColor: (this.isValidString(this.props.backgroundColor)? this.props.backgroundColor: colorConstants.WHITE_COLOR), marginBottom: 1 , borderColor:'gray', borderWidth:.5}}>
           <TextInput
             {...this.props}
             testID={'textinputcomponent_field_' + label}

@@ -1,7 +1,6 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
 var colorConstant = require('../../config/colorConstant')
 var constants = require('../../config/Constants')
-const DEVICE_WIDTH = Dimensions.get('window').width;
 const MARGIN = 50;
 
 // eslint-disable-next-line no-undef
@@ -20,7 +19,7 @@ export default (styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    width: DEVICE_WIDTH - 40,
+    width: constants.SCREEN_WIDTH - 40,
     height: 40,
     marginHorizontal: 20,
     paddingLeft: 45,
@@ -29,7 +28,7 @@ export default (styles = StyleSheet.create({
     marginTop: 15,
   },
   inputWrapper: {
-    width: DEVICE_WIDTH - 20,
+    width: constants.SCREEN_WIDTH - 20, marginTop:10
   },
   inlineImg: {
     position: 'absolute',

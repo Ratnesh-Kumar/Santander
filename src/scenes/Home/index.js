@@ -19,19 +19,15 @@ export default class HomeScreen extends Component {
   }
 
   async componentDidMount(){
-    let remoteConfig = await getRemoteConfig();
-    console.log("################ remoteConfig : "+globalData.isVerifyEmail());
-    let termsAndConditions = await getTermsAndConditions(constants.LOCALE_ES);
-    console.log("################ termsAndConditions : "+termsAndConditions)
-    let privacyPolicy = await getPrivacyPolicy(constants.LOCALE_ES)
-    console.log("################ privacyPolicy : "+privacyPolicy)
   }
   render() {
     
     return (
       <View style={homeStyle.container}>
-        <Header title={strings('screens.homeScreen')} />
-        <View style={homeStyle.viewContainer}>
+        <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={true} rightText={strings('screens.signOut')} onRightPressed={() =>{
+          this.googleSignOut();
+        }} isCrossIconVisible={false}/>
+        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.createCampaign()}}>
           <Text style={homeStyle.welcome}>{strings('screens.homeScreen')}</Text>
         </View>
       </View>
@@ -39,13 +35,13 @@ export default class HomeScreen extends Component {
   }
 
   async displayConsole() {
-    console.log("############# : " + JSON.stringify(RNLocalize.getLocales()));
-    console.log("############# : " + RNLocalize.getCurrencies());
-    console.log("############# : " + RNLocalize.getCountry());
-    console.log("############# : " + RNLocalize.getCalendar());
-    console.log("############# : " + RNLocalize.getTemperatureUnit());
-    console.log("############# : " + RNLocalize.getTimeZone());
-    console.log("############# : " + RNLocalize.uses24HourClock());
+    // console.log("############# : " + JSON.stringify(RNLocalize.getLocales()));
+    // console.log("############# : " + RNLocalize.getCurrencies());
+    // console.log("############# : " + RNLocalize.getCountry());
+    // console.log("############# : " + RNLocalize.getCalendar());
+    // console.log("############# : " + RNLocalize.getTemperatureUnit());
+    // console.log("############# : " + RNLocalize.getTimeZone());
+    // console.log("############# : " + RNLocalize.uses24HourClock());
   }
 }
 
