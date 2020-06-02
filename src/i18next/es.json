@@ -50,6 +50,10 @@
     "uploadImageText":"Sube foto de tu producto",
     "nextButtonText": "Próxima"
   },
+  "createCampaignCategories": {
+    "trackSwitchText": "Cantidad de seguimiento",
+    "allowPurchaseSwitchText": "Permitir compra cuando no hay stock"
+  },
   "createCampaignShare":{
     "publishNowText": "Publica ahora",
     "campaignShareMessage": "Todas estas campañas también se publicarán en el sitio de Digishop cuando estén listas.",
