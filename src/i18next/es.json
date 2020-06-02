@@ -49,5 +49,18 @@
     "addDescriptionPlaceholder": "agregar descripción",
     "uploadImageText":"Sube foto de tu producto",
     "nextButtonText": "Próxima"
+  },
+  "createCampaignShare":{
+    "publishNowText": "Publica ahora",
+    "campaignShareMessage": "Todas estas campañas también se publicarán en el sitio de Digishop cuando estén listas.",
+    "whatsAppText":"WhatsApp",
+    "facebookText": "Facebook Messenger",
+    "textSmsText": "Texto (SMS)",
+    "emailText":"correo electrónico",
+    "facebookPageText": "Pagina de Facebook",
+    "facebookShopText": "Facebook Shop",
+    "facebookMarketText": "Tienda de Facebook",
+    "pinterestText": "Pinterest",
+    "instagramText": "Instagram"
   }
 }

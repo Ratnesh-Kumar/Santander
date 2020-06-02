@@ -25,7 +25,7 @@ import CreateCampaign from './src/scenes/Campaign/createCampaign';
 import {
   StyleSheet
 } from 'react-native'
-import CreateCampaignShare from './src/scenes/CreateCampaignShare';
+import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 console.disableYellowBox = true;
 const styles = StyleSheet.create({
   container: {
