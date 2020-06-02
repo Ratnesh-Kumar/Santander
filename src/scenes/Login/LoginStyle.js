@@ -52,7 +52,7 @@ export default (styles = StyleSheet.create({
   button: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: colorConstant.RED_COLOR,
+    backgroundColor: colorConstant.SANT_RED_COLOR,
     height: MARGIN,
     paddingTop:3, paddingBottom:5,borderWidth:2,borderRadius: 20, borderColor:'transparent'
   },
@@ -87,13 +87,13 @@ export default (styles = StyleSheet.create({
     fontSize: 18, color: colorConstant.SANTANDAR_COLOR 
   },
   loginTitleView:{
-    height: constants.SCREEN_HEIGHT / 3, justifyContent: 'center', alignItems: 'center'
+    justifyContent: 'center', alignItems: 'center', marginTop: 20
   },
   loginTitleText:{
     fontSize: 28, color: colorConstant.BLACK_COLOR ,  fontWeight: 'bold'
   },
   loginTitleSubText:{
-    fontSize: 15, color: colorConstant.BLACK_COLOR , margin: 30 , textAlign:'center'
+    fontSize: 15, color: colorConstant.BLACK_COLOR ,  textAlign:'center', marginTop: 30
   },
   loginSumbitButtonView:{
     paddingLeft: 20, paddingRight: 20

@@ -1,6 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { Router, Scene, ActionConst, Actions } from 'react-native-router-flux';
+import { Router, Scene, ActionConst } from 'react-native-router-flux';
 import splashscreen from './src/scenes/Splash';
 
 import {
@@ -14,7 +14,6 @@ import TermsScreen from './src/scenes/TermsAndPrivacy';
 import HomeScreen from './src/scenes/Home';
 import MyProfileScreen from './src/scenes/MyProfile';
 import MoreScreen from './src/scenes/More';
-import RegisterScreen from './src/scenes/Register'
 import FavouriteScreen from './src/scenes/Favourites';
 import SettingsScreen from './src/scenes/Settings';
 import FBaseWrite from './src/scenes/FirebaseRW/FBaseWrite';
@@ -94,12 +93,6 @@ export default class App extends Component {
             duration={0}
           />
           <Scene
-            key="register"
-            type={Actions.RESET}
-            component={RegisterScreen}
-            title="register"
-            />
-            <Scene
             key="forgotPassword"
             component={ForgotPasswordScreen}
             title="Forgot Password"
