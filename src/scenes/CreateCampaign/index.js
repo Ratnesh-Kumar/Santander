@@ -16,7 +16,7 @@ export default class CreateCampaignScene extends Component {
         <Header title={createCampaignConstant.CREATE_STORE_SCREEN} />
         <View style={createCampaignStyle.viewContainer}>
           <CardView
-            style={{ backgroundColor: 'white',  height: 150, marginTop:50, marginLeft:15, marginRight:15}}
+            style={{ backgroundColor: 'white',  height: 160, marginTop:50, marginLeft:10, marginRight:10}}
             cardElevation={8}
             cardMaxElevation={8}
             cornerOverlap={false}
@@ -26,9 +26,7 @@ export default class CreateCampaignScene extends Component {
                 {'Start right away by creating a campaign \nwhich will also create your first product'}
               </Text>
             </View>
-            <TouchableOpacity>
-              
-            </TouchableOpacity>
+            {this.renderCreateFirstCampaignButton()}
           </CardView>
             <TouchableOpacity style={{marginTop:10}}>
               <Text style={{fontSize:18}}>{'Skip this step'}</Text>
@@ -38,7 +36,7 @@ export default class CreateCampaignScene extends Component {
     );
   }
 
-  renderCreateShopButton() {
+  renderCreateFirstCampaignButton() {
     return (
       <View style={createCampaignStyle.createShopButtonView}>
         <TouchableOpacity
@@ -50,7 +48,7 @@ export default class CreateCampaignScene extends Component {
           {}
           <Text
             style={createCampaignStyle.createShopButtonText}>
-            {strings('createShop.createDigitalShop')}
+            {'Create your first campaign'}
           </Text>
         </TouchableOpacity>
       </View>

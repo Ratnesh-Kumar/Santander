@@ -23,11 +23,12 @@ export default (styles = StyleSheet.create({
       button: {
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: colorConstant.SANT_RED_COLOR,
+        backgroundColor: colorConstant.WHITE_COLOR,
         height: MARGIN,
-        paddingTop:3, paddingBottom:5,borderWidth:2,borderRadius: 20, borderColor:'transparent'
+        borderColor:colorConstant.SANT_RED_COLOR,
+        paddingTop:3, paddingBottom:5,borderWidth:2,borderRadius: 20
       },
       createShopButtonText:{
-        color: colorConstant.WHITE_COLOR, fontSize: 20, fontWeight: 'bold', 
+        color: colorConstant.SANT_RED_COLOR, fontSize: 20, fontWeight: 'bold', 
       },
 }));
