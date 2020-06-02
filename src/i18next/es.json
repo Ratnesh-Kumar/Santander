@@ -32,5 +32,17 @@
     "ConfirmPasswordTextInput":"Confirmar contraseña",
     "ConfirmPasswordTextInputError":"Por favor ingrese su contraseña de confirmación",
     "SignUpButttonText":"Regístrate"
+  },
+  "forgotScreen": {
+    "forgotTitle": "olvidadoTítulo",
+    "forgotSubTitle": "Ingrese su correo electrónico para restablecer la contraseña.",
+    "SendEmailButtonText":"Enviar correo electrónico",
+    "UserTextInput":"UserEmail",
+    "UserTextInputError":"Por favor introduzca su correo electrónico",
+    "ScreenTitle":"Digishop"
+  },
+  "termsScreen":{
+    "termsTitle":"Términos y condiciones",
+    "privacyTitle":"Política de privacidad"
   }
 }

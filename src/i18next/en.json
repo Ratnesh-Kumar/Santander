@@ -12,7 +12,7 @@
       "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
       "TermsConditionTitle1":" Terms ",
       "TermsConditionTitle2":"and have acknowledged\n our",
-      "TermsConditionSubTitle":" privacy",
+      "TermsConditionSubTitle":" privacy ",
       "TermsConditionSubTitle1":"statement",
       "UserTextInput":"Username",
       "UserTextInputError":"Please enter your username/email",
@@ -36,5 +36,17 @@
       "ConfirmPasswordTextInput":"Confirm Password",
       "ConfirmPasswordTextInputError":"Please enter your confirm password",
       "SignUpButttonText":"Sign Up"
+    },
+    "forgotScreen": {
+      "forgotTitle": "Forgot Password",
+      "forgotSubTitle": "Please enter your email to reset the password.",
+      "SendEmailButtonText":"Submit",
+      "UserTextInput":"UserEmail",
+      "UserTextInputError":"Please enter your email",
+      "ScreenTitle":"Digishop"
+    },
+    "termsScreen":{
+      "termsTitle":"Terms And Condtions",
+      "privacyTitle":"Privacy Policy"
     }
 }
