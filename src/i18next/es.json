@@ -26,5 +26,11 @@
   "termsScreen":{
     "termsTitle":"Términos y condiciones",
     "privacyTitle":"Política de privacidad"
+  },
+  "createCampaign":{
+    "createFirstCampaign":"Crea tu primera campaña",
+    "skipStep":"Salta este paso",
+    "startRightAway": "Comience de inmediato creando una campaña \nque también creará su primer producto"
+
   }
 }

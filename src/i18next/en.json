@@ -1,35 +1,40 @@
 {
-    "screens": {
-      "homeScreen": "Home Screen",
-      "signOut":"Sign Out"
-    },
-    "loginScreen": {
-      "digiShopTitle": "DigiShop",
-      "digiShopSubTitle": "Sign in to Santander Digital accounts to\naccess all our products.",
-      "forgotPasswordTitle": "Forgot Password?",
-      "SignInButtonText":"Sign In with email",
-      "SignUpButttonText":"Sign Up",
-      "UpdatedText":"Updated on 1 January 2020",
-      "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
-      "TermsConditionTitle1":" Terms ",
-      "TermsConditionTitle2":"and have acknowledged\n our",
-      "TermsConditionSubTitle":" privacy ",
-      "TermsConditionSubTitle1":"statement",
-      "UserTextInput":"Username",
-      "UserTextInputError":"Please enter your username/email",
-      "PasswordTextInput":"Password",
-      "PasswordTextInputError":"Please enter your password"
-    },
-    "forgotScreen": {
-      "forgotTitle": "Forgot Password",
-      "forgotSubTitle": "Please enter your email to reset the password.",
-      "SendEmailButtonText":"Submit",
-      "UserTextInput":"UserEmail",
-      "UserTextInputError":"Please enter your email",
-      "ScreenTitle":"Digishop"
-    },
-    "termsScreen":{
-      "termsTitle":"Terms And Condtions",
-      "privacyTitle":"Privacy Policy"
-    }
+  "screens": {
+    "homeScreen": "Home Screen",
+    "signOut": "Sign Out"
+  },
+  "loginScreen": {
+    "digiShopTitle": "DigiShop",
+    "digiShopSubTitle": "Sign in to Santander Digital accounts to\naccess all our products.",
+    "forgotPasswordTitle": "Forgot Password?",
+    "SignInButtonText": "Sign In with email",
+    "SignUpButttonText": "Sign Up",
+    "UpdatedText": "Updated on 1 January 2020",
+    "TermsConditionTitle": "By clicking Sign In with Email, you agree\n to our",
+    "TermsConditionTitle1": " Terms ",
+    "TermsConditionTitle2": "and have acknowledged\n our",
+    "TermsConditionSubTitle": " privacy ",
+    "TermsConditionSubTitle1": "statement",
+    "UserTextInput": "Username",
+    "UserTextInputError": "Please enter your username/email",
+    "PasswordTextInput": "Password",
+    "PasswordTextInputError": "Please enter your password"
+  },
+  "forgotScreen": {
+    "forgotTitle": "Forgot Password",
+    "forgotSubTitle": "Please enter your email to reset the password.",
+    "SendEmailButtonText": "Submit",
+    "UserTextInput": "UserEmail",
+    "UserTextInputError": "Please enter your email",
+    "ScreenTitle": "Digishop"
+  },
+  "termsScreen": {
+    "termsTitle": "Terms And Condtions",
+    "privacyTitle": "Privacy Policy"
+  },
+  "createCampaign": {
+    "createFirstCampaign": "Create your first campaign",
+    "skipStep": "Skip this step",
+    "startRightAway": "Start right away by creating a campaign \nwhich will also create your first product"
+  }
 }
