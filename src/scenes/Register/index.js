@@ -27,6 +27,10 @@ export default class RegisterView extends Component {
       phone: '',
       hidden: true,
       passwordHiddenIcon: registerConstant.INFO_PASSWORD_HIDDEN,
+      showPassModal: false,
+
+
+
     }
   }
 
@@ -34,30 +38,110 @@ export default class RegisterView extends Component {
   render() {
     return (
       <View style={registerStyle.renderContainer}>
-        {this.renderRegisterTitle()}
+        <Header isleftArrowDisplay={true} title={strings('registerScreen.digiShopTitle')} />
+        {/*this.renderRegisterTitle()*/}
         {this.renderValidationForm()}
+        {this.showPasswordHintBox()}
         {this.renderSignUpButton()}
         {this.renderTermsView()}
         {this.renderUpdateText()}
       </View>
     );
   }
+  isAlpha() {
+    const { password } = this.state;
+    var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+    if (format.test(password)) {
+      return true;
+      this.setState({ alpha: true })
+    }
+    else {
+      return false;
+    }
+  }
+  isCapital() {
+    const { password } = this.state;
+    var format = /[A-Z]/;
+    if (format.test(password))
+      return true;
+    else
+      return false;
+  }
+  isSmall() {
+    const { password } = this.state;
+    var format = /[a-z]/;
+    if (format.test(password))
+      return true;
+    else
+      return false;
+  }
+  isNumeric() {
+    const { password } = this.state;
+    var format = /[0-9]/;
+    if (format.test(password))
+      return true;
+    else
+      return false;
+  }
+  isValid() {
+    const { password } = this.state;
+    var format = /^([0-9a-zA-Z!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,16})$/;
+    if (format.test(password))
+      return true;
+    else
+      return false;
+  }
+
+
+  showPasswordHintBox() {
+    if (this.state.showPassModal && this.state.password != '') {
+      return (
+        <View style={{ backgroundColor: '#eff6f9', paddingTop: 20, paddingLeft: 20 }}>
+          <View style={{ flexDirection: 'row',paddingTop:5 }}>
+            <Image source={this.isValid() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} />
+            <Text style={{ fontSize: 16, color: '#000000' }}>{strings('registerScreen.PasswordValid1')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row',paddingTop:5  }}>
+            <Image source={this.isCapital() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} />
+            <Text style={{ fontSize: 16, color: '#000000' }}>{strings('registerScreen.PasswordValid2')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row',paddingTop:5  }}>
+            <Image source={this.isSmall() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} />
+            <Text style={{ fontSize: 16, color: '#000000' }}>{strings('registerScreen.PasswordValid3')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row',paddingTop:5  }}>
+            <Image source={this.isNumeric() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} />
+            <Text style={{ fontSize: 16, color: '#000000' }}>{strings('registerScreen.PasswordValid4')}</Text>
+          </View>
+          <View style={{ flexDirection: 'row',paddingTop:5  }}>
+            <Image source={this.isAlpha() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} />
+            <Text style={{ fontSize: 16, color: '#000000' }}>{strings('registerScreen.PasswordValid5')}</Text>
+          </View>
+        </View>
+      )
+
+    }
+    else {
+      <View></View>
+    }
+  }
 
   renderRegisterTitle() {
     return (
-      <View style={registerStyle.registerTitleView}>
-        <View style={{alignItems:'center',top:24}}>
-        <Text style={registerStyle.registerTitleText}>{strings('registerScreen.digiShopTitle')}</Text>
-     </View>
-      <TouchableOpacity onPress={()=>Actions.login()}
-       style={{flexDirection:'row',alignItems:'center',marginLeft: 20}}>
-        <Image  style={{ }}
-         source={require('../../public/images/close.png')}/>
-        </TouchableOpacity> 
-      
-     </View>
-     
-      
+      {}
+      // <View style={registerStyle.registerTitleView}>
+      //   <View style={{ alignItems: 'center', top: 24 }}>
+      //     <Text style={registerStyle.registerTitleText}>{strings('registerScreen.digiShopTitle')}</Text>
+      //   </View>
+      //   <TouchableOpacity onPress={() => Actions.login()}
+      //     style={registerStyle.closeIcon}>
+      //     <Image style={{}}
+      //       source={registerConstant.CLOSE_ICON} />
+      //   </TouchableOpacity>
+
+      // </View>
+
+
     )
   }
   setPasswordVisibility() {
@@ -143,7 +227,7 @@ export default class RegisterView extends Component {
                 underlineHeight={2}
                 isLoginScreen={false}
                 returnKeyType="next"
-                onChangeText={password=>this.setState({password}) }
+                onChangeText={password => this.setState({ password, showPassModal: true })}
                 autoCapitalize={'none'}
                 returnKeyType={'done'}
                 autoCorrect={false}
@@ -153,26 +237,25 @@ export default class RegisterView extends Component {
                 errorText={strings('registerScreen.PasswordTextInputError')}
                 onFocus={() => this.inputFocused.bind(this)}
               />
-               
+
             </View>
             {/* <TouchableOpacity style={{flex:1, position: 'absolute', right: 30, top: 165, alignSelf: 'center', height: 10, width: 10, justifyContent: 'center', zIndex: 999}} onPress={() => this.setPasswordVisibility()}>
               <Image source={this.state.passwordHiddenIcon} />
-            </TouchableOpacity>  */}
+            </TouchableOpacity>   */}
           </View>
         </View>
       </KeyboardAvoidingView>
     );
-    {/* flex:1, position: 'absolute', right: 30, top: 165, alignSelf: 'center', height: 10, width: 10, justifyContent: 'center', zIndex: 999 */}
   }
-  
+
   renderTermsView() {
     return (
       <View style={registerStyle.termsAndConditionView}>
         <Text style={{ fontSize: 16, textAlign: 'center' }}>
           <Text>{strings('registerScreen.TermsConditionTitle')}</Text>
-          <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('registerScreen.TermsConditionTitle1')}</Text>
+          <Text onPress={() => Actions.termsAndPrivacy({ selectedTitle: 'terms' })} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('registerScreen.TermsConditionTitle1')}</Text>
           <Text>{strings('registerScreen.TermsConditionTitle2')}</Text>
-          <Text style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('registerScreen.TermsConditionSubTitle')}</Text>
+          <Text onPress={() => Actions.termsAndPrivacy({ selectedTitle: 'privacy' })} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('registerScreen.TermsConditionSubTitle')}</Text>
           <Text>{strings('registerScreen.TermsConditionSubTitle1')}</Text>
         </Text>
       </View>

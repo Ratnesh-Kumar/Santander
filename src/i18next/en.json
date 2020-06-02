@@ -1,4 +1,6 @@
+
 {
+  
     "screens": {
       "homeScreen": "Home Screen"
     },
@@ -35,7 +37,12 @@
       "PasswordTextInputError":"Please enter your password",
       "ConfirmPasswordTextInput":"Confirm Password",
       "ConfirmPasswordTextInputError":"Please enter your confirm password",
-      "SignUpButttonText":"Sign Up"
+      "SignUpButttonText":"Sign Up with Email",
+      "PasswordValid1":" 8-16 characters",
+      "PasswordValid2":" atleast one upper case letter (e.g. A B C..)",
+      "PasswordValid3":" atleast one lower case letter (e.g. a b c..)",
+      "PasswordValid4":" atleast one number (e.g. 1 2 3..)",
+      "PasswordValid5":" use a special character (e.g. @ # $ *  % < > : ; _ ^ !)"
     },
     "forgotScreen": {
       "forgotTitle": "Forgot Password",

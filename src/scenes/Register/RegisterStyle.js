@@ -62,6 +62,9 @@ export default (styles = StyleSheet.create({
       inputWrapper: {
         width: DEVICE_WIDTH - 20,
       },
+      closeIcon:{
+        flexDirection: 'row', alignItems: 'center', marginLeft: 20
+      }
 
 
 

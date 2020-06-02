@@ -6,43 +6,48 @@
     "digiShopTitle": "DigiShop",
     "digiShopSubTitle": "Inicie sesión en cuentas digitales de Santander para acceder a todos nuestros productos.",
     "forgotPasswordTitle": "¿Se te olvidó tu contraseña?",
-    "SignInButtonText":"Iniciar sesión con correo electrónico",
-    "SignUpButttonText":"Regístrate",
-    "UpdatedText":"Actualizado el 1 de enero de 2020",
-    "TermsConditionTitle":"Al hacer clic en Iniciar sesión con correo electrónico, acepta \n nuestro",
-    "TermsConditionTitle1":" Condiciones ",
-    "TermsConditionTitle2":"Y han reconocido \n nuestrar",
-    "TermsConditionSubTitle":" intimidad",
-    "TermsConditionSubTitle1":"declaración"
+    "SignInButtonText": "Iniciar sesión con correo electrónico",
+    "SignUpButttonText": "Regístrate",
+    "UpdatedText": "Actualizado el 1 de enero de 2020",
+    "TermsConditionTitle": "Al hacer clic en Iniciar sesión con correo electrónico, acepta \n nuestro",
+    "TermsConditionTitle1": " Condiciones ",
+    "TermsConditionTitle2": "Y han reconocido \n nuestrar",
+    "TermsConditionSubTitle": " intimidad",
+    "TermsConditionSubTitle1": "declaración"
   },
-  "registerScreen":{
+  "registerScreen": {
     "digiShopTitle": "DigiShop",
-    "UpdatedText":"Actualizado el 1 de enero de 2020",
-    "TermsConditionTitle":"Al hacer clic en Iniciar sesión con correo electrónico, acepta \n nuestro",
-    "TermsConditionTitle1":" Condiciones ",
-    "TermsConditionTitle2":"Y han reconocido \n nuestrar",
-    "TermsConditionSubTitle":" intimidad ",
-    "TermsConditionSubTitle1":"declaración",
-    "UserTextInput":"Nombre de usuario (correo electrónico)",
-    "UserTextInputError":"Por favor ingrese su nombre de usuario / correo electrónico",
-    "PhoneTextInput":"Número de teléfono",
-    "PhoneTextInputError":"Por favor, introduzca su número de teléfono",
-    "PasswordTextInput":"Contraseña",
-    "PasswordTextInputError":"Por favor, introduzca su contraseña",
-    "ConfirmPasswordTextInput":"Confirmar contraseña",
-    "ConfirmPasswordTextInputError":"Por favor ingrese su contraseña de confirmación",
-    "SignUpButttonText":"Regístrate"
+    "UpdatedText": "Actualizado el 1 de enero de 2020",
+    "TermsConditionTitle": "Al hacer clic en Iniciar sesión con correo electrónico, acepta \n nuestro",
+    "TermsConditionTitle1": " Condiciones ",
+    "TermsConditionTitle2": "Y han reconocido \n nuestrar",
+    "TermsConditionSubTitle": " intimidad ",
+    "TermsConditionSubTitle1": "declaración",
+    "UserTextInput": "Nombre de usuario (correo electrónico)",
+    "UserTextInputError": "Por favor ingrese su nombre de usuario / correo electrónico",
+    "PhoneTextInput": "Número de teléfono",
+    "PhoneTextInputError": "Por favor, introduzca su número de teléfono",
+    "PasswordTextInput": "Contraseña",
+    "PasswordTextInputError": "Por favor, introduzca su contraseña",
+    "ConfirmPasswordTextInput": "Confirmar contraseña",
+    "ConfirmPasswordTextInputError": "Por favor ingrese su contraseña de confirmación",
+    "SignUpButttonText": "Ingresa con e-mail",
+    "PasswordValid1": " 8-16 caracteres",
+    "PasswordValid2": " al menos una letra mayúscula (por ejemplo, A B C ..)",
+    "PasswordValid3": " al menos una letra mayúscula (por ejemplo, a b c ..)",
+    "PasswordValid4": " al menos un número (por ejemplo, 1 2 3 ..)",
+    "PasswordValid5": " use un carácter especial (por ejemplo, @ # $ *% <>:; _ ^!)"
   },
   "forgotScreen": {
     "forgotTitle": "olvidadoTítulo",
     "forgotSubTitle": "Ingrese su correo electrónico para restablecer la contraseña.",
-    "SendEmailButtonText":"Enviar correo electrónico",
-    "UserTextInput":"UserEmail",
-    "UserTextInputError":"Por favor introduzca su correo electrónico",
-    "ScreenTitle":"Digishop"
+    "SendEmailButtonText": "Enviar correo electrónico",
+    "UserTextInput": "UserEmail",
+    "UserTextInputError": "Por favor introduzca su correo electrónico",
+    "ScreenTitle": "Digishop"
   },
-  "termsScreen":{
-    "termsTitle":"Términos y condiciones",
-    "privacyTitle":"Política de privacidad"
+  "termsScreen": {
+    "termsTitle": "Términos y condiciones",
+    "privacyTitle": "Política de privacidad"
   }
 }
