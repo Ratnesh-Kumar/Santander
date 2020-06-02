@@ -38,7 +38,7 @@ export default class RegisterView extends Component {
   render() {
     return (
       <View style={registerStyle.renderContainer}>
-        <Header isleftArrowDisplay={true} title={strings('registerScreen.digiShopTitle')} />
+        <Header isleftArrowDisplay={true} isCrossIconVisible={true} title={strings('registerScreen.digiShopTitle')} />
         {/*this.renderRegisterTitle()*/}
         {this.renderValidationForm()}
         {this.showPasswordHintBox()}
