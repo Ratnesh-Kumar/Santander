@@ -23,6 +23,7 @@ import TabIcon from './src/components/TabIcon';
 import {
   StyleSheet
 } from 'react-native'
+import CreateCampaiganShare from './src/scenes/CreateCampaignShare';
 console.disableYellowBox = true;
 const styles = StyleSheet.create({
   container: {
@@ -98,6 +99,12 @@ export default class App extends Component {
           <Scene
             key="termsAndPrivacy"
             component={TermsScreen}
+            title="Terms"
+            duration={0}
+          />
+          <Scene
+            key="createCampaignShare"
+            component={CreateCampaiganShare}
             title="Terms"
             duration={0}
           />
