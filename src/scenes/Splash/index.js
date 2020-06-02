@@ -17,7 +17,12 @@ export default class splashscreen extends Component {
 
   componentDidMount() {
     setTimeout(function () {
-      Actions.login();
+      if(isUserAlreadySignIn){
+        Actions.tabbar();
+      }else{
+        Actions.login();
+        // Actions.createCampaign();
+      }
     }, 2000);
   }
 
