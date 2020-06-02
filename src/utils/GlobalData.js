@@ -7,6 +7,7 @@ var userData = false;
 var isFirebaseInitialize = false;
 var verifyEmail = false;
 var googleUserInfo = '';
+var isAddCampaignStart = false;
 
 export class GlobalData extends Component {
     constructor() {
@@ -48,6 +49,14 @@ export class GlobalData extends Component {
 
     getGoogleUserInfo(){
         return googleUserInfo;
+    }
+
+    setAddCampaignStart(flag){
+        isAddCampaignStart = flag;
+    }
+
+    isAddCampaignStart(){
+        return isAddCampaignStart;
     }
 }
 

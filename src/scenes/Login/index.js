@@ -144,7 +144,8 @@ export default class LoginView extends BaseComponent {
         {this.renderForgotPassword()}
         {/* {this.renderSignInButton()} */}
         <AppButton buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
-                Actions.tabbar();
+                // Actions.tabbar();
+                Actions.registerCreateCampaign();
             }}/>
         {this.renderTermsView()}
         {this.renderSignUpButton()}
