@@ -119,7 +119,8 @@ export default class CampaignScreen extends BaseComponent {
 
   renderCostView() {
     return (
-      <View style={{ padding: 10 }}>
+      <View style={{marginTop: 20, marginBottom:10}}>
+      <View style={{ paddingTop: 10, paddingBottom: 20, paddingLeft: 10, paddingRight: 10, backgroundColor: colorConstant.SANT_MEDIUM_YELLOW}}>
         <View style={campaignStyle.inputWrapper}>
           <View style={campaignStyle.validFormSubView}>
             <TextInputMaterial
@@ -131,9 +132,10 @@ export default class CampaignScreen extends BaseComponent {
               autoCapitalize={'none'}
               onChangeText={text => this.setState({ campaignCostValue: text })}
               returnKeyType={'done'}
+              backgroundColor={colorConstant.SANT_MEDIUM_YELLOW}
               autoCorrect={false}
               isLoginScreen={false}
-              style={campaignStyle.input}
+              style={{backgroundColor: colorConstant.SANT_MEDIUM_YELLOW}}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
               value={this.state.campaignCostValue}
@@ -160,6 +162,7 @@ export default class CampaignScreen extends BaseComponent {
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ campaignProfitValue: text })}
                 returnKeyType={'done'}
+                backgroundColor={colorConstant.SANT_MEDIUM_YELLOW}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={campaignStyle.input}
@@ -187,6 +190,7 @@ export default class CampaignScreen extends BaseComponent {
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ campaignMarginValue: text })}
                 returnKeyType={'done'}
+                backgroundColor={colorConstant.SANT_MEDIUM_YELLOW}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={campaignStyle.input}
@@ -204,6 +208,7 @@ export default class CampaignScreen extends BaseComponent {
             </View>
           </View>
         </View>
+      </View>
       </View>
     )
   }
@@ -280,7 +285,7 @@ export default class CampaignScreen extends BaseComponent {
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>
-          <View style={{ backgroundColor: '#eff6f9', borderWidth: 1, borderColor: '#d9e5ec', height: 80, marginTop: 10 }}>
+          <View style={{ backgroundColor: colorConstant.SANT_LIGHT_SKY_BLUE, borderWidth: 1, borderColor: colorConstant.SANT_MEDIUM_SKY_BLUE, height: 80, marginTop: 10 }}>
             <TextInput style={styles.input}
               underlineColorAndroid="transparent"
               placeholder={strings('createCampaign.addDescriptionPlaceholder')}

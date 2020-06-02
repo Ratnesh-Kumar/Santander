@@ -42,4 +42,7 @@ export const RED_COLOR = "#ec0000";//
 //Santander color code
 export const SANT_RED_COLOR = "#ec0000"
 export const SANTANDAR_COLOR = '#119e99';
+export const SANT_LIGHT_SKY_BLUE = "#eff6f9"
+export const SANT_MEDIUM_SKY_BLUE = "#d9e5ec";
+export const SANT_MEDIUM_YELLOW = "#fef3dc"
 
