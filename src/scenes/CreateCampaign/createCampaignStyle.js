@@ -10,7 +10,6 @@ export default (styles = StyleSheet.create({
     viewContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
       },
       termsAndConditionView:{
         margin: 25 , alignItems:'center'
