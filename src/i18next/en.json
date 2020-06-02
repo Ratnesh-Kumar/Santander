@@ -31,5 +31,30 @@
     "termsScreen":{
       "termsTitle":"Terms And Condtions",
       "privacyTitle":"Privacy Policy"
+    },
+    "createCampaign": {
+      "screenTitle": "Create Campaign",
+      "campaignTextInput":"Business tax ID",
+      "priceTextInput":"Price",
+      "salePriceTextInput":"Sale Price",
+      "costTextInput":"Cost (Optional)",
+      "profitTextInput":"Profit",
+      "marginTextInput":"Margin",
+      "skuTextInput":"SKU",
+      "barcodeTextInput":"Barcode",
+      "campaignNameErrorText":"Please enter valid business tax id.",
+      "priceErrorText":"Please enter valid price.",
+      "salePriceErrorText":"Please enter valid sale price.",
+      "costErrorText":"Please enter valid cost.",
+      "profitErrorText":"Please enter valid profit.",
+      "marginErrorText":"Please enter valid margin.",
+      "skuErrorText":"Please enter valid sku.",
+      "barcodeErrorText":"Please enter valid barcode.",
+      "addDescriptionTitle": "Add Description",
+      "addDescriptionPlaceholder": "add description",
+      "uploadImageText":"Upload photo of your product",
+      "nextButtonText": "Next"
     }
+
+    
 }

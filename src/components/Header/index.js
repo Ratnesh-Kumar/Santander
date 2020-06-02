@@ -52,21 +52,19 @@ export default class Header extends Component {
         return (
             <View style={headerStyle.viewContainer}>
                 {this.renderLeftView(isleftArrowDisplay)}
-                <View style={{backgroundColor:colorConstants.WHITE_COLOR}}>
+                <View style={{flex: 1, backgroundColor:colorConstants.WHITE_COLOR, alignItems:'center', marginRight: (isleftArrowDisplay && this.props.isSignOutDisplay)?50: 0,}}>
                     <Text style={headerStyle.headerText}>{this.props.title}</Text>
                 </View>
                 {this.renderRightView(true)}
-                {/* <Text style={headerStyle.headerText}>{this.props.title}</Text>
-                {this.renderRightText()} */}
             </View>
         );
     }
 
     renderRightView(flag) {
         if (this.props.isSignOutDisplay) {
-            return (<TouchableOpacity  onPress={() => { this.props.onRightPressed() }}>
+            return (<TouchableOpacity  onPress={() => { this.props.onRightPressed() }} style={{position: 'absolute', right: 0, top: 0, height: 50, justifyContent:'center'}}>
                 <View style={headerStyle.leftImageView}>
-                <Text style={{ color: colorConstants.WHITE_COLOR, fontSize: 14, marginRight: 20 }}>{'Sign Out'}</Text>
+                <Text style={{ color: colorConstants.SANT_RED_COLOR, fontSize: 14, marginRight: 20, fontWeight:'bold' }}>{this.props.rightText}</Text>
                 </View>
             </TouchableOpacity>)
         } else {
@@ -88,12 +86,13 @@ export default class Header extends Component {
     // }
 
     renderLeftView(flag) {
+        const leftIcon = (this.props.isCrossIconVisible)? headerConstants.CLOSE_ICON: headerConstants.BACK_ARROW;
         if (flag) {
             return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
                 Actions.pop();
             }}>
                 <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>
-                    <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={headerConstants.LEFT_ARROW} style={{ marging: 15, height: 25, width: 20, tintColor: colorConstants.RED_COLOR }}>
+                    <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={leftIcon} style={{ height: 20, width: 20, tintColor: colorConstants.SANT_RED_COLOR }}>
                     </Image>
                 </View>
             </TouchableOpacity>)
@@ -105,21 +104,21 @@ export default class Header extends Component {
 
     
 
-    renderRightView(flag) {
-        if (flag) {
-            return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
-                Actions.pop();
-            }}>
-                <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>
-                    <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={headerConstants.LEFT_ARROW} style={{ marging: 15, height: 20, width: 15, tintColor: 'white' }}>
-                    </Image>
-                </View>
-            </TouchableOpacity>)
-        } else {
-            return <View style={headerStyle.leftImageView}></View>
-        }
+    // renderRightView(flag) {
+    //     if (flag) {
+    //         return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
+    //             Actions.pop();
+    //         }}>
+    //             <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>
+    //                 <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={headerConstants.LEFT_ARROW} style={{ marging: 15, height: 20, width: 15, tintColor: 'white' }}>
+    //                 </Image>
+    //             </View>
+    //         </TouchableOpacity>)
+    //     } else {
+    //         return <View style={headerStyle.leftImageView}></View>
+    //     }
 
-    }
+    // }
 
     // renderCartLayout(flag) {
     //     if (!flag) {

@@ -29,7 +29,7 @@ export const BLACK_COLOR = '#273039'; //TOP HEADER BLACK
 export const PLACEHOLDER_TEXT_COLOR='#ffffff';
 export const TBC_COLOR='#225aa9';
 
-export const SANTANDAR_COLOR = '#119e99';
+
 export const GREY_DARK_COLOR1 = '#4E555D';
 export const GREY_DARK_COLOR_A = "#707070"
 export const BLUE_COLOR = "#1E5A99"; //BUTTON, TEXT, BORDERS, BACKGROUND
@@ -41,4 +41,8 @@ export const RED_COLOR = "#ec0000";//
 
 //Santander color code
 export const SANT_RED_COLOR = "#ec0000"
+export const SANTANDAR_COLOR = '#119e99';
+export const SANT_LIGHT_SKY_BLUE = "#eff6f9"
+export const SANT_MEDIUM_SKY_BLUE = "#d9e5ec";
+export const SANT_MEDIUM_YELLOW = "#fef3dc"
 
