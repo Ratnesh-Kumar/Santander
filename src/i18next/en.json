@@ -55,6 +55,10 @@
       "uploadImageText":"Upload photo of your product",
       "nextButtonText": "Next"
     },
+    "createCampaignCategories": {
+      "trackSwitchText": "Track Quantity",
+      "allowPurchaseSwitchText": "Allow purchase when out of stock"
+    },
     "createCampaignShare":{
       "publishNowText": "Publish Now",
       "campaignShareMessage": "All these campaigns shall also be published to\nthe Digishop site when ready",
