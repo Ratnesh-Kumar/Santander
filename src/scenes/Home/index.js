@@ -16,12 +16,18 @@ export default class HomeScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
+    console.log("################ { isAddCampaign : true} : "+props.isAddCampaign)
     this.state={
       isSignOutDisplay: false
+    }
+    if(globalData.isAddCampaignStart()){
+      globalData.setAddCampaignStart(false)
+      Actions.campaign();
     }
   }
 
   async componentDidMount(){
+    
     let isUserAlreadySignIn = await this.isSignedIn();
     if(isUserAlreadySignIn){
       let currentUserInfo = await this.getCurrentUser();

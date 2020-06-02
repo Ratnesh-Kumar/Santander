@@ -5,11 +5,13 @@ import Header from '../../components/Header';
 import createCampaignStyle from './createCampaignStyle';
 import { strings } from '../../i18next/i18n';
 import CardView from 'react-native-cardview'
-
+import BaseComponent from '../../BaseComponent';
+var constants = require('../../config/Constants');
 var createCampaignConstant = require('./createCampaignConstant')
 var colorConstant = require('../../config/colorConstant')
-
-export default class CreateCampaignScene extends Component {
+import GlobalData from '../../utils/GlobalData';
+var globalData = new GlobalData();
+export default class CreateCampaignScene extends BaseComponent {
   render() {
     return (
       <View style={createCampaignStyle.container}>
@@ -21,15 +23,19 @@ export default class CreateCampaignScene extends Component {
             cardMaxElevation={8}
             cornerOverlap={false}
             cornerRadius={5}>
-            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-              <Text style={{ fontSize: 18, margin: 20 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', width: constants.SCREEN_WIDTH -40 }}>
+              <Text style={{ fontSize: 16, margin: 20 }}>
                 {strings("createCampaign.startRightAway")}
               </Text>
             </View>
             {this.renderCreateFirstCampaignButton()}
           </CardView>
-            <TouchableOpacity style={{marginTop:10}} onPress={() => Actions.tabbar()}>
-              <Text style={{fontSize:20, fontStyle:'italic' ,color:colorConstant.GREY_DARK_COLOR_A}}>{strings("createCampaign.skipStep")}</Text>
+            <TouchableOpacity style={{marginTop:10}} onPress={() => {
+              globalData.setAddCampaignStart(false)
+              Actions.tabbar()
+
+              }}>
+              <Text style={{fontSize:18, fontStyle:'italic' ,color:colorConstant.GREY_DARK_COLOR_A}}>{strings("createCampaign.skipStep")}</Text>
             </TouchableOpacity>
         </View>
       </View>
@@ -42,7 +48,8 @@ export default class CreateCampaignScene extends Component {
         <TouchableOpacity
           style={createCampaignStyle.button}
           onPress={() => {
-            Actions.campaign();
+            globalData.setAddCampaignStart(true)
+            Actions.tabbar();
           }}
           activeOpacity={1}>
           {}

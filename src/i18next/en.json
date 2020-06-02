@@ -53,7 +53,10 @@
       "addDescriptionTitle": "Add Description",
       "addDescriptionPlaceholder": "add description",
       "uploadImageText":"Upload photo of your product",
-      "nextButtonText": "Next"
+      "nextButtonText": "Next",
+      "startRightAway":"Start right away by creating a campaign\nwhich will also create your first product",
+      "createFirstCampaign": "Create your first campaign",
+      "skipStep": "Skip this step"
     },
     "createCampaignCategories": {
       "trackSwitchText": "Track Quantity",

@@ -26,10 +26,10 @@ export default (styles = StyleSheet.create({
     backgroundColor: colorConstant.WHITE_COLOR,
     height: MARGIN,
     borderColor: colorConstant.SANT_RED_COLOR,
-    paddingTop: 3, paddingBottom: 5, borderWidth: 1, borderRadius: 20
+    paddingTop: 3, paddingBottom: 5, borderWidth: 1, borderRadius: 25
   },
   createShopButtonText: {
-    color: colorConstant.SANT_RED_COLOR, fontSize: 20, fontWeight:'bold'
+    color: colorConstant.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
   },
   cardViewStyle: {
     backgroundColor: colorConstant.WHITE_COLOR,
