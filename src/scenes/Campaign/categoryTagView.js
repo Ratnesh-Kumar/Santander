@@ -42,7 +42,7 @@ export default class CampaignScreen extends BaseComponent {
             tagList.push(this.renderTagView(this.state.tagNameList[i]))
         }
         return (
-            <View style={{ marginTop: 10, marginBottom: 10, alignSelf: 'flex-start', flexDirection: 'row', width: constants.SCREEN_WIDTH - 20, flexWrap: 'wrap' }}>
+            <View style={{ marginTop: 10, marginBottom: 10, marginLeft: 20, marginRight: 20, alignSelf: 'flex-start', flexDirection: 'row', width: constants.SCREEN_WIDTH - 20, flexWrap: 'wrap' }}>
                 {tagList}
             </View>
         )
