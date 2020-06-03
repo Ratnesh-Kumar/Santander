@@ -50,6 +50,7 @@ export default class CreateCampaignScene extends BaseComponent {
           onPress={() => {
             globalData.setAddCampaignStart(true)
             Actions.tabbar();
+            Actions.campaign();
           }}
           activeOpacity={1}>
           {}

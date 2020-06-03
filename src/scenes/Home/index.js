@@ -19,10 +19,6 @@ export default class HomeScreen extends BaseComponent {
     this.state={
       isSignOutDisplay: false
     }
-    if(globalData.isAddCampaignStart()){
-      globalData.setAddCampaignStart(false)
-      Actions.campaign();
-    }
   }
 
   async componentDidMount(){

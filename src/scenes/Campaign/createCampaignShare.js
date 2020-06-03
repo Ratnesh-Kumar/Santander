@@ -6,7 +6,8 @@ import {
   View,
   ScrollView,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 import PropTypes from 'prop-types';
 import createStyle from './campaignStyle';
@@ -14,6 +15,7 @@ import Header from '../../components/Header';
 import SwitchTextInput from '../../components/SwitchTextInput';
 import AppButton from '../../components/AppButton';
 import { strings } from '../../i18next/i18n';
+import { Actions } from 'react-native-router-flux';
 var constants = require('../../config/Constants');
 
 export default class CreateCampaiganShare extends Component {
@@ -49,10 +51,20 @@ export default class CreateCampaiganShare extends Component {
   renderPublishButton() {
     return (
         <AppButton buttonText={strings('createCampaignShare.publishNowText')} onButtonPressed={()=>{
-          alert("Campaign published")
+          this.showAlert()
         }}/>
     );
   }
+
+  showAlert() {  
+    Alert.alert(  
+        'Information',  
+        'You campaign successfully published.',  
+        [   
+            {text: 'OK', onPress: () => Actions.home()},  
+        ]  
+    );  
+}  
   renderSwitchTextInput() {
     return (
       <View style={{ marginTop: 10 }}>
