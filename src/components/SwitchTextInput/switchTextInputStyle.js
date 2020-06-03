@@ -10,7 +10,7 @@ const header = {
   containerStyle:{
     width:constants.SCREEN_WIDTH-40,
     backgroundColor:colorConstants.WHITE_COLOR,
-    height:50,
+    height:60,
     borderColor:colorConstants.GREY_BORDER_COLOR,
     borderWidth:2,
     borderRadius:2,

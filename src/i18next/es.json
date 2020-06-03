@@ -93,5 +93,24 @@
     "PasswordValid4": " al menos un número (por ejemplo, 1 2 3 ..)",
     "PasswordValid5": " use un carácter especial (por ejemplo, @ # $ *% <>:; _ ^!)",
     "SignInButtonText":"Iniciar sesión con correo electrónico"
+  },
+  "shopSettingsScreen":{
+    "ShopSettingsTitle":"Configuraciones de la tienda",
+    "PaymentProcessor":"Proceso de pago",
+    "nextButtonText": "Próxima",
+    "profitMarginInput":"Margen de beneficio (%)",
+    "shippingCostInput":"Costo de envío",
+    "handlingCostInput":"Costo de manipulación",
+    "defaultsTitle":"Valores predeterminados",
+    "paymentDropDownText":"Procesador de pagos",
+    "taxInventory":"Inventario fiscal",
+    "taxOnSales":"Impuesto sobre ventas",
+    "taxTypeInput":"Tipo de impuesto (GST, IVA, etc.)",
+    "flatTaxSwitch":"Impuesto fijo",
+    "taxRateInput":"Tax rate(%)",
+    "showDiscountSwitch":"Show discount",
+    "shipProductsSwitch":"Ship products",
+    "shippingCompany":"Shipping company",
+    "estimateProfit":"Estimate profit"
   }
 }
