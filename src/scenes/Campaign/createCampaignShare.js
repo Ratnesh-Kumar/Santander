@@ -55,7 +55,7 @@ export default class CreateCampaiganShare extends Component {
   }
   renderSwitchTextInput() {
     return (
-      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
+      <View style={{ marginTop: 10 }}>
         {this.renderSwitchFields(strings('createCampaignShare.whatsAppText'))}
         {this.renderSwitchFields(strings('createCampaignShare.facebookText'))}
         {this.renderSwitchFields(strings('createCampaignShare.textSmsText'))}
@@ -71,7 +71,7 @@ export default class CreateCampaiganShare extends Component {
 
   renderSwitchFields(title) {
     return (
-      <View style={{ paddingTop: 10, paddingRight: 10 }}>
+      <View>
         <SwitchTextInput
           defaultSwitchValue={true}
           onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}

@@ -15,6 +15,10 @@ const header = {
     borderWidth:2,
     borderRadius:2,
     borderBottomColor:colorConstants.GREY_DARK_COLOR,
+    marginRight: 20,
+    marginLeft: 20, 
+    marginTop: 5,
+    marginBottom : 5
   },
   textStyle:{
     paddingLeft:5,

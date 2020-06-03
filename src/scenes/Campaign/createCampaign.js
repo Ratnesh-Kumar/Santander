@@ -100,7 +100,7 @@ export default class CampaignScreen extends BaseComponent {
   }
   renderSwitchFields(title) {
     return (
-      <View style={{ paddingTop: 10, paddingRight: 10 }}>
+      <View>
         <SwitchTextInput
           defaultSwitchValue={true}
           onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
