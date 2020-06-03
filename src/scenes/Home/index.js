@@ -16,7 +16,6 @@ export default class HomeScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
-    console.log("################ { isAddCampaign : true} : "+props.isAddCampaign)
     this.state={
       isSignOutDisplay: false
     }
@@ -42,7 +41,7 @@ export default class HomeScreen extends BaseComponent {
         <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() =>{
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
-        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.createCampaign()}}>
+        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
           <Text style={homeStyle.welcome}>{strings('screens.homeScreen')}</Text>
         </View>
       </View>
