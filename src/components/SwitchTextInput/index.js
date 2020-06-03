@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import switchTextInputStyle from './switchTextInputStyle';
 import { Text } from 'native-base';
-
+var colorConstants = require('../../config/colorConstant');
 export default class SwitchTextInput extends Component {
     constructor(props) {
         super(props);
@@ -44,6 +44,7 @@ export default class SwitchTextInput extends Component {
             <View
               style={{position: 'absolute', right: 10, top: 10}}>
               <Switch
+                onTintColor={colorConstants.SANT_RED_COLOR}
                 value={this.state.switchvalue}
                  onValueChange={(value) => {this.setState({switchvalue:!this.state.switchvalue}); this.props.onRightPressed(value) }}
               />
