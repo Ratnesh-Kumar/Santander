@@ -23,6 +23,7 @@ import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
 import RegisterCreateCampaign from './src/scenes/CreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
+import BuisnessProfile from './src/scenes/BuisnessProfile';
 import RegisterScreen from './src/scenes/Register';
 import {
   StyleSheet
@@ -86,6 +87,7 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
+          <Scene key="buisnessProfile" component={BuisnessProfile} title="buisnessProfile" duration={0} />
           {this.renderTabbar()}
         </Scene>
       </Router>
