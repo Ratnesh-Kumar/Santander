@@ -15,7 +15,7 @@ export default class AppButton extends Component {
             borderRadius: 5,
             justifyContent: 'center',
             margin: 20,
-            height: 50,
+            height: 44,
             backgroundColor: colorConstant.SANT_RED_COLOR
           }}
           cardElevation={2}
@@ -25,7 +25,7 @@ export default class AppButton extends Component {
           <TouchableOpacity onPress={()=>{
             this.props.onButtonPressed()
           }} style={{flex:1, justifyContent:'center', alignItems:'center'}}>
-            <Text style={{fontSize:20, color: colorConstant.WHITE_COLOR, fontWeight: 'bold'}}>
+            <Text style={{fontSize:18, color: colorConstant.WHITE_COLOR, fontWeight: 'bold'}}>
               {this.props.buttonText}
           </Text>
           </TouchableOpacity>

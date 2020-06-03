@@ -51,7 +51,10 @@
     "nextButtonText": "Próxima",
     "startRightAway": "Comience de inmediato creando una campaña \n nque también creará su primer producto",
     "createFirstCampaign": "Crea tu primera campaña",
-    "skipStep": "Salta este paso"
+    "skipStep": "Salta este paso",
+    "quanitytTitle": "Cantidad",
+    "categoryTagTextInput": "Categorias",
+    "variantsTagTextInput": "Variantes (opcional)"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",
