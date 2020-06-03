@@ -1,1 +1,0 @@
-export const CREATE_STORE_SCREEN = "Digishop";

@@ -41,6 +41,6 @@ export default (styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
-    color: colorConstants.LOGIN_BUTTON_BLUE,
+    color: colorConstants.SANT_RED_COLOR,
   },
 }));

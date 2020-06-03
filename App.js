@@ -18,10 +18,10 @@ import FavouriteScreen from './src/scenes/Favourites';
 import SettingsScreen from './src/scenes/Settings';
 import FBaseWrite from './src/scenes/FirebaseRW/FBaseWrite';
 import FBaseReadItems from './src/scenes/FirebaseRW/FBaseReadItems';
-import TabIcon from './src/components/TabIcon';
+import TabIcon from './src/TabIcon';
 import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
-import RegisterCreateCampaign from './src/scenes/CreateCampaign';
+import RegisterCreateCampaign from './src/scenes/Campaign/registerCreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 import BuisnessProfile from './src/scenes/BuisnessProfile';
 import RegisterScreen from './src/scenes/Register';
@@ -33,16 +33,16 @@ console.disableYellowBox = true;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    height:70
+    height:48
   },
   
   tabBarStyle: {
     borderTopWidth:1,
     borderTopColor:'transparent',
-    height:70,
+    height:48,
   },
   tabBarSelectedItemStyle: {
-    height:70
+    height:48
   },
 });
 
@@ -54,21 +54,6 @@ let tracker = new GoogleAnalyticsTracker('G-LC2MDJK4YT');
 export default class App extends Component {
   constructor(props) {
     super(props);
-    // realm = new Realm({
-    //   path: 'UserDatabase.realm',
-    //   schema: [
-    //     {
-    //       name: 'user_details',
-    //       properties: {
-    //         user_name: 'string',
-    //         user_password: 'string',
-    //       },
-    //     },
-    //   ],
-    // });
-    // YellowBox.ignoreWarnings(['Warning: isMounted(...) is deprecated', 'Module RCTImageLoader']);
-    // YellowBox.ignoreWarnings(['Setting a timer']);
-    // YellowBox.ignoreWarnings(['Warning: componentWillReceiveProps has been renamed']);
 
   }
   componentDidMount() {
@@ -106,7 +91,7 @@ export default class App extends Component {
         
 
         {/* Tab and it's scenes */}
-        <Scene key="homeTab" title="HOME" icon={TabIcon}  initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
+        <Scene key="homeTab" title="Home" icon={TabIcon}  initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
           <Scene key="home" component={HomeScreen} title="Blue" hideNavBar />
           <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
           <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
@@ -114,15 +99,15 @@ export default class App extends Component {
           
         </Scene>
 
-        <Scene key="productTab" title="PRODUCTS" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
+        <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
           <Scene key="favourite" component={FavouriteScreen} title="home" />
         </Scene>
 
-        <Scene key="orderTab" title="ORDER" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
+        <Scene key="orderTab" title="Order" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
           <Scene key="order" component={MyProfileScreen} title="home" />
         </Scene>
 
-        <Scene key="shopTab" title="SHOP" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
+        <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
           <Scene key="shop" component={SettingsScreen} title="home" />
         </Scene>
 

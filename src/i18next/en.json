@@ -1,6 +1,7 @@
 {
     "screens": {
       "homeScreen": "Home Screen",
+      "addCampaign": "Add Campaign",
       "signOut":"Sign Out"
     },
     "loginScreen": {
@@ -56,7 +57,10 @@
       "nextButtonText": "Next",
       "startRightAway":"Start right away by creating a campaign\nwhich will also create your first product",
       "createFirstCampaign": "Create your first campaign",
-      "skipStep": "Skip this step"
+      "skipStep": "Skip this step",
+      "quanitytTitle": "Quantity",
+      "categoryTagTextInput": "Categories",
+      "variantsTagTextInput": "Variants (Optional)"
     },
     "createCampaignCategories": {
       "trackSwitchText": "Track Quantity",

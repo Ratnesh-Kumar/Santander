@@ -8,7 +8,12 @@ export default (styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorConstants.WHITE_COLOR,
   },
-  renderContainer: {
+  viewContainer: {
+    marginLeft: 20, marginRight: 20,
+  },
+  registerCreateCampaignContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   seperateLine: {
     flex: 1,
@@ -61,5 +66,29 @@ export default (styles = StyleSheet.create({
   },
   bottomTextStyle:{
     fontSize: 15, color: colorConstants.BLACK_COLOR ,  textAlign:'center',padding:30 ,
+  },
+  UpdatedView: {
+    alignItems: 'center', flex: 1
+  },
+  createShopButtonView: {
+    paddingLeft: 20, paddingRight: 20, marginTop:10
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colorConstants.WHITE_COLOR,
+    height: MARGIN,
+    borderColor: colorConstants.SANT_RED_COLOR,
+    paddingTop: 3, paddingBottom: 5, borderWidth: 1, borderRadius: 25
+  },
+  createShopButtonText: {
+    color: colorConstants.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
+  },
+  cardViewStyle: {
+    backgroundColor: colorConstants.WHITE_COLOR,
+    height: 180,
+    marginTop: 50,
+    marginLeft: 5,
+    marginRight: 5
   }
 }));
