@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 var constants = require('../../config/Constants');
 var colorConstants = require('../../config/colorConstant')
 const MARGIN = 50
@@ -14,6 +14,16 @@ export default (styles = StyleSheet.create({
   registerCreateCampaignContainer: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  scrollViewStyle:{
+    ...Platform.select({
+      ios: {
+        marginBottom: 100
+      },
+      android: {
+        marginBottom: 50
+      }
+    })
   },
   seperateLine: {
     flex: 1,

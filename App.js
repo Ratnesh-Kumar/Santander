@@ -22,7 +22,7 @@ import TabIcon from './src/TabIcon';
 import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
 import ShopSettingScreen from './src/scenes/ShopSettings'
-import RegisterCreateCampaign from './src/scenes/CreateCampaign';
+import RegisterCreateCampaign from './src/scenes/Campaign/registerCreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 import RegisterScreen from './src/scenes/Register';
 import {

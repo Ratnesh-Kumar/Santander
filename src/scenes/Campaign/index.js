@@ -40,7 +40,7 @@ export default class CampaignScreen extends BaseComponent {
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <View>
-          <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 50}}>
+          <ScrollView keyboardShouldPersistTaps={'always'} style={campaignStyle.scrollViewStyle}>
             {this.renderCampaignName()}
             {this.createCameraView()}
             {this.renderPriceView()}
