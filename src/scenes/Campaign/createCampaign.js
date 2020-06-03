@@ -34,7 +34,8 @@ export default class CampaignScreen extends BaseComponent {
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <View style={campaignStyle.viewContainer}>
           <ScrollView keyboardShouldPersistTaps={'always'} style={{marginTop: 10 }}>
-          {this.renderSwitchTextInput()}
+          {this.renderSwitchFields(strings('createCampaignCategories.trackSwitchText'))}
+          {this.renderSwitchFields(strings('createCampaignCategories.allowPurchaseSwitchText'))}
             <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               Actions.createCampaignShare()
             }} />
@@ -44,17 +45,9 @@ export default class CampaignScreen extends BaseComponent {
     );
   }
 
-  renderSwitchTextInput() {
-    return (
-      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
-        {this.renderSwitchFields(strings('createCampaignCategories.trackSwitchText'))}
-        {this.renderSwitchFields(strings('createCampaignCategories.allowPurchaseSwitchText'))}
-      </View>
-    );
-  }
   renderSwitchFields(title) {
     return (
-      <View style={{ paddingTop: 10, paddingRight: 10 }}>
+      <View>
         <SwitchTextInput
           defaultSwitchValue={true}
           onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
