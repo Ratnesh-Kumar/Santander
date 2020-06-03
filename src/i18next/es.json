@@ -53,6 +53,10 @@
     "createFirstCampaign": "Crea tu primera campaña",
     "skipStep": "Salta este paso"
   },
+  "createCampaignCategories": {
+    "trackSwitchText": "Cantidad de seguimiento",
+    "allowPurchaseSwitchText": "Permitir compra cuando no hay stock"
+  },
   "createCampaignShare": {
     "publishNowText": "Publica ahora",
     "campaignShareMessage": "Todas estas campañas también se publicarán en el sitio de Digishop cuando estén listas.",
