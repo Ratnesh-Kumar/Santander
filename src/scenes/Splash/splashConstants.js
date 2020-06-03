@@ -1,1 +1,1 @@
-export const SPLASH_SCREEN = "Splash Screen";
+export const SPLASH_SCREEN = "Digi Shop";
