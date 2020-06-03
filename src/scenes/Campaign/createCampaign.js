@@ -14,6 +14,7 @@ import AppButton from '../../components/AppButton'
 import SwitchTextInput from '../../components/SwitchTextInput';
 import QuantityField from '../../components/QuantityField';
 import CreateTagView from './categoryTagView'
+import { color } from 'react-native-reanimated';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -38,7 +39,8 @@ export default class CampaignScreen extends BaseComponent {
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
-          <View style={campaignStyle.viewContainer}>
+
+          <View>
             {this.renderSwitchTextInput()}
             {this.renderProductQuantity()}
             {this.renderCategoryTagView()}
@@ -78,8 +80,8 @@ export default class CampaignScreen extends BaseComponent {
 
   renderCategoryTagView() {
     return (
-      <View style={{marginTop:10}}>
-        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => this.setState({ categoryList: categoryList })}/>
+      <View style={{ marginTop: 10 }}>
+        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => this.setState({ categoryList: categoryList })} />
         <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => this.setState({ variantsList: variantList })} />
       </View>
     )
@@ -87,7 +89,7 @@ export default class CampaignScreen extends BaseComponent {
 
   renderProductQuantity() {
     return (
-      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => {  }} />
+      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { }} />
     )
   }
 

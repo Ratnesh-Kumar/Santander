@@ -42,7 +42,7 @@ export default class HomeScreen extends BaseComponent {
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
         <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
-          <Text style={homeStyle.welcome}>{strings('screens.homeScreen')}</Text>
+          <Text style={homeStyle.welcome}>{strings('screens.addCampaign')}</Text>
         </View>
       </View>
     );

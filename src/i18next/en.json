@@ -1,6 +1,7 @@
 {
     "screens": {
       "homeScreen": "Home Screen",
+      "addCampaign": "Add Campaign",
       "signOut":"Sign Out"
     },
     "loginScreen": {

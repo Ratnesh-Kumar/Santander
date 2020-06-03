@@ -51,7 +51,10 @@
     "nextButtonText": "Próxima",
     "startRightAway": "Comience de inmediato creando una campaña \n nque también creará su primer producto",
     "createFirstCampaign": "Crea tu primera campaña",
-    "skipStep": "Salta este paso"
+    "skipStep": "Salta este paso",
+    "quanitytTitle": "Cantidad",
+    "categoryTagTextInput": "Categorias",
+    "variantsTagTextInput": "Variantes (opcional)"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",
@@ -92,6 +95,6 @@
     "PasswordValid3": " al menos una letra mayúscula (por ejemplo, a b c ..)",
     "PasswordValid4": " al menos un número (por ejemplo, 1 2 3 ..)",
     "PasswordValid5": " use un carácter especial (por ejemplo, @ # $ *% <>:; _ ^!)",
-    "SignInButtonText":"Iniciar sesión con correo electrónico"
+    "SignInButtonText": "Iniciar sesión con correo electrónico"
   }
 }

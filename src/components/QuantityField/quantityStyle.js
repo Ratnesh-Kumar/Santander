@@ -12,6 +12,8 @@ const header = {
     backgroundColor:colorConstants.WHITE_COLOR,
     height:40,
     marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
     flexDirection:'row',
     alignItems:'center',
     justifyContent:'center'
