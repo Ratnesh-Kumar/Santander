@@ -6,6 +6,8 @@ import createCampaignStyle from '../Campaign/campaignStyle';
 import { strings } from '../../i18next/i18n';
 import CardView from 'react-native-cardview'
 import BaseComponent from '../../BaseComponent';
+import AppButton from '../../components/AppButton'
+
 var constants = require('../../config/Constants');
 var createCampaignConstant = require('../Campaign/campaignConstants')
 var colorConstant = require('../../config/colorConstant')
@@ -28,7 +30,12 @@ export default class CreateCampaignScene extends BaseComponent {
                 {strings("createCampaign.startRightAway")}
               </Text>
             </View>
-            {this.renderCreateFirstCampaignButton()}
+            <AppButton isLightTheme={true}   buttonText={strings('createCampaign.createFirstCampaign')} onButtonPressed={()=>{
+                globalData.setAddCampaignStart(true)
+                Actions.tabbar();
+                Actions.campaign();
+            }}/>
+            {/* {this.renderCreateFirstCampaignButton()} */}
           </CardView>
           <TouchableOpacity style={{ marginTop: 10 }} onPress={() => {
             globalData.setAddCampaignStart(false)
