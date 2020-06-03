@@ -43,7 +43,7 @@ export default class ForgotPassword extends Component {
       <View style={forgotPasswordStyle.renderContainer}>
         <Header isleftArrowDisplay={true} title={strings('forgotScreen.forgotTitle')} />
         {this.renderForgotTitle()}
-        <AppButton buttonText={strings('forgotScreen.SendEmailButtonText')}onButtonPressed={()=>{
+        <AppButton isLightTheme={false}  buttonText={strings('forgotScreen.SendEmailButtonText')}onButtonPressed={()=>{
                alert('Please check your email ')
             }}/>
       </View>

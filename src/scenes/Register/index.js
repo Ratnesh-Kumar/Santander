@@ -47,7 +47,7 @@ export default class RegisterView extends Component {
                 {this.showPasswordHintBox()}
                 {/*this.renderSignUpButton()*/}
                 {this.renderConfirmPassword()}
-                <AppButton buttonText={strings('registerScreen.SignUpButttonText')} onButtonPressed={() => {
+                <AppButton isLightTheme={false} buttonText={strings('registerScreen.SignUpButttonText')} onButtonPressed={() => {
                     Actions.registerCreateCampaign();
                 }} />
 

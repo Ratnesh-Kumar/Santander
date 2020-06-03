@@ -110,10 +110,10 @@
     "taxOnSales":"Impuesto sobre ventas",
     "taxTypeInput":"Tipo de impuesto (GST, IVA, etc.)",
     "flatTaxSwitch":"Impuesto fijo",
-    "taxRateInput":"Tax rate(%)",
-    "showDiscountSwitch":"Show discount",
-    "shipProductsSwitch":"Ship products",
-    "shippingCompany":"Shipping company",
-    "estimateProfit":"Estimate profit"
+    "taxRateInput":"Tasa de impuesto(%)",
+    "showDiscountSwitch":"Mostrar descuento",
+    "shipProductsSwitch":"Enviar productos",
+    "shippingCompany":"Compañía de envios",
+    "estimateProfit":"Estimación de ganancias"
   }
 }

@@ -48,7 +48,7 @@ export default class CreateCampaiganShare extends Component {
 
   renderPublishButton() {
     return (
-        <AppButton buttonText={strings('createCampaignShare.publishNowText')} onButtonPressed={()=>{
+        <AppButton isLightTheme={false} buttonText={strings('createCampaignShare.publishNowText')} onButtonPressed={()=>{
           alert("Campaign published")
         }}/>
     );

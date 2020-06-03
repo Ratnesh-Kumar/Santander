@@ -46,7 +46,7 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderPriceView()}
             {this.renderCostView()}
             {this.renderSkuAndBarcode()}
-            <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={()=>{
+            <AppButton isLightTheme={false}  buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={()=>{
                 Actions.createCampaign();
             }}/>
           </ScrollView>
