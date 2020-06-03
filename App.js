@@ -23,6 +23,7 @@ import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
 import RegisterCreateCampaign from './src/scenes/CreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
+import RegisterScreen from './src/scenes/Register';
 import {
   StyleSheet
 } from 'react-native'
@@ -84,6 +85,7 @@ export default class App extends Component {
           <Scene key="forgotPassword" component={ForgotPasswordScreen} title="Forgot Password" duration={0} />
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
+          <Scene key="register" component={RegisterScreen} title="register" duration={0} />
           {this.renderTabbar()}
         </Scene>
       </Router>
