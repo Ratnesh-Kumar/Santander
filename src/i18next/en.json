@@ -57,7 +57,9 @@
       "startRightAway":"Start right away by creating a campaign\nwhich will also create your first product",
       "createFirstCampaign": "Create your first campaign",
       "skipStep": "Skip this step",
-      "quanitytTitle": "Quantity"
+      "quanitytTitle": "Quantity",
+      "categoryTagTextInput": "Categories",
+      "variantsTagTextInput": "Variants (Optional)"
     },
     "createCampaignCategories": {
       "trackSwitchText": "Track Quantity",

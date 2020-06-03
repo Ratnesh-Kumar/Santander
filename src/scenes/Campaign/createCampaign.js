@@ -13,6 +13,7 @@ import TextInputMaterial from '../../components/textInputMaterial';
 import AppButton from '../../components/AppButton'
 import SwitchTextInput from '../../components/SwitchTextInput';
 import QuantityField from '../../components/QuantityField';
+import CreateTagView from './categoryTagView'
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -23,7 +24,9 @@ export default class CampaignScreen extends BaseComponent {
     super(props)
     this.state = {
       campaignName: '',
-      productQuantity: 1
+      productQuantity: 1,
+      variantsList: [],
+      categoryList: []
     }
   }
 
@@ -38,22 +41,53 @@ export default class CampaignScreen extends BaseComponent {
           <View style={campaignStyle.viewContainer}>
             {this.renderSwitchTextInput()}
             {this.renderProductQuantity()}
+            {this.renderCategoryTagView()}
+            {this.renderVariantsQantityView()}
           </View>
           <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-              Actions.createCampaignShare()
-            }} />
+            Actions.createCampaignShare()
+          }} />
         </ScrollView>
       </View>
     );
   }
-  renderProductQuantity(){
-    return(
-      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) =>{
-        console.log("######### quantity : "+quantity)
+
+  renderVariantsQantityView() {
+    let variantList = [];
+    if (this.isValidArray(this.state.variantsList)) {
+      for (let i = 0; i < this.state.variantsList.length; i++) {
+        variantList.push(this.renderQuantityView(this.state.variantsList[i]))
+      }
+    }
+    return (
+      <View>
+        {variantList}
+      </View>
+    )
+  }
+
+  renderQuantityView(quantityTitle) {
+    return (
+      <QuantityField title={quantityTitle} updatedQuantity={(quantity) => {
         this.setState({
           productQuantity: quantity
         })
-      }}/>
+      }} />
+    )
+  }
+
+  renderCategoryTagView() {
+    return (
+      <View style={{marginTop:10}}>
+        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => this.setState({ categoryList: categoryList })}/>
+        <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => this.setState({ variantsList: variantList })} />
+      </View>
+    )
+  }
+
+  renderProductQuantity() {
+    return (
+      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => {  }} />
     )
   }
 

@@ -62,5 +62,5 @@ export default (styles = StyleSheet.create({
   },
   bottomTextStyle:{
     fontSize: 15, color: colorConstants.BLACK_COLOR ,  textAlign:'center',padding:30 ,
-  }
+  },
 }));
