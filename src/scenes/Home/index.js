@@ -42,7 +42,7 @@ export default class HomeScreen extends BaseComponent {
         <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() =>{
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
-        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
+        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.createCampaign()}}>
           <Text style={homeStyle.welcome}>{strings('screens.homeScreen')}</Text>
         </View>
       </View>

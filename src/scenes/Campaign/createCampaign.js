@@ -12,6 +12,7 @@ import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
 import AppButton from '../../components/AppButton'
 import SwitchTextInput from '../../components/SwitchTextInput';
+import QuantityField from '../../components/QuantityField';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -22,6 +23,7 @@ export default class CampaignScreen extends BaseComponent {
     super(props)
     this.state = {
       campaignName: '',
+      productQuantity: 1
     }
   }
 
@@ -32,23 +34,33 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
-        <View style={campaignStyle.viewContainer}>
-          <ScrollView keyboardShouldPersistTaps={'always'} style={{marginTop: 10 }}>
-          {this.renderSwitchTextInput()}
-            <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
+        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
+          <View style={campaignStyle.viewContainer}>
+            {this.renderSwitchTextInput()}
+            {this.renderProductQuantity()}
+          </View>
+          <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               Actions.createCampaignShare()
             }} />
-          </ScrollView>
-        </View>
+        </ScrollView>
       </View>
     );
+  }
+  renderProductQuantity(){
+    return(
+      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) =>{
+        console.log("######### quantity : "+quantity)
+        this.setState({
+          productQuantity: quantity
+        })
+      }}/>
+    )
   }
 
   renderSwitchTextInput() {
     return (
-      <View style={{ marginLeft: 20, marginRight: 20, marginTop: 10 }}>
+      <View style={{ marginTop: 10 }}>
         {this.renderSwitchFields(strings('createCampaignCategories.trackSwitchText'))}
-        {this.renderSwitchFields(strings('createCampaignCategories.allowPurchaseSwitchText'))}
       </View>
     );
   }

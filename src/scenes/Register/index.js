@@ -14,6 +14,7 @@ import { Actions } from 'react-native-router-flux';
 import registerStyle from './RegisterStyle';
 import Header from '../../components/Header';
 import AppButton from '../../components/AppButton'
+import { ActionSheet } from 'native-base';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 var registerConstant = require('./RegisterConstants.js');
@@ -47,7 +48,7 @@ export default class RegisterView extends Component {
                 {/*this.renderSignUpButton()*/}
                 {this.renderConfirmPassword()}
                 <AppButton buttonText={strings('registerScreen.SignUpButttonText')} onButtonPressed={() => {
-                    Actions.tabbar();
+                    Actions.registerCreateCampaign();
                 }} />
 
                 {this.renderTermsView()}

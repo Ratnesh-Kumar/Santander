@@ -8,7 +8,8 @@ export default (styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorConstants.WHITE_COLOR,
   },
-  renderContainer: {
+  viewContainer: {
+    marginLeft: 20, marginRight: 20,
   },
   seperateLine: {
     flex: 1,

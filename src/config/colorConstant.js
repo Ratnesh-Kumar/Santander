@@ -45,4 +45,5 @@ export const SANTANDAR_COLOR = '#119e99';
 export const SANT_LIGHT_SKY_BLUE = "#eff6f9"
 export const SANT_MEDIUM_SKY_BLUE = "#d9e5ec";
 export const SANT_MEDIUM_YELLOW = "#fef3dc"
+export const SANT_BLUE_COLOR = "#0073e6"
 
