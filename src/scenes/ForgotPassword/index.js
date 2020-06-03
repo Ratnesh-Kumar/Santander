@@ -41,10 +41,8 @@ export default class ForgotPassword extends Component {
   render() {
     return (
       <View style={forgotPasswordStyle.renderContainer}>
-        <Header isleftArrowDisplay={true} title={strings('forgotScreen.ScreenTitle')} />
+        <Header isleftArrowDisplay={true} title={strings('forgotScreen.forgotTitle')} />
         {this.renderForgotTitle()}
-        {this.renderEmailTextInput()}
-        {/* {this.renderForgotPassButton()} */}
         <AppButton buttonText={strings('forgotScreen.SendEmailButtonText')}onButtonPressed={()=>{
                alert('Please check your email ')
             }}/>
@@ -92,8 +90,8 @@ export default class ForgotPassword extends Component {
   renderForgotTitle() {
     return (
       <View style={forgotPasswordStyle.forgotTitleView}>
-        <Text style={forgotPasswordStyle.forgotTitleText}>{strings('forgotScreen.forgotTitle')}</Text>
         <Text style={forgotPasswordStyle.forgotTitleSubText}>{strings('forgotScreen.forgotSubTitle')}</Text>
+        {this.renderEmailTextInput()}
       </View>
     )
   }

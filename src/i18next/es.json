@@ -17,9 +17,9 @@
   },
   "forgotScreen": {
     "forgotTitle": "olvidadoTítulo",
-    "forgotSubTitle": "Ingrese su correo electrónico para restablecer la contraseña.",
-    "SendEmailButtonText": "Enviar correo electrónico",
-    "UserTextInput": "UserEmail",
+    "forgotSubTitle": "La ayudaremos a restablecerlo y volver a la pista.",
+    "SendEmailButtonText": " Enviar restablecer enlace",
+    "UserTextInput": "correo electrónico",
     "UserTextInputError": "Por favor introduzca su correo electrónico",
     "ScreenTitle": "Digishop"
   },

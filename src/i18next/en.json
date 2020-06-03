@@ -22,9 +22,9 @@
     },
     "forgotScreen": {
       "forgotTitle": "Forgot Password",
-      "forgotSubTitle": "Please enter your email to reset the password.",
-      "SendEmailButtonText":"Submit",
-      "UserTextInput":"UserEmail",
+      "forgotSubTitle": "We'll help you reset it and get back on track.",
+      "SendEmailButtonText":"Send Reset Link",
+      "UserTextInput":"eMail",
       "UserTextInputError":"Please enter your email",
       "ScreenTitle":"Digishop"
     },
