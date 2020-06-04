@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -15,6 +15,7 @@ var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
+import ImagePicker from "react-native-image-picker";
 export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
@@ -28,7 +29,8 @@ export default class CampaignScreen extends BaseComponent {
       campaignProfitValue:'',
       campaignMarginValue:'',
       campaignSkuValue:'',
-      campaignBarcodeValue:''
+      campaignBarcodeValue:'',
+      pickedImage: compaignConstants.CAMERA_ICON,
     }
   }
 
@@ -275,12 +277,27 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
+  pickImageHandler = () => {
+    ImagePicker.showImagePicker({title: "Pick an Image", maxWidth: 800, maxHeight: 600}, res => {
+      if (res.didCancel) {
+        console.log("User cancelled!");
+      } else if (res.error) {
+        console.log("Error", res.error);
+      } else {
+        this.setState({
+          pickedImage: { uri: res.uri }
+        });
+
+      }
+    });
+  }
+
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
         <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
-          <Image source={require('../../public/images/camera_icon.png')} style={{ height: 50, width: 50, marginTop: 40 }} />
-          <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+          <Image source={this.state.pickedImage} style={{ height: 100, width: 150, marginTop: 20 }} />
+          <Text onPress={()=>this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
 
         </View>
         <View style={{ marginTop: 20 }}>
