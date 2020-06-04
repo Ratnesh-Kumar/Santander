@@ -8,7 +8,7 @@ var constants = require('../../config/Constants');
 var homeConstants = require('./homeConstants')
 import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
-import { getTermsAndConditions, getPrivacyPolicy, getRemoteConfig } from '../../config/firebaseFirestore';
+import { getRemoteConfig } from '../../config/firebaseFirestore';
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 var globalData = new GlobalData();
@@ -21,8 +21,7 @@ export default class HomeScreen extends BaseComponent {
     }
   }
 
-  async componentDidMount(){
-    
+  async componentDidMount(){    
     let isUserAlreadySignIn = await this.isSignedIn();
     if(isUserAlreadySignIn){
       let currentUserInfo = await this.getCurrentUser();
@@ -30,6 +29,7 @@ export default class HomeScreen extends BaseComponent {
         isSignOutDisplay: isUserAlreadySignIn
       })
     }
+    await getRemoteConfig();
   }
   render() {
     return (

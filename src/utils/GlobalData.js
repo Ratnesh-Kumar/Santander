@@ -9,6 +9,17 @@ var verifyEmail = false;
 var googleUserInfo = '';
 var isAddCampaignStart = false;
 
+//Add publish remote config flag
+var isEmailEnabled = false;
+var isFacebookMarketplaceEnabled = false;
+var isFacebookMessangerEnable = false;
+var isFacebookPageEnabled = false;
+var isFacebookShopEnabled = false;
+var isInstagramEnabled = false;
+var isPinterestEnabled = false;
+var isTextSmsEnabled = false;
+var isWhatsAppEnable = false;
+
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -57,6 +68,78 @@ export class GlobalData extends Component {
 
     isAddCampaignStart(){
         return isAddCampaignStart;
+    }
+
+    setEmailEnabled(flag){
+        isEmailEnabled = flag;
+    }
+
+    isEmailEnabled(){
+        return isEmailEnabled;
+    }
+
+    setWhatsAppEnable(flag){
+        isWhatsAppEnable = flag;
+    }
+    
+    isWhatsAppEnable(){
+        return isWhatsAppEnable;
+    }
+    
+    setTextSmsEnabled(flag){
+        isTextSmsEnabled = flag;
+    }
+    
+    isTextSmsEnabled(){
+        return isTextSmsEnabled;
+    }
+    
+    setPinterestEnabled(flag){
+        isPinterestEnabled = flag;
+    }
+    
+    isPinterestEnabled(){
+        return isPinterestEnabled;
+    }
+    
+    setInstagramEnabled(flag){
+        isInstagramEnabled = flag;
+    }
+    
+    isInstagramEnabled(){
+        return isInstagramEnabled;
+    }
+    
+    setFacebookShopEnabled(flag){
+        isFacebookShopEnabled = flag;
+    }
+    
+    isFacebookShopEnabled(){
+        return isFacebookShopEnabled;
+    }
+    
+    setFacebookPageEnabled(flag){
+        isFacebookPageEnabled = flag;
+    }
+    
+    isFacebookPageEnabled(){
+        return isFacebookPageEnabled;
+    }
+    
+    setFacebookMessangerEnable(flag){
+        isFacebookMessangerEnable = flag;
+    }
+    
+    isFacebookMessangerEnable(){
+        return isFacebookMessangerEnable;
+    }
+    
+    setFacebookMarketplaceEnabled(flag){
+        isFacebookMarketplaceEnabled = flag;
+    }
+    
+    isFacebookMarketplaceEnabled(){
+        return isFacebookMarketplaceEnabled;
     }
 }
 
