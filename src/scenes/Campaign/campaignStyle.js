@@ -96,7 +96,6 @@ export default (styles = StyleSheet.create({
   },
   cardViewStyle: {
     backgroundColor: colorConstants.WHITE_COLOR,
-    height: 180,
     marginTop: 50,
     marginLeft: 5,
     marginRight: 5

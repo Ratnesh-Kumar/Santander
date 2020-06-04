@@ -444,8 +444,10 @@ export default class TextInputMaterial extends PureComponent {
             placeholderColor={placeholderColor}
             error=""
             refsValue={this.props.refsValue}
+            onBarcodeTapped={() => {(typeof this.props.onBarcodeTapped == 'function')?this.props.onBarcodeTapped():''}}
             errorColor={this.errorColorCode}
             activeColor={errorActiveColor}
+            isBarcodeDisplay={this.props.isBarcodeDisplay}
             onFocus={() => {
               this.setFocus();
             }}
