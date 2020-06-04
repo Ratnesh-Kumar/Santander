@@ -154,7 +154,14 @@
       "shipProductsSwitch":"Ship products",
       "shippingCompany":"Shipping company",
       "estimateProfit":"Estimate profit"
+    },
+    "shopTab":{
+      "ShopSettingsTitle":"Shop Settings",
+      "BusinessProfileTitle":"Business Profile",
+      "BusinessSettings":"Business Settings",
+      "EnablePayment":"Enable Payment",
+      "Delete":"Delete My Account",
+      "logout":"Logout"
     }
-
     
 }

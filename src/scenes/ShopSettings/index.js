@@ -32,8 +32,7 @@ export default class ShopSettingScreen extends BaseComponent {
     return (
       <View style={shopSettingStyle.container}>
         <Header title={strings('shopSettingsScreen.ShopSettingsTitle')} isCrossIconVisible={false} />
-        <View style={shopSettingStyle.viewContainer}>
-          <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 50}}>
+          <ScrollView keyboardShouldPersistTaps={'always'}>
             {this.renderPaymentBox()}
             {this.renderTaxBox()}
             {this.renderDiscountBox()}
@@ -43,7 +42,6 @@ export default class ShopSettingScreen extends BaseComponent {
                 Actions.buisnessProfile();
             }}/>
           </ScrollView>
-        </View>
       </View>
     );
   }
