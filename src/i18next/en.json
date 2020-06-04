@@ -8,8 +8,8 @@
       "digiShopTitle": "DigiShop",
       "digiShopSubTitle": "Sign in to Santander Digital accounts to\naccess all our products.",
       "forgotPasswordTitle": "Forgot Password?",
-      "SignInButtonText":"Sign In with email",
-      "SignUpButttonText":"Sign Up",
+      "SignInButtonText":"Sign in with email",
+      "SignUpButttonText":"Sign up",
       "UpdatedText":"Updated on 1 January 2020",
       "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
       "TermsConditionTitle1":" Terms ",
@@ -23,9 +23,9 @@
     },
     "forgotScreen": {
       "forgotTitle": "Forgot Password",
-      "forgotSubTitle": "Please enter your email to reset the password.",
-      "SendEmailButtonText":"Submit",
-      "UserTextInput":"UserEmail",
+      "forgotSubTitle": "We'll help you reset it and get back on track.",
+      "SendEmailButtonText":"Send Reset Link",
+      "UserTextInput":"eMail",
       "UserTextInputError":"Please enter your email",
       "ScreenTitle":"Digishop"
     },
@@ -135,6 +135,25 @@
       "BuisnessNameTextInputError":"Please enter your Business Name",
       "BuisnessTaxIdTextInput":"Buisness Tax Id",
       "BuisnessTaxIdTextInputError":"Please enter your Buisness Tax Id"
+    },
+    "shopSettingsScreen":{
+      "ShopSettingsTitle":"Shop Settings",
+      "PaymentProcessor":"Payment processor",
+      "nextButtonText": "Next",
+      "profitMarginInput":"Profit margin (%)",
+      "shippingCostInput":"Shipping cost",
+      "handlingCostInput":"Handling cost",
+      "defaultsTitle":"DEFAULTS",
+      "paymentDropDownText":"Payment Processor",
+      "taxInventory":"Tax Inventory",
+      "taxOnSales":"Tax on sales",
+      "taxTypeInput":"Tax type(GST,VAT etc.)",
+      "flatTaxSwitch":"Flat tax",
+      "taxRateInput":"Tax rate(%)",
+      "showDiscountSwitch":"Show discount",
+      "shipProductsSwitch":"Ship products",
+      "shippingCompany":"Shipping company",
+      "estimateProfit":"Estimate profit"
     }
 
     

@@ -27,13 +27,13 @@ export default (styles = StyleSheet.create({
     paddingTop:3, paddingBottom:5,borderWidth:2,borderRadius: 20, borderColor:'transparent'
   },
   forgotTitleView:{
-    height: constants.SCREEN_HEIGHT / 3, justifyContent: 'center', alignItems: 'center'
+    alignItems: 'center'
   },
   forgotTitleText:{
     fontSize: 18, color: colorConstant.BLACK_COLOR ,  fontWeight: 'bold'
   },
   forgotTitleSubText:{
-    fontSize: 15, color: colorConstant.BLACK_COLOR , margin: 30 , textAlign:'center'
+    fontSize: 15, color: colorConstant.BLACK_COLOR , textAlign:'center', marginTop:40 , marginBottom: 20
   },
   validFormViewContainer:{
     alignItems: 'center'

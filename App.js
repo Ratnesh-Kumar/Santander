@@ -21,6 +21,7 @@ import FBaseReadItems from './src/scenes/FirebaseRW/FBaseReadItems';
 import TabIcon from './src/TabIcon';
 import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
+import ShopSettingScreen from './src/scenes/ShopSettings'
 import RegisterCreateCampaign from './src/scenes/Campaign/registerCreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 import BuisnessProfile from './src/scenes/BuisnessProfile';
@@ -73,6 +74,8 @@ export default class App extends Component {
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
           <Scene key="buisnessProfile" component={BuisnessProfile} title="buisnessProfile" duration={0} />
+          <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
+
           {this.renderTabbar()}
         </Scene>
       </Router>

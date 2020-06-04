@@ -46,7 +46,7 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderCategoryTagView()}
             {this.renderVariantsQantityView()}
           </View>
-          <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
+          <AppButton isLightTheme={false}  buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
             Actions.createCampaignShare()
           }} />
         </ScrollView>

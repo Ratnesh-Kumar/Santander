@@ -143,12 +143,14 @@ export default class LoginView extends BaseComponent {
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
         {/* {this.renderSignInButton()} */}
-        <AppButton buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
+        <AppButton isLightTheme={false}   buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
                 Actions.tabbar();
-               
             }}/>
         {this.renderTermsView()}
-        {this.renderSignUpButton()}
+        {/* {this.renderSignUpButton()} */}
+        <AppButton isLightTheme={true}   buttonText={strings('loginScreen.SignUpButttonText')} onButtonPressed={()=>{
+                Actions.register();
+            }}/>
         {this.renderUpdateText()}
         {/* {this.renderTouchIdAndFaceId()}
         <ConfirmGoogleCaptcha
@@ -362,7 +364,7 @@ export default class LoginView extends BaseComponent {
   }
   renderSignUpButton() {
     return (
-      <View style={loginStyle.loginSumbitButtonView}>
+      <View style={loginStyle.loginSumbitButtonView}> 
         <TouchableOpacity
           style={loginStyle.signInButton}
           onPress={() => Actions.register()}

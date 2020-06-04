@@ -40,13 +40,13 @@ export default class CampaignScreen extends BaseComponent {
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <View>
-          <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 50}}>
+          <ScrollView keyboardShouldPersistTaps={'always'} style={campaignStyle.scrollViewStyle}>
             {this.renderCampaignName()}
             {this.createCameraView()}
             {this.renderPriceView()}
             {this.renderCostView()}
             {this.renderSkuAndBarcode()}
-            <AppButton buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={()=>{
+            <AppButton isLightTheme={false}  buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={()=>{
                 Actions.createCampaign();
             }}/>
           </ScrollView>

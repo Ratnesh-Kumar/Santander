@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 var constants = require('../../config/Constants');
 var colorConstants = require('../../config/colorConstant')
 const MARGIN = 50
@@ -8,22 +8,7 @@ export default (styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colorConstants.WHITE_COLOR,
   },
-  viewContainer: {
-    marginLeft: 20, marginRight: 20,
-  },
-  registerCreateCampaignContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  scrollViewStyle:{
-    ...Platform.select({
-      ios: {
-        marginBottom: 100
-      },
-      android: {
-        marginBottom: 50
-      }
-    })
+  renderContainer: {
   },
   seperateLine: {
     flex: 1,
@@ -76,29 +61,5 @@ export default (styles = StyleSheet.create({
   },
   bottomTextStyle:{
     fontSize: 15, color: colorConstants.BLACK_COLOR ,  textAlign:'center',padding:30 ,
-  },
-  UpdatedView: {
-    alignItems: 'center', flex: 1
-  },
-  createShopButtonView: {
-    paddingLeft: 20, paddingRight: 20, marginTop:10
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colorConstants.WHITE_COLOR,
-    height: MARGIN,
-    borderColor: colorConstants.SANT_RED_COLOR,
-    paddingTop: 3, paddingBottom: 5, borderWidth: 1, borderRadius: 25
-  },
-  createShopButtonText: {
-    color: colorConstants.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
-  },
-  cardViewStyle: {
-    backgroundColor: colorConstants.WHITE_COLOR,
-    height: 180,
-    marginTop: 50,
-    marginLeft: 5,
-    marginRight: 5
   }
 }));
