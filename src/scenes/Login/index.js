@@ -149,12 +149,13 @@ export default class LoginView extends BaseComponent {
         {this.renderTermsView()}
         {/* {this.renderSignUpButton()} */}
         <AppButton isLightTheme={true}   buttonText={strings('loginScreen.SignUpButttonText')} onButtonPressed={()=>{
+                //Actions.shopSetting();
                 Actions.register();
             }}/>
         {this.renderUpdateText()}
         {/* {this.renderTouchIdAndFaceId()}
         <ConfirmGoogleCaptcha
-          ref={_ref => this.captchaForm = _ref}
+          ref={_ref => this.captchaForm = _ref
           siteKey={siteKey}
           baseUrl={baseUrl}
           languageCode='en'
@@ -261,6 +262,7 @@ export default class LoginView extends BaseComponent {
   }
 
   renderValidationForm() {
+    var imgSource = this.state.press? constants.EYE_ICON_VISIBLE : constants.EYE_ICON;
     return (
       <KeyboardAvoidingView
         behavior="height"
@@ -316,12 +318,12 @@ export default class LoginView extends BaseComponent {
                 onFocus={() => this.inputFocused.bind(this)}
               />
             </View>
-            {/* <TouchableOpacity
+            <TouchableOpacity
               activeOpacity={0.7}
               style={loginStyle.btnEye}
               onPress={this.showPass}>
-              <Image source={constants.EYE_ICON} style={loginStyle.iconEye} />
-            </TouchableOpacity>  */}
+              <Image source={imgSource} style={loginStyle.iconEye} />
+            </TouchableOpacity> 
           </View>
         </View>
       </KeyboardAvoidingView>

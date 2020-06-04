@@ -40,7 +40,7 @@ export default class ShopSettingScreen extends BaseComponent {
             {this.renderDefaultsText()}
             {this.renderDefaultsTextInput()}
             <AppButton buttonText={strings('shopSettingsScreen.nextButtonText')} onButtonPressed={()=>{
-                Actions.createCampaign();
+                Actions.buisnessProfile();
             }}/>
           </ScrollView>
         </View>

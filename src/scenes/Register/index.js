@@ -198,7 +198,7 @@ export default class RegisterView extends Component {
                 }}
               />
             </View> */}
-
+                        
                         <View style={registerStyle.validFormSecondFieldView}>
                             <TextInputMaterial
                                 secureTextEntry={this.state.hidden}
@@ -228,6 +228,7 @@ export default class RegisterView extends Component {
                             />
 
                         </View>
+                        
                         {/* <TouchableOpacity style={{flex:1, position: 'absolute', right: 30, top: 165, alignSelf: 'center', height: 10, width: 10, justifyContent: 'center', zIndex: 999}} onPress={() => this.setPasswordVisibility()}>
               <Image source={this.state.passwordHiddenIcon} />
             </TouchableOpacity>   */}
@@ -240,12 +241,12 @@ export default class RegisterView extends Component {
         return (
             <KeyboardAvoidingView
                 behavior="height"
-                style={registerStyle.validFormViewConfirmPassContainer}>
+                style={registerStyle.validFormViewConfirmPassContainer}>  
                 <View style={registerStyle.inputWrapper}>
+                <View style={registerStyle.validFormSubView}>
                         <TextInputMaterial
                             secureTextEntry={this.state.hiddenConfirm}
                             blurText={this.state.confirmPass}
-                            //refsValue={commonConstants.TEXT_INPUT_PASSWORD}
                             showIcon={false}
                             value={this.state.confirmPass}
                             textInputName={this.state.confirmPass}
@@ -271,6 +272,7 @@ export default class RegisterView extends Component {
                     {/* <TouchableOpacity style={{flex:1, position: 'absolute', right: 30, top: 145, alignSelf: 'center', height: 1, width: 1, justifyContent: 'center', zIndex: 999}} onPress={() => this.setPasswordVisibility()}>
     <Image source={this.state.passwordHiddenIcon} />
         </TouchableOpacity>   */}
+                </View>
                 </View>
             </KeyboardAvoidingView>
         )
