@@ -27,17 +27,17 @@ export default class BuisnessProfileView extends Component {
         this.state = {
             documentNum: '',
             expDate: '',
-            postalCode:'',
-            postalState:'',
-            city:'',
-            address:'',
-            nationality:'',
-            lname:'',
-            fname:'',
-            iban:'',
-            phone:'',
-            buisnessName:'',
-            buisnesstaxId:'',
+            postalCode: '',
+            postalState: '',
+            city: '',
+            address: '',
+            nationality: '',
+            lname: '',
+            fname: '',
+            iban: '',
+            phone: '',
+            buisnessName: '',
+            buisnesstaxId: '',
 
         }
     }
@@ -134,7 +134,7 @@ export default class BuisnessProfileView extends Component {
                     </View>
                 </View>
                 <View style={buisnessStyle.inputWrapper}>
-                <View style={buisnessStyle.validFormSecondFieldView}>
+                    <View style={buisnessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.iban}
                             refsValue={strings('BuisnessProfile.IBANTextInput')}
@@ -159,7 +159,7 @@ export default class BuisnessProfileView extends Component {
                             }}
                         />
                     </View>
-                    </View>
+                </View>
             </KeyboardAvoidingView>
         )
 
@@ -174,7 +174,7 @@ export default class BuisnessProfileView extends Component {
                     <View style={buisnessStyle.validFormSubView}>
                         <Text style={{ fontSize: 18 }}>Representative Information</Text>
                     </View>
-                    
+
                     <View style={buisnessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.fname}
@@ -307,9 +307,9 @@ export default class BuisnessProfileView extends Component {
 
     renderSwitchFields(title) {
         return (
-            <View style={{  }}>
+            <View style={{}}>
                 <SwitchTextInput
-                   isDropDownVisbile={true}
+                    isDropDownVisbile={true}
                     title={title}
                 />
             </View>
@@ -459,17 +459,21 @@ export default class BuisnessProfileView extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps={'always'} style={buisnessStyle.renderContainer}>
+            <View style={buisnessStyle.container}>
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
-                {this.renderBuisnessForm()}
-                {this.renderAddressForm()}
-                {this.renderPinCode()}
-                {this.renderDocuments()}
-                {this.renderDocumentDetail()}
-                <AppButton buttonText={strings('BuisnessProfile.NextButton')} onButtonPressed={() => {
-                    Actions.tabbar();
-                }} />
-            </ScrollView>
+                <View style={buisnessStyle.viewContainer}>
+                <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 200}}>
+                        {this.renderBuisnessForm()}
+                        {this.renderAddressForm()}
+                        {this.renderPinCode()}
+                        {this.renderDocuments()}
+                        {this.renderDocumentDetail()}
+                        <AppButton buttonText={strings('BuisnessProfile.NextButton')} onButtonPressed={() => {
+                            Actions.tabbar();
+                        }} />
+                    </ScrollView>
+                </View>
+            </View>
         );
     }
 
