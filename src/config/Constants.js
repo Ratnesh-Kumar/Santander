@@ -23,7 +23,8 @@ export const LABEL_PASSWORD = "Password";
 export const ERROR_TEXT_INPUT_USERNAME = "Please enter your username/email";
 export const TEXT_INPUT_USERNAME = "loginInputName";
 export const LABEL_USERNAME = "Username";
-export const EYE_ICON = require('../public/images/eye_icon.png');
+export const EYE_ICON = require('../public/images/eye_invisible.png');
+export const EYE_ICON_VISIBLE = require('../public/images/eye_visible.png');
 export const DEFAULT_CITY_IMG = 'https://images.pexels.com/photos/59519/pexels-photo-59519.jpeg?w=1260&h=750&dpr=2&auto=compress&cs=tinysrgb';
 export const PRIMARY_TEXT_COLOR = "#e6e6ff";
 

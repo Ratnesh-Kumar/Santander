@@ -29,7 +29,7 @@
   },
   "createCampaign": {
     "screenTitle": "Crear campaña",
-    "campaignTextInput": "Titulo del producto",
+    "campaignTextInput": "Título",
     "priceTextInput": "Precio",
     "salePriceTextInput": "Precio de venta",
     "costTextInput": "Costo (opcional)",
