@@ -37,7 +37,6 @@ export function getRemoteConfig() {
             .then(documentSnapshot => {
                 if (documentSnapshot.exists) {
                     var data = documentSnapshot.data();
-                    console.log('getRemoteConfig data: ', data);
                     remoteConfigHandle(data)
                     resolve(data)
                 }else{
@@ -46,10 +45,18 @@ export function getRemoteConfig() {
             });
     });
 }
-
 function remoteConfigHandle(data){
     if(isValidString(data)){
         globalData.setVerifyEmail(data.verifyEmail);
+        globalData.setEmailEnabled(data.isEmailEnabled);
+        globalData.setFacebookMarketplaceEnabled(data.isFacebookMarketplaceEnabled)
+        globalData.setFacebookMessangerEnable(data.isFacebookMessangerEnable)
+        globalData.setFacebookPageEnabled(data.isFacebookPageEnabled)
+        globalData.setFacebookShopEnabled(data.isFacebookShopEnabled)
+        globalData.setInstagramEnabled(data.isInstagramEnabled)
+        globalData.setPinterestEnabled(data.isPinterestEnabled)
+        globalData.setTextSmsEnabled(data.isTextSmsEnabled)
+        globalData.setWhatsAppEnable(data.isWhatsAppEnable)
     }
 }
 
