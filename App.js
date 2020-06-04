@@ -24,7 +24,7 @@ import CreateCampaign from './src/scenes/Campaign/createCampaign';
 import ShopSettingScreen from './src/scenes/ShopSettings'
 import RegisterCreateCampaign from './src/scenes/Campaign/registerCreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
-import BuisnessProfile from './src/scenes/BuisnessProfile';
+import BusinessProfile from './src/scenes/BusinessProfile';
 import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
 import {
@@ -74,7 +74,7 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
-          <Scene key="buisnessProfile" component={BuisnessProfile} title="buisnessProfile" duration={0} />
+          <Scene key="buisnessProfile" component={BusinessProfile} title="buisnessProfile" duration={0} />
           <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
 
           {this.renderTabbar()}
