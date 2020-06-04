@@ -35,7 +35,7 @@
     },
     "createCampaign": {
       "screenTitle": "Create Campaign",
-      "campaignTextInput":"Business tax ID",
+      "campaignTextInput":"Product Title",
       "priceTextInput":"Price",
       "salePriceTextInput":"Sale Price",
       "costTextInput":"Cost (Optional)",
@@ -82,7 +82,7 @@
     "registerScreen":{
       "digiShopTitle": "DigiShop",
       "UpdatedText":"Updated on 1 January 2020",
-      "TermsConditionTitle":"By clicking Sign In with Email, you agree\n to our",
+      "TermsConditionTitle":"By clicking Sign Up with Email, you agree\n to our",
       "TermsConditionTitle1":" Terms ",
       "TermsConditionTitle2":"and have acknowledged\n our",
       "TermsConditionSubTitle":" privacy ",
