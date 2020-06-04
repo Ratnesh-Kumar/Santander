@@ -25,10 +25,10 @@ export default class TermsScreen extends Component {
   async componentDidMount(){
     let termStr = "";
     if(this.props.selectedTitle === 'terms'){
-      termStr = await getTermsAndConditions(constants.LOCALE_ES);
+      termStr = await getTermsAndConditions(constants.LOCALE_EN);
     }
     else{
-      termStr = await getPrivacyPolicy(constants.LOCALE_ES)
+      termStr = await getPrivacyPolicy(constants.LOCALE_EN)
     }
     this.setState({termsString:termStr })
     

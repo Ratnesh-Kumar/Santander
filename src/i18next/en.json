@@ -35,7 +35,7 @@
     },
     "createCampaign": {
       "screenTitle": "Create Campaign",
-      "campaignTextInput":"Business tax ID",
+      "campaignTextInput":"Product Title",
       "priceTextInput":"Price",
       "salePriceTextInput":"Sale Price",
       "costTextInput":"Cost (Optional)",
