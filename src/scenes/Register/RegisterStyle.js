@@ -13,6 +13,9 @@ export default (styles = StyleSheet.create({
         marginTop: 50,
         alignItems: 'center'
     },
+    validFormSubView:{
+        paddingLeft: 15, paddingRight: 15
+      },
     validFormViewConfirmPassContainer: {
         marginTop: 20,
         alignItems: 'center'
@@ -55,16 +58,13 @@ export default (styles = StyleSheet.create({
     },
     input: {
         backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: DEVICE_WIDTH - 40,
+        width: constants.SCREEN_WIDTH - 40,
         height: 40,
         marginHorizontal: 20,
         paddingLeft: 45,
         borderRadius: 20,
         color: '#000000',
         marginTop: 15,
-    },
-    inputWrapper: {
-        width: DEVICE_WIDTH - 20,
     },
     closeIcon: {
         flexDirection: 'row', alignItems: 'center', marginLeft: 20
