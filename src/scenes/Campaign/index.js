@@ -28,13 +28,23 @@ export default class CampaignScreen extends BaseComponent {
       campaignProfitValue:'',
       campaignMarginValue:'',
       campaignSkuValue:'',
-      campaignBarcodeValue:''
+      campaignBarcodeValue:'',
+      isBarcodeDisplay: false
     }
   }
 
   async componentDidMount() {
 
   }
+
+  componentWillReceiveProps(props){
+    if(this.isValidString(props.qrcodeData)){
+      this.setState({
+        campaignBarcodeValue: props.qrcodeData
+      })
+    }
+  }
+
   render() {
     return (
       <View style={campaignStyle.container}>
@@ -108,6 +118,9 @@ export default class CampaignScreen extends BaseComponent {
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
               keyboardType="email-address"
+              editable={false}
+              isBarcodeDisplay={true}
+              onBarcodeTapped={()=>{Actions.qrCode({title: "Barcode Scanner"})}}
               onSubmitEditing={event => {
               }}
             />
