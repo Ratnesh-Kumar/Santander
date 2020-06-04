@@ -21,7 +21,7 @@ export default class SwitchTextInput extends Component {
     render() {
         return(
             <View
-            style={switchTextInputStyle.containerStyle}>
+            style={this.props.isDropDownVisbile?switchTextInputStyle.containerStyleWithBorder:switchTextInputStyle.containerStyle}>
             <Text style={switchTextInputStyle.textStyle}>{this.props.title}</Text>  
             {this.renderSwitch(this.props.isDropDownVisbile)}
         </View>

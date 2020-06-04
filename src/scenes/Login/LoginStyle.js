@@ -47,7 +47,9 @@ export default (styles = StyleSheet.create({
     width: 25,
     height: 25,
     //tintColor: 'rgba(0,0,0,0.2)',
-    marginTop:-35
+    marginTop:-35,
+    marginRight:5,
+    resizeMode:'contain'
   },
   button: {
     alignItems: 'center',
