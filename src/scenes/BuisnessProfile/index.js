@@ -307,10 +307,9 @@ export default class BuisnessProfileView extends Component {
 
     renderSwitchFields(title) {
         return (
-            <View style={{ paddingLeft: 22, paddingTop: 10, paddingRight: 20 }}>
+            <View style={{  }}>
                 <SwitchTextInput
-                    defaultSwitchValue={true}
-                    onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
+                   isDropDownVisbile={true}
                     title={title}
                 />
             </View>
