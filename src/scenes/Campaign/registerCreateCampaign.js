@@ -30,20 +30,19 @@ export default class CreateCampaignScene extends BaseComponent {
                 {strings("createCampaign.startRightAway")}
               </Text>
             </View>
-            <AppButton isLightTheme={true}   buttonText={strings('createCampaign.createFirstCampaign')} onButtonPressed={()=>{
-                globalData.setAddCampaignStart(true)
-                Actions.tabbar();
-                Actions.campaign();
-            }}/>
-            {/* {this.renderCreateFirstCampaignButton()} */}
+            <AppButton isLightTheme={true} buttonText={strings('createCampaign.createFirstCampaign')} onButtonPressed={() => {
+              globalData.setAddCampaignStart(true)
+              Actions.tabbar();
+              Actions.campaign();
+            }} />
+            <TouchableOpacity style={{ marginBottom: 20, alignItems:'center' }} onPress={() => {
+              globalData.setAddCampaignStart(false)
+              Actions.tabbar()
+            }}>
+              <Text style={{ fontSize: 18, color: colorConstant.SANT_LIGHT_BLUE, fontWeight:'bold' }}>{strings("createCampaign.skipStep")}</Text>
+            </TouchableOpacity>
           </CardView>
-          <TouchableOpacity style={{ marginTop: 10 }} onPress={() => {
-            globalData.setAddCampaignStart(false)
-            Actions.tabbar()
 
-          }}>
-            <Text style={{ fontSize: 18, fontStyle: 'italic', color: colorConstant.GREY_DARK_COLOR_A }}>{strings("createCampaign.skipStep")}</Text>
-          </TouchableOpacity>
         </View>
       </View>
     );

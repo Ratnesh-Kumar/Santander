@@ -24,8 +24,9 @@ import CreateCampaign from './src/scenes/Campaign/createCampaign';
 import ShopSettingScreen from './src/scenes/ShopSettings'
 import RegisterCreateCampaign from './src/scenes/Campaign/registerCreateCampaign';
 import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
-import BuisnessProfile from './src/scenes/BuisnessProfile';
+import BusinessProfile from './src/scenes/BusinessProfile';
 import RegisterScreen from './src/scenes/Register';
+import QRCode from './src/scenes/QRCode';
 import {
   StyleSheet
 } from 'react-native'
@@ -73,7 +74,6 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
-          
 
           {this.renderTabbar()}
         </Scene>
@@ -98,7 +98,7 @@ export default class App extends Component {
           <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
           <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
           <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar/>
-          
+          <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar/>
         </Scene>
 
         <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>

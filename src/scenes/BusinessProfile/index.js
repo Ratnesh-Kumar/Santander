@@ -12,8 +12,8 @@ import PropTypes from 'prop-types';
 import Constants from '../../config/Constants';
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
-import buisnessStyle from './BuisnessProfileStyles';
-import buisnessConst from './BuisnessProfileConstants';
+import businessStyle from './BusinessProfileStyles';
+import buisnessConst from './BusinessProfileConstants';
 import Header from '../../components/Header';
 import AppButton from '../../components/AppButton';
 import SwitchTextInput from '../../components/SwitchTextInput';
@@ -21,7 +21,7 @@ var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 
 
-export default class BuisnessProfileView extends Component {
+export default class BusinessProfileView extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -45,9 +45,9 @@ export default class BuisnessProfileView extends Component {
         return (
             <KeyboardAvoidingView
                 behavior="height"
-                style={buisnessStyle.validFormViewContainer}>
-                <View style={buisnessStyle.inputWrapper}>
-                    <View style={buisnessStyle.validFormSubView}>
+                style={businessStyle.validFormViewContainer}>
+                <View style={businessStyle.inputWrapper}>
+                    <View style={businessStyle.validFormSubView}>
                         <TextInputMaterial
                             blurText={this.state.buisnesstaxId}
                             refsValue={strings('BuisnessProfile.BuisnessTaxIdTextInput')}
@@ -59,7 +59,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.buisnesstaxId}
@@ -73,8 +73,8 @@ export default class BuisnessProfileView extends Component {
                         />
                     </View>
                 </View>
-                <View style={buisnessStyle.inputWrapper}>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                <View style={businessStyle.inputWrapper}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.buisnessName}
                             refsValue={strings('BuisnessProfile.BuisnessNameTextInput')}
@@ -86,7 +86,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.buisnessName}
@@ -106,8 +106,8 @@ export default class BuisnessProfileView extends Component {
                 {this.renderSwitchFields(strings('BuisnessProfile.CountryText'))}
                 {this.renderSwitchFields(strings('BuisnessProfile.IndustryTypeText'))}
 
-                <View style={buisnessStyle.inputWrapper}>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                <View style={businessStyle.inputWrapper}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.phone}
                             refsValue={strings('BuisnessProfile.PhoneTextInput')}
@@ -119,7 +119,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.phone}
@@ -133,8 +133,8 @@ export default class BuisnessProfileView extends Component {
                         />
                     </View>
                 </View>
-                <View style={buisnessStyle.inputWrapper}>
-                <View style={buisnessStyle.validFormSecondFieldView}>
+                <View style={businessStyle.inputWrapper}>
+                <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.iban}
                             refsValue={strings('BuisnessProfile.IBANTextInput')}
@@ -146,7 +146,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.iban}
@@ -169,13 +169,13 @@ export default class BuisnessProfileView extends Component {
         return (
             <KeyboardAvoidingView
                 behavior="height"
-                style={buisnessStyle.validAddressViewContainer}>
-                <View style={buisnessStyle.inputWrapper}>
-                    <View style={buisnessStyle.validFormSubView}>
+                style={businessStyle.validAddressViewContainer}>
+                <View style={businessStyle.inputWrapper}>
+                    <View style={businessStyle.validFormSubView}>
                         <Text style={{ fontSize: 18 }}>Representative Information</Text>
                     </View>
                     
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.fname}
                             refsValue={strings('BuisnessProfile.FirstNameTextInput')}
@@ -187,7 +187,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.fname}
@@ -200,7 +200,7 @@ export default class BuisnessProfileView extends Component {
                             }}
                         />
                     </View>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.lname}
                             refsValue={strings('BuisnessProfile.LastNameTextInput')}
@@ -212,7 +212,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.lname}
@@ -225,7 +225,7 @@ export default class BuisnessProfileView extends Component {
                             }}
                         />
                     </View>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.nationality}
                             refsValue={strings('BuisnessProfile.NationalityTextInput')}
@@ -237,7 +237,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.nationality}
@@ -250,7 +250,7 @@ export default class BuisnessProfileView extends Component {
                             }}
                         />
                     </View>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.address}
                             refsValue={strings('BuisnessProfile.AddressTextInput')}
@@ -262,7 +262,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.address}
@@ -275,7 +275,7 @@ export default class BuisnessProfileView extends Component {
                             }}
                         />
                     </View>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.city}
                             refsValue={strings('BuisnessProfile.CityTextInput')}
@@ -287,7 +287,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.city}
@@ -318,10 +318,10 @@ export default class BuisnessProfileView extends Component {
 
     renderPinCode() {
         return (
-            <KeyboardAvoidingView style={buisnessStyle.validFormViewContainerZip}>
+            <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
 
-                <View style={buisnessStyle.inputWrapperSmall}>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+                <View style={businessStyle.inputWrapperSmall}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.postalState}
                             refsValue={strings('BuisnessProfile.StateTextInput')}
@@ -333,7 +333,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.postalState}
@@ -347,8 +347,8 @@ export default class BuisnessProfileView extends Component {
                         />
                     </View>
                 </View>
-                <View style={buisnessStyle.inputWrapperSmall}>
-                    <View style={buisnessStyle.validFormSecondFieldViewZip}>
+                <View style={businessStyle.inputWrapperSmall}>
+                    <View style={businessStyle.validFormSecondFieldViewZip}>
                         <TextInputMaterial
                             blurText={this.state.postalCode}
                             refsValue={strings('BuisnessProfile.PostalCodeTextInput')}
@@ -360,7 +360,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.postalCode}
@@ -382,9 +382,9 @@ export default class BuisnessProfileView extends Component {
         return (
             <KeyboardAvoidingView
                 behavior="height"
-                style={buisnessStyle.validAddressViewContainer}>
-                <View style={buisnessStyle.inputWrapper}>
-                    <View style={buisnessStyle.validFormSubView}>
+                style={businessStyle.validAddressViewContainer}>
+                <View style={businessStyle.inputWrapper}>
+                    <View style={businessStyle.validFormSubView}>
                         <Text style={{ fontSize: 18 }}>{strings('BuisnessProfile.DocumentText')}</Text>
                     </View>
                 </View>
@@ -397,9 +397,9 @@ export default class BuisnessProfileView extends Component {
 
     renderDocumentDetail() {
         return (
-            <KeyboardAvoidingView style={buisnessStyle.validFormViewContainerZip}>
-                <View style={buisnessStyle.inputWrapperSmall}>
-                    <View style={buisnessStyle.validFormSecondFieldView}>
+            <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
+                <View style={businessStyle.inputWrapperSmall}>
+                    <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.documentNum}
                             refsValue={strings('BuisnessProfile.DocumentTextInput')}
@@ -411,7 +411,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.documentNum}
@@ -424,8 +424,8 @@ export default class BuisnessProfileView extends Component {
                         />
                     </View>
                 </View>
-                <View style={buisnessStyle.inputWrapperSmall}>
-                    <View style={buisnessStyle.validFormSecondFieldViewZip}>
+                <View style={businessStyle.inputWrapperSmall}>
+                    <View style={businessStyle.validFormSecondFieldViewZip}>
                         <TextInputMaterial
                             blurText={this.state.expDate}
                             refsValue={strings('BuisnessProfile.ExpiryTextInput')}
@@ -437,7 +437,7 @@ export default class BuisnessProfileView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            style={buisnessStyle.input}
+                            style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.expDate}
@@ -459,7 +459,7 @@ export default class BuisnessProfileView extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps={'always'} style={buisnessStyle.renderContainer}>
+            <ScrollView keyboardShouldPersistTaps={'always'} style={businessStyle.renderContainer}>
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
                 {this.renderBuisnessForm()}
                 {this.renderAddressForm()}
@@ -486,7 +486,7 @@ export default class BuisnessProfileView extends Component {
     }
 
 }
-BuisnessProfileView.propTypes = {
+BusinessProfileView.propTypes = {
     source: PropTypes.number.isRequired,
     placeholder: PropTypes.string.isRequired,
     secureTextEntry: PropTypes.bool,

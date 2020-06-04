@@ -1,5 +1,5 @@
 import React, {PureComponent} from 'react';
-import {View, TextInput, Platform, Image} from 'react-native';
+import {View, TextInput, Platform, Image, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import Label from './Label';
 import Placeholder from './Placeholder';
@@ -239,7 +239,23 @@ export default class extends PureComponent {
   }
   renderIcon() {
     let showIcon = this.props.showIcon == false ? false : true;
-    if (showIcon) {
+    if(this.props.isBarcodeDisplay){
+      return (
+        <TouchableOpacity onPress={()=>{
+          (typeof this.props.onBarcodeTapped == 'function')?this.props.onBarcodeTapped():''
+        }}
+          testID={'textinputcomponent_view_iconCrossCheck'}
+          accessibilityLabel={'textinputcomponent_view_iconCrossCheck'}
+          style={{position: 'absolute', right: 10, top: 10}}>
+          <Image
+            testID={'textinputcomponent_image_iconCrossCheck'}
+            accessibilityLabel={'textinputcomponent_image_iconCrossCheck'}
+            style={{width: 32, height: 32}}
+            source={require('../../.././public/images/barcode_icon.png')}
+          />
+        </TouchableOpacity>
+      );
+    }else if (showIcon) {
       if (
         this.props.underlineColor == colorConstants.MATERIAL_DESIGN_ERROR_COLOR
       ) {
