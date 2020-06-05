@@ -162,6 +162,15 @@
       "EnablePayment":"Enable Payment",
       "Delete":"Delete My Account",
       "logout":"Logout"
+    },
+    "editOrder":{
+      "title":"Manage Order",
+      "orderText":"Order# ",
+      "productsText":"Products",
+      "SkuText":"SKU - ",
+      "QtyText":"Quantity - ",
+      "AmtText":"Amount - "
+      
     }
     
 }

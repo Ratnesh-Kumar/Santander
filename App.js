@@ -28,6 +28,8 @@ import BusinessProfile from './src/scenes/BusinessProfile';
 import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
 import MyOrder from './src/scenes/MyOrder';
+import EditOrder from './src/scenes/MyOrder/editOrder';
+
 import {
   StyleSheet
 } from 'react-native'
@@ -75,7 +77,7 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
-
+           
           {this.renderTabbar()}
         </Scene>
       </Router>
@@ -108,6 +110,7 @@ export default class App extends Component {
 
         <Scene key="orderTab" title="Order" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
           <Scene key="myOrder" component={MyOrder} title="home" />
+          <Scene key="editOrder" component={EditOrder} title="editOrder"/>
         </Scene>
 
         <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>

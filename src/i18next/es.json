@@ -157,6 +157,16 @@
     "EnablePayment":"Habilitar pago",
     "Delete":"Borrar mi cuenta",
     "logout":"cerrar sesión"
+  },
+  "editOrder":{
+    "title":"Gestionar pedido",
+    "orderText":"Orden#",
+    "productsText":"Productos",
+    "SkuText":"SKU - ",
+    "QtyText":"Cantidad - ",
+    "AmtText":"Cantidad - "
+    
   }
+
 
 }

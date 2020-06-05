@@ -12,9 +12,13 @@ export default (styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   viewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1
+    paddingLeft:15,
+    paddingTop:10
+
+  },
+  viewAddressContainer: {
+    marginTop:10,marginLeft:15
+
   },
   welcome: {
     fontSize: 20,
@@ -22,4 +26,26 @@ export default (styles = StyleSheet.create({
     margin: 10,
     color: 'black',
   },
+  orderNumberView:{
+    width:(DEVICE_WIDTH-110),
+    flexDirection:'row'
+  },
+  addressText:{
+    fontSize:14,paddingTop:5
+  },
+  orderText:{
+    fontSize: 18 
+  },
+  showSKUView:{
+    paddingTop:5,flexDirection:"row"
+  },
+  renderAmtView:{
+    flexDirection:"row",paddingLeft:50
+  },
+  productNameText:{
+    fontSize:14,fontWeight:'bold'
+  }
+
+
+
 }));
