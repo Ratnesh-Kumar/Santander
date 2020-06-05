@@ -15,7 +15,6 @@ import HomeScreen from './src/scenes/Home';
 import MyProfileScreen from './src/scenes/MyProfile';
 import MoreScreen from './src/scenes/More';
 import FavouriteScreen from './src/scenes/Favourites';
-import SettingsScreen from './src/scenes/Settings';
 import FBaseWrite from './src/scenes/FirebaseRW/FBaseWrite';
 import FBaseReadItems from './src/scenes/FirebaseRW/FBaseReadItems';
 import TabIcon from './src/TabIcon';
@@ -29,6 +28,7 @@ import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
 import MyOrder from './src/scenes/MyOrder';
 import TrackInformation from './src/scenes/MyOrder/trackInformation';
+import ShopTabScreen from './src/scenes/ShopTab'
 import {
   StyleSheet
 } from 'react-native'
@@ -113,7 +113,7 @@ export default class App extends Component {
         </Scene>
 
         <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
-          <Scene key="shop" component={SettingsScreen} title="home" />
+          <Scene key="shop" component={ShopTabScreen} title="home" />
           <Scene key="businessProfile" component={BusinessProfile} title="businessProfile" duration={0} />
           <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
         </Scene>
