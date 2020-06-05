@@ -111,7 +111,7 @@ export default class App extends Component {
 
         <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
           <Scene key="shop" component={SettingsScreen} title="home" />
-          <Scene key="buisnessProfile" component={BusinessProfile} title="buisnessProfile" duration={0} />
+          <Scene key="businessProfile" component={BusinessProfile} title="businessProfile" duration={0} />
           <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
         </Scene>
 
