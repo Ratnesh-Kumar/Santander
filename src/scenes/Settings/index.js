@@ -55,7 +55,9 @@ selectFlatListItem(item){
   if(item.key === settingConstants.FLATLIST_KEY_BUSINESS){
     Actions.businessProfile()
   }
-  
+  if(item.key === settingConstants.FLATLIST_KEY_LOGOUT){
+    Actions.login();
+  }
 }
 }
 

@@ -35,4 +35,14 @@ export default (styles = StyleSheet.create({
   validFormSubView:{
     paddingLeft: 10, paddingRight: 10
   },
+  input: {
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    width: constants.SCREEN_WIDTH - 40,
+    height: 40,
+    marginHorizontal: 20,
+    paddingLeft: 45,
+    borderRadius: 20,
+    color: '#000000',
+    marginTop: 15,
+  },
 }));
