@@ -45,11 +45,20 @@ export default (styles = StyleSheet.create({
     UpdatedView: {
         alignItems: 'center', flex: 1
     },
-    btnEye: {
-        flex: 1,
-        flexDirection: 'row-reverse',
-        position: 'relative',
+   btnEye: {
+            flex: 1,
+            flexDirection: 'row-reverse',
+            position: 'relative',
+          
     },
+    iconEye: {
+        width: 25,
+        height: 25,
+        //tintColor: 'rgba(0,0,0,0.2)',
+        marginTop:-35,
+        marginRight:5,
+        resizeMode:'contain'
+      },
     registerTitleView: {
         paddingTop: 10, height: constants.SCREEN_HEIGHT / 8, justifyContent: 'center',
     },

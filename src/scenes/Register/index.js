@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
-import Constants from '../../config/Constants';
+
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import registerStyle from './RegisterStyle';
@@ -27,10 +27,11 @@ export default class RegisterView extends Component {
             password: '',
             confirmPass: '',
             phone: '',
-            hidden: true,
-            passwordHiddenIcon: registerConstant.INFO_PASSWORD_HIDDEN,
+            showPass: true,
+            passPress: false,
             showPassModal: false,
-            hiddenConfirm: true
+            showConfirmPass: true,
+            confirmPassPress: false,
 
 
 
@@ -103,54 +104,54 @@ export default class RegisterView extends Component {
     showPasswordHintBox() {
         if (this.state.showPassModal && this.state.password != '') {
             return (
-                <View style={{margin: 20}}>
-                <CardView
-                    cardElevation={8}
-                    cardMaxElevation={8}
-                    cornerOverlap={false}>
-                    <View style={{ backgroundColor: colorConstant.WHITE_COLOR, padding:10 }}>
-                        <View style={{ flexDirection: 'row', paddingTop: 3, alignItems:'center' }}>
-                            <Image source={this.isValid() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{height: 14,width: 14, tintColor: this.isValid() ? colorConstant.SANT_DARK_GREEN: ""}} />
-                            <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid1')}</Text>
+                <View style={{ margin: 20 }}>
+                    <CardView
+                        cardElevation={8}
+                        cardMaxElevation={8}
+                        cornerOverlap={false}>
+                        <View style={{ backgroundColor: colorConstant.WHITE_COLOR, padding: 10 }}>
+                            <View style={{ flexDirection: 'row', paddingTop: 3, alignItems: 'center' }}>
+                                <Image source={this.isValid() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{ height: 14, width: 14, tintColor: this.isValid() ? colorConstant.SANT_DARK_GREEN : "" }} />
+                                <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid1')}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', paddingTop: 4, alignItems: 'center' }}>
+                                <Image source={this.isCapital() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{ height: 14, width: 14, tintColor: this.isCapital() ? colorConstant.SANT_DARK_GREEN : "" }} />
+                                <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid2')}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', paddingTop: 5, alignItems: 'center' }}>
+                                <Image source={this.isSmall() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{ height: 14, width: 14, tintColor: this.isSmall() ? colorConstant.SANT_DARK_GREEN : "" }} />
+                                <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid3')}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', paddingTop: 6, alignItems: 'center' }}>
+                                <Image source={this.isNumeric() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{ height: 14, width: 14, tintColor: this.isNumeric() ? colorConstant.SANT_DARK_GREEN : "" }} />
+                                <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid4')}</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', paddingTop: 7, alignItems: 'center' }}>
+                                <Image source={this.isAlpha() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{ height: 14, width: 14, tintColor: this.isAlpha() ? colorConstant.SANT_DARK_GREEN : "" }} />
+                                <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid5')}</Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', paddingTop: 4, alignItems:'center' }}>
-                            <Image source={this.isCapital() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{height: 14,width: 14, tintColor: this.isCapital() ? colorConstant.SANT_DARK_GREEN: ""}} />
-                            <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid2')}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', paddingTop: 5, alignItems:'center' }}>
-                            <Image source={this.isSmall() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{height: 14,width: 14, tintColor: this.isSmall() ? colorConstant.SANT_DARK_GREEN: ""}} />
-                            <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid3')}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', paddingTop: 6, alignItems:'center' }}>
-                            <Image source={this.isNumeric() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{height: 14,width: 14, tintColor: this.isNumeric() ? colorConstant.SANT_DARK_GREEN: ""}} />
-                            <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid4')}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row', paddingTop: 7, alignItems:'center' }}>
-                            <Image source={this.isAlpha() ? registerConstant.GREEN_TICK : registerConstant.GRAY_TICK} style={{height: 14,width: 14, tintColor: this.isAlpha() ? colorConstant.SANT_DARK_GREEN: ""}} />
-                            <Text style={{ marginLeft: 3, fontSize: 15, color: colorConstant.BLACK_COLOR }}>{strings('registerScreen.PasswordValid5')}</Text>
-                        </View>
-                    </View>
-                </CardView>
+                    </CardView>
                 </View>
             )
         }
 
     }
+    setConfirmPasswordVisibility() {
+        this.state.confirmPassPress === false
+            ? this.setState({ showConfirmPass: false, confirmPassPress: true })
+            : this.setState({ showConfirmPass: true, confirmPassPress: false });
+    }
 
 
     setPasswordVisibility() {
-        if (this.state.hidden) {
-            this.setState({
-                hidden: false, passwordHiddenIcon: registerConstant.INFO_PASSWORD_SHOW
-            })
-        } else {
-            this.setState({
-                hidden: true, passwordHiddenIcon: registerConstant.INFO_PASSWORD_HIDDEN
-            })
-        }
+        this.state.passPress === false
+            ? this.setState({ showPass: false, passPress: true })
+            : this.setState({ showPass: true, passPress: false });
     }
 
     renderValidationForm() {
+        var imgSource = this.state.passPress ? commonConstants.EYE_ICON_VISIBLE : commonConstants.EYE_ICON;
         return (
             <KeyboardAvoidingView
                 behavior="height"
@@ -205,10 +206,9 @@ export default class RegisterView extends Component {
                 }}
               />
             </View> */}
-
                         <View style={registerStyle.validFormSecondFieldView}>
                             <TextInputMaterial
-                                secureTextEntry={this.state.hidden}
+                                secureTextEntry={this.state.showPass}
                                 blurText={this.state.password}
                                 //refsValue={commonConstants.TEXT_INPUT_PASSWORD}
                                 showIcon={false}
@@ -233,18 +233,17 @@ export default class RegisterView extends Component {
                                     this.refs.confirmPasswordInput.focus();
                                 }}
                             />
-
                         </View>
-
-                        {/* <TouchableOpacity style={{flex:1, position: 'absolute', right: 30, top: 165, alignSelf: 'center', height: 10, width: 10, justifyContent: 'center', zIndex: 999}} onPress={() => this.setPasswordVisibility()}>
-              <Image source={this.state.passwordHiddenIcon} />
-            </TouchableOpacity>   */}
+                        <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setPasswordVisibility()}>
+                            <Image source={imgSource} style={registerStyle.iconEye} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </KeyboardAvoidingView>
         );
     }
     renderConfirmPassword() {
+        var imgSource = this.state.confirmPassPress ? commonConstants.EYE_ICON_VISIBLE : commonConstants.EYE_ICON;
         return (
             <KeyboardAvoidingView
                 behavior="height"
@@ -252,7 +251,7 @@ export default class RegisterView extends Component {
                 <View style={registerStyle.inputWrapper}>
                     <View style={registerStyle.validFormSubView}>
                         <TextInputMaterial
-                            secureTextEntry={this.state.hiddenConfirm}
+                            secureTextEntry={this.state.showConfirmPass}
                             blurText={this.state.confirmPass}
                             showIcon={false}
                             value={this.state.confirmPass}
@@ -274,11 +273,9 @@ export default class RegisterView extends Component {
                             errorText={strings('registerScreen.ConfirmPasswordTextInputError')}
                             onFocus={() => this.inputFocused.bind(this)}
                         />
-
-
-                        {/* <TouchableOpacity style={{flex:1, position: 'absolute', right: 30, top: 145, alignSelf: 'center', height: 1, width: 1, justifyContent: 'center', zIndex: 999}} onPress={() => this.setPasswordVisibility()}>
-    <Image source={this.state.passwordHiddenIcon} />
-        </TouchableOpacity>   */}
+                        <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setConfirmPasswordVisibility()}>
+                            <Image source={imgSource} style={registerStyle.iconEye} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </KeyboardAvoidingView>
