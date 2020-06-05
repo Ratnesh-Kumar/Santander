@@ -21,7 +21,7 @@ const header = {
     //marginLeft: 20, flex:1
   },
   leftImageView:{
-    marginLeft:20,
+    marginLeft:10,
   }
 };
 

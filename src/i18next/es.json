@@ -165,7 +165,12 @@
     "SkuText":"SKU - ",
     "QtyText":"Cantidad - ",
     "AmtText":"Cantidad - "
-    
+  },
+  "TrackQuantityScreen":{
+    "EnterTacking":"Ingrese la información de seguimiento",
+    "trackingTitle":"Rastreo #",
+    "trackingPicker":"USPS",
+    "saveButtontext":"Salvar"
   }
 
 

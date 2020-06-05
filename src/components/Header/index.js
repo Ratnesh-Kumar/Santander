@@ -92,7 +92,7 @@ export default class Header extends Component {
                 Actions.pop();
             }} style={{ position: 'absolute', left: 0, top: 0, height: 50, justifyContent: 'center' }}>
                 <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>
-                    <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={leftIcon} style={{ height: 20, width: 20, tintColor: colorConstants.SANT_RED_COLOR }}>
+                    <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={leftIcon} style={{ height: 32, width: 32, tintColor: colorConstants.SANT_RED_COLOR }}>
                     </Image>
                 </View>
             </TouchableOpacity>)

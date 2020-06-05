@@ -170,7 +170,12 @@
       "SkuText":"SKU - ",
       "QtyText":"Quantity - ",
       "AmtText":"Amount - "
-      
+    },
+    "TrackQuantityScreen":{
+      "EnterTacking":"Enter Tracking Information",
+      "trackingTitle":"Tracking #",
+      "trackingPicker":"USPS",
+      "saveButtontext":"Save"
     }
     
 }

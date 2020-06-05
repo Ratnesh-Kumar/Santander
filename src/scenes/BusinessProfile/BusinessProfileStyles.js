@@ -9,6 +9,11 @@ export default (styles = StyleSheet.create({
     renderContainer: {
         flex: 1, backgroundColor: colorConstant.WHITE_COLOR
     },
+    viewContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+      },
     validFormViewContainer: {
         marginTop: 50,
         alignItems: 'center'
