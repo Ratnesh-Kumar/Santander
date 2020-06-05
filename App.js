@@ -74,8 +74,6 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
-          <Scene key="buisnessProfile" component={BusinessProfile} title="buisnessProfile" duration={0} />
-          <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
 
           {this.renderTabbar()}
         </Scene>
@@ -113,6 +111,8 @@ export default class App extends Component {
 
         <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
           <Scene key="shop" component={SettingsScreen} title="home" />
+          <Scene key="buisnessProfile" component={BuisnessProfile} title="buisnessProfile" duration={0} />
+          <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
         </Scene>
 
         {/* <Scene key="homeTab" title="My Procedures" icon={TabIcon} initial={true} homeTabar={true} resource={require('./src/public/images/letter_a_icon.png')} hideNavBar>

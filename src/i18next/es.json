@@ -149,6 +149,14 @@
     "shipProductsSwitch":"Enviar productos",
     "shippingCompany":"Compañía de envios",
     "estimateProfit":"Estimación de ganancias"
+  },
+  "shopTab":{
+    "ShopSettingsTitle":"Configuraciones de la tienda",
+    "BusinessProfileTitle":"Perfil de trabajo",
+    "BusinessSettings":"Configuraciones comerciales",
+    "EnablePayment":"Habilitar pago",
+    "Delete":"Borrar mi cuenta",
+    "logout":"cerrar sesión"
   }
 
 }
