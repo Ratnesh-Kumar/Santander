@@ -53,7 +53,7 @@ selectFlatListItem(item){
     Actions.shopSetting()
   }
   if(item.key === settingConstants.FLATLIST_KEY_BUSINESS){
-    Actions.buisnessProfile()
+    Actions.businessProfile()
   }
   
 }

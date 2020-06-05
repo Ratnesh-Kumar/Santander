@@ -27,6 +27,7 @@ import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 import BusinessProfile from './src/scenes/BusinessProfile';
 import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
+import MyOrder from './src/scenes/MyOrder';
 import {
   StyleSheet
 } from 'react-native'
@@ -106,7 +107,7 @@ export default class App extends Component {
         </Scene>
 
         <Scene key="orderTab" title="Order" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
-          <Scene key="order" component={MyProfileScreen} title="home" />
+          <Scene key="myOrder" component={MyOrder} title="home" />
         </Scene>
 
         <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>

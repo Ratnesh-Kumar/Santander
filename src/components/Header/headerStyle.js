@@ -12,7 +12,6 @@ const header = {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colorConstants.WHITE_COLOR,
-    justifyContent:'space-between'
   },
   headerText: {
     color: colorConstants.RED_COLOR,

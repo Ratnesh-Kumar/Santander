@@ -35,7 +35,7 @@ export const GREY_DARK_COLOR_A = "#707070"
 export const BLUE_COLOR = "#1E5A99"; //BUTTON, TEXT, BORDERS, BACKGROUND
 export const RED_TEXT_COLOR = "#B30000"; // PRICING, RMP BADGE
 export const GOLD_COLOR = "#EBC132";//RATING
-export const GRAY_LIGHT_COLOR = "#f9f9f9";//HOME LOGGGED VIEW BACKGROUND 
+export const GRAY_LIGHT_COLOR = "#F1F3F4";//HOME LOGGGED VIEW BACKGROUND 
 export const GREEN_COLOR = "#287255";//double check the green color 2E773B
 export const RED_COLOR = "#ec0000";//
 
@@ -46,6 +46,4 @@ export const SANT_LIGHT_SKY_BLUE = "#eff6f9"
 export const SANT_MEDIUM_SKY_BLUE = "#d9e5ec";
 export const SANT_MEDIUM_YELLOW = "#fef3dc"
 export const SANT_BLUE_COLOR = "#0073e6"
-export const SANT_LIGHT_BLUE = "#1bb3bc"
-export const SANT_DARK_GREEN = "#049e13"
 

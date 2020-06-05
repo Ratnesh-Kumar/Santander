@@ -52,7 +52,7 @@ export default class Header extends Component {
         return (
             <View style={headerStyle.viewContainer}>
                 {this.renderLeftView(isleftArrowDisplay)}
-                <View style={{flex: 1, backgroundColor:colorConstants.WHITE_COLOR, alignItems:'center', marginRight: (isleftArrowDisplay && this.props.isSignOutDisplay)?50: 0,}}>
+                <View style={{ flex: 1, alignItems: 'center', marginRight: (isleftArrowDisplay && this.props.isSignOutDisplay) ? 50 : 0, }}>
                     <Text style={headerStyle.headerText}>{this.props.title}</Text>
                 </View>
                 {this.renderRightView(true)}
@@ -62,18 +62,18 @@ export default class Header extends Component {
 
     renderRightView(flag) {
         if (this.props.isSignOutDisplay) {
-            return (<TouchableOpacity  onPress={() => { this.props.onRightPressed() }} style={{position: 'absolute', right: 0, top: 0, height: 50, justifyContent:'center'}}>
+            return (<TouchableOpacity onPress={() => { this.props.onRightPressed() }} style={{ position: 'absolute', right: 0, top: 0, height: 50, justifyContent: 'center' }}>
                 <View style={headerStyle.leftImageView}>
-                <Text style={{ color: colorConstants.SANT_RED_COLOR, fontSize: 14, marginRight: 20, fontWeight:'bold' }}>{this.props.rightText}</Text>
+                    <Text style={{ color: colorConstants.SANT_RED_COLOR, fontSize: 14, marginRight: 20, fontWeight: 'bold' }}>{this.props.rightText}</Text>
                 </View>
             </TouchableOpacity>)
         } else {
-            return <View style={headerStyle.leftImageView}></View>
+            return <View></View>
         }
 
     }
 
-    
+
 
     // renderRightText() {
     //     if (this.props.isSignOutDisplay) {
@@ -86,11 +86,11 @@ export default class Header extends Component {
     // }
 
     renderLeftView(flag) {
-        const leftIcon = (this.props.isCrossIconVisible)? headerConstants.CLOSE_ICON: headerConstants.BACK_ARROW;
+        const leftIcon = (this.props.isCrossIconVisible) ? headerConstants.CLOSE_ICON : headerConstants.BACK_ARROW;
         if (flag) {
             return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
                 Actions.pop();
-            }}>
+            }} style={{ position: 'absolute', left: 0, top: 0, height: 50, justifyContent: 'center' }}>
                 <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>
                     <Image testID="browseHeader_image_leftArrow" accessibilityLabel="browseHeader_image_leftArrow" source={leftIcon} style={{ height: 20, width: 20, tintColor: colorConstants.SANT_RED_COLOR }}>
                     </Image>
@@ -102,7 +102,7 @@ export default class Header extends Component {
 
     }
 
-    
+
 
     // renderRightView(flag) {
     //     if (flag) {
