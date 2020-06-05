@@ -132,7 +132,7 @@ export default class CampaignScreen extends BaseComponent {
   renderCostView() {
     return (
       <View style={{marginTop: 20, marginBottom:10}}>
-      <View style={{ paddingTop: 10, paddingBottom: 20, paddingLeft: 10, paddingRight: 10, backgroundColor: colorConstant.SANT_MEDIUM_YELLOW}}>
+      <View style={{ paddingTop: 10, paddingBottom: 20, paddingLeft: 10, paddingRight: 10, backgroundColor: colorConstant.GRAY_LIGHT_COLOR}}>
         <View style={campaignStyle.inputWrapper}>
           <View style={campaignStyle.validFormSubView}>
             <TextInputMaterial
