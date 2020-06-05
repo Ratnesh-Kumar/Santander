@@ -157,6 +157,12 @@
     "EnablePayment":"Habilitar pago",
     "Delete":"Borrar mi cuenta",
     "logout":"cerrar sesión"
+  },
+  "TrackQuantityScreen":{
+    "EnterTacking":"Ingrese la información de seguimiento",
+    "trackingTitle":"Rastreo #",
+    "trackingPicker":"USPS",
+    "saveButtontext":"Salvar"
   }
 
 }
