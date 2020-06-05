@@ -27,17 +27,17 @@ export default class BusinessProfileView extends Component {
         this.state = {
             documentNum: '',
             expDate: '',
-            postalCode:'',
-            postalState:'',
-            city:'',
-            address:'',
-            nationality:'',
-            lname:'',
-            fname:'',
-            iban:'',
-            phone:'',
-            buisnessName:'',
-            buisnesstaxId:'',
+            postalCode: '',
+            postalState: '',
+            city: '',
+            address: '',
+            nationality: '',
+            lname: '',
+            fname: '',
+            iban: '',
+            phone: '',
+            buisnessName: '',
+            buisnesstaxId: '',
 
         }
     }
@@ -159,7 +159,7 @@ export default class BusinessProfileView extends Component {
                             }}
                         />
                     </View>
-                    </View>
+                </View>
             </KeyboardAvoidingView>
         )
 
@@ -307,9 +307,9 @@ export default class BusinessProfileView extends Component {
 
     renderSwitchFields(title) {
         return (
-            <View style={{  }}>
+            <View style={{}}>
                 <SwitchTextInput
-                   isDropDownVisbile={true}
+                    isDropDownVisbile={true}
                     title={title}
                 />
             </View>
@@ -459,17 +459,21 @@ export default class BusinessProfileView extends Component {
 
     render() {
         return (
-            <ScrollView keyboardShouldPersistTaps={'always'} style={businessStyle.renderContainer}>
+            <View  style={businessStyle.renderContainer}>
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
-                {this.renderBuisnessForm()}
-                {this.renderAddressForm()}
-                {this.renderPinCode()}
-                {this.renderDocuments()}
-                {this.renderDocumentDetail()}
-                <AppButton buttonText={strings('BuisnessProfile.NextButton')} onButtonPressed={() => {
-                    Actions.tabbar();
-                }} />
-            </ScrollView>
+                <View style={buisnessStyle.viewContainer}>
+                <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 200}}>
+                        {this.renderBuisnessForm()}
+                        {this.renderAddressForm()}
+                        {this.renderPinCode()}
+                        {this.renderDocuments()}
+                        {this.renderDocumentDetail()}
+                        <AppButton buttonText={strings('BuisnessProfile.NextButton')} onButtonPressed={() => {
+                            Actions.tabbar();
+                        }} />
+                    </ScrollView>
+                </View>
+            </View>
         );
     }
 
