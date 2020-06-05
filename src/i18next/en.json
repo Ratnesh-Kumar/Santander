@@ -162,6 +162,12 @@
       "EnablePayment":"Enable Payment",
       "Delete":"Delete My Account",
       "logout":"Logout"
+    },
+    "TrackQuantityScreen":{
+      "EnterTacking":"Enter Tracking Information",
+      "trackingTitle":"Tracking #",
+      "trackingPicker":"USPS",
+      "saveButtontext":"Save"
     }
     
 }
