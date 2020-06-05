@@ -9,12 +9,11 @@ const MARGIN = 40;
 export default (styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: colorConstant.WHITE_COLOR,
   },
   viewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1
+    flex: 1,
+    margin: 10
   },
   welcome: {
     fontSize: 20,

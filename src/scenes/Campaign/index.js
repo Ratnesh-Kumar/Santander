@@ -315,7 +315,7 @@ export default class CampaignScreen extends BaseComponent {
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>
           <View style={{ backgroundColor: colorConstant.SANT_LIGHT_SKY_BLUE, borderWidth: 1, borderColor: colorConstant.SANT_MEDIUM_SKY_BLUE, height: 80, marginTop: 10 }}>
-            <TextInput style={styles.input}
+            <TextInput 
               underlineColorAndroid="transparent"
               placeholder={strings('createCampaign.addDescriptionPlaceholder')}
               ref={'campaignDescription'}
