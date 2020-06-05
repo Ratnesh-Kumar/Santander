@@ -1,5 +1,5 @@
 export const BUTTON_BLUE_BACKGROUND = '#4878BA';
-export const WHITE_COLOR = '#FFFFFF';
+export const WHITE_COLOR = '#FEFEFE';
 export const GREY_COLOR = '#C9C9CC';
 export const BROWSE_RED = '#DF0101';
 export const GREY_DARK_COLOR = '#AFAFAF';

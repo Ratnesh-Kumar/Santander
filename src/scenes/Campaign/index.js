@@ -144,10 +144,10 @@ export default class CampaignScreen extends BaseComponent {
               autoCapitalize={'none'}
               onChangeText={text => this.setState({ campaignCostValue: text })}
               returnKeyType={'done'}
-              backgroundColor={colorConstant.SANT_MEDIUM_YELLOW}
+              backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
               autoCorrect={false}
               isLoginScreen={false}
-              style={{backgroundColor: colorConstant.SANT_MEDIUM_YELLOW}}
+              style={{backgroundColor: colorConstant.GRAY_LIGHT_COLOR}}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
               value={this.state.campaignCostValue}
@@ -174,7 +174,7 @@ export default class CampaignScreen extends BaseComponent {
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ campaignProfitValue: text })}
                 returnKeyType={'done'}
-                backgroundColor={colorConstant.SANT_MEDIUM_YELLOW}
+                backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={campaignStyle.input}
@@ -202,7 +202,7 @@ export default class CampaignScreen extends BaseComponent {
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ campaignMarginValue: text })}
                 returnKeyType={'done'}
-                backgroundColor={colorConstant.SANT_MEDIUM_YELLOW}
+                backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={campaignStyle.input}
