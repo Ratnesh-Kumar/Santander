@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { StyleSheet, Text, View, Alert, FlatList, Image, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import orderStyle from './orderStyle';
@@ -41,12 +41,18 @@ export default class EditOrder extends Component {
 
     renderSwitchFields(title) {
         return (
-            <View style={{ paddingTop: 15 }}>
-                <SwitchTextInput
-                    isDropDownVisbile={true}
-                    title={title}
-                />
-            </View>
+            <TouchableOpacity onPress={() => Alert.alert('hello')}>
+                <View style={orderStyle.containerStyleWithBorder}>
+                    <Text style={orderStyle.textStyle}>{title}</Text>
+                    <View
+                        style={{ position: 'absolute', right: 10, top: 10 }}>
+                        <Image
+                            style={{ width: 35, height: 35 }}
+                            source={require('../../public/images/right_arrow.png')}
+                        />
+                    </View>
+                </View>
+            </TouchableOpacity>
         );
     }
 
@@ -81,24 +87,24 @@ export default class EditOrder extends Component {
         )
 
     }
-    renderProducts(productName, productSKU, productQty, productAmt) {
+    renderProducts = (item, index) => {
         return (
             <View>
                 <View style={{ paddingTop: 10 }}>
-                    <Text style={orderStyle.productNameText}>{productName}</Text>
+                    <Text style={orderStyle.productNameText}>{item.productName}</Text>
                 </View>
                 <View style={orderStyle.showSKUView}>
                     <Text>{strings("editOrder.SkuText")}</Text>
-                    <Text>{productSKU}</Text>
+                    <Text>{item.productSKU}</Text>
                 </View>
                 <View style={orderStyle.showSKUView}>
                     <View style={{ flexDirection: "row" }}>
                         <Text>{strings("editOrder.QtyText")}</Text>
-                        <Text>{productQty}</Text>
+                        <Text>{item.productQty}</Text>
                     </View>
                     <View style={orderStyle.renderAmtView}>
                         <Text>{strings("editOrder.AmtText")}</Text>
-                        <Text>{productAmt}</Text>
+                        <Text>{item.productAmt}</Text>
                     </View>
                 </View>
             </View>
@@ -107,30 +113,20 @@ export default class EditOrder extends Component {
 
 
     }
-    renderProductTitle() {
-        <View style={orderStyle.viewContainer}>
 
-        </View>
-    }
 
     renderProductDetail() {
-        let productName = "ProductName";
-        let productSKU = "ProductSKU";
-        let productQty = "ProductQty";
-        let productAmt = "ProductAmt";
+
         return (
             <View style={orderStyle.viewContainer}>
                 <Text style={orderStyle.orderText}>{strings("editOrder.productsText")}</Text>
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
-                {this.renderProducts(productName, productSKU, productQty, productAmt)}
+
+                <FlatList
+                    data={orderConstants.PRODUCT_DATA_ARRAY}
+                    renderItem={({ item, index }) => this.renderProducts(item, index)}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={{ paddingBottom: 10 }}
+                />
 
             </View>
         )
