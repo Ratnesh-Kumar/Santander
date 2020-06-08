@@ -14,7 +14,7 @@ export default (styles = StyleSheet.create({
         alignItems: 'center'
     },
     validFormSubView:{
-        paddingLeft: 15, paddingRight: 15
+        paddingLeft: 10, paddingRight: 10
       },
     validFormViewConfirmPassContainer: {
         alignItems: 'center'

@@ -29,6 +29,7 @@ export default class HomeScreen extends BaseComponent {
         isSignOutDisplay: isUserAlreadySignIn
       })
     }
+    this.displayConsole()
     await getRemoteConfig();
   }
   render() {
@@ -45,13 +46,13 @@ export default class HomeScreen extends BaseComponent {
   }
 
   async displayConsole() {
-    // console.log("############# : " + JSON.stringify(RNLocalize.getLocales()));
-    // console.log("############# : " + RNLocalize.getCurrencies());
-    // console.log("############# : " + RNLocalize.getCountry());
-    // console.log("############# : " + RNLocalize.getCalendar());
-    // console.log("############# : " + RNLocalize.getTemperatureUnit());
-    // console.log("############# : " + RNLocalize.getTimeZone());
-    // console.log("############# : " + RNLocalize.uses24HourClock());
+    console.log("############# : " + JSON.stringify(RNLocalize.getLocales()));
+    console.log("############# : " + RNLocalize.getCurrencies());
+    console.log("############# : " + RNLocalize.getCountry());
+    console.log("############# : " + RNLocalize.getCalendar());
+    console.log("############# : " + RNLocalize.getTemperatureUnit());
+    console.log("############# : " + RNLocalize.getTimeZone());
+    console.log("############# : " + RNLocalize.uses24HourClock());
   }
 
   async googleSignOut(){
