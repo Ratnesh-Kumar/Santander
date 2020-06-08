@@ -6,6 +6,7 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -59,6 +60,14 @@ export default class ForgotPassword extends Component {
     });
     message = '';
   }
+  renderDialogModalSuccess(message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: 'Password Reset Successful'
+    });
+    message = '';
+  }
 
   renderModal() {
     if (this.state.isDialogModalVisible) {
@@ -87,6 +96,16 @@ export default class ForgotPassword extends Component {
       </View>
     );
   }
+  emailValidation() {
+    email=this.state.username;
+    var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (reg.test(email)) {
+      return true;
+  }
+  else {
+      return false;
+  }
+  }
 
   isValidString(text) {
     if (text != '' && text != undefined) {
@@ -96,21 +115,28 @@ export default class ForgotPassword extends Component {
   }
 
   async fetchService() {
-    if(this.state.username !== ''){
+    if(this.state.username !== '' && this.emailValidation() ){
       this.renderActivityIndicatorShow()
-      var responseData = await fetchJsonGET(commonConstants.USER_RESET_PASSWORD_URL+"?username=" + this.state.username)
+      
+      var responseData = await fetchJsonGET(commonConstants.USER_RESET_PASSWORD_URL+"/"+this.state.username)
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
-        console.log("###########" + responseData.statusMessage)
+        console.log("########### status message" + responseData.statusMessage);
         if (responseData.statusMessage == commonConstants.USER_RESET_PASSWORD_STATUS) {
-          
-          Actions.registerCreateCampaign();
+          //console.log("########### status message" + responseData.statusMessage);
+        //Actions.forgotPassword();
+        this.renderDialogModalSuccess(strings(forgotScreen.PasswordResetSuccess));
+        }
+        else{
+          this.renderDialogModal(strings(forgotScreen.PasswordResetError), responseData.statusMessage);
         }
       }
+     
       this.renderActivityIndicatorHide()
     }
+    else{
+      Alert.alert("Alert","Enter correct email address")
+    }
   }
-
-
 
   renderEmailTextInput() {
 

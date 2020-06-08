@@ -24,7 +24,9 @@
     "SendEmailButtonText": " Enviar restablecer enlace",
     "UserTextInput": "correo electrónico",
     "UserTextInputError": "Por favor introduzca su correo electrónico",
-    "ScreenTitle": "Digishop"
+    "ScreenTitle": "Digishop",
+    "PasswordResetError":"error de restablecimiento de contraseña",
+    "PasswordResetSuccess":"Restablecer enlace enviado correctamente a su correo electrónico"
   },
   "termsScreen": {
     "termsTitle": "Términos y condiciones",
