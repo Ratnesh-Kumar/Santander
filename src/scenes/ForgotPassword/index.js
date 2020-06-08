@@ -4,24 +4,19 @@
 import React, { Component } from 'react';
 import {
   View,
-  Image,
   Text,
   KeyboardAvoidingView,
-  TouchableOpacity,
-  Dimensions,
-  Animated,
-  Easing,
-  Alert,
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
-import Constants from '../../config/Constants';
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
-import TouchID from 'react-native-touch-id';
 import forgotPasswordStyle from './ForgotPasswordStyle';
 import Header from '../../components/Header';
-import AppButton from '../../components/AppButton'
+import AppButton from '../../components/AppButton';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+import { fetchJsonGET } from '../../services/FetchData';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 
@@ -30,27 +25,94 @@ export default class ForgotPassword extends Component {
     super(props);
     this.state = {
       username: '',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     // Actions.tabbar();
   }
 
-  
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: 'Password Reset Process Failed'
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
+    }
+  }
+
+
   render() {
     return (
       <View style={forgotPasswordStyle.renderContainer}>
         <Header isleftArrowDisplay={true} title={strings('forgotScreen.forgotTitle')} />
+        {this.renderModal()}
         {this.renderForgotTitle()}
-        <AppButton isLightTheme={false}  buttonText={strings('forgotScreen.SendEmailButtonText')}onButtonPressed={()=>{
-               alert('Please check your email ')
-            }}/>
+        <AppButton isLightTheme={false} buttonText={strings('forgotScreen.SendEmailButtonText')} onButtonPressed={() => {
+          this.fetchService()
+        }} />
       </View>
     );
   }
 
-  renderEmailTextInput(){
+  isValidString(text) {
+    if (text != '' && text != undefined) {
+      return true;
+    }
+    return false;
+  }
+
+  async fetchService() {
+    if(this.state.username !== ''){
+      this.renderActivityIndicatorShow()
+      var responseData = await fetchJsonGET(commonConstants.USER_RESET_PASSWORD_URL+"?username=" + this.state.username)
+      if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
+        console.log("###########" + responseData.statusMessage)
+        if (responseData.statusMessage == commonConstants.USER_RESET_PASSWORD_STATUS) {
+          
+          Actions.registerCreateCampaign();
+        }
+      }
+      this.renderActivityIndicatorHide()
+    }
+  }
+
+
+
+  renderEmailTextInput() {
 
     return (
       <KeyboardAvoidingView
@@ -96,22 +158,24 @@ export default class ForgotPassword extends Component {
     )
   }
 
-  
-  renderForgotPassButton() {
-    return (
-      <View style={forgotPasswordStyle.forgotPasswordButtonView}>
-        <TouchableOpacity
-          style={forgotPasswordStyle.button}
-          onPress={() => alert('Please check your emailID.')}
-          activeOpacity={1}>
-          <Text
-            style={forgotPasswordStyle.forgotPasswordButtonText}>
-            {strings('forgotScreen.SendEmailButtonText')}
-          </Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
+
+
+
+  // renderForgotPassButton() {
+  //   return (
+  //     <View style={forgotPasswordStyle.forgotPasswordButtonView}>
+  //       <TouchableOpacity
+  //         style={forgotPasswordStyle.button}
+  //         onPress={() => this.onPasswordResetClicked()}
+  //         activeOpacity={1}>
+  //         <Text
+  //           style={forgotPasswordStyle.forgotPasswordButtonText}>
+  //           {strings('forgotScreen.SendEmailButtonText')}
+  //         </Text>
+  //       </TouchableOpacity>
+  //     </View>
+  //   );
+  // }
 
   inputFocused(refName) {
     setTimeout(() => {

@@ -113,6 +113,7 @@ export default class RegisterView extends BaseComponent {
             let bodyData = this.getBodyData()
             var responseData = await fetchJsonPOST(constants.USER_REGISTRATION_URL, bodyData)
             if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+                console.log("########### status message" + responseData.statusMessage);
                 if(responseData.statusMessage == constants.USER_REGISTERED_STATUS){
                     Actions.registerCreateCampaign();
                 }
