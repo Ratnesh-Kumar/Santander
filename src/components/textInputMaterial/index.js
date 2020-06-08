@@ -13,11 +13,11 @@ var constants = require('../../config/Constants');
 export default class TextInputMaterial extends PureComponent {
   constructor(props) {
     super(props);
-    this.uneditColorCode = (props.isLoginScreen)?'white':colorConstants.MATERIAL_DESIGN_UNEDIT_COLOR;
-    this.activeColorCode = (props.isLoginScreen)?'white':colorConstants.LOGIN_BUTTON_BLUE;
-    this.successColorCode = (props.isLoginScreen)?'white':colorConstants.MATERIAL_DESIGN_SUCCESS_COLOR;
+    this.uneditColorCode = (props.isLoginScreen) ? 'white' : colorConstants.MATERIAL_DESIGN_UNEDIT_COLOR;
+    this.activeColorCode = (props.isLoginScreen) ? 'white' : colorConstants.LOGIN_BUTTON_BLUE;
+    this.successColorCode = (props.isLoginScreen) ? 'white' : colorConstants.MATERIAL_DESIGN_SUCCESS_COLOR;
     this.errorColorCode = colorConstants.MATERIAL_DESIGN_ERROR_COLOR;
-    this.inputTextColorCode = (props.isLoginScreen)?'white':'black'
+    this.inputTextColorCode = (props.isLoginScreen) ? 'white' : 'black'
     this.state = {
       labelColor: this.uneditColorCode,
       errorText: '',
@@ -146,8 +146,98 @@ export default class TextInputMaterial extends PureComponent {
     }
     return state;
   }
+
+  checkForValidConfirmPassword() {
+    if (this.props.blurText.trim().length < 1) {
+      if (typeof this.props.isValidConfirmPassword == 'function') {
+        this.props.isValidConfirmPassword(false)
+      }
+        this.setState(
+            {
+                errorText: "Please confirm your password",
+                scrollViewHeight: (constants.SCREEN_HEIGHT - 44),
+                underlineColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR,
+                labelColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR
+            }
+        )
+    }
+    else if (this.props.passwordValue != this.props.blurText || this.props.blurText === "") {
+      if (typeof this.props.isValidConfirmPassword == 'function') {
+        this.props.isValidConfirmPassword(false)
+      }
+        this.setState(
+            {
+                errorText: "Please enter the same password again",
+                scrollViewHeight: (constants.SCREEN_HEIGHT - 44),
+                underlineColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR,
+                labelColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR
+            }
+        )
+    }
+    else {
+      if (typeof this.props.isValidConfirmPassword == 'function') {
+        this.props.isValidConfirmPassword(true)
+      }
+        this.setState({
+            errorText: "",
+            scrollViewHeight: (constants.SCREEN_HEIGHT - 44),
+            underlineColor: colorConstants.MATERIAL_DESIGN_SUCCESS_COLOR,
+            labelColor: colorConstants.MATERIAL_DESIGN_SUCCESS_COLOR
+        })
+    }
+}
+
+
+
+  emailValidation(emailString) {
+    var reg = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (emailString != undefined && emailString.trim().length === 0) {
+      if (typeof this.props.isValidUserName == 'function') {
+        this.props.isValidUserName(false)
+      }
+      this.setState(
+        {
+          errorText: "Please provide your email address",
+          scrollViewHeight: (constants.SCREEN_HEIGHT - 44),
+          underlineColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR,
+          labelColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR
+        }
+      )
+    } else if (!reg.test(emailString.trim())) {
+      if (typeof this.props.isValidUserName == 'function') {
+        this.props.isValidUserName(false)
+      }
+
+      this.setState({
+        errorText: "Please enter a valid email address",
+        scrollViewHeight: (constants.SCREEN_HEIGHT - 44),
+        underlineColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR,
+        labelColor: colorConstants.MATERIAL_DESIGN_ERROR_COLOR
+      })
+      if (emailString == null || emailString == undefined) {
+        this.setState({
+          errorText: "Please provide your email address",
+        });
+      }
+    } else {
+      if (typeof this.props.isValidUserName == 'function') {
+        this.props.isValidUserName(true)
+      }
+      this.setState(
+        {
+          errorText: "",
+          scrollViewHeight: (constants.SCREEN_HEIGHT - 44),
+          underlineColor: colorConstants.MATERIAL_DESIGN_SUCCESS_COLOR,
+          labelColor: colorConstants.MATERIAL_DESIGN_SUCCESS_COLOR
+        }
+      )
+    }
+
+  }
+
   validateUserName(userName) {
     if (userName.length === 0) {
+      console.log("################ validateUserName")
       this.setState({
         errorText: 'Please enter your username/email',
         scrollViewHeight: constants.SCREEN_HEIGHT - 44,
@@ -179,11 +269,15 @@ export default class TextInputMaterial extends PureComponent {
       });
     } else if (this.props.refsValue === 'passwordInput') {
       this.validateLoginPassword(this.props.blurText);
-    } else if (
+    } else if (this.props.refsValue === 'confirmPassword') {
+      this.checkForValidConfirmPassword(this.props.blurText);
+    }else if (
       this.props.refsValue === 'email-address' ||
       this.props.refsValue === 'loginNameInput'
     ) {
       this.validateUserName(this.props.blurText);
+    } else if (this.props.refsValue === 'username_email') {
+      this.emailValidation(this.props.blurText)
     } else {
       this.setState({
         errorText: this.checkValidText(this.props.blurText)
@@ -212,10 +306,14 @@ export default class TextInputMaterial extends PureComponent {
         this.props.borderColorAction(this.state.underlineColor);
       }
     }
+
   }
 
   validateLoginPassword(receivedPassword) {
     if (receivedPassword.length === 0) {
+      if (typeof this.props.isValidPassword == 'function') {
+        this.props.isValidPassword(false)
+      }
       this.setState({
         errorText: 'Please enter your password',
         scrollViewHeight: constants.SCREEN_HEIGHT - 44,
@@ -223,6 +321,9 @@ export default class TextInputMaterial extends PureComponent {
         labelColor: this.errorColorCode,
       });
     } else {
+      if (typeof this.props.isValidPassword == 'function') {
+        this.props.isValidPassword(true)
+      }
       this.setState({
         underlineColor: this.successColorCode,
         labelColor: this.successColorCode,
@@ -325,7 +426,7 @@ export default class TextInputMaterial extends PureComponent {
         <View
           accessibilityLabel="textInputMaterial_view_serverError"
           testID="textInputMaterial_view_serverError"
-          style={{ height: 25, backgroundColor: (this.props.isLoginScreen)?'#225aa9':'white' }}>
+          style={{ height: 25, backgroundColor: (this.props.isLoginScreen) ? '#225aa9' : 'white' }}>
           <View
             accessibilityLabel="textInputMaterial_innerView_serverError"
             testID="textInputMaterial_innerView_serverError">
@@ -351,7 +452,7 @@ export default class TextInputMaterial extends PureComponent {
         <View
           testID={'loginScene_view_' + this.state.errorText}
           accessibilityLabel={'loginScene_view_' + this.state.errorText}
-          style={{ height: 25, backgroundColor: (this.props.isLoginScreen)?'#225aa9':'white' }}>
+          style={{ height: 25, backgroundColor: (this.props.isLoginScreen) ? '#225aa9' : 'white' }}>
           <View
             testID={'loginScene_textView_' + this.state.errorText}
             accessibilityLabel={'loginScene_textView_' + this.state.errorText}>
@@ -429,7 +530,7 @@ export default class TextInputMaterial extends PureComponent {
         <View
           testID={'textinputcomponent_view_' + label}
           accessibilityLabel={'textinputcomponent_view_' + label}
-          style={{ height: 55, backgroundColor: (this.isValidString(this.props.backgroundColor)? this.props.backgroundColor: colorConstants.WHITE_COLOR), marginBottom: 1 , borderColor:'gray', borderWidth:.5}}>
+          style={{ height: 55, backgroundColor: (this.isValidString(this.props.backgroundColor) ? this.props.backgroundColor : colorConstants.WHITE_COLOR), marginBottom: 1, borderColor: 'gray', borderWidth: .5 }}>
           <TextInput
             {...this.props}
             testID={'textinputcomponent_field_' + label}
@@ -444,7 +545,7 @@ export default class TextInputMaterial extends PureComponent {
             placeholderColor={placeholderColor}
             error=""
             refsValue={this.props.refsValue}
-            onBarcodeTapped={() => {(typeof this.props.onBarcodeTapped == 'function')?this.props.onBarcodeTapped():''}}
+            onBarcodeTapped={() => { (typeof this.props.onBarcodeTapped == 'function') ? this.props.onBarcodeTapped() : '' }}
             errorColor={this.errorColorCode}
             activeColor={errorActiveColor}
             isBarcodeDisplay={this.props.isBarcodeDisplay}

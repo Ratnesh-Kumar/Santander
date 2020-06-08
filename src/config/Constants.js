@@ -1,5 +1,6 @@
 import { Dimensions } from 'react-native';
 import Environment from './Environment';
+import * as RNLocalize from "react-native-localize";
 var env = new Environment();
 
 //API keys that are not able to keep on the .evn files for security reasons
@@ -14,7 +15,6 @@ export const FETCHING_TODOS = 'FETCHING_TODOS';
 export const FETCH_TODOS_SUCCESS = 'FETCH_TODOS_SUCCESS';
 export const FETCH_TODOS_FAILURE = 'FETCH_TODOS_FAILURE';
 export const UNDERLINE_COLOR_ANDROID = 'transparent';
-export const BASE_URL = "http://dummy.restapiexample.com";
 export const API_URL = BASE_URL + "/api/v1/employees";
 export const LOGIN_BUTTON_TEXT = "Sign In with email";
 export const ERROR_TEXT_INPUT_PASSWORD = "Please enter password";
@@ -30,5 +30,13 @@ export const PRIMARY_TEXT_COLOR = "#e6e6ff";
 
 export const LOCALE_EN = "en";
 export const LOCALE_ES = "es";
+
+//API urls
+export const COUNTRY_NAME = RNLocalize.getCountry();
+export const DEVICE_LOCALE = RNLocalize.getLocales()[0].languageTag;
+export const BASE_URL = "http://3.135.192.164";
+export const IDENTITY_SERVICE_PORT =":8096";
+export const BASE_IDENTITY_SERVICE_URL = BASE_URL+IDENTITY_SERVICE_PORT;
+export const USER_REGISTRATION_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users";
 
 

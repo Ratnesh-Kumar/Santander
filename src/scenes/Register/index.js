@@ -5,6 +5,7 @@ import {
     Text,
     KeyboardAvoidingView,
     TouchableOpacity,
+    Keyboard
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -15,11 +16,15 @@ import registerStyle from './RegisterStyle';
 import Header from '../../components/Header';
 import AppButton from '../../components/AppButton'
 import { ActionSheet } from 'native-base';
-var commonConstants = require('../../config/Constants');
+import { fetchJsonPOST } from '../../services/FetchData';
+var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 var registerConstant = require('./RegisterConstants.js');
 import CardView from 'react-native-cardview'
-export default class RegisterView extends Component {
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+import BaseComponent from '../../BaseComponent';
+export default class RegisterView extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,9 +37,51 @@ export default class RegisterView extends Component {
             showPassModal: false,
             showConfirmPass: true,
             confirmPassPress: false,
+            isActivityIndicatorVisible: false,
+            activityIndicatorText: '',
+            isDialogModalVisible: false,
+            dialogModalText: '',
+            dialogModalTitle: '',
+            isValidUserName: false,
+            isValidPassword: false,
+            isValidConfirmPassword: false
+        }
+    }
 
+    renderActivityIndicatorShow() {
+        this.setState({
+            isActivityIndicatorVisible: true,
+            activityIndicatorText: 'Loading...'
+        });
+    }
 
+    renderActivityIndicatorHide() {
+        this.setState({
+            isActivityIndicatorVisible: false,
+            activityIndicatorText: ''
+        });
+    }
 
+    renderDialogModal(message) {
+        this.setState({
+            isDialogModalVisible: true,
+            dialogModalText: message,
+            dialogModalTitle: 'Login Failed'
+        });
+        message = '';
+    }
+
+    renderModal() {
+        if (this.state.isDialogModalVisible) {
+            return (
+                <DialogModalView isVisible={this.state.isDialogModalVisible}
+                    title={this.state.dialogModalTitle}
+                    message={this.state.dialogModalText}
+                    handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+        } else if (this.state.isActivityIndicatorVisible) {
+            return (
+                <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+            );
         }
     }
 
@@ -42,6 +89,7 @@ export default class RegisterView extends Component {
     render() {
         return (
             <View style={registerStyle.renderContainer}>
+                {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={true} title={strings('registerScreen.digiShopTitle')} />
                 {/*this.renderRegisterTitle()*/}
                 {this.renderValidationForm()}
@@ -49,7 +97,8 @@ export default class RegisterView extends Component {
                 {/*this.renderSignUpButton()*/}
                 {this.renderConfirmPassword()}
                 <AppButton isLightTheme={false} buttonText={strings('registerScreen.SignUpButttonText')} onButtonPressed={() => {
-                    Actions.registerCreateCampaign();
+                    this.fetchService()
+                    // Actions.registerCreateCampaign();
                 }} />
 
                 {this.renderTermsView()}
@@ -57,6 +106,54 @@ export default class RegisterView extends Component {
             </View>
         );
     }
+
+    async fetchService() {
+        if (this.isValidRegistrationForm()) {
+            this.renderActivityIndicatorShow()
+            let bodyData = this.getBodyData()
+            console.log("################ bodyData : " + JSON.stringify(bodyData))
+            var responseData = await fetchJsonPOST(constants.USER_REGISTRATION_URL, bodyData)
+            console.log("################ responseData : " + JSON.stringify(responseData))
+            if (this.isValidString(responseData)) {
+                alert('Successfully Registered')
+            }
+            this.renderActivityIndicatorHide()
+        }
+    }
+
+    getBodyData() {
+        console.log("############# locale : " + constants.DEVICE_LOCALE)
+        let bodyData = "username=" + this.state.username +
+            "&password=" + this.state.password +
+            "&confirmPassword=" + this.state.confirmPass +
+            "&country=" + constants.COUNTRY_NAME +
+            "&locale=" + constants.DEVICE_LOCALE
+            return bodyData
+    }
+
+
+    isValidRegistrationForm() {
+        if (this.state.isValidUserName && this.isValidPasswordRules() && this.isValidConfirmPassword()) {
+            return true
+        }
+        return false;
+    }
+
+    isValidConfirmPassword() {
+        if (this.state.isValidConfirmPassword || ((this.state.confirmPass.length > 0) && (this.state.password == this.state.confirmPass))) {
+            return true;
+        }
+        return false
+    }
+
+    isValidPasswordRules() {
+        if (this.isAlpha() && this.isCapital() && this.isNumeric() && this.isSmall() && this.isValid() && this.state.isValidPassword) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     isAlpha() {
         const { password } = this.state;
         var format = /[ !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
@@ -151,7 +248,7 @@ export default class RegisterView extends Component {
     }
 
     renderValidationForm() {
-        var imgSource = this.state.passPress ? commonConstants.EYE_ICON_VISIBLE : commonConstants.EYE_ICON;
+        var imgSource = this.state.passPress ? constants.EYE_ICON_VISIBLE : constants.EYE_ICON;
         return (
             <KeyboardAvoidingView
                 behavior="height"
@@ -160,8 +257,8 @@ export default class RegisterView extends Component {
                     <View style={registerStyle.validFormSubView}>
                         <TextInputMaterial
                             blurText={this.state.username}
-                            refsValue={strings('registerScreen.UserTextInput')}
-                            ref={strings('registerScreen.UserTextInput')}
+                            refsValue={"username_email"}
+                            ref={"username_email"}
                             label={strings('registerScreen.UserTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
@@ -171,12 +268,13 @@ export default class RegisterView extends Component {
                             isLoginScreen={false}
                             style={registerStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.username}
                             textInputName={this.state.username}
                             errorText={strings('registerScreen.UserTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
+                            isValidUserName={(flag) => { this.setState({ isValidUserName: flag }); console.log("################### isValidUserName : " + flag) }}
                             onSubmitEditing={event => {
                                 this.refs.passwordInput.focus();
                             }}
@@ -195,7 +293,7 @@ export default class RegisterView extends Component {
                 isLoginScreen={false}
                 style={registerStyle.input}
                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                 value={this.state.phone}
                 textInputName={this.state.phone}
                 errorText={strings('registerScreen.PhoneTextInputError')}
@@ -210,12 +308,12 @@ export default class RegisterView extends Component {
                             <TextInputMaterial
                                 secureTextEntry={this.state.showPass}
                                 blurText={this.state.password}
-                                //refsValue={commonConstants.TEXT_INPUT_PASSWORD}
+                                //refsValue={constants.TEXT_INPUT_PASSWORD}
                                 showIcon={false}
                                 value={this.state.password}
                                 textInputName={this.state.password}
-                                refsValue={strings('registerScreen.PasswordTextInput')}
-                                ref={strings('registerScreen.PasswordTextInput')}
+                                refsValue={"passwordInput"}
+                                ref={"passwordInput"}
                                 label={strings('registerScreen.PasswordTextInput')}
                                 maxLength={50}
                                 underlineHeight={2}
@@ -226,11 +324,12 @@ export default class RegisterView extends Component {
                                 returnKeyType={'done'}
                                 autoCorrect={false}
                                 style={registerStyle.input}
+                                isValidPassword={(flag) => { this.setState({ isValidPassword: flag }) }}
                                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                                 underlineColorAndroid={colorConstant.UNDERLINE_COLOR_ANDROID}
                                 errorText={strings('registerScreen.PasswordTextInputError')}
                                 onSubmitEditing={event => {
-                                    this.refs.confirmPasswordInput.focus();
+                                    this.refs.confirmPassword.focus();
                                 }}
                             />
                         </View>
@@ -243,7 +342,7 @@ export default class RegisterView extends Component {
         );
     }
     renderConfirmPassword() {
-        var imgSource = this.state.confirmPassPress ? commonConstants.EYE_ICON_VISIBLE : commonConstants.EYE_ICON;
+        var imgSource = this.state.confirmPassPress ? constants.EYE_ICON_VISIBLE : constants.EYE_ICON;
         return (
             <KeyboardAvoidingView
                 behavior="height"
@@ -256,8 +355,8 @@ export default class RegisterView extends Component {
                             showIcon={false}
                             value={this.state.confirmPass}
                             textInputName={this.state.confirmPass}
-                            refsValue={strings('registerScreen.ConfirmPasswordTextInput')}
-                            ref={strings('registerScreen.ConfirmPasswordTextInput')}
+                            refsValue={"confirmPassword"}
+                            ref={"confirmPassword"}
                             label={strings('registerScreen.ConfirmPasswordTextInput')}
                             maxLength={50}
                             underlineHeight={2}
@@ -268,6 +367,8 @@ export default class RegisterView extends Component {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             style={registerStyle.input}
+                            passwordValue={this.state.password}
+                            isValidConfirmPassword={(flag) => { this.setState({ isValidConfirmPassword: flag }) }}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={colorConstant.UNDERLINE_COLOR_ANDROID}
                             errorText={strings('registerScreen.ConfirmPasswordTextInputError')}
