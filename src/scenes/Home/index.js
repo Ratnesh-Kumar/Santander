@@ -19,6 +19,8 @@ export default class HomeScreen extends BaseComponent {
     this.state={
       isSignOutDisplay: false
     }
+    console.log("############ userInfo : "+JSON.stringify(globalData.getUserInfo()))
+    console.log("############ userInfo token : "+globalData.getUserTokenKey())
   }
 
   async componentDidMount(){    

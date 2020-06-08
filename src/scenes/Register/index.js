@@ -28,9 +28,9 @@ export default class RegisterView extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'abc1@yopmail.com',
-            password: 'Tester@123',
-            confirmPass: 'Tester@123',
+            username: '',
+            password: '',
+            confirmPass: '',
             phone: '',
             showPass: true,
             passPress: false,
@@ -62,11 +62,11 @@ export default class RegisterView extends BaseComponent {
         });
     }
 
-    renderDialogModal(message) {
+    renderDialogModal(title, message) {
         this.setState({
             isDialogModalVisible: true,
             dialogModalText: message,
-            dialogModalTitle: 'Login Failed'
+            dialogModalTitle: title
         });
         message = '';
     }
@@ -108,16 +108,19 @@ export default class RegisterView extends BaseComponent {
     }
 
     async fetchService() {
-        if (!this.isValidRegistrationForm()) {
+        if (this.isValidRegistrationForm()) {
             this.renderActivityIndicatorShow()
             let bodyData = this.getBodyData()
             var responseData = await fetchJsonPOST(constants.USER_REGISTRATION_URL, bodyData)
             if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
                 if(responseData.statusMessage == constants.USER_REGISTERED_STATUS){
+                    this.saveUserInfo(responseData);
                     Actions.registerCreateCampaign();
                 }
             }
             this.renderActivityIndicatorHide()
+        } else{
+            this.renderDialogModal(strings('registerScreen.Info'), strings('registerScreen.ValidInformation'))
         }
     }
 
