@@ -41,7 +41,10 @@ export default (styles = StyleSheet.create({
   btnEye: {
     flex: 1,
     flexDirection: 'row-reverse',
-    position: 'relative',
+    position: 'absolute',
+    bottom:7,
+    right:7,
+    top:50
   },
   iconEye: {
     width: 25,
