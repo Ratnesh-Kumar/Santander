@@ -3,7 +3,6 @@ import {
     AppRegistry
 } from 'react-native';
 var singleInstance = null;
-var userData = false;
 var isFirebaseInitialize = false;
 var verifyEmail = false;
 var googleUserInfo = '';
@@ -19,6 +18,8 @@ var isInstagramEnabled = false;
 var isPinterestEnabled = false;
 var isTextSmsEnabled = false;
 var isWhatsAppEnable = false;
+var userInfo = "";
+var userTokenKey = "";
 
 export class GlobalData extends Component {
     constructor() {
@@ -27,15 +28,6 @@ export class GlobalData extends Component {
             singleInstance = this;
         }
         return singleInstance;
-    }
-
-    //this enable the test dialog in Home page
-    setUserData(text){
-        userData = text;
-    }
-
-    getUserData(){
-        return userData;
     }
 
     setFirebaseInitialize(flag){
@@ -140,6 +132,22 @@ export class GlobalData extends Component {
     
     isFacebookMarketplaceEnabled(){
         return isFacebookMarketplaceEnabled;
+    }
+
+    setUserInfo(info){
+        userInfo = info;
+    }
+
+    getUserInfo(){
+        return userInfo;
+    }
+
+    setUserTokenKey(key){
+        userTokenKey = key;
+    }
+
+    getUserTokenKey(){
+        return userTokenKey;
     }
 }
 

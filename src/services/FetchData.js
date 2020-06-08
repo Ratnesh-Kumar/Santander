@@ -32,14 +32,12 @@ function fetchJsonGET(url) {
 
 
 function fetchJsonPOST(urlString, bodyData) {
-  console.log('############# urlString - ' + urlString)
-  console.log('############# boDyData ' + bodyData)
   return new Promise(function (resolve, reject) {
     fetch(urlString, {
       method: "POST",
       timeout: 2000,
       headers: POST_HEADER,
-      body: bodyData,
+      body: JSON.stringify(bodyData),
     })
       .then((response) => response.json())
       .then((responseData) => {
