@@ -38,5 +38,6 @@ export const BASE_URL = "http://3.135.192.164";
 export const IDENTITY_SERVICE_PORT =":8096";
 export const BASE_IDENTITY_SERVICE_URL = BASE_URL+IDENTITY_SERVICE_PORT;
 export const USER_REGISTRATION_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users";
+export const USER_REGISTERED_STATUS = "Registered";
 
 

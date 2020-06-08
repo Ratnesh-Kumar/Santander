@@ -28,9 +28,9 @@ export default class RegisterView extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            confirmPass: '',
+            username: 'abc1@yopmail.com',
+            password: 'Tester@123',
+            confirmPass: 'Tester@123',
             phone: '',
             showPass: true,
             passPress: false,
@@ -108,27 +108,28 @@ export default class RegisterView extends BaseComponent {
     }
 
     async fetchService() {
-        if (this.isValidRegistrationForm()) {
+        if (!this.isValidRegistrationForm()) {
             this.renderActivityIndicatorShow()
             let bodyData = this.getBodyData()
-            console.log("################ bodyData : " + JSON.stringify(bodyData))
             var responseData = await fetchJsonPOST(constants.USER_REGISTRATION_URL, bodyData)
-            console.log("################ responseData : " + JSON.stringify(responseData))
-            if (this.isValidString(responseData)) {
-                alert('Successfully Registered')
+            if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+                if(responseData.statusMessage == constants.USER_REGISTERED_STATUS){
+                    Actions.registerCreateCampaign();
+                }
             }
             this.renderActivityIndicatorHide()
         }
     }
 
     getBodyData() {
-        console.log("############# locale : " + constants.DEVICE_LOCALE)
-        let bodyData = "username=" + this.state.username +
-            "&password=" + this.state.password +
-            "&confirmPassword=" + this.state.confirmPass +
-            "&country=" + constants.COUNTRY_NAME +
-            "&locale=" + constants.DEVICE_LOCALE
-            return bodyData
+        let locale = constants.DEVICE_LOCALE.replace("-","_").toLocaleLowerCase()
+        return {
+            "username" : this.state.username,
+            "password" : this.state.password,
+            "confirmPassword": this.state.confirmPass,
+            "country" : constants.COUNTRY_NAME,
+            "locale" : locale
+        }
     }
 
 
