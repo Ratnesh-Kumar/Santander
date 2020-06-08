@@ -22,7 +22,7 @@
       "PasswordTextInputError":"Please enter your password",
       "Info": "Info",
       "ValidInformation": "Please provide valid information.",
-      "LoginError":"Error de inicio de sesión"
+      "LoginError":"Login Error"
     },
     "forgotScreen": {
       "forgotTitle": "Forgot Password",

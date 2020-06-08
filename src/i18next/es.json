@@ -16,7 +16,7 @@
     "TermsConditionSubTitle1": "declaración",
     "Info": "Informacion",
     "ValidInformation": "Por favor proporcione información válida.",
-    "LoginError":"Login Error"
+    "LoginError":"Error de inicio de sesión"
   },
   "forgotScreen": {
     "forgotTitle": "olvidadoTítulo",

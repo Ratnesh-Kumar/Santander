@@ -201,7 +201,7 @@ export default class LoginView extends BaseComponent {
   }
 
   checkForLoginFormValidation() {
-    if (this.state.username && this.state.password && this.state.isValidPassword && this.state.isValidUserName) {
+    if (this.state.username && this.state.password) {
       return true
     }
     return false;
