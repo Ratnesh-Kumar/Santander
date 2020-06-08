@@ -13,7 +13,10 @@
     "TermsConditionTitle1": " Condiciones ",
     "TermsConditionTitle2": "Y han reconocido \n nuestrar",
     "TermsConditionSubTitle": " intimidad",
-    "TermsConditionSubTitle1": "declaración"
+    "TermsConditionSubTitle1": "declaración",
+    "Info": "Informacion",
+    "ValidInformation": "Por favor proporcione información válida.",
+    "LoginError":"Login Error"
   },
   "forgotScreen": {
     "forgotTitle": "olvidadoTítulo",

@@ -19,7 +19,10 @@
       "UserTextInput":"Username",
       "UserTextInputError":"Please enter your username/email",
       "PasswordTextInput":"Password",
-      "PasswordTextInputError":"Please enter your password"
+      "PasswordTextInputError":"Please enter your password",
+      "Info": "Info",
+      "ValidInformation": "Please provide valid information.",
+      "LoginError":"Error de inicio de sesión"
     },
     "forgotScreen": {
       "forgotTitle": "Forgot Password",
