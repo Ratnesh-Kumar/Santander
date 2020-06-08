@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import {
-    AppRegistry
-} from 'react-native';
 var singleInstance = null;
 var userData = false;
 var isFirebaseInitialize = false;
