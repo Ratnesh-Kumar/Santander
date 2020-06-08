@@ -233,10 +233,11 @@ export default class RegisterView extends Component {
                                     this.refs.confirmPasswordInput.focus();
                                 }}
                             />
+                            <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setPasswordVisibility()}>
+                                <Image source={imgSource} style={registerStyle.iconEye} />
+                            </TouchableOpacity>
                         </View>
-                        <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setPasswordVisibility()}>
-                            <Image source={imgSource} style={registerStyle.iconEye} />
-                        </TouchableOpacity>
+                        
                     </View>
                 </View>
             </KeyboardAvoidingView>
@@ -250,6 +251,7 @@ export default class RegisterView extends Component {
                 style={registerStyle.validFormViewConfirmPassContainer}>
                 <View style={registerStyle.inputWrapper}>
                     <View style={registerStyle.validFormSubView}>
+                    <View style={registerStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             secureTextEntry={this.state.showConfirmPass}
                             blurText={this.state.confirmPass}
@@ -276,6 +278,7 @@ export default class RegisterView extends Component {
                         <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setConfirmPasswordVisibility()}>
                             <Image source={imgSource} style={registerStyle.iconEye} />
                         </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
             </KeyboardAvoidingView>
