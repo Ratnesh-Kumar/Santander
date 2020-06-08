@@ -7,10 +7,16 @@ let FacebookShareMessage= 'facebook share';
 let TwitterShareURL= 'https://aboutreact.com';
 let TweetContent= 'Hello Guys, This is a testing of twitter share example';
 let TwitterViaAccount= 'AboutReact';
+var singleInstance = null;
+
 export class CommonFunctions extends Component {
-    constructor(props) {
-        super(props);
-        };
+    constructor() {
+        super();
+        if (!singleInstance) {
+            singleInstance = this;
+        }
+        return singleInstance;
+    }
 
         
     tweetNow = () => {

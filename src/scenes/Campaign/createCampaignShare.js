@@ -16,10 +16,12 @@ import SwitchTextInput from '../../components/SwitchTextInput';
 import AppButton from '../../components/AppButton';
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
-import GlobalData from '../../utils/GlobalData'
+import GlobalData from '../../utils/GlobalData';
+import CommonFunctions from '../../utils/CommonFunctions';
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
+var comonFunctions = new CommonFunctions();
 
 export default class CreateCampaiganShare extends Component {
   constructor(props) {
@@ -54,7 +56,7 @@ export default class CreateCampaiganShare extends Component {
   renderPublishButton() {
     return (
       <AppButton isLightTheme={false} buttonText={strings('createCampaignShare.publishNowText')} onButtonPressed={() => {
-        this.showAlert()
+        comonFunctions.postOnFacebook();
       }} />
     );
   }
