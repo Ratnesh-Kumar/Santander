@@ -317,13 +317,13 @@ export default class LoginView extends BaseComponent {
                 errorText={strings('loginScreen.PasswordTextInputError')}
                 onFocus={() => this.inputFocused.bind(this)}
               />
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={loginStyle.btnEye}
+                onPress={this.showPass}>
+                <Image source={imgSource} style={loginStyle.iconEye} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={loginStyle.btnEye}
-              onPress={this.showPass}>
-              <Image source={imgSource} style={loginStyle.iconEye} />
-            </TouchableOpacity> 
           </View>
         </View>
       </KeyboardAvoidingView>
