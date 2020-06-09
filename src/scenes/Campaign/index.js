@@ -41,7 +41,17 @@ export default class CampaignScreen extends BaseComponent {
 
   }
 
-  componentWillReceiveProps(props) {
+  // UNSAFE_componentWillUpdate = nextProps => {
+  //   this.state.refershData = nextProps.qrcodeData
+  //   console.log("################## UNSAFE_componentWillUpdate : " + nextProps.qrcodeData)
+  //   if (this.isValidString(nextProps.qrcodeData)) {
+  //     // this.setState({
+  //     //   campaignBarcodeValue: nextProps.qrcodeData
+  //     // })
+  //   }
+  // }
+
+  UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.qrcodeData)) {
       this.setState({
         campaignBarcodeValue: props.qrcodeData
@@ -311,7 +321,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
 
-        <Image source={this.state.pickedImage} style={{ height: 80, width: 80, marginTop: 20 }} />
+        <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
 
         <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
       </TouchableOpacity>
@@ -330,8 +340,10 @@ export default class CampaignScreen extends BaseComponent {
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View>
-          {this.state.showImage == false ? this.renderCamera() : this.renderImageView()}
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
+          <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
+          <Text onPress={() => this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>

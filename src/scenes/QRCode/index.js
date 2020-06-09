@@ -14,6 +14,7 @@ import { RNCamera } from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
 var constants = require('../../config/Constants');
 var createReactClass = require('create-react-class');
+var isBarcodeRead = false;
 
 //const QR_IMAGE = require('../../../public/images/QRimage.webp')
 var QRCodeScreen = createReactClass({
@@ -57,14 +58,23 @@ var QRCodeScreen = createReactClass({
   },
 
   _onPressCancel: function () {
-    Actions.pop();
-   
+    // Actions.pop();
+    Actions.pop()
     this.barCodeFlag = false;
   },
 
   _onBarCodeRead: function (result) {
-    console.log("#######result - " + JSON.stringify(result));
-    Actions.pop({refresh:{qrcodeData : result.data}})
+    console.log("####### result data - " + result.data);
+    if (!isBarcodeRead) {
+      isBarcodeRead = true
+      Actions.pop({ refresh: { qrcodeData: result.data } })
+      setTimeout(() => {
+        Actions.refresh({
+          qrcodeData: result.data
+        });
+      }, 10);
+    }
+
   },
   showAlert: function () {
     Alert.alert(
@@ -72,9 +82,11 @@ var QRCodeScreen = createReactClass({
       'Sorry, this barcode is not recognized. Please try scanning again or browse for this product within our app.',
       [
         { text: 'Go Back', onPress: () => { Actions.pop() } },
-        { text: 'Scan Again', onPress: () => { 
-          Actions.refresh();
-        } },
+        {
+          text: 'Scan Again', onPress: () => {
+            Actions.refresh();
+          }
+        },
       ],
       { cancelable: false }
     )
