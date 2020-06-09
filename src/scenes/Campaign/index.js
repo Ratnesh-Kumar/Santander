@@ -318,7 +318,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
         <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
-          <Image source={this.state.pickedImage} style={{ height: 100, width: 150, marginTop: 20 }} />
+          <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
           <Text onPress={() => this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
 
         </View>
