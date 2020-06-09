@@ -68,26 +68,22 @@ export class CommonFunctions extends Component {
     postOnFacebook = () => {
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");
             } else {
-                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");
             }
         }
         if (FacebookShareMessage != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag");
             } else {
-                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag");
             }
         }
         let url = 'https://www.facebook.com/sharer/sharer.php' + facebookParameters;
         Actions.browser({ url: url });
 
-        // Linking.openURL(url).then((data) => {
-
-        // }).catch(() => {
-        //     console.log('Something went wrong');
-        // });
+        
     }
 }
 export default CommonFunctions;
