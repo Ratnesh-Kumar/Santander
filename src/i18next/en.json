@@ -82,7 +82,9 @@
       "facebookShopText": "Facebook Shop",
       "facebookMarketText": "Facebook Market Place",
       "pinterestText": "Pinterest",
-      "instagramText": "Instagram"
+      "instagramText": "Instagram",
+      "Info": "Info",
+      "createShopErrorkey":"Please enter valid Information"
     },
     "registerScreen":{
       "digiShopTitle": "DigiShop",

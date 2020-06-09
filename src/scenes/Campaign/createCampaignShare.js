@@ -20,7 +20,7 @@ import GlobalData from '../../utils/GlobalData';
 import CommonFunctions from '../../utils/CommonFunctions';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-import { fetchJsonPOST } from '../../services/FetchData';
+import { fetchPartyPOST } from '../../services/FetchData';
 import BaseComponent from '../../BaseComponent';
 var comonFunctions = new CommonFunctions();
 var campaignConstants = require('./campaignConstants');
@@ -66,8 +66,8 @@ export default class CreateCampaiganShare extends BaseComponent {
   renderPublishButton() {
     return (
       <AppButton isLightTheme={false} buttonText={strings('createCampaignShare.publishNowText')} onButtonPressed={() => {
-       //this.publishButtonClick()
-       comonFunctions.postOnFacebook();
+       this.publishButtonClick()
+       //comonFunctions.postOnFacebook();
       }} />
     );
   }
@@ -77,8 +77,7 @@ export default class CreateCampaiganShare extends BaseComponent {
     this.renderActivityIndicatorShow()
     let bodyData = this.getShopNameBodyData()
     console.log("@@@@@@@@@@@@@@@@@@@  bodyData : " + JSON.stringify(bodyData))
-    var responseData = await fetchJsonPOST(constants.CREATE_SHOP_URL, bodyData)
-    debugger;
+    var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, bodyData)
     console.log("@@@@@@@@@@@@@@@@@@@  responseData : " + JSON.stringify(responseData))
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       // if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
@@ -87,13 +86,16 @@ export default class CreateCampaiganShare extends BaseComponent {
       //   this.renderDialogModal('Publish error', responseData.statusMessage);
       // }
     }
+    else{
+      this.renderDialogModal(strings('createCampaignShare.Info'),strings('createCampaignShare.createShopErrorkey'));
+    }
     this.renderActivityIndicatorHide()
   }
 
   getShopNameBodyData() {
     let locale = constants.DEVICE_LOCALE.replace("-","_").toLocaleLowerCase()
     let bodyData = {
-      "shopName": 'HOLD',
+      "shopName": 'MyShop',
       "country": constants.COUNTRY_NAME,
       "locale":locale,
     };

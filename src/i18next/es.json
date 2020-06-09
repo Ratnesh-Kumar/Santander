@@ -76,7 +76,9 @@
     "facebookShopText": "Facebook Shop",
     "facebookMarketText": "Tienda de Facebook",
     "pinterestText": "Pinterest",
-    "instagramText": "Instagram"
+    "instagramText": "Instagram",
+    "Info": "Informacion",
+    "createShopErrorkey":"Por favor, introduzca información válida"
   },
   "registerScreen": {
     "digiShopTitle": "DigiShop",

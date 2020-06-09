@@ -46,4 +46,8 @@ export const USER_RESET_PASSWORD_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users/forgot
 export const USER_RESET_PASSWORD_STATUS="OK";
 export const USER_LOGIN_STATUS = "Login Success";
 
+//Party Shop API Url
+
+export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
+
 
