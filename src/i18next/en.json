@@ -30,7 +30,9 @@
       "SendEmailButtonText":"Send Reset Link",
       "UserTextInput":"eMail",
       "UserTextInputError":"Please enter your email",
-      "ScreenTitle":"Digishop"
+      "ScreenTitle":"Digishop",
+      "PasswordResetError":"password reset error",
+      "PasswordResetSuccess":"Reset link successfully sent to your Email"
     },
     "termsScreen":{
       "termsTitle":"Terms And Condtions",
@@ -167,6 +169,14 @@
       "EnablePayment":"Enable Payment",
       "Delete":"Delete My Account",
       "logout":"Logout"
+    },
+    "editOrder":{
+      "title":"Manage Order",
+      "orderText":"Order# ",
+      "productsText":"Products",
+      "SkuText":"SKU - ",
+      "QtyText":"Quantity - ",
+      "AmtText":"Amount - "
     },
     "TrackQuantityScreen":{
       "EnterTacking":"Enter Tracking Information",

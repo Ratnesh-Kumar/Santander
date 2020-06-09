@@ -11,6 +11,9 @@ function fetchJsonGET(url) {
     fetch(url, {
       method: "GET",
       headers: {
+        'Accept': 'application/json',
+        'SAN.AppId': 'SAN.digitalShop',
+        'SAN.AppSecret': '4d9100df-8187-406e-836f-721d04767874',
         'Content-Type': 'application/json',
         'Connection': 'keep-alive',
         'Accept-Language': 'en;q=1',
