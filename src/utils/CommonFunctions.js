@@ -81,12 +81,12 @@ export class CommonFunctions extends Component {
         ShareDialog.show(sharePhotoContent);
     }
     postOnFacebook = (globalData) => {
-        FacebookShareMessage = (globalData.getdescriptionCampaign() + '\n\r' + "Available Quantity :" + globalData.getQuantityCampaign() + '\n\r' + "Price :" + globalData.getPriceCampaign() + '\n' + "Sale Price :" + globalData.getSalesPriceCampaign());
+        FacebookShareMessage = (globalData.getTitleCampaign() + '\n\r'+ "Product Description :" + globalData.getdescriptionCampaign() + '\n\r' + "Available Quantity :" + globalData.getQuantityCampaign() + '\n\r' + "Price :" + globalData.getPriceCampaign() + '\n\r' + "Sale Price :" + globalData.getSalesPriceCampaign());
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&title=" + globalData.getTitleCampaign().trim() + "&images=" + { base64Image};
+                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&title=" + "&images=" + { base64Image };
             } else {
-                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + + "&title=" + globalData.getTitleCampaign().trim() + "&images=" + { base64Image };
+                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { base64Image };
             }
         }
         if (FacebookShareMessage != undefined) {

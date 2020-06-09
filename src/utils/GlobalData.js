@@ -23,7 +23,8 @@ var descriptionCampaign = "";
 var quantityCampaign = 0;
 var categoriesCampaign = "";
 var variantsCampaign = "";
-
+var priceCampaign=0;
+var salesPriceCampaign =0;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -46,7 +47,18 @@ export class GlobalData extends Component {
     getImageCampaign() {
         return imageCampaign;
     }
-
+    setPriceCampaign(price){
+        priceCampaign = price;
+    }
+    getPriceCampaign(){
+        return priceCampaign;
+    }
+    setSalesPriceCampaign(price){
+        salesPriceCampaign = price;
+    }
+    getSalesPriceCampaign(){
+        return salesPriceCampaign;
+    }
     setdescriptionCampaign(description) {
         descriptionCampaign = description;
     }
