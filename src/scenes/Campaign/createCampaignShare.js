@@ -22,10 +22,10 @@ import ActivityIndicatorView from '../../components/activityindicator/ActivityIn
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import { fetchJsonPOST } from '../../services/FetchData';
 import BaseComponent from '../../BaseComponent';
+var comonFunctions = new CommonFunctions();
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
-var comonFunctions = new CommonFunctions();
 
 export default class CreateCampaiganShare extends BaseComponent {
   constructor(props) {
