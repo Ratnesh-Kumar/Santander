@@ -11,7 +11,6 @@ let TwitterShareURL = 'https://aboutreact.com';
 let TweetContent = 'Hello Guys, This is a testing of twitter share example';
 let TwitterViaAccount = 'AboutReact';
 var singleInstance = null;
-var image = require('../public/images/backArrow.png')
 export class CommonFunctions extends Component {
     constructor() {
         super();

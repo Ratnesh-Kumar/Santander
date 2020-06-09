@@ -3,29 +3,31 @@ import { View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Header from '../Header';
 var colorConstants = require('../../config/colorConstant')
+var constants = require('../../config/Constants')
 
 export default class Browser extends Component {
     constructor(props) {
         super(props);
     }
     onNavigationStateChange(webViewState) {
-        console.log(webViewState.url)
+        console.log("################# onNavigationStateChange : " + webViewState.url)
     }
     render() {
-        console.log("##########################################" + this.props.url);
+        console.log("########################################## : " + this.props.url);
         return (
+            // <WebView source={{ uri: this.props.url }} />
             <View style={{
-                flex:1,
-                backgroundColor: colorConstants.WHITE_COLOR
+                flex: 1,
+                backgroundColor: colorConstants.BLUE_COLOR
             }}>
                 <Header title={"Share"} isCrossIconVisible={false} isSignOutDisplay={false} />
-                <View style={{backfaceVisibility:'green'}}>
+                <View style={{ flex: 1 }}>
                     <WebView
                         ref="webview"
-                        onNavigationStateChange={()=>this.onNavigationStateChange.bind(this)}
+                        source={{ uri: this.props.url }}
                         javaScriptEnabled={true}
                         domStorageEnabled={true}
-                        source={{ url: this.props.url }}
+                        onNavigationStateChange={() => this.onNavigationStateChange.bind(this)}
                     />
                 </View>
             </View>

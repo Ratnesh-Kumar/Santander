@@ -18,10 +18,10 @@ import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import GlobalData from '../../utils/GlobalData';
 import CommonFunctions from '../../utils/CommonFunctions';
+var comonFunctions = new CommonFunctions();
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
-var comonFunctions = new CommonFunctions();
 
 export default class CreateCampaiganShare extends Component {
   constructor(props) {
