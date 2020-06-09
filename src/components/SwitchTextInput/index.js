@@ -44,7 +44,7 @@ export default class SwitchTextInput extends Component {
             <View
               style={{position: 'absolute', right: 10, top: 10}}>
               <Switch
-                onTintColor={colorConstants.SANT_RED_COLOR}
+                trackColor={colorConstants.SANT_RED_COLOR}
                 value={this.state.switchvalue}
                  onValueChange={(value) => {this.setState({switchvalue:!this.state.switchvalue}); this.props.onRightPressed(value) }}
               />

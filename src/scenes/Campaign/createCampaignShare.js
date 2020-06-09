@@ -18,15 +18,24 @@ import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import GlobalData from '../../utils/GlobalData';
 import CommonFunctions from '../../utils/CommonFunctions';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+import { fetchJsonPOST } from '../../services/FetchData';
+import BaseComponent from '../../BaseComponent';
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
 var comonFunctions = new CommonFunctions();
 
-export default class CreateCampaiganShare extends Component {
+export default class CreateCampaiganShare extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
     };
   }
 
@@ -35,6 +44,7 @@ export default class CreateCampaiganShare extends Component {
   render() {
     return (
       <View style={createStyle.container}>
+        {this.renderModal()}
         <Header isleftArrowDisplay={true} title={strings('createCampaign.screenTitle')} />
         <ScrollView style={{ paddingBottom: 50 }}>
           {this.renderSwitchTextInput()}
@@ -56,9 +66,38 @@ export default class CreateCampaiganShare extends Component {
   renderPublishButton() {
     return (
       <AppButton isLightTheme={false} buttonText={strings('createCampaignShare.publishNowText')} onButtonPressed={() => {
-        comonFunctions.postOnFacebook();
+       //this.publishButtonClick()
+       comonFunctions.postOnFacebook();
       }} />
     );
+  }
+
+  async publishButtonClick(){
+    //check for shop name already exists or not . 
+    this.renderActivityIndicatorShow()
+    let bodyData = this.getShopNameBodyData()
+    console.log("@@@@@@@@@@@@@@@@@@@  bodyData : " + JSON.stringify(bodyData))
+    var responseData = await fetchJsonPOST(constants.CREATE_SHOP_URL, bodyData)
+    debugger;
+    console.log("@@@@@@@@@@@@@@@@@@@  responseData : " + JSON.stringify(responseData))
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      // if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
+      // }
+      // else {
+      //   this.renderDialogModal('Publish error', responseData.statusMessage);
+      // }
+    }
+    this.renderActivityIndicatorHide()
+  }
+
+  getShopNameBodyData() {
+    let locale = constants.DEVICE_LOCALE.replace("-","_").toLocaleLowerCase()
+    let bodyData = {
+      "shopName": 'HOLD',
+      "country": constants.COUNTRY_NAME,
+      "locale":locale,
+    };
+    return bodyData
   }
 
   showAlert() {
@@ -147,6 +186,42 @@ export default class CreateCampaiganShare extends Component {
       )
     }
 
+  }
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
+    }
   }
 }
 
