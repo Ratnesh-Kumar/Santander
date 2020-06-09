@@ -144,7 +144,7 @@ export default class CampaignScreen extends BaseComponent {
               label={strings('createCampaign.costTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => this.setState({ campaignCostValue: text })}
+              onChangeText={text => {this.setState({ campaignCostValue: text })}}
               returnKeyType={'done'}
               backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
               autoCorrect={false}
@@ -325,7 +325,7 @@ export default class CampaignScreen extends BaseComponent {
               multiline={true}
               maxLength={250}
               numberOfLines={3}
-              onChangeText={text =>{this.setState({ productDescription: text})}} 
+              onChangeText={text =>{globalData.setdescriptionCampaign(text); this.setState({ productDescription: text})}} 
               onSubmitEditing={event => {
                 this.refs.campaignPrice.focus();
               }}
@@ -350,7 +350,7 @@ export default class CampaignScreen extends BaseComponent {
               label={strings('createCampaign.campaignTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => this.setState({ campaignName: text })}
+              onChangeText={text => {globalData.setTitleCampaign(text);this.setState({ campaignName: text })}}
               returnKeyType={'done'}
               autoCorrect={false}
               isLoginScreen={false}

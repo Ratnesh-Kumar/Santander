@@ -17,6 +17,12 @@ var isTextSmsEnabled = false;
 var isWhatsAppEnable = false;
 var userInfo = "";
 var userTokenKey = "";
+var titleCampaign = "";
+var imageCampaign = "";
+var descriptionCampaign = "";
+var quantityCampaign = 0;
+var categoriesCampaign = "";
+var variantsCampaign = "";
 
 export class GlobalData extends Component {
     constructor() {
@@ -27,123 +33,164 @@ export class GlobalData extends Component {
         return singleInstance;
     }
 
-    setFirebaseInitialize(flag){
+    setTitleCampaign(title) {
+        titleCampaign = title;
+    }
+    getTitleCampaign() {
+        return titleCampaign;
+    }
+
+    setImageCampaign(image) {
+        imageCampaign = image;
+    }
+    getImageCampaign() {
+        return imageCampaign;
+    }
+
+    setdescriptionCampaign(description) {
+        descriptionCampaign = description;
+    }
+    getdescriptionCampaign() {
+        return descriptionCampaign;
+    }
+
+    setQuantityCampaign(quantity) {
+        quantityCampaign = quantity;
+    }
+    getQuantityCampaign() {
+        return quantityCampaign;
+    }
+
+    setCategoriesCampaign(categories) {
+        categoriesCampaign = categories;
+    }
+    getCategoriesCampaign() {
+        return categoriesCampaign;
+    }
+    setVariantsCampaign(variants) {
+        variantsCampaign = variants;
+    }
+    getVariantsCampaign() {
+        return variantsCampaign;
+    }
+
+    setFirebaseInitialize(flag) {
         isFirebaseInitialize = flag;
     }
 
-    isFirebaseInitialize(){
+    isFirebaseInitialize() {
         return isFirebaseInitialize;
     }
 
-    setVerifyEmail(flag){
+    setVerifyEmail(flag) {
         verifyEmail = flag;
     }
 
-    isVerifyEmail(){
+    isVerifyEmail() {
         return verifyEmail;
     }
 
-    setGoogleUserInfo(userInfo){
+    setGoogleUserInfo(userInfo) {
         googleUserInfo = userInfo;
     }
 
-    getGoogleUserInfo(){
+    getGoogleUserInfo() {
         return googleUserInfo;
     }
 
-    setAddCampaignStart(flag){
+    setAddCampaignStart(flag) {
         isAddCampaignStart = flag;
     }
 
-    isAddCampaignStart(){
+    isAddCampaignStart() {
         return isAddCampaignStart;
     }
 
-    setEmailEnabled(flag){
+    setEmailEnabled(flag) {
         isEmailEnabled = flag;
     }
 
-    isEmailEnabled(){
+    isEmailEnabled() {
         return isEmailEnabled;
     }
 
-    setWhatsAppEnable(flag){
+    setWhatsAppEnable(flag) {
         isWhatsAppEnable = flag;
     }
-    
-    isWhatsAppEnable(){
+
+    isWhatsAppEnable() {
         return isWhatsAppEnable;
     }
-    
-    setTextSmsEnabled(flag){
+
+    setTextSmsEnabled(flag) {
         isTextSmsEnabled = flag;
     }
-    
-    isTextSmsEnabled(){
+
+    isTextSmsEnabled() {
         return isTextSmsEnabled;
     }
-    
-    setPinterestEnabled(flag){
+
+    setPinterestEnabled(flag) {
         isPinterestEnabled = flag;
     }
-    
-    isPinterestEnabled(){
+
+    isPinterestEnabled() {
         return isPinterestEnabled;
     }
-    
-    setInstagramEnabled(flag){
+
+    setInstagramEnabled(flag) {
         isInstagramEnabled = flag;
     }
-    
-    isInstagramEnabled(){
+
+    isInstagramEnabled() {
         return isInstagramEnabled;
     }
-    
-    setFacebookShopEnabled(flag){
+
+    setFacebookShopEnabled(flag) {
         isFacebookShopEnabled = flag;
     }
-    
-    isFacebookShopEnabled(){
+
+    isFacebookShopEnabled() {
         return isFacebookShopEnabled;
     }
-    
-    setFacebookPageEnabled(flag){
+
+    setFacebookPageEnabled(flag) {
         isFacebookPageEnabled = flag;
     }
-    
-    isFacebookPageEnabled(){
+
+    isFacebookPageEnabled() {
         return isFacebookPageEnabled;
     }
-    
-    setFacebookMessangerEnable(flag){
+
+    setFacebookMessangerEnable(flag) {
         isFacebookMessangerEnable = flag;
     }
-    
-    isFacebookMessangerEnable(){
+
+    isFacebookMessangerEnable() {
         return isFacebookMessangerEnable;
     }
-    
-    setFacebookMarketplaceEnabled(flag){
+
+    setFacebookMarketplaceEnabled(flag) {
         isFacebookMarketplaceEnabled = flag;
     }
-    
-    isFacebookMarketplaceEnabled(){
+
+    isFacebookMarketplaceEnabled() {
         return isFacebookMarketplaceEnabled;
     }
 
-    setUserInfo(info){
+    setUserInfo(info) {
         userInfo = info;
     }
 
-    getUserInfo(){
+    getUserInfo() {
         return userInfo;
     }
 
-    setUserTokenKey(key){
+    setUserTokenKey(key) {
         userTokenKey = key;
     }
 
-    getUserTokenKey(){
+    getUserTokenKey() {
         return userTokenKey;
     }
 }

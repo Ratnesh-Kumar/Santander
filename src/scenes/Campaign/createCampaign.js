@@ -45,7 +45,7 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderCategoryTagView()}
             {this.renderVariantsQantityView()}
           </View>
-          <AppButton isLightTheme={false}  buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
+          <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
             Actions.createCampaignShare()
           }} />
         </ScrollView>
@@ -80,15 +80,15 @@ export default class CampaignScreen extends BaseComponent {
   renderCategoryTagView() {
     return (
       <View style={{ marginTop: 10 }}>
-        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => this.setState({ categoryList: categoryList })} />
-        <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => this.setState({ variantsList: variantList })} />
+        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => { globalData.setCategoriesCampaign(categoryList); this.setState({ categoryList: categoryList }) }} />
+        <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
       </View>
     )
   }
 
   renderProductQuantity() {
     return (
-      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { }} />
+      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { globalData.setQuantityCampaign(quantity) }} />
     )
   }
 
