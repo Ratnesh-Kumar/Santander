@@ -25,7 +25,7 @@ import AppButton from '../../components/AppButton'
 // import Realm from 'realm';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-import { fetchJsonPOST } from '../../services/FetchData';
+import { fetchIdentityPOST } from '../../services/FetchData';
 import TouchID from 'react-native-touch-id';
 import ConfirmGoogleCaptcha from 'react-native-google-recaptcha-v2';
 // import Auth from '@react-native-firebase/auth';
@@ -175,7 +175,7 @@ export default class LoginView extends BaseComponent {
     if (this.checkForLoginFormValidation()) {
       this.renderActivityIndicatorShow()
       let bodyData = this.getLoginBodyData()
-      var responseData = await fetchJsonPOST(constants.USER_LOGIN_URL, bodyData)
+      var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
       console.log("################ login responseData : " + JSON.stringify(responseData))
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
         if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {

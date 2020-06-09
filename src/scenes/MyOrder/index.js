@@ -6,6 +6,7 @@ import orderStyle from './orderStyle';
 import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
 import CardView from 'react-native-cardview'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 var orderConstants = require('./orderConstants');
 var colorConstants = require('../../config/colorConstant');
 
@@ -47,28 +48,34 @@ export default class MyOrder extends BaseComponent {
   renderItemView = (item, index) => {
     if (this.isValidString(item)) {
       return (
-        <View style={{ padding:10 }}>
-          <CardView
-            cardElevation={8}
-            cardMaxElevation={8}
-            corderOverlap={false}
-          >
-            <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom:10 }}>
-              <View>
-                <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.orderDate}</Text>
-                <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.orderNumber}</Text>
-                <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, paddingTop: 2 }}>{item.orderStatus}</Text>
-              </View>
-              <View style={{ flex: 1, justifyContent:'center', alignItems:'center' }}>
-                <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, marginLeft: 20 }}>{"Amount - "+item.orderAmount}</Text>
-              </View>
-              <View style={{justifyContent:'center'}}>
-                <Image source={require('../../public/images/right_arrow.png')} style={{height: 32, width: 24}}/>
-              </View>
-            </View>
+        <TouchableOpacity onPress={() => Actions.editOrder()}>
+          <View style={{ padding: 10 }}>
 
-          </CardView>
-        </View>
+            <CardView
+              cardElevation={8}
+              cardMaxElevation={8}
+              corderOverlap={false}
+            >
+              <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
+                <View>
+                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.orderDate}</Text>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.orderNumber}</Text>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, paddingTop: 2 }}>{item.orderStatus}</Text>
+                </View>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, marginLeft: 20 }}>{"Amount - " + item.orderAmount}</Text>
+                </View>
+                <View style={{ justifyContent: 'center' }}>
+
+                  <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
+
+                </View>
+              </View>
+
+            </CardView>
+
+          </View>
+        </TouchableOpacity>
       )
     }
   }

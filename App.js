@@ -28,6 +28,8 @@ import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
 import Browser from './src/components/Browser';
 import MyOrder from './src/scenes/MyOrder';
+import EditOrder from './src/scenes/MyOrder/editOrder';
+
 import TrackInformation from './src/scenes/MyOrder/trackInformation';
 import ShopTabScreen from './src/scenes/ShopTab'
 import {
@@ -78,6 +80,7 @@ export default class App extends Component {
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
           <Scene key="browser" component={Browser} title ="Facebook Share" duration={0}/>
+           
           {this.renderTabbar()}
         </Scene>
       </Router>
@@ -110,6 +113,7 @@ export default class App extends Component {
 
         <Scene key="orderTab" title="Order" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
           <Scene key="myOrder" component={MyOrder} title="home" />
+          <Scene key="editOrder" component={EditOrder} title="editOrder"/>
           <Scene key="trackInformation" component={TrackInformation} title="Track Information" />
         </Scene>
 

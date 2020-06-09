@@ -18,4 +18,20 @@ export const ORDER_DATA_ARRAY = [
         orderStatus: "Unfulfilled",
         orderAmount: "$67.20"
     }
-]
+];
+export const PRODUCT_DATA_ARRAY = [
+    {
+        productName: "Product1",
+        productSKU: "133483",
+        productQty: "02",
+        productAmt: "50",
+    },
+    {
+        productName: "Product2",
+        productSKU: "133455",
+        productQty: "01",
+        productAmt: "20",
+    },
+    
+
+] 
