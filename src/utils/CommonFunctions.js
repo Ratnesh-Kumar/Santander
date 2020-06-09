@@ -68,7 +68,7 @@ export class CommonFunctions extends Component {
     };
 
     postOnFacebook = (globalData) => {
-        FacebookShareMessage = (globalData.getTitleCampaign() + '<br>' + globalData.getdescriptionCampaign() + '<br>' + globalData.getQuantityCampaign());
+        FacebookShareMessage = (globalData.getTitleCampaign() + '\n' + globalData.getdescriptionCampaign() + '\n' + globalData.getQuantityCampaign());
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
                 facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
