@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { WebView, Linking } from 'react-native-webview';
+import { WebView } from 'react-native-webview';
 import Header from '../Header';
 var colorConstants = require('../../config/colorConstant')
 var constants = require('../../config/Constants')

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Linking } from 'react-native';
 import { Actions } from "react-native-router-flux";
 import ImgToBase64 from 'react-native-image-base64';
+import { ShareDialog } from 'react-native-fbsdk';
 
 let facebookParameters = ""
 let TwitterParameters = '';
@@ -13,6 +14,14 @@ let TweetContent = 'Hello Guys, This is a testing of twitter share example';
 let TwitterViaAccount = 'AboutReact';
 var singleInstance = null;
 var image = require('../public/images/barcode_icon.png')
+
+  const sharePhotoContent = {
+    contentType: 'photo',
+    photos: [{ imageUrl: image }],
+    redirect_uri:"https://www.santanderbank.com/",
+    hashtag:"test",
+    quote:"abcd \nefgh"
+  }  
 export class CommonFunctions extends Component {
     constructor() {
         super();
@@ -67,25 +76,29 @@ export class CommonFunctions extends Component {
         //     });
     };
 
+    shareOnFacebook(){
+        var tmp = this;
+        ShareDialog.show(sharePhotoContent);
+    }
     postOnFacebook = (globalData) => {
-        FacebookShareMessage = (globalData.getTitleCampaign() + '<br>' + globalData.getdescriptionCampaign() + '<br>' + globalData.getQuantityCampaign());
-        if (FacebookShareURL != undefined) {
-            if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
-            } else {
-                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
-            }
-        }
-        if (FacebookShareMessage != undefined) {
-            if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage);
-            } else {
-                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage);
-            }
-        }
-        let url = 'https://www.facebook.com/sharer/sharer.php' + facebookParameters;
-        Actions.browser({ url: url });
-
+        // FacebookShareMessage = (globalData.getTitleCampaign() + '<br>' + globalData.getdescriptionCampaign() + '<br>' + globalData.getQuantityCampaign());
+        // if (FacebookShareURL != undefined) {
+        //     if (facebookParameters.includes("?") == false) {
+        //         facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
+        //     } else {
+        //         facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
+        //     }
+        // }
+        // if (FacebookShareMessage != undefined) {
+        //     if (facebookParameters.includes("?") == false) {
+        //         facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage);
+        //     } else {
+        //         facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage);
+        //     }
+        // }
+        // let url = 'https://www.facebook.com/sharer/sharer.php' + facebookParameters;
+        // Actions.browser({ url: url });
+        this.shareOnFacebook();
 
     }
 }
