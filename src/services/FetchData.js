@@ -1,9 +1,15 @@
 //const URI = 'https://jsonplaceholder.typicode.com/users';
-const POST_HEADER = {
+const IDENTITY_POST_HEADER = {
   "Content-Type": "application/json;charset=utf-8",
   "Accept": "application/json",
   "SAN.AppId": "SAN.digitalShop",
   "SAN.AppSecret": "4d9100df-8187-406e-836f-721d04767874"
+}
+const PARTY_POST_HEADER = {
+  "Content-Type": "application/json;charset=utf-8",
+  "Accept": "application/json",
+  "SAN.AppId": "SAN.digitalShop",
+  "SAN.AppSecret": "a847fc1b-632a-4dbf-8fac-4ed55c722c3d"
 }
 
 function fetchJsonGET(url) {
@@ -34,12 +40,12 @@ function fetchJsonGET(url) {
 }
 
 
-function fetchJsonPOST(urlString, bodyData) {
+function fetchIdentityPOST(urlString, bodyData) {
   return new Promise(function (resolve, reject) {
     fetch(urlString, {
       method: "POST",
       timeout: 2000,
-      headers: POST_HEADER,
+      headers: IDENTITY_POST_HEADER,
       body: JSON.stringify(bodyData),
     })
       .then((response) => response.json())
@@ -48,7 +54,31 @@ function fetchJsonPOST(urlString, bodyData) {
       })
       .catch((error) => {
         error.message = "Unable to communicate with server.";
-        console.log('There has been a problem with your fetch operation: fetchJsonPOST' + constants.UNABLE_TO_COMMUNICATE);
+        console.log('There has been a problem with your fetch operation: fetchIdentityPOST' + constants.UNABLE_TO_COMMUNICATE);
+
+        resolve(error.message);
+        reject(() => {
+        });
+      }).done();
+  }
+  )
+}
+
+function fetchPartyPOST(urlString, bodyData) {
+  return new Promise(function (resolve, reject) {
+    fetch(urlString, {
+      method: "POST",
+      timeout: 2000,
+      headers: PARTY_POST_HEADER,
+      body: JSON.stringify(bodyData),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        error.message = "Unable to communicate with server.";
+        console.log('There has been a problem with your fetch operation: fetchPartyPOST' + constants.UNABLE_TO_COMMUNICATE);
 
         resolve(error.message);
         reject(() => {
@@ -60,5 +90,6 @@ function fetchJsonPOST(urlString, bodyData) {
 
 export {
   fetchJsonGET,
-  fetchJsonPOST
+  fetchPartyPOST,
+  fetchIdentityPOST
 };

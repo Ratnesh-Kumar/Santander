@@ -16,7 +16,7 @@ import registerStyle from './RegisterStyle';
 import Header from '../../components/Header';
 import AppButton from '../../components/AppButton'
 import { ActionSheet } from 'native-base';
-import { fetchJsonPOST } from '../../services/FetchData';
+import { fetchIdentityPOST } from '../../services/FetchData';
 var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 var registerConstant = require('./RegisterConstants.js');
@@ -111,7 +111,7 @@ export default class RegisterView extends BaseComponent {
         if (this.isValidRegistrationForm()) {
             this.renderActivityIndicatorShow()
             let bodyData = this.getBodyData()
-            var responseData = await fetchJsonPOST(constants.USER_REGISTRATION_URL, bodyData)
+            var responseData = await fetchIdentityPOST(constants.USER_REGISTRATION_URL, bodyData)
             if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
                 console.log("########### status message" + responseData.statusMessage);
                 if(responseData.statusMessage == constants.USER_REGISTERED_STATUS){
