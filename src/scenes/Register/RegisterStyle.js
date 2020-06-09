@@ -14,10 +14,9 @@ export default (styles = StyleSheet.create({
         alignItems: 'center'
     },
     validFormSubView:{
-        paddingLeft: 15, paddingRight: 15
+        paddingLeft: 10, paddingRight: 10
       },
     validFormViewConfirmPassContainer: {
-        marginTop: 20,
         alignItems: 'center'
     },
     inputWrapper: {
@@ -45,11 +44,13 @@ export default (styles = StyleSheet.create({
     UpdatedView: {
         alignItems: 'center', flex: 1
     },
-   btnEye: {
-            flex: 1,
-            flexDirection: 'row-reverse',
-            position: 'relative',
-          
+    btnEye: {
+        flex: 1,
+        flexDirection: 'row-reverse',
+        position: 'absolute',
+        bottom: 7,
+        right: 7,
+        top: 50
     },
     iconEye: {
         width: 25,

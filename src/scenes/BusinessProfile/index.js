@@ -461,8 +461,8 @@ export default class BusinessProfileView extends Component {
         return (
             <View  style={businessStyle.renderContainer}>
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
-                <View style={buisnessStyle.viewContainer}>
-                <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 200}}>
+                <View style={businessStyle.viewContainer}>
+                <ScrollView keyboardShouldPersistTaps={'always'} style={{marginBottom: 20}}>
                         {this.renderBuisnessForm()}
                         {this.renderAddressForm()}
                         {this.renderPinCode()}

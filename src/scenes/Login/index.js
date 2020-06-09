@@ -23,7 +23,9 @@ import { Actions } from 'react-native-router-flux';
 import AppButton from '../../components/AppButton'
 // import { getFBRealtimeDBFeatureFlags } from '../../config/firebasequery'
 // import Realm from 'realm';
-import { TBC_COLOR } from '../../config/colorConstant';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+import { fetchJsonPOST } from '../../services/FetchData';
 import TouchID from 'react-native-touch-id';
 import ConfirmGoogleCaptcha from 'react-native-google-recaptcha-v2';
 // import Auth from '@react-native-firebase/auth';
@@ -46,17 +48,23 @@ export default class LoginView extends BaseComponent {
     this.state = {
       showPass: true,
       press: false,
-      isLoading: false,
       username: '',
       password: '',
       isTouchIdSupported: false,
       isFaceIdSupported: false,
       googleUserInfo: '',
-      isSigninInProgress: false
+      isSigninInProgress: false,
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
+      isValidUserName: false,
+      isValidPassword: false,
     };
     this.showPass = this.showPass.bind(this);
-    this.buttonAnimated = new Animated.Value(0);
-    this.growAnimated = new Animated.Value(0);
+    //this.buttonAnimated = new Animated.Value(0);
+   // this.growAnimated = new Animated.Value(0);
     this.googleConfiguration()
     this.onMessage = this.onMessage.bind(this);
     // realm = new Realm({ path: 'UserDatabase.realm' });
@@ -68,8 +76,8 @@ export default class LoginView extends BaseComponent {
     //   });
     // });
 
-    this.isTouchIdSupported()
-    this.getFireBaseValue();
+    //this.isTouchIdSupported()
+   // this.getFireBaseValue();
   }
 
   
@@ -138,18 +146,16 @@ export default class LoginView extends BaseComponent {
   render() {
     return (
       <View style={loginStyle.renderContainer}>
+         {this.renderModal()}
         {this.renderLoginTitle()}
         {this.renderHorizontalLine(20)}
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
-        {/* {this.renderSignInButton()} */}
         <AppButton isLightTheme={false}   buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
-                Actions.tabbar();
+                this.loginButtonTapped()
             }}/>
         {this.renderTermsView()}
-        {/* {this.renderSignUpButton()} */}
         <AppButton isLightTheme={true}   buttonText={strings('loginScreen.SignUpButttonText')} onButtonPressed={()=>{
-                //Actions.shopSetting();
                 Actions.register();
             }}/>
         {this.renderUpdateText()}
@@ -164,6 +170,80 @@ export default class LoginView extends BaseComponent {
       </View>
     );
   }
+
+  async loginButtonTapped() {
+    if (this.checkForLoginFormValidation()) {
+      this.renderActivityIndicatorShow()
+      let bodyData = this.getLoginBodyData()
+      var responseData = await fetchJsonPOST(constants.USER_LOGIN_URL, bodyData)
+      console.log("################ login responseData : " + JSON.stringify(responseData))
+      if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+        if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
+          this.saveUserInfo(responseData);
+          Actions.tabbar();
+        }
+        else {
+          this.renderDialogModal(strings('loginScreen.LoginError'), responseData.statusMessage);
+        }
+      }
+      this.renderActivityIndicatorHide()
+    }
+    else {
+      this.renderDialogModal(strings('loginScreen.Info'),strings('loginScreen.ValidInformation'));
+    }
+  }
+  getLoginBodyData() {
+    let bodyData = {
+      "username": this.state.username,
+      "password": this.state.password,
+    };
+    return bodyData
+  }
+
+  checkForLoginFormValidation() {
+    if (this.state.username && this.state.password) {
+      return true
+    }
+    return false;
+  }
+
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
+    }
+  }
+
 
   renderGoogleSignIn() {
     return (
@@ -271,8 +351,8 @@ export default class LoginView extends BaseComponent {
           <View style={loginStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.username}
-              refsValue={strings('loginScreen.UserTextInput')}
-              ref={strings('loginScreen.UserTextInput')}
+              refsValue={'username_email'}
+              ref={'username_email'}
               label={strings('loginScreen.UserTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -288,6 +368,7 @@ export default class LoginView extends BaseComponent {
               errorText={strings('loginScreen.UserTextInputError')}
               underlineHeight={2}
               keyboardType="email-address"
+              isValidUserName={(flag) => { this.setState({ isValidUserName: flag });}}
               onSubmitEditing={event => {
                 this.refs.passwordInput.focus();
               }}
@@ -300,8 +381,8 @@ export default class LoginView extends BaseComponent {
                 showIcon={false}
                 value={this.state.password}
                 textInputName={this.state.password}
-                refsValue={strings('loginScreen.PasswordTextInput')}
-                ref={strings('loginScreen.PasswordTextInput')}
+                refsValue={'passwordInput'}
+                ref={'passwordInput'}
                 label={strings('loginScreen.PasswordTextInput')}
                 maxLength={50}
                 underlineHeight={2}
@@ -314,16 +395,17 @@ export default class LoginView extends BaseComponent {
                 style={loginStyle.input}
                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                 underlineColorAndroid={colorConstant.UNDERLINE_COLOR_ANDROID}
+                isValidPassword={(flag) => { this.setState({ isValidPassword: flag }) }}
                 errorText={strings('loginScreen.PasswordTextInputError')}
                 onFocus={() => this.inputFocused.bind(this)}
               />
+              <TouchableOpacity
+                activeOpacity={0.7}
+                style={loginStyle.btnEye}
+                onPress={this.showPass}>
+                <Image source={imgSource} style={loginStyle.iconEye} />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={loginStyle.btnEye}
-              onPress={this.showPass}>
-              <Image source={imgSource} style={loginStyle.iconEye} />
-            </TouchableOpacity> 
           </View>
         </View>
       </KeyboardAvoidingView>

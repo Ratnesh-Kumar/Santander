@@ -67,5 +67,16 @@ export default class BaseComponent extends Component {
         return currentUser;
       };
     
-
+      saveUserInfo(data){
+        if(this.isValidString(data) && this.isValidArray(data.properties)){
+          let userInfo = data.properties[0].value;
+          if(this.isValidString(userInfo)){
+            globalData.setUserInfo(userInfo);
+            let userTokenKey = userInfo.key;
+            if(this.isValidString(userTokenKey)){
+              globalData.setUserTokenKey(userTokenKey);
+            }
+          }
+        }
+      }
 }

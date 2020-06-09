@@ -17,8 +17,8 @@
 
 // export const CLEAR_RECENT_TEXT = "CLEAR ALL";
 // export const CANCEL_TEXT = "Cancel";
- export const BACK_ARROW = require('../../public/images/backArrow.png');
- export const CLOSE_ICON = require('../../public/images/Close_icon.png');
+ export const BACK_ARROW = require('../../public/images/left_arrow.png');
+ export const CLOSE_ICON = require('../../public/images/cross_icon.png');
 
 
 
