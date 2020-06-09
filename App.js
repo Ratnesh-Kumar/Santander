@@ -27,6 +27,7 @@ import CreateCampaignShare from './src/scenes/Campaign/createCampaignShare';
 import BusinessProfile from './src/scenes/BusinessProfile';
 import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
+import Browser from './src/components/Browser';
 import MyOrder from './src/scenes/MyOrder';
 import {
   StyleSheet
@@ -75,7 +76,7 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
-
+          <Scene key="browser" component={Browser} title ="Facebook Share" duration={0}/>
           {this.renderTabbar()}
         </Scene>
       </Router>
