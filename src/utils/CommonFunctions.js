@@ -65,7 +65,7 @@ export class CommonFunctions extends Component {
         //     });
     };
 
-    postOnFacebook = () => {
+    postOnFacebook = (globalData) => {
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
                 facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");

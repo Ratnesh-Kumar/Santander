@@ -80,7 +80,7 @@ export default class CreateCampaiganShare extends BaseComponent {
     console.log("@@@@@@@@@@@@@@@@@@@  responseData : " + JSON.stringify(responseData))
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.CREATE_SHOP_STATUS) {
-        comonFunctions.postOnFacebook();
+        comonFunctions.postOnFacebook(globalData);
       }
       else {
         this.renderDialogModal(strings('createCampaignShare.Info'), responseData.statusMessage);
