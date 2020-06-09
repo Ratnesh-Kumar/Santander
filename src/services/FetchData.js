@@ -54,7 +54,7 @@ function fetchIdentityPOST(urlString, bodyData) {
       })
       .catch((error) => {
         error.message = "Unable to communicate with server.";
-        console.log('There has been a problem with your fetch operation: fetchIdentityPOST' + constants.UNABLE_TO_COMMUNICATE);
+        console.log('There has been a problem with your fetch operation: fetchIdentityPOST');
 
         resolve(error.message);
         reject(() => {
@@ -78,7 +78,7 @@ function fetchPartyPOST(urlString, bodyData) {
       })
       .catch((error) => {
         error.message = "Unable to communicate with server.";
-        console.log('There has been a problem with your fetch operation: fetchPartyPOST' + constants.UNABLE_TO_COMMUNICATE);
+        console.log('There has been a problem with your fetch operation: fetchPartyPOST');
 
         resolve(error.message);
         reject(() => {
