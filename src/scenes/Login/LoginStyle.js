@@ -80,7 +80,7 @@ export default (styles = StyleSheet.create({
     backgroundColor: '#F035E0',
   },
   renderContainer: {
-    flex: 1, backgroundColor: colorConstant.WHITE_COLOR , marginTop: (Platform.OS === 'ios') ? 50 : 20,
+    flex: 1, backgroundColor: colorConstant.WHITE_COLOR , marginTop: (Platform.OS === 'ios') ? 50 : 10,
   },
   touchIdContainer: {
     marginTop: 20, alignItems: 'center'
@@ -92,13 +92,13 @@ export default (styles = StyleSheet.create({
     fontSize: 18, color: colorConstant.SANTANDAR_COLOR 
   },
   loginTitleView:{
-    justifyContent: 'center', alignItems: 'center', marginTop: 20
+    justifyContent: 'center', alignItems: 'center', marginTop: (Platform.OS === 'ios')?20:5,
   },
   loginTitleText:{
-    fontSize: 28, color: colorConstant.BLACK_COLOR ,  fontWeight: 'bold'
+    fontSize: 28, color: colorConstant.BLACK_COLOR , fontWeight: 'bold'
   },
   loginTitleSubText:{
-    fontSize: 15, color: colorConstant.BLACK_COLOR ,  textAlign:'center', marginTop: 30
+    fontSize: 15, color: colorConstant.BLACK_COLOR ,  textAlign:'center', marginTop: (Platform.OS === 'ios')?30:10
   },
   loginSumbitButtonView:{
     paddingLeft: 20, paddingRight: 20
@@ -110,7 +110,7 @@ export default (styles = StyleSheet.create({
     color: colorConstant.GREY_DARK_COLOR, fontSize: 20,fontWeight: 'bold', 
   },
   termsAndConditionView:{
-   margin: 25 , alignItems:'center'
+   margin:  (Platform.OS === 'ios')?25:5 , alignItems:'center'
   },
   UpdatedView:{
     alignItems:'center',flex:1
