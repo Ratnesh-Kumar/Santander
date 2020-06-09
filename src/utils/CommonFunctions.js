@@ -11,7 +11,7 @@ let TwitterShareURL = 'https://aboutreact.com';
 let TweetContent = 'Hello Guys, This is a testing of twitter share example';
 let TwitterViaAccount = 'AboutReact';
 var singleInstance = null;
-var image = require('../public/images/backArrow.png')
+// var image = require('../public/images/backArrow.png')
 export class CommonFunctions extends Component {
     constructor() {
         super();
@@ -69,26 +69,22 @@ export class CommonFunctions extends Component {
     postOnFacebook = () => {
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");
             } else {
-                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");
             }
         }
         if (FacebookShareMessage != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag");
             } else {
-                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag") + "&images=";
+                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag");
             }
         }
         let url = 'https://www.facebook.com/sharer/sharer.php' + facebookParameters;
         Actions.browser({ url: url });
 
-        // Linking.openURL(url).then((data) => {
-
-        // }).catch(() => {
-        //     console.log('Something went wrong');
-        // });
+        
     }
 }
 export default CommonFunctions;
