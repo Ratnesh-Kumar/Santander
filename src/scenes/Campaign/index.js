@@ -317,33 +317,15 @@ export default class CampaignScreen extends BaseComponent {
       }
     });
   }
-  renderCamera() {
-    return (
-      <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
-
-        <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
-
-        <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
-      </TouchableOpacity>
-    )
-
-  }
-  renderImageView() {
-    return(
-    <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
-      <Image source={this.state.pickedImage} style={{ height: 120, width: 200, marginTop: 20 }} />
-    </View>
-    )
-  }
-
 
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR,  }}>
+          <TouchableOpacity onPress={() => this.pickImageHandler()} style={{alignItems: 'center'}}>
           <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
-          <Text onPress={() => this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
-
+          <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+          </TouchableOpacity>
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>
