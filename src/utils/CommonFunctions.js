@@ -5,12 +5,14 @@ import ImgToBase64 from 'react-native-image-base64';
 
 let facebookParameters = ""
 let TwitterParameters = '';
-let FacebookShareURL = "https://img.freepik.com/free-vector/broken-frosted-glass-realistic-icon_1284-12125.jpg?size=338&ext=jpg";
-let FacebookShareMessage = 'facebook share';
+// let FacebookShareURL = "https://img.freepik.com/free-vector/broken-frosted-glass-realistic-icon_1284-12125.jpg?size=338&ext=jpg";
+let FacebookShareURL = "https://www.santanderbank.com/"
+let FacebookShareMessage = '';
 let TwitterShareURL = 'https://aboutreact.com';
 let TweetContent = 'Hello Guys, This is a testing of twitter share example';
 let TwitterViaAccount = 'AboutReact';
 var singleInstance = null;
+var image = require('../public/images/barcode_icon.png')
 export class CommonFunctions extends Component {
     constructor() {
         super();
@@ -21,7 +23,7 @@ export class CommonFunctions extends Component {
     }
     async getDataUrl(img) {
         // Create canvas
-       return await ImgToBase64.getBase64String(img)
+        return await ImgToBase64.getBase64String(img)
             .then(base64String => doSomethingWith(base64String))
             .catch(err => doSomethingWith(err));
     }
@@ -66,24 +68,25 @@ export class CommonFunctions extends Component {
     };
 
     postOnFacebook = (globalData) => {
+        FacebookShareMessage = (globalData.getTitleCampaign() + '<br>' + globalData.getdescriptionCampaign() + '<br>' + globalData.getQuantityCampaign());
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");
+                facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
             } else {
-                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23tag");
+                facebookParameters = facebookParameters + "&u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign()) + "&images=" + { image };
             }
         }
         if (FacebookShareMessage != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag");
+                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage);
             } else {
-                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage) + "&hashtag=" + ("%23tag");
+                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage);
             }
         }
         let url = 'https://www.facebook.com/sharer/sharer.php' + facebookParameters;
         Actions.browser({ url: url });
 
-        
+
     }
 }
 export default CommonFunctions;

@@ -73,23 +73,25 @@ export default class CreateCampaiganShare extends BaseComponent {
   }
 
   async publishButtonClick(){
+    comonFunctions.postOnFacebook(globalData);
+
     //check for shop name already exists or not . 
-    this.renderActivityIndicatorShow()
-    let bodyData = this.getShopNameBodyData()
-    var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, bodyData)
-    console.log("@@@@@@@@@@@@@@@@@@@  responseData : " + JSON.stringify(responseData))
-    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-      if (responseData.statusMessage == constants.CREATE_SHOP_STATUS) {
-        comonFunctions.postOnFacebook(globalData);
-      }
-      else {
-        this.renderDialogModal(strings('createCampaignShare.Info'), responseData.statusMessage);
-      }
-    }
-    else{
-      this.renderDialogModal(strings('createCampaignShare.Info'),strings('createCampaignShare.createShopErrorkey'));
-    }
-    this.renderActivityIndicatorHide()
+    // this.renderActivityIndicatorShow()
+    // let bodyData = this.getShopNameBodyData()
+    // var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, bodyData)
+    // console.log("@@@@@@@@@@@@@@@@@@@  responseData : " + JSON.stringify(responseData))
+    // if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+    //   if (responseData.statusMessage == constants.CREATE_SHOP_STATUS) {
+    //     comonFunctions.postOnFacebook(globalData);
+    //   }
+    //   else {
+    //     this.renderDialogModal(strings('createCampaignShare.Info'), responseData.statusMessage);
+    //   }
+    // }
+    // else{
+    //   this.renderDialogModal(strings('createCampaignShare.Info'),strings('createCampaignShare.createShopErrorkey'));
+    // }
+    // this.renderActivityIndicatorHide()
   }
 
   getShopNameBodyData() {
