@@ -45,5 +45,7 @@ export const USER_REGISTERED_STATUS = "Registered";
 export const USER_RESET_PASSWORD_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users/forgotpassword";
 export const USER_RESET_PASSWORD_STATUS="OK";
 export const USER_LOGIN_STATUS = "Login Success";
+export const CHECKING_EMAIL_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users";
+export const CHECKING_EMAIL_URL_STATUS="OK";
 
 
