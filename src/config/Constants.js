@@ -49,5 +49,5 @@ export const USER_LOGIN_STATUS = "Login Success";
 //Party Shop API Url
 
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
-
+export const CREATE_SHOP_STATUS = "Success";
 

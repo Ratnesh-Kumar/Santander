@@ -76,15 +76,15 @@ export default class CreateCampaiganShare extends BaseComponent {
     //check for shop name already exists or not . 
     this.renderActivityIndicatorShow()
     let bodyData = this.getShopNameBodyData()
-    console.log("@@@@@@@@@@@@@@@@@@@  bodyData : " + JSON.stringify(bodyData))
     var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, bodyData)
     console.log("@@@@@@@@@@@@@@@@@@@  responseData : " + JSON.stringify(responseData))
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-      // if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
-      // }
-      // else {
-      //   this.renderDialogModal('Publish error', responseData.statusMessage);
-      // }
+      if (responseData.statusMessage == constants.CREATE_SHOP_STATUS) {
+        comonFunctions.postOnFacebook();
+      }
+      else {
+        this.renderDialogModal(strings('createCampaignShare.Info'), responseData.statusMessage);
+      }
     }
     else{
       this.renderDialogModal(strings('createCampaignShare.Info'),strings('createCampaignShare.createShopErrorkey'));

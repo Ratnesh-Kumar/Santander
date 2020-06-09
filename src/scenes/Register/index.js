@@ -118,6 +118,9 @@ export default class RegisterView extends BaseComponent {
                     this.saveUserInfo(responseData);
                     Actions.registerCreateCampaign();
                 }
+                else{
+                    this.renderDialogModal(strings('registerScreen.Info'), responseData.statusMessage)
+                }
             }
             this.renderActivityIndicatorHide()
         } else{
