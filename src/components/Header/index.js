@@ -52,7 +52,7 @@ export default class Header extends Component {
         return (
             <View style={headerStyle.viewContainer}>
                 {this.renderLeftView(isleftArrowDisplay)}
-                <View style={{ flex: 1, alignItems: 'center', marginRight: (isleftArrowDisplay && this.props.isSignOutDisplay) ? 50 : 0, }}>
+                <View style={{ flex: 1, alignItems: 'center', marginRight: 50,marginLeft:50 }}>
                     <Text style={headerStyle.headerText}>{this.props.title}</Text>
                 </View>
                 {this.renderRightView(true)}
