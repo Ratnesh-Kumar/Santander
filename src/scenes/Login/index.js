@@ -12,7 +12,8 @@ import {
   Animated,
   Easing,
   Alert,
-  Platform
+  Platform,
+  Keyboard
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import BaseComponent from '../../BaseComponent';
@@ -152,6 +153,7 @@ export default class LoginView extends BaseComponent {
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
         <AppButton isLightTheme={false}   buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
+                Keyboard.dismiss()
                 this.loginButtonTapped()
             }}/>
         {this.renderTermsView()}
@@ -358,7 +360,7 @@ export default class LoginView extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={username => this.setState({ username })}
-              returnKeyType={'done'}
+              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
               style={loginStyle.input}
@@ -388,7 +390,6 @@ export default class LoginView extends BaseComponent {
                 maxLength={50}
                 underlineHeight={2}
                 isLoginScreen={false}
-                returnKeyType="next"
                 onChangeText={password => this.setState({ password })}
                 autoCapitalize={'none'}
                 returnKeyType={'done'}
