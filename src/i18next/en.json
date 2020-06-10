@@ -109,7 +109,8 @@
       "PasswordValid4":" atleast one number (e.g. 1 2 3..)",
       "PasswordValid5":" use a special character (e.g. @ # $ *  % < > : ; _ ^ !)",
       "Info": "Info",
-      "ValidInformation": "Please provide valid information."
+      "ValidInformation": "Please provide valid information.",
+      "AlreadyRegisteredError":"This email already has a registered account."
     },
     "BuisnessProfile":{
       "Title":"Business Profile",

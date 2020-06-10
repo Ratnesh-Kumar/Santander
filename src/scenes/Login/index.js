@@ -139,7 +139,7 @@ export default class LoginView extends BaseComponent {
 
   renderHorizontalLine(margin) {
     return (
-      <View style={{ height: 1, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, marginTop: margin, marginBottom: margin }} />
+      <View style={{ height: 1, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, marginTop:  (Platform.OS === 'ios')?margin:10, marginBottom:  (Platform.OS === 'ios')?margin:10 }} />
     )
   }
 
@@ -322,7 +322,7 @@ export default class LoginView extends BaseComponent {
 
   renderForgotPassword() {
     return (
-      <View style={{ margin : 25 , alignItems:'flex-end'}}>
+      <View style={{ margin : (Platform.OS === 'ios')? 25:10 , alignItems:'flex-end'}}>
         <TouchableOpacity
           onPress={() => Actions.forgotPassword()}>
         <Text style={loginStyle.forgotTitleText}>{strings('loginScreen.forgotPasswordTitle')}</Text>
@@ -465,7 +465,7 @@ export default class LoginView extends BaseComponent {
   renderUpdateText() {
     return (
       <View style={loginStyle.UpdatedView}>
-        <Text style={{ position: 'absolute', bottom: 25 }}>{strings('loginScreen.UpdatedText')}</Text>
+        <Text style={{ position: 'absolute', bottom: (Platform.OS === 'ios')?25:10 }}>{strings('loginScreen.UpdatedText')}</Text>
       </View>
     );
   }
