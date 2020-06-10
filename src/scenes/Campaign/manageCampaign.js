@@ -39,7 +39,7 @@ export default class ManageCampaign extends BaseComponent {
   render() {
     return (
       <View style={createStyle.container}>
-        <Header isleftArrowDisplay={true} title={strings('createCampaign.screenTitle')} />
+        <Header isleftArrowDisplay={true} title={strings('manageCampaignScreen.ManageCampaign')} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={{margin:10}}>
           {this.renderFlatList()}

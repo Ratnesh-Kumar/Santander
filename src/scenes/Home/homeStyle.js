@@ -43,9 +43,19 @@ export default (styles = StyleSheet.create({
     margin: 10,
     color: colorConstants.SANT_RED_COLOR,
   },
+  graphViewStyle:{
+    justifyContent: 'center',
+    alignItems: 'center', 
+    width: constants.SCREEN_WIDTH - 40,
+    height:constants.SCREEN_HEIGHT/3,
+    borderColor:colorConstants.GRAY_MEDIUM_COLOR,
+    borderWidth:2,
+    borderRadius:1,
+    marginTop:10
+  },
   cardViewStyle: {
     backgroundColor: colorConstants.WHITE_COLOR,
-    marginTop: 50,
+    marginTop: 30,
     marginLeft: 5,
     marginRight: 5
   }
