@@ -89,7 +89,7 @@ export default class ForgotPassword extends Component {
   render() {
     return (
       <View style={forgotPasswordStyle.renderContainer}>
-        <Header isleftArrowDisplay={true} title={strings('forgotScreen.forgotTitle')} />
+        <Header isleftArrowDisplay={true} isCrossIconVisible={true}  title={strings('forgotScreen.forgotTitle')} />
         {this.renderModal()}
         {this.renderForgotTitle()}
         <AppButton isLightTheme={false} buttonText={strings('forgotScreen.SendEmailButtonText')} onButtonPressed={() => {

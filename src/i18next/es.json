@@ -58,12 +58,17 @@
     "createFirstCampaign": "Crea tu primera campaña",
     "skipStep": "Salta este paso",
     "quanitytTitle": "Cantidad",
-    "categoryTagTextInput": "Categorias",
-    "variantsTagTextInput": "Variantes (opcional)"
+    "categoryTagTextInput": "Agregar categorías",
+    "variantsTagTextInput": "Agregar variantes",
+    "categoryTagText": "categorías",
+    "variantsTagText": "variantes"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",
-    "allowPurchaseSwitchText": "Permitir compra cuando no hay stock"
+    "allowPurchaseSwitchText": "Permitir compra cuando no hay stock",
+    "salesTaxSwitchText":"Impuesto de vent",
+      "salesTaxTypeTextInput":"Tipo de impuesto",
+      "salesTaxTextInput":"%"
   },
   "createCampaignShare": {
     "publishNowText": "Publica ahora",
