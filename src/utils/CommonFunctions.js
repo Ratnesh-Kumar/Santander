@@ -86,9 +86,9 @@ export class CommonFunctions extends Component {
         }
         if (FacebookShareMessage != undefined) {
             if (facebookParameters.includes("?") == false) {
-                facebookParameters = facebookParameters + "?quote=" + encodeURI(FacebookShareMessage);
+                facebookParameters = facebookParameters + "?quote=" + FacebookShareMessage;
             } else {
-                facebookParameters = facebookParameters + "&quote=" + encodeURI(FacebookShareMessage);
+                facebookParameters = facebookParameters + "&quote=" + FacebookShareMessage;
             }
         }
         let url = 'https://www.facebook.com/sharer/sharer.php' + facebookParameters;

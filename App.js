@@ -29,7 +29,7 @@ import QRCode from './src/scenes/QRCode';
 import Browser from './src/components/Browser';
 import MyOrder from './src/scenes/MyOrder';
 import EditOrder from './src/scenes/MyOrder/editOrder';
-
+import ManageCampaign from './src/scenes/Campaign/manageCampaign';
 import TrackInformation from './src/scenes/MyOrder/trackInformation';
 import ShopTabScreen from './src/scenes/ShopTab'
 import {
@@ -104,6 +104,7 @@ export default class App extends Component {
           <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
           <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
           <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar/>
+          <Scene key="manageCampaign" component={ManageCampaign} title="Manage Campaign" hideNavBar/>
           <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar/>
         </Scene>
 

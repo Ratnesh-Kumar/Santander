@@ -112,6 +112,7 @@ export default class RegisterView extends BaseComponent {
     }
 
     async fetchService() {
+        Keyboard.dismiss()
         if (this.isValidRegistrationForm()) {
             this.renderActivityIndicatorShow()
             let bodyData = this.getBodyData()
@@ -285,6 +286,12 @@ export default class RegisterView extends BaseComponent {
                 console.log("############ satus message " + responseData.statusMessage);
                 this.emailOnBlur();
             }
+            else{
+                this.setState({
+                    errorEmail: "",
+                    alreadyRegisered:false
+                })
+            }
         }
     }
 
@@ -307,7 +314,8 @@ export default class RegisterView extends BaseComponent {
                             serverError={this.state.errorEmail}
                             autoCapitalize={'none'}
                             onChangeText={username => this.setState({ username, errorEmail: '' })}
-                            returnKeyType={'done'}
+                            returnKeyType={'next'}
+                            onBlur1={()=>this.isCheckedEmailExist() }
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={registerStyle.input}
@@ -315,7 +323,7 @@ export default class RegisterView extends BaseComponent {
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             errorColor={'#B30000'}
                             value={this.state.username}
-
+                  
                             textInputName={this.state.username}
                             errorText={strings('registerScreen.UserTextInputError')}
                             underlineHeight={2}
@@ -368,10 +376,9 @@ export default class RegisterView extends BaseComponent {
                                 maxLength={50}
                                 underlineHeight={2}
                                 isLoginScreen={false}
-                                returnKeyType="next"
                                 onChangeText={password => this.setState({ password, showPassModal: true })}
                                 autoCapitalize={'none'}
-                                returnKeyType={'done'}
+                                returnKeyType={'next'}
                                 autoCorrect={false}
                                 style={registerStyle.input}
                                 isValidPassword={(flag) => { this.setState({ isValidPassword: flag }) }}
@@ -413,7 +420,6 @@ export default class RegisterView extends BaseComponent {
                                 maxLength={50}
                                 underlineHeight={2}
                                 isLoginScreen={false}
-                                returnKeyType="next"
                                 onChangeText={confirmPass => this.setState({ confirmPass })}
                                 autoCapitalize={'none'}
                                 returnKeyType={'done'}

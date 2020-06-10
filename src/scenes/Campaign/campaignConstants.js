@@ -12,3 +12,21 @@ export const PUBLISH_PINTEREST = "Pinterest";
 export const PUBLISH_TEXT_SMS = "TextSms";
 export const PUBLISH_WHATSAPP = "Whatsapp";
 
+export const CAMPAIGN_ARRAY = [
+    {
+        campaignDate: "12-May-20",
+        campaignName: "Summer Clothes",
+        cost: "$1020.95"
+    },
+    {
+        campaignDate: "19-May-20",
+        campaignName: "Summer Clothes",
+        cost: "$500.55"
+    },
+    {
+        campaignDate: "17-Jun-20",
+        campaignName: "Back to school",
+        cost: "$1967.20"
+    }
+];
+

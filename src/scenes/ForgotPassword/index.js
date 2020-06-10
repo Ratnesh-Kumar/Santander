@@ -7,6 +7,7 @@ import {
   Text,
   KeyboardAvoidingView,
   Alert,
+  Keyboard,
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -64,7 +65,8 @@ export default class ForgotPassword extends Component {
     this.setState({
       isDialogModalVisible: true,
       dialogModalText: message,
-      dialogModalTitle: 'Password Reset Successful'
+      dialogModalTitle: 'Password Reset Successful',
+      username:''
     });
     message = '';
   }
@@ -115,6 +117,7 @@ export default class ForgotPassword extends Component {
   }
 
   async fetchService() {
+    Keyboard.dismiss()
     if(this.state.username !== '' && this.emailValidation() ){
       this.renderActivityIndicatorShow()
       
@@ -123,11 +126,11 @@ export default class ForgotPassword extends Component {
         console.log("########### status message" + responseData.statusMessage);
         if (responseData.statusMessage == commonConstants.USER_RESET_PASSWORD_STATUS) {
           //console.log("########### status message" + responseData.statusMessage);
-        //Actions.forgotPassword();
-        this.renderDialogModalSuccess(strings(forgotScreen.PasswordResetSuccess));
+          //Actions.forgotPassword();
+           this.renderDialogModalSuccess(strings('forgotScreen.PasswordResetSuccess'));
         }
         else{
-          this.renderDialogModal(strings(forgotScreen.PasswordResetError), responseData.statusMessage);
+          this.renderDialogModal(strings('forgotScreen.PasswordResetError'), responseData.statusMessage);
         }
       }
      
