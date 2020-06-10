@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -15,6 +15,7 @@ var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 import ImagePicker from "react-native-image-picker";
+
 export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
@@ -30,7 +31,9 @@ export default class CampaignScreen extends BaseComponent {
       campaignSkuValue: '',
       campaignBarcodeValue: '',
       pickedImage: compaignConstants.CAMERA_ICON,
-      isBarcodeDisplay: false
+      isBarcodeDisplay: false,
+      showImage: false
+
     }
   }
 
@@ -307,7 +310,8 @@ export default class CampaignScreen extends BaseComponent {
         console.log("Error", res.error);
       } else {
         this.setState({
-          pickedImage: { uri: res.uri }
+          pickedImage: { uri: res.uri },
+          showImage: true
         });
 
       }
@@ -317,10 +321,11 @@ export default class CampaignScreen extends BaseComponent {
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR,  }}>
+          <TouchableOpacity onPress={() => this.pickImageHandler()} style={{alignItems: 'center'}}>
           <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
-          <Text onPress={() => this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
-
+          <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+          </TouchableOpacity>
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>

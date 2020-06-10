@@ -104,7 +104,8 @@
     "PasswordValid5": " use un carácter especial (por ejemplo, @ # $ *% <>:; _ ^!)",
     "SignInButtonText": "Iniciar sesión con correo electrónico",
     "Info": "Informacion",
-    "ValidInformation": "Por favor proporcione información válida."
+    "ValidInformation": "Por favor proporcione información válida.",
+    "AlreadyRegisteredError":"Este correo electrónico ya tiene una cuenta registrada."
   },
   "BuisnessProfile": {
     "Title": "Perfil de trabajo",
