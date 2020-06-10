@@ -172,6 +172,7 @@ export default class LoginView extends BaseComponent {
   }
 
   async loginButtonTapped() {
+    Keyboard.dismiss()
     if (this.checkForLoginFormValidation()) {
       this.renderActivityIndicatorShow()
       let bodyData = this.getLoginBodyData()
