@@ -35,6 +35,8 @@ import ShopTabScreen from './src/scenes/ShopTab'
 import ManageProduct from './src/scenes/Products';
 import AddProduct from './src/scenes/Products/addProduct';
 import AddProductCategory from './src/scenes/Products/addProductCategory';
+import VarientDetail from './src/scenes/Campaign/varientDetail';
+import ProductVarientDetail from './src/scenes/Products/productVarientDetail'
 import {
   StyleSheet
 } from 'react-native'
@@ -109,6 +111,7 @@ export default class App extends Component {
           <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar />
           <Scene key="manageCampaign" component={ManageCampaign} title="Manage Campaign" hideNavBar />
           <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar />
+          <Scene key="campaignVarient" component={VarientDetail} title="Varient Detail" hideNavBar/>
         </Scene>
 
         <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
@@ -116,6 +119,7 @@ export default class App extends Component {
           <Scene key="manageProduct" component={ManageProduct} title="Blue" hideNavBar />
           <Scene key="addProduct" component={AddProduct} title="Blue" hideNavBar />
           <Scene key="addProductCategory" component={AddProductCategory} title="Terms" hideNavBar />
+          <Scene key="productVarient" component={ProductVarientDetail} title="Varient Detail" hideNavBar/>
         </Scene>
 
         <Scene key="orderTab" title="Order" icon={TabIcon} resource={require('./src/public/images/tab_shop.png')} hideNavBar>

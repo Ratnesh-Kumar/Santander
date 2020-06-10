@@ -76,7 +76,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <QuantityField isVarientQuantityView={true} 
       onButtonPressed={() => {
-        Alert.alert('text');
+        Actions.campaignVarient()
       }}
        title={quantityTitle} updatedQuantity={(quantity) => {
         this.setState({
@@ -88,7 +88,7 @@ export default class CampaignScreen extends BaseComponent {
 
   renderCategoryTagView() {
     return (
-      <View style={{ paddingTop: 20 }}>
+      <View style={{ paddingLeft:10,paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => { globalData.setCategoriesCampaign(categoryList); this.setState({ categoryList: categoryList }) }} />
         <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />

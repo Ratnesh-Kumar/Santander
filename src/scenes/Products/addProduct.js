@@ -14,6 +14,7 @@ var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var productConstants = require('./productConstants')
 var colorConstant = require('../../config/colorConstant')
+import SwitchTextInput from '../../components/SwitchTextInput';
 import ImagePicker from "react-native-image-picker";
 
 export default class AddProductScreen extends BaseComponent {
@@ -32,7 +33,8 @@ export default class AddProductScreen extends BaseComponent {
       productBarcodeValue: '',
       pickedImage: productConstants.CAMERA_ICON,
       isBarcodeDisplay: false,
-      showImage: false
+      showImage: false,
+      productWeight:''
 
     }
   }
@@ -70,6 +72,7 @@ export default class AddProductScreen extends BaseComponent {
             {this.renderPriceView()}
             {this.renderCostView()}
             {this.renderSkuAndBarcode()}
+            {this.renderWeighView()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               Actions.addProductCategory();
             }} />
@@ -77,6 +80,65 @@ export default class AddProductScreen extends BaseComponent {
         </View>
       </View>
     );
+  }
+
+
+
+  renderWeighView() {
+    return (
+      <View>
+      <View style={{paddingTop:20,paddingLeft:20}}>
+        <Text style={{ fontSize: 20 }}>{strings('productScreen.weightTitle')}</Text>
+        </View>
+      <View
+        style={productStyle.priceTextInputContainer}>
+        <View style={productStyle.priceInputWrapper}>
+          <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
+            <View
+              style={productStyle.containerStyleWithBorder}>
+              <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20,fontSize: 16 }}>
+                {strings('productScreen.productWeightText')}</Text>
+              <View
+                style={{ position: 'absolute', right: 10, top: 10 }}>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={require('../.././public/images/dropDown.png')}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={productStyle.priceInputWrapper}>
+          <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
+            <TextInputMaterial
+              blurText={this.state.productSaleValue}
+              refsValue={'productWeight'}
+              ref={'productWeight'}
+              label={strings('productScreen.productWeightInputText')}
+              maxLength={100}
+              autoCapitalize={'none'}
+              onChangeText={text => { this.setState({ productWeight: text }) }}
+              returnKeyType={'next'}
+              autoCorrect={false}
+              isLoginScreen={false}
+              keyboardType={'number-pad'}
+              style={productStyle.input}
+              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+              value={this.state.productSaleValue}
+              textInputName={this.state.productSaleValue}
+              // errorText={strings('createCampaign.campaignNameErrorText')}
+              underlineHeight={2}
+              onSubmitEditing={event => {
+                this.refs.productCost.focus();
+              }}
+            />
+          </View>
+        </View>
+      </View>
+      </View>
+    )
+
   }
 
   renderSkuAndBarcode() {
@@ -253,7 +315,7 @@ export default class AddProductScreen extends BaseComponent {
               label={strings('createCampaign.priceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => {this.setState({ productPriceValue: text }) }}
+              onChangeText={text => { this.setState({ productPriceValue: text }) }}
               returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
@@ -321,10 +383,10 @@ export default class AddProductScreen extends BaseComponent {
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR,  }}>
-          <TouchableOpacity onPress={() => this.pickImageHandler()} style={{alignItems: 'center'}}>
-          <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
-          <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, }}>
+          <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
+            <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
+            <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
           </TouchableOpacity>
         </View>
         <View style={{ marginTop: 20 }}>
@@ -340,7 +402,7 @@ export default class AddProductScreen extends BaseComponent {
               multiline={true}
               maxLength={250}
               numberOfLines={3}
-              onChangeText={text => {this.setState({ productDescription: text }) }}
+              onChangeText={text => { this.setState({ productDescription: text }) }}
               onSubmitEditing={event => {
                 this.refs.productPrice.focus();
               }}
