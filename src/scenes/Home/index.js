@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View , TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import homeStyle from './homeStyle';
 import { strings } from '../../i18next/i18n';
+import CardView from 'react-native-cardview';
 var constants = require('../../config/Constants');
 var homeConstants = require('./homeConstants')
 import * as RNLocalize from "react-native-localize";
@@ -11,7 +12,9 @@ import * as RNLocalize from "react-native-localize";
 import { getRemoteConfig } from '../../config/firebaseFirestore';
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
+import AppButton from '../../components/AppButton'
 var globalData = new GlobalData();
+var colorConstant = require('../../config/colorConstant')
 export default class HomeScreen extends BaseComponent {
 
   constructor(props) {
@@ -40,9 +43,27 @@ export default class HomeScreen extends BaseComponent {
         <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() =>{
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
-        <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
-          <Text style={homeStyle.welcome}>{strings('screens.addCampaign')}</Text>
+        <View style={homeStyle.viewContainer}>
+          <CardView
+            style={homeStyle.cardViewStyle}
+            cardElevation={8}
+            cardMaxElevation={8}
+            cornerOverlap={false}
+            cornerRadius={5}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', width: constants.SCREEN_WIDTH - 40 }}>
+              <Text style={{ fontSize: 16, margin: 10 }}>
+                {strings("screens.manageScreen")}
+              </Text>
+            </View>
+            <AppButton isLightTheme={true} buttonText={strings('screens.manageCampaigan')} onButtonPressed={() => {
+              Actions.manageCampaign()
+            }} />
+          </CardView>
+
         </View>
+        {/* <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
+          <Text style={homeStyle.welcome}>{strings('screens.addCampaign')}</Text>
+        </View> */}
       </View>
     );
   }
