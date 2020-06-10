@@ -7,6 +7,7 @@ import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
 import CardView from 'react-native-cardview'
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import FloatingButton from '../../components/FloatingButton';
 var orderConstants = require('./orderConstants');
 var colorConstants = require('../../config/colorConstant');
 
@@ -20,6 +21,8 @@ export default class MyOrder extends BaseComponent {
   render() {
     return (
       <View style={orderStyle.container}>
+        <FloatingButton onFloatButtonPressed={()=>{
+        }}/>
         <Header title={orderConstants.MANAGE_ORDER} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={orderStyle.viewContainer}>

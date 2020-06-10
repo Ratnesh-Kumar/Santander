@@ -15,6 +15,7 @@ import createStyle from './campaignStyle';
 import Header from '../../components/Header';
 import SwitchTextInput from '../../components/SwitchTextInput';
 import AppButton from '../../components/AppButton';
+import FloatingButton from '../../components/FloatingButton';
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import GlobalData from '../../utils/GlobalData';
@@ -39,6 +40,9 @@ export default class ManageCampaign extends BaseComponent {
   render() {
     return (
       <View style={createStyle.container}>
+        <FloatingButton onFloatButtonPressed={()=>{
+          Actions.campaign()
+        }}/>
         <Header isleftArrowDisplay={true} title={strings('manageCampaignScreen.ManageCampaign')} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={{margin:10}}>

@@ -15,6 +15,7 @@ import productStyle from './productStyle';
 import Header from '../../components/Header';
 import SwitchTextInput from '../../components/SwitchTextInput';
 import AppButton from '../../components/AppButton';
+import FloatingButton from '../../components/FloatingButton';
 import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import GlobalData from '../../utils/GlobalData';
@@ -39,6 +40,9 @@ export default class ManageProducts extends BaseComponent {
   render() {
     return (
       <View style={productStyle.container}>
+        <FloatingButton onFloatButtonPressed={()=>{
+          Actions.addProduct()
+        }}/>
         <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={{ margin: 10 }}>
