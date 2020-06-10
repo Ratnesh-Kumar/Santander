@@ -4,7 +4,8 @@
     "addCampaign": "Añadir campaña",
     "signOut":"Desconectar",
     "manageScreen":"Gestiona y rastrea tus campañas",
-    "manageCampaigan":"Administrar campaña"
+    "manageCampaigan":"Administrar campaña",
+    "spaceforGraph":"Espacio para gráfico"
   },
   "loginScreen": {
     "digiShopTitle": "DigiShop",
@@ -185,5 +186,11 @@
   },
   "manageCampaignScreen":{
     "ManageCampaign":"Administrar campaña"
+  },
+  "productScreen":{
+    "manageProducts": "Gestionar productos",
+    "addProduct": "Añadir Producto",
+    "variantsDetail": "Detalle variante",
+    "saveButtonText": "Salvar"
   }
 }

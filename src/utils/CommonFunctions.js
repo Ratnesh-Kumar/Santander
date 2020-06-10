@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Linking } from 'react-native';
 import { Actions } from "react-native-router-flux";
 import ImgToBase64 from 'react-native-image-base64';
-import { ShareDialog } from 'react-native-fbsdk';
 
 let facebookParameters = ""
 let TwitterParameters = '';
@@ -76,10 +75,6 @@ export class CommonFunctions extends Component {
         //     });
     };
 
-    shareOnFacebook() {
-        var tmp = this;
-        ShareDialog.show(sharePhotoContent);
-    }
     postOnFacebook = (globalData) => {
         FacebookShareMessage = (globalData.getTitleCampaign() + '\n\r'+ "Product Description :" + globalData.getdescriptionCampaign() + '\n\r' + "Available Quantity :" + globalData.getQuantityCampaign() + '\n\r' + "Price :" + globalData.getPriceCampaign() + '\n\r' + "Sale Price :" + globalData.getSalesPriceCampaign());
         if (FacebookShareURL != undefined) {

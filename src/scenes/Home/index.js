@@ -37,6 +37,15 @@ export default class HomeScreen extends BaseComponent {
     this.displayConsole()
     await getRemoteConfig();
   }
+  renderGraphView() {
+    return (
+      <View style={homeStyle.graphViewStyle}>
+        <Text style={{ fontSize: 16, margin: 10 }}>
+          {strings('screens.spaceforGraph')}
+        </Text>
+      </View>
+    );
+  }
   render() {
     return (
       <View style={homeStyle.container}>
@@ -44,7 +53,8 @@ export default class HomeScreen extends BaseComponent {
           this.googleSignOut();
         }} isCrossIconVisible={false}/>
         <View style={homeStyle.viewContainer}>
-          <CardView
+           {this.renderGraphView()}
+           <CardView
             style={homeStyle.cardViewStyle}
             cardElevation={8}
             cardMaxElevation={8}
@@ -58,7 +68,7 @@ export default class HomeScreen extends BaseComponent {
             <AppButton isLightTheme={true} buttonText={strings('screens.manageCampaigan')} onButtonPressed={() => {
               Actions.manageCampaign()
             }} />
-          </CardView>
+          </CardView> 
 
         </View>
         {/* <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
