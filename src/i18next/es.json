@@ -1,6 +1,10 @@
 {
   "screens": {
-    "homeScreen": "Casa Pantalla"
+    "homeScreen": "DigiShop",
+    "addCampaign": "Añadir campaña",
+    "signOut":"Desconectar",
+    "manageScreen":"Gestiona y rastrea tus campañas",
+    "manageCampaigan":"Administrar campaña"
   },
   "loginScreen": {
     "digiShopTitle": "DigiShop",
@@ -173,5 +177,8 @@
     "trackingTitle": "Rastreo #",
     "trackingPicker": "USPS",
     "saveButtontext": "Salvar"
+  },
+  "manageCampaignScreen":{
+    "ManageCampaign":"Administrar campaña"
   }
 }

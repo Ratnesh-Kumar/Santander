@@ -9,7 +9,7 @@ export default (styles = StyleSheet.create({
     backgroundColor: colorConstants.WHITE_COLOR,
   },
   viewContainer: {
-    flex: 1, justifyContent: 'center', alignItems:'center'
+    justifyContent: 'center', alignItems:'center'
   },
   seperateLine: {
     flex: 1,
@@ -43,4 +43,10 @@ export default (styles = StyleSheet.create({
     margin: 10,
     color: colorConstants.SANT_RED_COLOR,
   },
+  cardViewStyle: {
+    backgroundColor: colorConstants.WHITE_COLOR,
+    marginTop: 50,
+    marginLeft: 5,
+    marginRight: 5
+  }
 }));
