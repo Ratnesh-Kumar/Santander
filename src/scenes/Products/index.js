@@ -56,7 +56,7 @@ export default class ManageProducts extends BaseComponent {
     return (
       <View>
         <FlatList
-          data={productConstants.CAMPAIGN_ARRAY}
+          data={productConstants.PRODUCT_ARRAY}
           renderItem={({ item, index }) => this.renderItemView(item, index)}
           keyExtractor={item => item.id}
           contentContainerStyle={{ paddingBottom: 10 }}
@@ -68,7 +68,7 @@ export default class ManageProducts extends BaseComponent {
   renderItemView = (item, index) => {
     if (this.isValidString(item)) {
       return (
-        <TouchableOpacity onPress={() => { Actions.addProduct() }}>
+        <TouchableOpacity onPress={() => { }}>
           <View style={{ padding: 10 }}>
 
             <CardView
@@ -78,11 +78,11 @@ export default class ManageProducts extends BaseComponent {
             >
               <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
                 <View>
-                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.campaignDate}</Text>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.campaignName}</Text>
+                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productCategory}</Text>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, marginLeft: 20 }}>{"Revenue - " + item.cost}</Text>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, marginLeft: 20 }}>{"Quantity - " + item.productQuantity}</Text>
                 </View>
                 <View style={{ justifyContent: 'center' }}>
 
