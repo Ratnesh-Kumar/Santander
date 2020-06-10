@@ -32,6 +32,9 @@ import EditOrder from './src/scenes/MyOrder/editOrder';
 import ManageCampaign from './src/scenes/Campaign/manageCampaign';
 import TrackInformation from './src/scenes/MyOrder/trackInformation';
 import ShopTabScreen from './src/scenes/ShopTab'
+import ManageProduct from './src/scenes/Products';
+import AddProduct from './src/scenes/Products/addProduct';
+import AddProductCategory from './src/scenes/Products/addProductCategory';
 import {
   StyleSheet
 } from 'react-native'
@@ -39,17 +42,17 @@ import {
 console.disableYellowBox = true;
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
-    height:48
+    flex: 1,
+    height: 48
   },
-  
+
   tabBarStyle: {
-    borderTopWidth:1,
-    borderTopColor:'transparent',
-    height:48,
+    borderTopWidth: 1,
+    borderTopColor: 'transparent',
+    height: 48,
   },
   tabBarSelectedItemStyle: {
-    height:48
+    height: 48
   },
 });
 
@@ -79,8 +82,8 @@ export default class App extends Component {
           <Scene key="termsAndPrivacy" component={TermsScreen} title="Terms" duration={0} />
           <Scene key="registerCreateCampaign" component={RegisterCreateCampaign} title="Terms" duration={0} />
           <Scene key="register" component={RegisterScreen} title="register" duration={0} />
-          <Scene key="browser" component={Browser} title ="Facebook Share" duration={0}/>
-           
+          <Scene key="browser" component={Browser} title="Facebook Share" duration={0} />
+
           {this.renderTabbar()}
         </Scene>
       </Router>
@@ -94,34 +97,37 @@ export default class App extends Component {
         key="tabbar"
         tabs={true}
         navTransparent={true}
-        tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarStyle}  hideNavBar={true} showLabel={false}>
+        tabBarStyle={styles.tabBarStyle} tabBarSelectedItemStyle={styles.tabBarStyle} hideNavBar={true} showLabel={false}>
         {/* Tab and it's scenes */}
-        
+
 
         {/* Tab and it's scenes */}
-        <Scene key="homeTab" title="Home" icon={TabIcon}  initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
+        <Scene key="homeTab" title="Home" icon={TabIcon} initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
           <Scene key="home" component={HomeScreen} title="Blue" hideNavBar />
           <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
           <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
-          <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar/>
-          <Scene key="manageCampaign" component={ManageCampaign} title="Manage Campaign" hideNavBar/>
-          <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar/>
+          <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar />
+          <Scene key="manageCampaign" component={ManageCampaign} title="Manage Campaign" hideNavBar />
+          <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar />
         </Scene>
 
         <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
-          <Scene key="favourite" component={FavouriteScreen} title="home" />
+        {/* <Scene key="favourit" component={FavouriteScreen} title="Blue" hideNavBar /> */}
+          <Scene key="manageProduct" component={ManageProduct} title="Blue" hideNavBar />
+          <Scene key="addProduct" component={AddProduct} title="Blue" hideNavBar />
+          <Scene key="addProductCategory" component={AddProductCategory} title="Terms" hideNavBar />
         </Scene>
 
-        <Scene key="orderTab" title="Order" icon={TabIcon}  resource={require('./src/public/images/tab_shop.png')} hideNavBar>
+        <Scene key="orderTab" title="Order" icon={TabIcon} resource={require('./src/public/images/tab_shop.png')} hideNavBar>
           <Scene key="myOrder" component={MyOrder} title="home" />
-          <Scene key="editOrder" component={EditOrder} title="editOrder"/>
+          <Scene key="editOrder" component={EditOrder} title="editOrder" />
           <Scene key="trackInformation" component={TrackInformation} title="Track Information" />
         </Scene>
 
         <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
           <Scene key="shop" component={ShopTabScreen} title="home" />
           <Scene key="businessProfile" component={BusinessProfile} title="businessProfile" duration={0} />
-          <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar/>
+          <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar />
         </Scene>
 
         {/* <Scene key="homeTab" title="My Procedures" icon={TabIcon} initial={true} homeTabar={true} resource={require('./src/public/images/letter_a_icon.png')} hideNavBar>

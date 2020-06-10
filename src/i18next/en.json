@@ -191,6 +191,12 @@
     },
     "manageCampaignScreen":{
       "ManageCampaign":"Manage Campaign"
+    },
+    "productScreen":{
+      "manageProducts": "Manage Products",
+      "addProduct": "Add Product",
+      "variantsDetail": "Variant detail",
+      "saveButtonText": "Save"
     }
     
 }
