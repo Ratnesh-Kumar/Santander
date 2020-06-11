@@ -15,14 +15,14 @@ export default class ShopTabScreen extends Component {
     return (
       <View style={shopStyle.container}>
         <Header title={shopConstants.SETTINGS_SCREEN} />
-        <View style={shopStyle.viewContainer} onTouchStart={()=>{Actions.shopSetting()}}>
+        {/* <View style={shopStyle.viewContainer} onTouchStart={()=>{Actions.shopSetting()}}>
           <Text style={shopStyle.welcome}>{strings('shopTab.ShopSettingsTitle')}</Text>
-        </View>
-        {/* <FlatList
+        </View> */}
+        <FlatList
           style={{marginTop:20}}
           data={listArr}
           renderItem={({ item }) => this.renderFlatListItems(item)}
-        /> */}
+        />
       </View>
     );
   }
@@ -30,7 +30,7 @@ export default class ShopTabScreen extends Component {
     listArr = [
         { title:strings('shopTab.ShopSettingsTitle') , imageResource: shopConstants.SHOP_SETTING , key:shopConstants.FLATLIST_KEY_SHOP},
         { title: strings('shopTab.BusinessProfileTitle'), imageResource: shopConstants.BUSINESS_PROFILE , key:shopConstants.FLATLIST_KEY_BUSINESS },
-        { title: strings('shopTab.BusinessSettings'), imageResource: shopConstants.BUSINESS_SETTING , key:shopConstants.FLATLIST_KEY_BUSINESS_SETTING },
+        // { title: strings('shopTab.BusinessSettings'), imageResource: shopConstants.BUSINESS_SETTING , key:shopConstants.FLATLIST_KEY_BUSINESS_SETTING },
         { title: strings('shopTab.EnablePayment'), imageResource: shopConstants.ENABLE_PAYMENT , key:shopConstants.FLATLIST_KEY_ENABLE },
         { title: strings('shopTab.Delete'), imageResource: shopConstants.DELETE , key:shopConstants.FLATLIST_KEY_DELETE },
         { title: strings('shopTab.logout'), imageResource: shopConstants.LOGOUT , key:shopConstants.FLATLIST_KEY_LOGOUT },
