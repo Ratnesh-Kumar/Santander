@@ -78,7 +78,7 @@ export default class CampaignScreen extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => this.setState({ tagName: text })}
-                            returnKeyType={'next'}
+                            returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             onFocus={() => { this.setState({ tagName: '' }) }}

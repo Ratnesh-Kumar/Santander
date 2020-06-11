@@ -69,8 +69,8 @@
       "quanitytTitle": "Quantity",
       "categoryTagTextInput": "Add Categories",
       "variantsTagTextInput": "Add Variants",
-      "categoryTagText": "Categories",
-      "variantsTagText": "Variants"
+      "categoryTagText": "CATEGORIES",
+      "variantsTagText": "VARIANTS"
     },
     "createCampaignCategories": {
       "trackSwitchText": "Track Quantity",

@@ -23,6 +23,7 @@ export default class SearchBar extends Component {
             autoCapitalize="none"
             style={{ fontSize: 16, textAlignVertical: 'top', paddingLeft: 20, flex: 1 }}
             onChangeText={text => { this.setState({ searchText: text }) }}
+            value={this.state.searchText}
             onSubmitEditing={event => {
               this.props.onSearchPressed(this.state.searchText)
             }}
