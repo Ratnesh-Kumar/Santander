@@ -29,7 +29,7 @@ var imagePathCampaign = "";
 var s3BucketName = "";
 var s3RegsionName = "";
 var s3accessKey = "";
-var secretKey = "";
+var s3SecretKey = "";
 var successActionStatus = 201;
 export class GlobalData extends Component {
     constructor() {
@@ -53,10 +53,10 @@ export class GlobalData extends Component {
         return s3RegsionName;
     }
     setS3SecretKey(secretKey) {
-        secretKey = secretKey;
+        s3SecretKey = secretKey;
     }
     getS3SecretKey() {
-        return secretKey;
+        return s3SecretKey;
     }
     setS3AccessKey(accessKey) {
         s3accessKey = accessKey;
