@@ -169,7 +169,8 @@ export default class ForgotPassword extends Component {
               underlineHeight={2}
               keyboardType="email-address"
               onSubmitEditing={event => {
-                this.refs.passwordInput.focus();
+                Keyboard.dismiss()
+                //this.refs.passwordInput.focus();
               }}
             />
           </View>

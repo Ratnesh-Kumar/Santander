@@ -18,7 +18,7 @@ export default (styles = StyleSheet.create({
   scrollViewStyle:{
     ...Platform.select({
       ios: {
-        marginBottom: 100
+        marginBottom: 130
       },
       android: {
         marginBottom: 80
