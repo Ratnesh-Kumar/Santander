@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity,Platform  } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -9,6 +9,7 @@ import * as RNLocalize from "react-native-localize";
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
+import AppButton from '../../components/AppButton';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -66,8 +67,8 @@ export default class CampaignScreen extends BaseComponent {
 
     renderInputText() {
         return (
-            <View style={{ alignItems: 'center' }}>
-                <View style={campaignStyle.inputWrapper}>
+            <View style={{alignItems:'center',flexDirection:'row'}}>
+                <View style={campaignStyle.inputWrapperSmall}>
                     <View style={campaignStyle.validFormSubView}>
                         <TextInputMaterial
                             blurText={this.state.tagName}
@@ -81,7 +82,7 @@ export default class CampaignScreen extends BaseComponent {
                             autoCorrect={false}
                             isLoginScreen={false}
                             onFocus={() => { this.setState({ tagName: '' }) }}
-                            onBlur1={() => {this.addItemToTagList()}}
+                            //onBlur1={() => {this.addItemToTagList()}}
                             style={campaignStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -97,6 +98,13 @@ export default class CampaignScreen extends BaseComponent {
                         />
                     </View>
                 </View>
+
+               <View style={{flex:1,paddingRight:25}}>
+                <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
+          this.addItemToTagList()
+          
+        }}/>
+               </View>
             </View>
         );
     }

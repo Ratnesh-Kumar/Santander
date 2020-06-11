@@ -9,6 +9,7 @@ import * as RNLocalize from "react-native-localize";
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
+import AppButton from '../../components/AppButton';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var productConstants = require('./productConstants')
@@ -66,8 +67,8 @@ export default class ProductTag extends BaseComponent {
 
     renderInputText() {
         return (
-            <View style={{ alignItems: 'center' }}>
-                <View style={productStyle.inputWrapper}>
+            <View style={{ alignItems: 'center',flexDirection:'row' }}>
+                <View style={productStyle.inputWrapperSmall}>
                     <View style={productStyle.validFormSubView}>
                         <TextInputMaterial
                             blurText={this.state.tagName}
@@ -81,7 +82,6 @@ export default class ProductTag extends BaseComponent {
                             autoCorrect={false}
                             isLoginScreen={false}
                             onFocus={() => { this.setState({ tagName: '' }) }}
-                            onBlur1={() => {this.addItemToTagList()}}
                             style={productStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -92,22 +92,28 @@ export default class ProductTag extends BaseComponent {
                             keyboardType="email-address"
                             isDefaultView={true}
                             onSubmitEditing={event => {
-                                
+
                             }}
                         />
                     </View>
+                </View>
+                <View style={{ flex: 1, paddingRight: 25 }}>
+                    <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
+                        this.addItemToTagList()
+
+                    }} />
                 </View>
             </View>
         );
     }
 
-    addItemToTagList(){
+    addItemToTagList() {
         if (this.isValidString(this.state.tagName) && this.state.tagNameList.length < 11) {
             this.state.tagNameList.push(this.state.tagName)
             this.props.updatedList(this.state.tagNameList)
             this.setState({
                 tagNameList: this.state.tagNameList,
-                tagName:''
+                tagName: ''
             })
         }
     }

@@ -37,6 +37,13 @@ export default (styles = StyleSheet.create({
     inputWrapperSmall: {
         width: (DEVICE_WIDTH - 20)/2,
     },
+    inputWrapperPhoneCode: {
+        width: (DEVICE_WIDTH - 20)/3,
+    },
+    inputWrapperPhone: {
+        width: (DEVICE_WIDTH - 150),
+    },
+
     validFormSecondFieldView: {
         marginTop: 15,paddingLeft:15,paddingRight:15
     },

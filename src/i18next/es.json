@@ -2,10 +2,10 @@
   "screens": {
     "homeScreen": "DigiShop",
     "addCampaign": "Añadir campaña",
-    "signOut":"Desconectar",
-    "manageScreen":"Gestiona y rastrea tus campañas",
-    "manageCampaigan":"Administrar campaña",
-    "spaceforGraph":"Espacio para gráfico"
+    "signOut": "Desconectar",
+    "manageScreen": "Gestiona y rastrea tus campañas",
+    "manageCampaigan": "Administrar campaña",
+    "spaceforGraph": "Espacio para gráfico"
   },
   "loginScreen": {
     "digiShopTitle": "DigiShop",
@@ -21,7 +21,7 @@
     "TermsConditionSubTitle1": "declaración",
     "Info": "Informacion",
     "ValidInformation": "Por favor proporcione información válida.",
-    "LoginError":"Error de inicio de sesión"
+    "LoginError": "Error de inicio de sesión"
   },
   "forgotScreen": {
     "forgotTitle": "olvidadoTítulo",
@@ -30,8 +30,8 @@
     "UserTextInput": "correo electrónico",
     "UserTextInputError": "Por favor introduzca su correo electrónico",
     "ScreenTitle": "Digishop",
-    "PasswordResetError":"error de restablecimiento de contraseña",
-    "PasswordResetSuccess":"Restablecer enlace enviado correctamente a su correo electrónico"
+    "PasswordResetError": "error de restablecimiento de contraseña",
+    "PasswordResetSuccess": "Restablecer enlace enviado correctamente a su correo electrónico"
   },
   "termsScreen": {
     "termsTitle": "Términos y condiciones",
@@ -63,12 +63,17 @@
     "createFirstCampaign": "Crea tu primera campaña",
     "skipStep": "Salta este paso",
     "quanitytTitle": "Cantidad",
-    "categoryTagTextInput": "Categorias",
-    "variantsTagTextInput": "Variantes (opcional)"
+    "categoryTagTextInput": "Agregar categorías",
+    "variantsTagTextInput": "Agregar variantes",
+    "categoryTagText": "categorías",
+    "variantsTagText": "variantes"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",
-    "allowPurchaseSwitchText": "Permitir compra cuando no hay stock"
+    "allowPurchaseSwitchText": "Permitir compra cuando no hay stock",
+    "salesTaxSwitchText": "Impuesto de vent",
+    "salesTaxTypeTextInput": "Tipo de impuesto",
+    "salesTaxTextInput": "%"
   },
   "createCampaignShare": {
     "publishNowText": "Publica ahora",
@@ -83,7 +88,7 @@
     "pinterestText": "Pinterest",
     "instagramText": "Instagram",
     "Info": "Informacion",
-    "createShopErrorkey":"Por favor, introduzca información válida"
+    "createShopErrorkey": "Por favor, introduzca información válida"
   },
   "registerScreen": {
     "digiShopTitle": "DigiShop",
@@ -110,7 +115,7 @@
     "SignInButtonText": "Iniciar sesión con correo electrónico",
     "Info": "Informacion",
     "ValidInformation": "Por favor proporcione información válida.",
-    "AlreadyRegisteredError":"Este correo electrónico ya tiene una cuenta registrada."
+    "AlreadyRegisteredError": "Este correo electrónico ya tiene una cuenta registrada."
   },
   "BuisnessProfile": {
     "Title": "Perfil de trabajo",
@@ -179,13 +184,20 @@
     "trackingPicker": "USPS",
     "saveButtontext": "Salvar"
   },
-  "manageCampaignScreen":{
-    "ManageCampaign":"Administrar campaña"
+  "manageCampaignScreen": {
+    "ManageCampaign": "Administrar campaña"
   },
-  "productScreen":{
+  "productScreen": {
     "manageProducts": "Gestionar productos",
     "addProduct": "Añadir Producto",
     "variantsDetail": "Detalle variante",
-    "saveButtonText": "Salvar"
+    "saveButtonText": "Salvar",
+    "weightTitle": "Peso",
+    "productWeightInputText": "Peso",
+    "productWeightText": "lb"
+  },
+  "varientCampaign":{
+    "title":"Detalle variante",
+    "saveButtonText":"Salvar"
   }
 }

@@ -23,8 +23,10 @@ var descriptionCampaign = "";
 var quantityCampaign = 1;
 var categoriesCampaign = "";
 var variantsCampaign = "";
-var priceCampaign=0;
-var salesPriceCampaign =0;
+var priceCampaign = 0;
+var salesPriceCampaign = 0;
+var salesTaxType = '';
+var salesTax = 0;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -47,16 +49,16 @@ export class GlobalData extends Component {
     getImageCampaign() {
         return imageCampaign;
     }
-    setPriceCampaign(price){
+    setPriceCampaign(price) {
         priceCampaign = price;
     }
-    getPriceCampaign(){
+    getPriceCampaign() {
         return priceCampaign;
     }
-    setSalesPriceCampaign(price){
+    setSalesPriceCampaign(price) {
         salesPriceCampaign = price;
     }
-    getSalesPriceCampaign(){
+    getSalesPriceCampaign() {
         return salesPriceCampaign;
     }
     setdescriptionCampaign(description) {
@@ -205,6 +207,24 @@ export class GlobalData extends Component {
     getUserTokenKey() {
         return userTokenKey;
     }
+
+    setSalesTaxType(TaxType) {
+        salesTaxType = TaxType;
+    }
+
+    getSalesTaxType() {
+        return salesTaxType;
+    }
+
+    setSalesTax(Tax) {
+        salesTax = Tax;
+    }
+    
+    getSalesTax() {
+        return salesTax;
+    }
+
+
 }
 
 export default GlobalData;

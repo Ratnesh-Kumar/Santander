@@ -53,6 +53,9 @@ export default (styles = StyleSheet.create({
   inputWrapper: {
     width: constants.SCREEN_WIDTH - 20, marginTop:10
   },
+  inputWrapperSmall:{
+    width: (constants.SCREEN_WIDTH - 20)/2, marginTop:10
+  },
   priceInputWrapper: {
     width: constants.SCREEN_WIDTH/2-10,
   },
