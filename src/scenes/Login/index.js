@@ -172,27 +172,27 @@ export default class LoginView extends BaseComponent {
   }
 
   async loginButtonTapped() {
-    Actions.tabbar();
+    // Actions.tabbar();
     //Keyboard.dismiss()
-    // if (this.checkForLoginFormValidation()) {
-    //   this.renderActivityIndicatorShow()
-    //   let bodyData = this.getLoginBodyData()
-    //   var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
-    //   console.log("################ login responseData : " + JSON.stringify(responseData))
-    //   if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-    //     if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
-    //       this.saveUserInfo(responseData);
-    //       Actions.tabbar();
-    //     }
-    //     else {
-    //       this.renderDialogModal(strings('loginScreen.LoginError'), responseData.statusMessage);
-    //     }
-    //   }
-    //   this.renderActivityIndicatorHide()
-    // }
-    // else {
-    //   this.renderDialogModal(strings('loginScreen.Info'),strings('loginScreen.ValidInformation'));
-    // }
+    if (this.checkForLoginFormValidation()) {
+      this.renderActivityIndicatorShow()
+      let bodyData = this.getLoginBodyData()
+      var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
+      console.log("################ login responseData : " + JSON.stringify(responseData))
+      if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+        if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
+          this.saveUserInfo(responseData);
+          Actions.tabbar();
+        }
+        else {
+          this.renderDialogModal(strings('loginScreen.LoginError'), responseData.statusMessage);
+        }
+      }
+      this.renderActivityIndicatorHide()
+    }
+    else {
+      this.renderDialogModal(strings('loginScreen.Info'),strings('loginScreen.ValidInformation'));
+    }
   }
   getLoginBodyData() {
     let bodyData = {
