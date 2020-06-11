@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -15,6 +15,17 @@ var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 import ImagePicker from "react-native-image-picker";
+import { RNS3 } from 'react-native-aws3';
+var imageFile = {}
+
+const options = {
+  keyPrefix: "uploads/",
+  bucket: "ecomimagebucket",
+  region: "us-west-2",
+  accessKey: "AKIAJMGLMXENWZWUEV4Q",
+  secretKey: "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",
+  successActionStatus: 201
+}
 
 export default class CampaignScreen extends BaseComponent {
 
@@ -31,9 +42,7 @@ export default class CampaignScreen extends BaseComponent {
       campaignSkuValue: '',
       campaignBarcodeValue: '',
       pickedImage: compaignConstants.CAMERA_ICON,
-      isBarcodeDisplay: false,
-      showImage: false
-
+      isBarcodeDisplay: false
     }
   }
 
@@ -302,6 +311,7 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
+
   pickImageHandler = () => {
     ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
@@ -309,23 +319,32 @@ export default class CampaignScreen extends BaseComponent {
       } else if (res.error) {
         console.log("Error", res.error);
       } else {
-        this.setState({
-          pickedImage: { uri: res.uri },
-          showImage: true
+        imageFile.uri = res.uri;
+        imageFile.name = res.uri.replace(/^.*[\\\/]/, '');
+        imageFile.type = "image/jpg";
+        RNS3.put(imageFile, options).then(response => {
+          if (response.status !== 201) {
+            throw new Error("Failed to upload image to S3");
+          }
+          else {
+            globalData.setImagePathCampaign(response.body.postResponse.location);
+            this.setState({
+              pickedImage: { uri: res.uri }
+            });
+          }
         });
-
       }
     });
   }
 
+
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR,  }}>
-          <TouchableOpacity onPress={() => this.pickImageHandler()} style={{alignItems: 'center'}}>
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
           <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
-          <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
-          </TouchableOpacity>
+          <Text onPress={() => this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>

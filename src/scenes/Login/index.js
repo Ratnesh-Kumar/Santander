@@ -64,7 +64,7 @@ export default class LoginView extends BaseComponent {
     };
     this.showPass = this.showPass.bind(this);
     //this.buttonAnimated = new Animated.Value(0);
-   // this.growAnimated = new Animated.Value(0);
+    // this.growAnimated = new Animated.Value(0);
     this.googleConfiguration()
     this.onMessage = this.onMessage.bind(this);
     // realm = new Realm({ path: 'UserDatabase.realm' });
@@ -77,14 +77,14 @@ export default class LoginView extends BaseComponent {
     // });
 
     //this.isTouchIdSupported()
-   // this.getFireBaseValue();
+    // this.getFireBaseValue();
   }
 
-  
+
 
   componentDidMount() {
     // Actions.tabbar();
-    
+
   }
 
   async getFireBaseValue() {
@@ -139,25 +139,25 @@ export default class LoginView extends BaseComponent {
 
   renderHorizontalLine(margin) {
     return (
-      <View style={{ height: 1, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, marginTop:  (Platform.OS === 'ios')?margin:10, marginBottom:  (Platform.OS === 'ios')?margin:10 }} />
+      <View style={{ height: 1, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, marginTop: (Platform.OS === 'ios') ? margin : 10, marginBottom: (Platform.OS === 'ios') ? margin : 10 }} />
     )
   }
 
   render() {
     return (
       <View style={loginStyle.renderContainer}>
-         {this.renderModal()}
+        {this.renderModal()}
         {this.renderLoginTitle()}
         {this.renderHorizontalLine(20)}
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
-        <AppButton isLightTheme={false}   buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={()=>{
-                this.loginButtonTapped()
-            }}/>
+        <AppButton isLightTheme={false} buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={() => {
+          this.loginButtonTapped()
+        }} />
         {this.renderTermsView()}
-        <AppButton isLightTheme={true}   buttonText={strings('loginScreen.SignUpButttonText')} onButtonPressed={()=>{
-                Actions.register();
-            }}/>
+        <AppButton isLightTheme={true} buttonText={strings('loginScreen.SignUpButttonText')} onButtonPressed={() => {
+          Actions.register();
+        }} />
         {this.renderUpdateText()}
         {/* {this.renderTouchIdAndFaceId()}
         <ConfirmGoogleCaptcha
@@ -172,26 +172,27 @@ export default class LoginView extends BaseComponent {
   }
 
   async loginButtonTapped() {
+    Actions.tabbar();
     //Keyboard.dismiss()
-    if (this.checkForLoginFormValidation()) {
-      this.renderActivityIndicatorShow()
-      let bodyData = this.getLoginBodyData()
-      var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
-      console.log("################ login responseData : " + JSON.stringify(responseData))
-      if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-        if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
-          this.saveUserInfo(responseData);
-          Actions.tabbar();
-        }
-        else {
-          this.renderDialogModal(strings('loginScreen.LoginError'), responseData.statusMessage);
-        }
-      }
-      this.renderActivityIndicatorHide()
-    }
-    else {
-      this.renderDialogModal(strings('loginScreen.Info'),strings('loginScreen.ValidInformation'));
-    }
+    // if (this.checkForLoginFormValidation()) {
+    //   this.renderActivityIndicatorShow()
+    //   let bodyData = this.getLoginBodyData()
+    //   var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
+    //   console.log("################ login responseData : " + JSON.stringify(responseData))
+    //   if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+    //     if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
+    //       this.saveUserInfo(responseData);
+    //       Actions.tabbar();
+    //     }
+    //     else {
+    //       this.renderDialogModal(strings('loginScreen.LoginError'), responseData.statusMessage);
+    //     }
+    //   }
+    //   this.renderActivityIndicatorHide()
+    // }
+    // else {
+    //   this.renderDialogModal(strings('loginScreen.Info'),strings('loginScreen.ValidInformation'));
+    // }
   }
   getLoginBodyData() {
     let bodyData = {
@@ -259,16 +260,16 @@ export default class LoginView extends BaseComponent {
     )
   }
 
-  async googleSignIn(){
+  async googleSignIn() {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
-      if(this.isValidString(userInfo)){
+      if (this.isValidString(userInfo)) {
         this.setState({ googleUserInfo: userInfo });
         globalData.setGoogleUserInfo(userInfo);
         Actions.tabbar();
       }
-      
+
     } catch (error) {
       console.log(error.onMessage)
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -323,10 +324,10 @@ export default class LoginView extends BaseComponent {
 
   renderForgotPassword() {
     return (
-      <View style={{ margin : (Platform.OS === 'ios')? 25:10 , alignItems:'flex-end'}}>
+      <View style={{ margin: (Platform.OS === 'ios') ? 25 : 10, alignItems: 'flex-end' }}>
         <TouchableOpacity
           onPress={() => Actions.forgotPassword()}>
-        <Text style={loginStyle.forgotTitleText}>{strings('loginScreen.forgotPasswordTitle')}</Text>
+          <Text style={loginStyle.forgotTitleText}>{strings('loginScreen.forgotPasswordTitle')}</Text>
         </TouchableOpacity>
       </View>
     )
@@ -343,7 +344,7 @@ export default class LoginView extends BaseComponent {
   }
 
   renderValidationForm() {
-    var imgSource = this.state.press? constants.EYE_ICON_VISIBLE : constants.EYE_ICON;
+    var imgSource = this.state.press ? constants.EYE_ICON_VISIBLE : constants.EYE_ICON;
     return (
       <KeyboardAvoidingView
         behavior="height"
@@ -369,7 +370,7 @@ export default class LoginView extends BaseComponent {
               errorText={strings('loginScreen.UserTextInputError')}
               underlineHeight={2}
               keyboardType="email-address"
-              isValidUserName={(flag) => { this.setState({ isValidUserName: flag });}}
+              isValidUserName={(flag) => { this.setState({ isValidUserName: flag }); }}
               onSubmitEditing={event => {
                 this.refs.passwordInput.focus();
               }}
@@ -413,7 +414,7 @@ export default class LoginView extends BaseComponent {
     );
   }
 
- 
+
 
   renderSignInButton() {
     return (
@@ -439,9 +440,9 @@ export default class LoginView extends BaseComponent {
       <View style={loginStyle.termsAndConditionView}>
         <Text style={{ fontSize: 16, textAlign: 'center' }}>
           <Text>{strings('loginScreen.TermsConditionTitle')}</Text>
-          <Text  onPress={() => Actions.termsAndPrivacy({selectedTitle:'terms'})} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionTitle1')}</Text>
+          <Text onPress={() => Actions.termsAndPrivacy({ selectedTitle: 'terms' })} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionTitle1')}</Text>
           <Text>{strings('loginScreen.TermsConditionTitle2')}</Text>
-          <Text  onPress={() => Actions.termsAndPrivacy({selectedTitle:'privacy'})} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionSubTitle')}</Text>
+          <Text onPress={() => Actions.termsAndPrivacy({ selectedTitle: 'privacy' })} style={{ color: colorConstant.SANTANDAR_COLOR }}>{strings('loginScreen.TermsConditionSubTitle')}</Text>
           <Text>{strings('loginScreen.TermsConditionSubTitle1')}</Text>
         </Text>
       </View>
@@ -449,7 +450,7 @@ export default class LoginView extends BaseComponent {
   }
   renderSignUpButton() {
     return (
-      <View style={loginStyle.loginSumbitButtonView}> 
+      <View style={loginStyle.loginSumbitButtonView}>
         <TouchableOpacity
           style={loginStyle.signInButton}
           onPress={() => Actions.register()}
@@ -466,7 +467,7 @@ export default class LoginView extends BaseComponent {
   renderUpdateText() {
     return (
       <View style={loginStyle.UpdatedView}>
-        <Text style={{ position: 'absolute', bottom: (Platform.OS === 'ios')?25:10 }}>{strings('loginScreen.UpdatedText')}</Text>
+        <Text style={{ position: 'absolute', bottom: (Platform.OS === 'ios') ? 25 : 10 }}>{strings('loginScreen.UpdatedText')}</Text>
       </View>
     );
   }
