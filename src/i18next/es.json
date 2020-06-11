@@ -196,7 +196,7 @@
     "productWeightInputText": "Peso",
     "productWeightText": "lb"
   },
-  "varientCampaign":{
+  "variantCampaign":{
     "title":"Detalle variante",
     "saveButtonText":"Salvar"
   }

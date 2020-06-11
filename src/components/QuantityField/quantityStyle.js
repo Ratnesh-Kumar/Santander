@@ -11,7 +11,7 @@ const header = {
     width:constants.SCREEN_WIDTH-40,
     backgroundColor:colorConstants.WHITE_COLOR,
     height:40,
-    marginTop: 20,
+    marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
     flexDirection:'row',

@@ -36,9 +36,10 @@ export default (styles = StyleSheet.create({
   },
   priceTextInputContainer:{
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 10,
     marginLeft:10,
     marginRight: 10,
+    marginBottom: 10,
     flexDirection: 'row'
   },
   validFormSubView:{

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -36,16 +36,16 @@ export default class ProductVarientDetailScreen extends BaseComponent {
     render() {
         return (
             <View style={productStyle.container}>
-                <Header title={strings('varientCampaign.title')} isCrossIconVisible={false} />
+                <Header title={strings('variantCampaign.title')} isCrossIconVisible={false} />
                 <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
                     <View>
                     </View>
                     {this.renderPriceView()}
                     {this.renderCostView()}
                     {this.renderSkuAndBarcode()}
-                    <AppButton isLightTheme={false} buttonText={strings('varientCampaign.nextButtonText')} onButtonPressed={() => {
+                    <AppButton isLightTheme={false} buttonText={strings('variantCampaign.saveButtonText')} onButtonPressed={() => {
                         Alert.alert('varient Detail Saved')
-                        Actions.createCampaign()
+                        Actions.pop()
                     }} />
                 </ScrollView>
             </View>
