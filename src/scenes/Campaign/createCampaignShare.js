@@ -60,8 +60,16 @@ export default class CreateCampaiganShare extends BaseComponent {
     return (
       <View>
         <Text style={createStyle.bottomTextStyle}>{strings('createCampaignShare.campaignShareMessage')}</Text>
+        {this.renderPreviewButton()}
         {this.renderPublishButton()}
       </View>
+    );
+  }
+
+  renderPreviewButton(){
+    return (
+      <AppButton isLightTheme={true} buttonText={strings('createCampaignShare.previewText')} onButtonPressed={() => {
+      }} />
     );
   }
 

@@ -92,7 +92,8 @@
       "pinterestText": "Pinterest",
       "instagramText": "Instagram",
       "Info": "Info",
-      "createShopErrorkey":"Please enter valid Information"
+      "createShopErrorkey":"Please enter valid Information",
+      "previewText":"Preview"
     },
     "registerScreen":{
       "digiShopTitle": "DigiShop",
