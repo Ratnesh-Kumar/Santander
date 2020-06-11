@@ -60,7 +60,7 @@ export default class CampaignScreen extends BaseComponent {
                 }}>
                     <Image source={require('../../public/images/Close_icon.png')} style={{ height: 12, width: 12, tintColor: colorConstant.GREY_DARK_COLOR1 }} />
                 </TouchableOpacity>
-                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1 }}>{tagName}</Text>
+                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1,marginTop:(Platform.OS === 'ios')?-2:0 }}>{tagName}</Text>
             </View>
         );
     }
