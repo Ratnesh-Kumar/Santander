@@ -27,6 +27,12 @@ var priceCampaign = 0;
 var salesPriceCampaign = 0;
 var salesTaxType = '';
 var salesTax = 0;
+var imagePathCampaign = "";
+var s3BucketName = "";
+var s3RegsionName = "";
+var s3accessKey = "";
+var s3SecretKey = "";
+var successActionStatus = 201;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -36,6 +42,36 @@ export class GlobalData extends Component {
         return singleInstance;
     }
 
+    setS3BucketName(bucketName) {
+        s3BucketName = bucketName;
+    }
+    getS3BucketName() {
+        return s3BucketName;
+    }
+    setS3RegionName(regionName) {
+        s3RegsionName = regionName;
+    }
+    getS3RegionName() {
+        return s3RegsionName;
+    }
+    setS3SecretKey(secretKey) {
+        s3SecretKey = secretKey;
+    }
+    getS3SecretKey() {
+        return s3SecretKey;
+    }
+    setS3AccessKey(accessKey) {
+        s3accessKey = accessKey;
+    }
+    getS3AccessKey() {
+        return s3accessKey;
+    }
+    setSuccessActionStatus(actionStatus) {
+        successActionStatus = actionStatus;
+    }
+    setSuccessActionStatus() {
+        return successActionStatus;
+    }
     setTitleCampaign(title) {
         titleCampaign = title;
     }
@@ -43,6 +79,12 @@ export class GlobalData extends Component {
         return titleCampaign;
     }
 
+    setImagePathCampaign(path) {
+        imagePathCampaign = path;
+    }
+    getImagePathCampaign() {
+        return imagePathCampaign;
+    }
     setImageCampaign(image) {
         imageCampaign = image;
     }

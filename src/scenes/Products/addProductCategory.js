@@ -4,6 +4,7 @@ import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
 import { strings } from '../../i18next/i18n';
+import Stepper from '../../components/Stepper/stepper'
 import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
 import GlobalData from '../../utils/GlobalData';
@@ -39,6 +40,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View style={productStyle.container}>
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
+        <Stepper count={2} currentCount={2}/>
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
 
           <View>
