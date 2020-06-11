@@ -154,7 +154,9 @@
       "BuisnessTaxIdTextInput":"Buisness Tax Id",
       "BuisnessTaxIdTextInputError":"Please enter your Buisness Tax Id",
       "PhoneCodeTextInput":"code",
-      "URLTextInput":"Enter Link (website/FB page/Yelp URL)"
+      "WebsiteTextInput":"Website",
+      "FbTextInput":"FB page",
+      "YelpTextInput":"Yelp"
       
     },
     "shopSettingsScreen":{
@@ -168,9 +170,9 @@
       "paymentDropDownText":"Payment Processor",
       "taxInventory":"Tax Inventory",
       "taxOnSales":"Tax on sales",
-      "taxTypeInput":"Tax type(GST,VAT etc.)",
+      "taxTypeInput":"Tax type",
       "flatTaxSwitch":"Flat tax",
-      "taxRateInput":"Tax rate(%)",
+      "taxRateInput":"%",
       "showDiscountSwitch":"Show discount",
       "shipProductsSwitch":"Ship products",
       "shippingCompany":"Shipping company",
