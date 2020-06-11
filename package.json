@@ -23,6 +23,7 @@
     "patch-package": "^6.2.0",
     "react": "16.11.0",
     "react-native": "0.62.2",
+    "react-native-aws3": "0.0.9",
     "react-native-camera": "^3.26.0",
     "react-native-cardview": "^2.0.5",
     "react-native-config": "^1.2.0",

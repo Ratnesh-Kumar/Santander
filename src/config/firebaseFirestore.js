@@ -58,6 +58,10 @@ function remoteConfigHandle(data){
         globalData.setPinterestEnabled(data.isPinterestEnabled)
         globalData.setTextSmsEnabled(data.isTextSmsEnabled)
         globalData.setWhatsAppEnable(data.isWhatsAppEnable)
+        globalData.setS3BucketName(data.awsBucket);
+        globalData.setS3RegionName(data.awsRegion);
+        globalData.setS3SecretKey(data.awsSecretKey);
+        globalData.setS3AccessKey(data.awsAccessKey);
     }
 }
 
