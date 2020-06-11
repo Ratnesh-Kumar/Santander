@@ -25,6 +25,7 @@ var categoriesCampaign = "";
 var variantsCampaign = "";
 var priceCampaign=0;
 var salesPriceCampaign =0;
+var imagePathCampaign ="";
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -41,6 +42,13 @@ export class GlobalData extends Component {
         return titleCampaign;
     }
 
+    setImagePathCampaign(path){
+        imagePathCampaign=path;
+    }
+    getImagePathCampaign()
+    {
+        return imagePathCampaign;
+    }
     setImageCampaign(image) {
         imageCampaign = image;
     }
