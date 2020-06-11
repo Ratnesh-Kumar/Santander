@@ -67,12 +67,17 @@
       "createFirstCampaign": "Create your first campaign",
       "skipStep": "Skip this step",
       "quanitytTitle": "Quantity",
-      "categoryTagTextInput": "Categories",
-      "variantsTagTextInput": "Variants (Optional)"
+      "categoryTagTextInput": "Add Categories",
+      "variantsTagTextInput": "Add Variants",
+      "categoryTagText": "Categories",
+      "variantsTagText": "Variants"
     },
     "createCampaignCategories": {
       "trackSwitchText": "Track Quantity",
-      "allowPurchaseSwitchText": "Allow purchase when out of stock"
+      "allowPurchaseSwitchText": "Allow purchase when out of stock",
+      "salesTaxSwitchText":"Sales Tax",
+      "salesTaxTypeTextInput":"Tax Type",
+      "salesTaxTextInput":"%"
     },
     "createCampaignShare":{
       "publishNowText": "Publish Now",
@@ -147,7 +152,10 @@
       "BuisnessNameTextInput":"Business Name",
       "BuisnessNameTextInputError":"Please enter your Business Name",
       "BuisnessTaxIdTextInput":"Buisness Tax Id",
-      "BuisnessTaxIdTextInputError":"Please enter your Buisness Tax Id"
+      "BuisnessTaxIdTextInputError":"Please enter your Buisness Tax Id",
+      "PhoneCodeTextInput":"code",
+      "URLTextInput":"Enter Link (website/FB page/Yelp URL)"
+      
     },
     "shopSettingsScreen":{
       "ShopSettingsTitle":"Shop Settings",
@@ -197,7 +205,15 @@
       "manageProducts": "Manage Products",
       "addProduct": "Add Product",
       "variantsDetail": "Variant detail",
-      "saveButtonText": "Save"
+      "saveButtonText": "Save",
+      "weightTitle":"Weight",
+      "productWeightInputText":"Weight",
+      "productWeightText":"lb"
+    },
+    "varientCampaign":{
+      "title":"Variant detail",
+      "saveButtonText":"Save"
     }
+  
     
 }

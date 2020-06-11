@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -26,7 +26,9 @@ export default class CampaignScreen extends BaseComponent {
       campaignName: '',
       productQuantity: 1,
       variantsList: [],
-      categoryList: []
+      categoryList: [],
+      salesTax:0,
+      salesTaxType:''
     }
   }
 
@@ -38,12 +40,14 @@ export default class CampaignScreen extends BaseComponent {
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
-
           <View>
             {this.renderSwitchTextInput()}
             {this.renderProductQuantity()}
+            <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
             {this.renderCategoryTagView()}
             {this.renderVariantsQantityView()}
+            {this.renderSalesTaxView()}
+            {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
             Actions.createCampaignShare()
@@ -61,15 +65,20 @@ export default class CampaignScreen extends BaseComponent {
       }
     }
     return (
-      <View>
-        {variantList}
-      </View>
+        <View >
+              {variantList}
+              </View>    
+        
     )
   }
 
   renderQuantityView(quantityTitle) {
     return (
-      <QuantityField title={quantityTitle} updatedQuantity={(quantity) => {
+      <QuantityField isVarientQuantityView={true} 
+      onButtonPressed={() => {
+        Actions.campaignVarient()
+      }}
+       title={quantityTitle} updatedQuantity={(quantity) => {
         this.setState({
           productQuantity: quantity
         })
@@ -79,16 +88,24 @@ export default class CampaignScreen extends BaseComponent {
 
   renderCategoryTagView() {
     return (
-      <View style={{ marginTop: 10 }}>
+      <View style={{ paddingLeft:10,paddingTop: 20 }}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => { globalData.setCategoriesCampaign(categoryList); this.setState({ categoryList: categoryList }) }} />
-        <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
+        <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
+        <View style={{ paddingTop: 20 }}>
+          <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.variantsTagText')}</Text>
+          <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
+        </View>
       </View>
     )
   }
 
+
+
+
   renderProductQuantity() {
     return (
-      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { globalData.setQuantityCampaign(quantity) }} />
+      <QuantityField isVarientQuantityView={false} title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { globalData.setQuantityCampaign(quantity) }} />
     )
   }
 
@@ -110,6 +127,78 @@ export default class CampaignScreen extends BaseComponent {
       </View>
     );
   }
+
+  renderSalesTaxView(){
+    return(
+        <View style={{ marginTop: 10 }}>
+        {this.renderSwitchFields(strings('createCampaignCategories.salesTaxSwitchText'))}
+      </View>
+     
+    )
+  }
+
+  renderSalesTaxInput(){
+    return(
+      <View
+        style={campaignStyle.priceTextInputContainer}>
+        <View style={campaignStyle.priceInputWrapper}>
+          <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
+            <TextInputMaterial
+              blurText={this.state.campaignPriceValue}
+              refsValue={'campaignPrice'}
+              ref={'campaignPrice'}
+              label={strings('createCampaignCategories.salesTaxTypeTextInput')}
+              maxLength={100}
+              autoCapitalize={'none'}
+              onChangeText={text => { globalData.setSalesTaxType(text); this.setState({ salesTaxType: text }) }}
+              returnKeyType={'next'}
+              autoCorrect={false}
+              isLoginScreen={false}
+              style={campaignStyle.input}
+              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+              value={this.state.campaignPriceValue}
+              textInputName={this.state.campaignPriceValue}
+              // errorText={strings('createCampaign.priceErrorText')}
+              underlineHeight={2}
+              keyboardType={'email-address'}
+              onSubmitEditing={event => {
+                this.refs.salesTaxPercent.focus();
+              }}
+            />
+          </View>
+        </View>
+        <View style={campaignStyle.priceInputWrapper}>
+          <View style={[campaignStyle.priceFormSubView, { paddingLeft: 15 }]}>
+            <TextInputMaterial
+              blurText={this.state.campaignSaleValue}
+              refsValue={'salesTaxPercent'}
+              ref={'salesTaxPercent'}
+              label={strings('createCampaignCategories.salesTaxTextInput')}
+              maxLength={100}
+              autoCapitalize={'none'}
+              onChangeText={text => { globalData.setSalesTax(text); this.setState({ salesTax: text }) }}
+              returnKeyType={'next'}
+              autoCorrect={false}
+              isLoginScreen={false}
+              keyboardType={'number-pad'}
+              style={campaignStyle.input}
+              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+              value={this.state.campaignSaleValue}
+              textInputName={this.state.campaignSaleValue}
+              // errorText={strings('createCampaign.campaignNameErrorText')}
+              underlineHeight={2}
+              onSubmitEditing={event => {
+              }}
+            />
+          </View>
+        </View>
+      </View>
+    )
+  }
+
+
 }
 
 

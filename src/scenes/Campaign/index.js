@@ -68,7 +68,7 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderCampaignName()}
             {this.createCameraView()}
             {this.renderPriceView()}
-            {this.renderCostView()}
+            {/* {this.renderCostView()} */}
             {this.renderSkuAndBarcode()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               Actions.createCampaign();
