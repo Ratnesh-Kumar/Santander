@@ -22,8 +22,8 @@ const options = {
   keyPrefix: "uploads/",
   bucket: "ecomimagebucket",
   region: "us-west-2",
-  accessKey: "AKIAJMGLMXENWZWUEV4Q",
-  secretKey: "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",
+  accessKey: "",
+  secretKey: "",
   successActionStatus: 201
 }
 
