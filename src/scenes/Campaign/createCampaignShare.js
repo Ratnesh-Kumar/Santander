@@ -22,6 +22,7 @@ import ActivityIndicatorView from '../../components/activityindicator/ActivityIn
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import { fetchPartyPOST } from '../../services/FetchData';
 import BaseComponent from '../../BaseComponent';
+import Stepper from '../../components/Stepper/stepper'
 var comonFunctions = new CommonFunctions();
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
@@ -46,6 +47,7 @@ export default class CreateCampaiganShare extends BaseComponent {
       <View style={createStyle.container}>
         {this.renderModal()}
         <Header isleftArrowDisplay={true} title={strings('createCampaign.screenTitle')} />
+        <Stepper count={3} currentCount={3}/>
         <ScrollView style={{ paddingBottom: 50 }}>
           {this.renderSwitchTextInput()}
           {this.renderBottomView()}

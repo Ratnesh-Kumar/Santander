@@ -10,11 +10,13 @@ import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
 import AppButton from '../../components/AppButton'
+import ImagePicker from "react-native-image-picker";
+import Stepper from '../../components/Stepper/stepper'
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
-import ImagePicker from "react-native-image-picker";
+
 
 export default class CampaignScreen extends BaseComponent {
 
@@ -63,6 +65,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
+        <Stepper count={3} currentCount={1}/>
         <View>
           <ScrollView keyboardShouldPersistTaps={'always'} style={campaignStyle.scrollViewStyle}>
             {this.renderCampaignName()}
@@ -73,6 +76,7 @@ export default class CampaignScreen extends BaseComponent {
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               Actions.createCampaign();
             }} />
+            
           </ScrollView>
         </View>
       </View>

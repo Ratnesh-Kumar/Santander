@@ -21,7 +21,7 @@ export default (styles = StyleSheet.create({
         marginBottom: 100
       },
       android: {
-        marginBottom: 50
+        marginBottom: 80
       }
     })
   },

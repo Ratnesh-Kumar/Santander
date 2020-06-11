@@ -13,6 +13,7 @@ import AppButton from '../../components/AppButton'
 import SwitchTextInput from '../../components/SwitchTextInput';
 import QuantityField from '../../components/QuantityField';
 import CreateTagView from './categoryTagView'
+import Stepper from '../../components/Stepper/stepper'
 import { color } from 'react-native-reanimated';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
@@ -39,6 +40,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
+        <Stepper count={3} currentCount={2}/>
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
           <View>
             {this.renderSwitchTextInput()}

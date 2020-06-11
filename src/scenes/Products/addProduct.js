@@ -10,6 +10,7 @@ import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
 import AppButton from '../../components/AppButton'
+import Stepper from '../../components/Stepper/stepper'
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var productConstants = require('./productConstants')
@@ -65,6 +66,7 @@ export default class AddProductScreen extends BaseComponent {
     return (
       <View style={productStyle.container}>
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
+        <Stepper count={2} currentCount={1}/>
         <View>
           <ScrollView keyboardShouldPersistTaps={'always'} style={productStyle.scrollViewStyle}>
             {this.renderProductName()}
