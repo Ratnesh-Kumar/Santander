@@ -33,7 +33,7 @@ export default class QuantityField extends Component {
                         cardMaxElevation={8}
                         corderOverlap={false}
                     >
-                        <View style={{ flexDirection: 'row', backgroundColor: colorConstant.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
+                        <View style={{ flexDirection: 'row', backgroundColor: colorConstant.WHITE_COLOR, padding: 10 }}>
                             <View style>
                                 <Text style={{ paddingTop: 5, color: colorConstant.BLACK_COLOR, fontSize: 16, position: 'absolute' }}>{this.props.title}
                                 </Text>

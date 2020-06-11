@@ -37,15 +37,15 @@ export default class VarientDetailScreen extends BaseComponent {
     render() {
         return (
             <View style={campaignStyle.container}>
-                <Header title={strings('varientCampaign.title')} isCrossIconVisible={false} />
+                <Header title={strings('variantCampaign.title')} isCrossIconVisible={false} />
                 <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
                     <View>
                     </View>
                     {this.renderPriceView()}
                     {this.renderSkuAndBarcode()}
-                    <AppButton isLightTheme={false} buttonText={strings('varientCampaign.saveButtonText')} onButtonPressed={() => {
+                    <AppButton isLightTheme={false} buttonText={strings('variantCampaign.saveButtonText')} onButtonPressed={() => {
                         Alert.alert('varient Detail Saved')
-                        Actions.createCampaign()
+                        Actions.pop()
                     }} />
                 </ScrollView>
             </View>
