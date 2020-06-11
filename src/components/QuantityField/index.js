@@ -17,7 +17,7 @@ export default class QuantityField extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            quantityValue: 1
+            quantityValue: "1"
         }
     }
 
@@ -25,32 +25,32 @@ export default class QuantityField extends Component {
     }
 
     render() {
-        if(this.props.isVarientQuantityView){
-       return(
-        <View style={{paddingTop:20,paddingLeft:20,paddingRight:20}}>
-        <CardView 
-        cardElevation={8}
-        cardMaxElevation={8}
-        corderOverlap={false}
-      >
-        <View style={{ flexDirection: 'row', backgroundColor: colorConstant.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-        <View style>
-        <Text style={{ paddingTop:5,color: colorConstant.BLACK_COLOR,fontSize:16,position:'absolute' }}>{this.props.title}
-        </Text>
-        </View>
-        <View style={{ flex:1,justifyContent: 'center', alignItems: 'center' }}>
-        {this.renderQuantityView()}
-        </View>
-        <TouchableOpacity onPress={() => this.props.onButtonPressed()}>
-        <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
-        </TouchableOpacity>
-         </View>
-        </CardView>
-        </View>
-        
-       );
+        if (this.props.isVarientQuantityView) {
+            return (
+                <View style={{ paddingTop: 20, paddingLeft: 20, paddingRight: 20 }}>
+                    <CardView
+                        cardElevation={8}
+                        cardMaxElevation={8}
+                        corderOverlap={false}
+                    >
+                        <View style={{ flexDirection: 'row', backgroundColor: colorConstant.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
+                            <View style>
+                                <Text style={{ paddingTop: 5, color: colorConstant.BLACK_COLOR, fontSize: 16, position: 'absolute' }}>{this.props.title}
+                                </Text>
+                            </View>
+                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                {this.renderQuantityView()}
+                            </View>
+                            <TouchableOpacity onPress={() => this.props.onButtonPressed()}>
+                                <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
+                            </TouchableOpacity>
+                        </View>
+                    </CardView>
+                </View>
+
+            );
         }
-        else{
+        else {
             return (
                 <View
                     style={quantityStyle.containerStyle}>
@@ -66,23 +66,28 @@ export default class QuantityField extends Component {
         return (
             <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 {this.renderMinusView()}
-                <View style={{ height: 32, width: 60,borderWidth:1,borderColor: colorConstant.SANT_BLUE_COLOR, justifyContent: 'center', alignItems: 'center' }}>
-                    <TextInput 
-                    numeric value
-                    keyboardType={'numeric'}
-                    onChangeText={quantityValue=>this.changeQtyValue(quantityValue)}
-                    style={{ fontSize: 18 }}
-                    >{this.state.quantityValue}</TextInput>
+                <View style={{ height: 32, width: 60, borderWidth: 1, borderColor: colorConstant.SANT_BLUE_COLOR, justifyContent: 'center', alignItems: 'center' }}>
+                    <TextInput
+                        underlineColorAndroid="transparent"
+                        keyboardType={'numeric'}
+                        style={{ fontSize: 18, paddingTop: 0, paddingBottom: 0, textAlign:'center' }}
+                        onChangeText={quantityValue => this.changeQtyValue(quantityValue)}
+                        maxLength={4}
+                        defaultValue={1}
+                        value={this.state.quantityValue}
+                        onSubmitEditing={event => {
+                        }}
+                    />
                 </View>
                 {this.renderPlusView()}
             </View>
         )
     }
 
-    changeQtyValue(quantityValue){
+    changeQtyValue(quantityValue) {
         if (quantityValue > 0) {
             this.setState({
-                quantityValue: quantityValue 
+                quantityValue: quantityValue
             })
             this.props.updatedQuantity(quantityValue);
         }

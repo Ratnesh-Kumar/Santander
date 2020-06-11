@@ -10,7 +10,7 @@ const header = {
   containerStyle:{
     width:constants.SCREEN_WIDTH-40,
     backgroundColor:colorConstants.WHITE_COLOR,
-    height:60,
+    height:50,
     //borderColor:colorConstants.GREY_BORDER_COLOR,
     //borderWidth:2,
     //borderRadius:2,
@@ -23,7 +23,7 @@ const header = {
   containerStyleWithBorder:{
     width:constants.SCREEN_WIDTH-40,
     backgroundColor:colorConstants.WHITE_COLOR,
-    height:60,
+    height:50,
     borderColor:colorConstants.GREY_BORDER_COLOR,
     borderWidth:2,
     borderRadius:2,
