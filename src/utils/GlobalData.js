@@ -23,9 +23,14 @@ var descriptionCampaign = "";
 var quantityCampaign = 1;
 var categoriesCampaign = "";
 var variantsCampaign = "";
-var priceCampaign=0;
-var salesPriceCampaign =0;
-var imagePathCampaign ="";
+var priceCampaign = 0;
+var salesPriceCampaign = 0;
+var imagePathCampaign = "";
+var s3BucketName = "";
+var s3RegsionName = "";
+var s3accessKey = "";
+var secretKey = "";
+var successActionStatus = 201;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -35,6 +40,36 @@ export class GlobalData extends Component {
         return singleInstance;
     }
 
+    setS3BucketName(bucketName) {
+        s3BucketName = bucketName;
+    }
+    getS3BucketName() {
+        return s3BucketName;
+    }
+    setS3RegionName(regionName) {
+        s3RegsionName = regionName;
+    }
+    getS3RegionName() {
+        return s3RegsionName;
+    }
+    setS3SecretKey(secretKey) {
+        secretKey = secretKey;
+    }
+    getS3SecretKey() {
+        return secretKey;
+    }
+    setS3AccessKey(accessKey) {
+        s3accessKey = accessKey;
+    }
+    getS3AccessKey() {
+        return s3accessKey;
+    }
+    setSuccessActionStatus(actionStatus) {
+        successActionStatus = actionStatus;
+    }
+    setSuccessActionStatus() {
+        return successActionStatus;
+    }
     setTitleCampaign(title) {
         titleCampaign = title;
     }
@@ -42,11 +77,10 @@ export class GlobalData extends Component {
         return titleCampaign;
     }
 
-    setImagePathCampaign(path){
-        imagePathCampaign=path;
+    setImagePathCampaign(path) {
+        imagePathCampaign = path;
     }
-    getImagePathCampaign()
-    {
+    getImagePathCampaign() {
         return imagePathCampaign;
     }
     setImageCampaign(image) {
@@ -55,16 +89,16 @@ export class GlobalData extends Component {
     getImageCampaign() {
         return imageCampaign;
     }
-    setPriceCampaign(price){
+    setPriceCampaign(price) {
         priceCampaign = price;
     }
-    getPriceCampaign(){
+    getPriceCampaign() {
         return priceCampaign;
     }
-    setSalesPriceCampaign(price){
+    setSalesPriceCampaign(price) {
         salesPriceCampaign = price;
     }
-    getSalesPriceCampaign(){
+    getSalesPriceCampaign() {
         return salesPriceCampaign;
     }
     setdescriptionCampaign(description) {

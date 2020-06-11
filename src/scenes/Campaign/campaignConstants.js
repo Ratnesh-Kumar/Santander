@@ -11,4 +11,7 @@ export const PUBLISH_INSTAGRAM = "Instagram";
 export const PUBLISH_PINTEREST = "Pinterest";
 export const PUBLISH_TEXT_SMS = "TextSms";
 export const PUBLISH_WHATSAPP = "Whatsapp";
+export const S3_UPLOAD_FOLDER = "uploads/";
+export const S3_SUCCESS_ACTION_STATUS = 201;
+
 

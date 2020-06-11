@@ -17,15 +17,7 @@ var colorConstant = require('../../config/colorConstant')
 import ImagePicker from "react-native-image-picker";
 import { RNS3 } from 'react-native-aws3';
 var imageFile = {}
-
-const options = {
-  keyPrefix: "uploads/",
-  bucket: "ecomimagebucket",
-  region: "us-west-2",
-  accessKey: "",
-  secretKey: "",
-  successActionStatus: 201
-}
+var options = {}
 
 export default class CampaignScreen extends BaseComponent {
 
@@ -311,8 +303,17 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
+  initializeOptions() {
+    options.keyPrefix = compaignConstants.S3_UPLOAD_FOLDER;
+    options.bucket = globalData.getS3BucketName();
+    options.region = globalData.getS3RegionName();
+    options.accessKey = globalData.getS3AccessKey();
+    options.secretKey = globalData.getS3SecretKey();
+    options.successActionStatus = compaignConstants.S3_SUCCESS_ACTION_STATUS;
+  }
 
   pickImageHandler = () => {
+    this.initializeOptions();
     ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
