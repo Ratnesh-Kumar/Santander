@@ -107,12 +107,9 @@ export default class BaseComponent extends Component {
   getBusinessId(response) {
     if (this.isValidArray(response.properties)) {
       let shopDetail = response.properties[0];
-      console.log("############# createShop shopDetail : " + JSON.stringify(shopDetail));
       if (this.isValidString(shopDetail)) {
         let shopValue = shopDetail.value;
-        console.log("############# createShop shopValue : " + JSON.stringify(shopValue));
         let businessId = shopValue.businessSettings.businessId;
-        console.log("############# createShop businessId : " + JSON.stringify(businessId));
         return businessId;
       }
     }
