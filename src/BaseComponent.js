@@ -89,7 +89,6 @@ export default class BaseComponent extends Component {
       "locale": "en_us"
     }
     var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, createShopBody);
-    console.log("############# createShop responseData  : " + JSON.stringify(responseData));
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
       if (this.isValidString(businessId)) {
@@ -100,7 +99,6 @@ export default class BaseComponent extends Component {
         globalData.setBusinessId(businessId)
         console.log("############# createShop businessId : " + businessId);
         let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
-        console.log("############# createShop isDataSave : " + JSON.stringify(isDataSave));
       }
 
     }
@@ -134,11 +132,9 @@ export default class BaseComponent extends Component {
     return new Promise(function (resolve, reject) {
       try {
         AsyncStorage.getItem(key).then((result) => {
-          console.log("######## getAsyncData asyncData : " + result)
           resolve(result)
         })
       } catch (error) {
-        console.log("######## getAsyncData error : " + JSON.stringify(error))
         resolve(undefined)
       }
     });

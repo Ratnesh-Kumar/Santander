@@ -31,9 +31,9 @@ export default class RegisterView extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            username: 'abc31@yopmail.com',
-            password: 'Tester@123',
-            confirmPass: 'Tester@123',
+            username: '',
+            password: '',
+            confirmPass: '',
             phone: '',
             showPass: true,
             passPress: false,
@@ -121,7 +121,6 @@ export default class RegisterView extends BaseComponent {
             let businessObject = await this.getAsyncData(constants.ASYNC_BUSINESS_ID)
             var responseData = await fetchIdentityPOST(constants.USER_REGISTRATION_URL, bodyData)
             if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-                console.log("########### status message" + responseData.statusMessage);
                 if (responseData.statusMessage == constants.USER_REGISTERED_STATUS) {
                     this.saveUserInfo(responseData);
                     this.handlerBusinessId(businessObject)
@@ -145,9 +144,7 @@ export default class RegisterView extends BaseComponent {
           }
           
         }
-        console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
         if (!this.isValidString(globalData.getBusinessId())) {
-          console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
           this.createShop()
         }
       }
@@ -300,9 +297,7 @@ export default class RegisterView extends BaseComponent {
         console.log('check')
         if (this.isValidString(this.state.username)) {
             var responseData = await fetchJsonGET(constants.CHECKING_EMAIL_URL + "/" + this.state.username);
-            console.log("############ satus message " + responseData.statusMessage);
             if (responseData.statusMessage == constants.CHECKING_EMAIL_URL_STATUS) {
-                console.log("############ satus message " + responseData.statusMessage);
                 this.emailOnBlur();
             }
             else {
