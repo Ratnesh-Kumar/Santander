@@ -50,8 +50,8 @@ export default class ManageProducts extends BaseComponent {
 
   async getProductList(){
       this.renderActivityIndicatorShow() 
-      //let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
-      let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
+      let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
+      //let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
       console.log("############# responseData : "+JSON.stringify(responseData))
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
         if (responseData.statusMessage == constants.SUCCESS_STATUS) {
@@ -82,7 +82,7 @@ export default class ManageProducts extends BaseComponent {
         }}/>
         <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
-        <View style={{ margin: 10,flex:1 }}>
+        <View style={{ margin: 10}}>
           {this.renderFlatList()}
         </View>
       </View>
@@ -92,7 +92,7 @@ export default class ManageProducts extends BaseComponent {
   renderFlatList() {
     if(this.isValidArray(this.state.productArr)){
       return (
-        <View style={{flex:1}}>
+        <View >
           <FlatList
             data={this.state.productArr}
             renderItem={({ item, index }) => this.renderItemView(item, index)}
@@ -104,7 +104,7 @@ export default class ManageProducts extends BaseComponent {
     }
     else{
       return (
-        <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+        <View style={{alignItems:'center',justifyContent:'center'}}>
           <Text style={productStyle.emptyNoProducttext}>{strings('productScreen.errorNoProductFound')}</Text>
         </View>
       )
