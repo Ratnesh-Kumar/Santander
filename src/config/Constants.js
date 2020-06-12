@@ -37,19 +37,27 @@ export const DEVICE_LOCALE = RNLocalize.getLocales()[0].languageTag;
 export const BASE_URL = "http://3.135.192.164";
 export const IDENTITY_SERVICE_PORT =":8096";
 export const PARTY_SERVICE_PORT =":8094";
+export const PRODUCT_SERVICE_PORT =":8093";
 export const BASE_IDENTITY_SERVICE_URL = BASE_URL+IDENTITY_SERVICE_PORT;
 export const BASE_PARTY_SERVICE_URL = BASE_URL+PARTY_SERVICE_PORT;
+export const BASE_PRODUCT_SERVICE_URL = BASE_URL+PRODUCT_SERVICE_PORT;
 export const USER_REGISTRATION_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users";
 export const USER_LOGIN_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users/login";
-export const USER_REGISTERED_STATUS = "Registered";
 export const USER_RESET_PASSWORD_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users/forgotpassword";
-export const USER_RESET_PASSWORD_STATUS="OK";
-export const USER_LOGIN_STATUS = "Login Success";
 export const CHECKING_EMAIL_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users";
-export const CHECKING_EMAIL_URL_STATUS="OK";
+export const GET_PRODUCT_LIST = BASE_PRODUCT_SERVICE_URL+"/v1/product?businessId=";
 
 //Party Shop API Url
-
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
+
+
+// API Constants
+export const CHECKING_EMAIL_URL_STATUS="OK";
+export const USER_RESET_PASSWORD_STATUS="OK";
+export const USER_LOGIN_STATUS = "Login Success";
+export const USER_REGISTERED_STATUS = "Registered";
 export const CREATE_SHOP_STATUS = "Success";
 
+
+//Async const
+export const ASYNC_BUSINESS_ID = "async_business_id"

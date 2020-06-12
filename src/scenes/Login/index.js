@@ -49,8 +49,8 @@ export default class LoginView extends BaseComponent {
     this.state = {
       showPass: true,
       press: false,
-      username: '',
-      password: '',
+      username: 'abc31@yopmail.com',
+      password: 'Tester@123',
       isTouchIdSupported: false,
       isFaceIdSupported: false,
       googleUserInfo: '',
@@ -178,11 +178,14 @@ export default class LoginView extends BaseComponent {
     if (this.checkForLoginFormValidation()) {
       this.renderActivityIndicatorShow()
       let bodyData = this.getLoginBodyData()
+
+      let businessObject = await this.getAsyncData(constants.ASYNC_BUSINESS_ID)
       var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
-      console.log("################ login responseData : " + JSON.stringify(responseData))
+
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
         if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
           this.saveUserInfo(responseData);
+          this.handlerBusinessId(businessObject)
           Actions.tabbar();
         }
         else {
@@ -192,7 +195,22 @@ export default class LoginView extends BaseComponent {
       this.renderActivityIndicatorHide()
     }
     else {
-      this.renderDialogModal(strings('loginScreen.Info'),strings('loginScreen.ValidInformation'));
+      this.renderDialogModal(strings('loginScreen.Info'), strings('loginScreen.ValidInformation'));
+    }
+  }
+
+  handlerBusinessId(businessObject) {
+    if (this.isValidString(businessObject)) {
+      businessObject = JSON.parse(businessObject)
+      if(businessObject.username == globalData.getUserInfo().username){
+        globalData.setBusinessId(businessObject.businessId)
+      }
+      
+    }
+    console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
+    if (!this.isValidString(globalData.getBusinessId())) {
+      console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
+      this.createShop()
     }
   }
   getLoginBodyData() {

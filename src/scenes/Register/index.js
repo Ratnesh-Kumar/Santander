@@ -18,6 +18,8 @@ import AppButton from '../../components/AppButton'
 import { ActionSheet } from 'native-base';
 import { fetchJsonGET } from '../../services/FetchData';
 import { fetchIdentityPOST } from '../../services/FetchData';
+import GlobalData from '../../utils/GlobalData'
+var globalData = new GlobalData()
 var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 var registerConstant = require('./RegisterConstants.js');
@@ -29,9 +31,9 @@ export default class RegisterView extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
-            password: '',
-            confirmPass: '',
+            username: 'abc31@yopmail.com',
+            password: 'Tester@123',
+            confirmPass: 'Tester@123',
             phone: '',
             showPass: true,
             passPress: false,
@@ -47,7 +49,7 @@ export default class RegisterView extends BaseComponent {
             isValidPassword: false,
             isValidConfirmPassword: false,
             errorEmail: '',
-            alreadyRegisered:false
+            alreadyRegisered: false
         }
         this.isCheckedEmailExist = this.isCheckedEmailExist.bind(this);
     }
@@ -113,17 +115,19 @@ export default class RegisterView extends BaseComponent {
 
     async fetchService() {
         Keyboard.dismiss()
-        if (this.isValidRegistrationForm()) {
+        if (!this.isValidRegistrationForm()) {
             this.renderActivityIndicatorShow()
             let bodyData = this.getBodyData()
+            let businessObject = await this.getAsyncData(constants.ASYNC_BUSINESS_ID)
             var responseData = await fetchIdentityPOST(constants.USER_REGISTRATION_URL, bodyData)
             if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
                 console.log("########### status message" + responseData.statusMessage);
                 if (responseData.statusMessage == constants.USER_REGISTERED_STATUS) {
                     this.saveUserInfo(responseData);
+                    this.handlerBusinessId(businessObject)
                     Actions.registerCreateCampaign();
                 }
-                else{
+                else {
                     this.renderDialogModal(strings('registerScreen.Info'), responseData.statusMessage)
                 }
             }
@@ -132,6 +136,21 @@ export default class RegisterView extends BaseComponent {
             this.renderDialogModal(strings('registerScreen.Info'), strings('registerScreen.ValidInformation'))
         }
     }
+
+    handlerBusinessId(businessObject) {
+        if (this.isValidString(businessObject)) {
+          businessObject = JSON.parse(businessObject)
+          if(businessObject.username == globalData.getUserInfo().username){
+            globalData.setBusinessId(businessObject.businessId)
+          }
+          
+        }
+        console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
+        if (!this.isValidString(globalData.getBusinessId())) {
+          console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
+          this.createShop()
+        }
+      }
 
     getBodyData() {
         let locale = constants.DEVICE_LOCALE.replace("-", "_").toLocaleLowerCase()
@@ -265,14 +284,14 @@ export default class RegisterView extends BaseComponent {
             this.setState(
                 {
                     errorEmail: strings('registerScreen.AlreadyRegisteredError'),
-                    alreadyRegisered:true
+                    alreadyRegisered: true
                 }
             )
         }
         else {
             this.setState({
                 errorEmail: "",
-                alreadyRegisered:false
+                alreadyRegisered: false
             })
         }
     }
@@ -286,10 +305,10 @@ export default class RegisterView extends BaseComponent {
                 console.log("############ satus message " + responseData.statusMessage);
                 this.emailOnBlur();
             }
-            else{
+            else {
                 this.setState({
                     errorEmail: "",
-                    alreadyRegisered:false
+                    alreadyRegisered: false
                 })
             }
         }
@@ -315,7 +334,7 @@ export default class RegisterView extends BaseComponent {
                             autoCapitalize={'none'}
                             onChangeText={username => this.setState({ username, errorEmail: '' })}
                             returnKeyType={'next'}
-                            onBlur1={()=>this.isCheckedEmailExist() }
+                            onBlur1={() => this.isCheckedEmailExist()}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={registerStyle.input}
@@ -323,7 +342,7 @@ export default class RegisterView extends BaseComponent {
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             errorColor={'#B30000'}
                             value={this.state.username}
-                  
+
                             textInputName={this.state.username}
                             errorText={strings('registerScreen.UserTextInputError')}
                             underlineHeight={2}
@@ -331,8 +350,8 @@ export default class RegisterView extends BaseComponent {
                             isValidUserName={(flag) => { this.setState({ isValidUserName: flag }); console.log("################### isValidUserName : " + flag) }}
                             onSubmitEditing={(event) => {
                                 setTimeout(() => {
-                                this.refs.passwordInput.focus();
-                            }, 600);
+                                    this.refs.passwordInput.focus();
+                                }, 600);
                                 this.isCheckedEmailExist();
                             }}
 

@@ -22,6 +22,7 @@ import GlobalData from '../../utils/GlobalData';
 import CommonFunctions from '../../utils/CommonFunctions';
 import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
+import {fetchProductGET} from '../../services/FetchData';
 var productConstants = require('./productConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
@@ -33,6 +34,13 @@ export default class ManageProducts extends BaseComponent {
     this.state = {
       searchText: ''
     };
+  }
+
+  async componentDidMount(){
+    console.log("############### globalData.getBusinessId() : "+globalData.getBusinessId())
+    console.log("###################### url : "+constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f")
+    let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
+    console.log("############# responseData : "+JSON.stringify(responseData))
   }
 
 

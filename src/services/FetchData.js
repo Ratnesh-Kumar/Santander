@@ -1,4 +1,9 @@
 //const URI = 'https://jsonplaceholder.typicode.com/users';
+
+import { AsyncStorage } from 'react-native';
+import GlobalData from '../utils/GlobalData';
+var globalData = new GlobalData();
+
 const IDENTITY_POST_HEADER = {
   "Content-Type": "application/json;charset=utf-8",
   "Accept": "application/json",
@@ -12,20 +17,24 @@ const PARTY_POST_HEADER = {
   "SAN.AppSecret": "a847fc1b-632a-4dbf-8fac-4ed55c722c3d"
 }
 
-function fetchJsonGET(url) {
+function getPartyPostHeader() {
+  return {
+    "Content-Type": "application/json;charset=utf-8",
+    "Accept": "application/json",
+    "SAN.AppId": "SAN.digitalShop",
+    "SAN.AppSecret": "a847fc1b-632a-4dbf-8fac-4ed55c722c3d",
+    "SAN.Key": globalData.getUserInfo().key,
+    "SAN.Id": globalData.getUserInfo().username
+  }
+}
+
+function fetchProductGET(url) {
+  console.log("############ fetchProductGET url : "+url)
+  console.log("############ fetchProductGET postHeader : "+JSON.stringify(getPartyPostHeader()))
   return new Promise(function (resolve, reject) {
     fetch(url, {
       method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'SAN.AppId': 'SAN.digitalShop',
-        'SAN.AppSecret': '4d9100df-8187-406e-836f-721d04767874',
-        'Content-Type': 'application/json',
-        'Connection': 'keep-alive',
-        'Accept-Language': 'en;q=1',
-        'Accept-Encoding': 'application/json',
-        'Pragma': 'no-cache',
-      },
+      headers: getPartyPostHeader(),
     })
       .then((response) => response.json())
       .then((responseData) => {
@@ -69,7 +78,7 @@ function fetchPartyPOST(urlString, bodyData) {
     fetch(urlString, {
       method: "POST",
       timeout: 2000,
-      headers: PARTY_POST_HEADER,
+      headers: getPartyPostHeader(),
       body: JSON.stringify(bodyData),
     })
       .then((response) => response.json())
@@ -88,8 +97,35 @@ function fetchPartyPOST(urlString, bodyData) {
   )
 }
 
+function fetchProductPOST(urlString, bodyData) {
+  return new Promise(function (resolve, reject) {
+    fetch(urlString, {
+      method: "POST",
+      timeout: 2000,
+      headers: this.getPartyPostHeader(),
+      body: JSON.stringify(bodyData),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        error.message = "Unable to communicate with server.";
+        console.log('There has been a problem with your fetch operation: fetchPartyPOST');
+
+        resolve(error.message);
+        reject(() => {
+        });
+      }).done();
+  }
+  )
+}
+
+
+
 export {
-  fetchJsonGET,
+  fetchProductGET,
   fetchPartyPOST,
-  fetchIdentityPOST
+  fetchIdentityPOST,
+  fetchProductPOST
 };
