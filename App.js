@@ -1,8 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, { Component } from 'react';
-import { Router, Scene, ActionConst } from 'react-native-router-flux';
+import { Router, Scene, ActionConst, Reducer, Actions } from 'react-native-router-flux';
 import splashscreen from './src/scenes/Splash';
-
 import {
   GoogleAnalyticsTracker,
   GoogleAnalyticsSettings,
@@ -76,7 +75,7 @@ export default class App extends Component {
   render() {
     return (
       // <Provider /*store={store}*/>
-      <Router hideNavBar={true}>
+      <Router hideNavBar={true} createReducer={reducerCreate}>
         <Scene key="root" hideNavBar>
           <Scene key="splash" component={splashscreen} initial={true} title="splash" duration={0} />
           <Scene key="login" type={ActionConst.RESET} component={LoginScreen} title="login" duration={0} />
@@ -111,15 +110,15 @@ export default class App extends Component {
           <Scene key="createCampaignShare" component={CreateCampaignShare} title="Terms" hideNavBar />
           <Scene key="manageCampaign" component={ManageCampaign} title="Manage Campaign" hideNavBar />
           <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar />
-          <Scene key="campaignVarient" component={VarientDetail} title="Varient Detail" hideNavBar/>
+          <Scene key="campaignVarient" component={VarientDetail} title="Varient Detail" hideNavBar />
         </Scene>
 
         <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
-        {/* <Scene key="favourit" component={FavouriteScreen} title="Blue" hideNavBar /> */}
+          {/* <Scene key="favourit" component={FavouriteScreen} title="Blue" hideNavBar /> */}
           <Scene key="manageProduct" component={ManageProduct} title="Blue" hideNavBar />
           <Scene key="addProduct" component={AddProduct} title="Blue" hideNavBar />
           <Scene key="addProductCategory" component={AddProductCategory} title="Terms" hideNavBar />
-          <Scene key="productVarient" component={ProductVarientDetail} title="Varient Detail" hideNavBar/>
+          <Scene key="productVarient" component={ProductVarientDetail} title="Varient Detail" hideNavBar />
         </Scene>
 
         <Scene key="orderTab" title="Order" icon={TabIcon} resource={require('./src/public/images/tab_shop.png')} hideNavBar>
@@ -160,3 +159,136 @@ export default class App extends Component {
     );
   }
 }
+/*Method Name   : inTabMenu
+    Description     : Check Clicked Action key present in Tab
+    Author          : Avnish Chuchra*/
+const inTabMenu = (state) => {
+  // console.log(JSON.stringify(state))
+  if (state && state.routes && state.routes.length > 1) {
+    if (state.routes[1].routeName == "tabbar") {
+      return true
+    }
+  }
+  return false;
+};
+
+const getChildLength = (state) => {
+  if (state && state.children && state.children.length > 0) {
+    return state.children.length;
+  }
+  return false;
+}
+/*Method Name   : getChildName
+    Description     : Get childe scene of tabbar
+    Author          : Avnish Chuchra*/
+const getChildName = (state, index) => {
+  if (state && state.children && state.children.length > 0) {
+    return state.children[index].name;
+  }
+  return false;
+}
+
+
+/*Method Name   : getActiveTabName
+    Description     : Get open tabbar Name
+    Author          : Avnish Chuchra*/
+const getActiveTabName = (state) => {
+  if (state && state.routes && state.routes.length > 1) {
+    let route = state.routes[1]
+
+    if (route.routeName == "tabbar") {
+      let routeIndex = route.index;
+      let routeItem = route.routes[routeIndex];
+      return routeItem.key
+    }
+    return undefined;
+  }
+};
+/*Method Name   : getTabTreeIndex
+    Description     : Get index of open class on tabbar
+    Author          : Avnish Chuchra*/
+const getTabTreeIndex = (state) => {
+  if (state && state.children && state.children.length > 0) {
+    let cbase, parent = null, base = state;
+    while (cbase = base.children) {
+      parent = base;
+      base = cbase[base.index];
+    }
+    return parent.index;
+  }
+  return undefined;
+};
+
+
+/*Method Name   : getTabRootName
+    Description     : Get Root class of tabbar
+    Author          : Avnish Chuchra*/
+const getTabRootName = (state) => {
+  if (state && state.children && state.children.length > 0) {
+    let cbase, parent = null, base = state;
+    while (cbase = base.children) {
+      parent = base;
+      base = cbase[base.index];
+    }
+    return parent.children[0].name;
+  }
+  return undefined;
+};
+/*Method Name   : reducerCreate
+    Description     : Created to handle Tab Actions
+    Author          : Avnish Chuchra*/
+const reducerCreate = params => {
+  const defaultReducer = Reducer(params);
+  return (state, action) => {
+    // this part makes sure that when a menuIcon is pressed AND you are already in that menu tree,
+    // it goes back to the root of that tree
+    if (action.type === ActionConst.REFRESH) {
+      // console.log('action.key######################$$$$$$$$$$$$$' + action.type);
+      let activeTabName = getActiveTabName(state);
+      action.key = activeTabName;
+    }
+    // if (inTabMenu(state)) {
+    //   let activeTabName = getActiveTabName(state);
+    //   console.log("--------------- activeTabName : " + activeTabName)
+    //   console.log("--------------- action.key : " + action.key)
+    //   // We only want to reset if the icon is tapped when we're already in the view
+    //   if (activeTabName === action.key) {
+    //     // if we're already at root, do not do anything.
+    //     let rootName = getTabRootName(state);
+    //     if (getTabTreeIndex(state) === 0) {
+    //       if (action.key == 'productTab') {
+    //         Actions.manageProduct({ type: 'reset' });
+    //       }
+    //       return state;
+    //     }
+    //     // snap to root.
+    //     if (rootName) {
+    //       previousState = state;
+    //       return defaultReducer(state, { key: rootName });
+    //     }
+    //   }
+    //   else if (inTabMenu(state)) {
+    //     let activeTabName = getActiveTabName(state);
+    //     let rootName = getTabRootName(state);
+    //     if (action.key == 'homeTab') {
+    //       // globalData.setselectedTab(1);
+    //       Actions.home({ type: 'reset' });
+    //     } else if (action.key == 'productTab') {
+    //       // globalData.setselectedTab(2);
+    //       Actions.manageProduct({ type: 'reset' });
+    //     } else if (action.key == 'orderTab') {
+    //       // globalData.setselectedTab(3);
+    //       Actions.myOrder({ type: 'reset', refresh: {} });
+    //     } else if (action.key == 'shopTab') {
+    //       // globalData.setselectedTab(4);
+    //       Actions.shop({ type: 'reset' });
+    //     }
+    //   }
+    // } else if (action.type === ActionConst.PUSH) {
+    //   let activeTabName = getActiveTabName(state);
+    //   action.key = changeActionKey(activeTabName, action.key)
+    // }
+    previousState = state;
+    return defaultReducer(state, action);
+  }
+};

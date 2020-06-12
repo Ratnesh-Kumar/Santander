@@ -9,6 +9,7 @@ import * as RNLocalize from "react-native-localize";
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
+import AddProductCategory from './addProductCategory';
 import AppButton from '../../components/AppButton';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
@@ -28,6 +29,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
             varientBarcodeValue:""
 
         }
+        console.log("############### productVariant : "+props.variantName)
     }
 
     async componentDidMount() {
@@ -44,12 +46,26 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                     {this.renderCostView()}
                     {this.renderSkuAndBarcode()}
                     <AppButton isLightTheme={false} buttonText={strings('variantCampaign.saveButtonText')} onButtonPressed={() => {
-                        Alert.alert('varient Detail Saved')
-                        Actions.pop()
+                        this.saveVariant()
                     }} />
                 </ScrollView>
             </View>
         )
+    }
+
+    saveVariant(){
+      let variantInfo = {
+        "name": this.props.variantName,
+        "price": this.state.varientPriceValue,
+        "barcode": this.state.varientBarcodeValue,
+        "skuNumber": this.state.varientSku
+      }
+      // Alert.alert('varient Detail Saved')
+      Actions.pop({refresh:{variantInfo: variantInfo}});
+setTimeout(()=>{
+  Actions.refresh({variantInfo: variantInfo})
+},100)
+      // Actions.refresh({variantInfo: variantInfo})
     }
 
     renderCostView() {

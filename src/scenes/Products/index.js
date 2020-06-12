@@ -23,6 +23,8 @@ import CommonFunctions from '../../utils/CommonFunctions';
 import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
 import {fetchProductGET} from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
 var productConstants = require('./productConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
@@ -32,15 +34,52 @@ export default class ManageProducts extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-      searchText: ''
+      searchText: '',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
+      productArr:[]
     };
   }
 
-  async componentDidMount(){
-    console.log("############### globalData.getBusinessId() : "+globalData.getBusinessId())
-    console.log("###################### url : "+constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f")
-    let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
-    console.log("############# responseData : "+JSON.stringify(responseData))
+  componentDidUpdate(){
+  }
+
+  componentWillMount(){
+  }
+
+  componentWillReceiveProps(props){
+    if(props.isRefresh){
+      this.getProductList()
+    }
+  }
+
+  componentDidMount(){
+    this.getProductList()
+  }
+
+  async getProductList(){
+      this.renderActivityIndicatorShow() 
+      let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
+      //let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
+      if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
+        if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+          if (this.isValidArray(responseData.properties)) {
+            let productArr = responseData.properties[0].value;
+            this.setState({productArr})
+          }
+          else{
+            this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
+          }
+        }
+        else{
+          this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
+        }
+      }
+     
+      this.renderActivityIndicatorHide()
   }
 
 
@@ -48,12 +87,13 @@ export default class ManageProducts extends BaseComponent {
   render() {
     return (
       <View style={productStyle.container}>
+        {this.renderModal()}
         <FloatingButton onFloatButtonPressed={()=>{
           Actions.addProduct()
         }}/>
         <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
-        <View style={{ margin: 10 }}>
+        <View style={{ margin: 10}}>
           {this.renderFlatList()}
         </View>
       </View>
@@ -61,16 +101,26 @@ export default class ManageProducts extends BaseComponent {
   }
 
   renderFlatList() {
-    return (
-      <View>
-        <FlatList
-          data={productConstants.PRODUCT_ARRAY}
-          renderItem={({ item, index }) => this.renderItemView(item, index)}
-          keyExtractor={item => item.id}
-          contentContainerStyle={{ paddingBottom: 10 }}
-        />
-      </View>
-    )
+    if(this.isValidArray(this.state.productArr)){
+      return (
+        <View >
+          <FlatList
+            data={this.state.productArr}
+            renderItem={({ item, index }) => this.renderItemView(item, index)}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{ paddingBottom: 10 }}
+          />
+        </View>
+      )
+    }
+    else{
+      return (
+        <View style={{alignItems:'center',justifyContent:'center',marginTop:constants.SCREEN_HEIGHT/3}}>
+          <Text style={productStyle.emptyNoProducttext}>{strings('productScreen.errorNoProductFound')}</Text>
+        </View>
+      )
+    }
+    
   }
 
   renderItemView = (item, index) => {
@@ -80,22 +130,24 @@ export default class ManageProducts extends BaseComponent {
           <View style={{ padding: 10 }}>
 
             <CardView
-              cardElevation={8}
-              cardMaxElevation={8}
+              cardElevation={(Platform.OS === 'ios') ? 3 : 8}
+              cardMaxElevation={(Platform.OS === 'ios') ? 3 : 8}
               corderOverlap={false}
             >
               <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-                <View>
-                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productCategory}</Text>
+                <View style={{flex:1}}>
+                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productFamily}</Text>
                   <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, marginLeft: 20 }}>{"Quantity - " + item.productQuantity}</Text>
-                </View>
-                <View style={{ justifyContent: 'center' }}>
+                <View style={{flex:1,flexDirection:'row'}}>
+                <View style={{ flex: 1, justifyContent: 'center', }}>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Quantity - " + item.defaultDetails.productPrice}</Text>                
+                  </View>
+                <View style={{ justifyContent: 'center', }}>
 
                   <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
 
+                </View>
                 </View>
               </View>
 
@@ -104,6 +156,43 @@ export default class ManageProducts extends BaseComponent {
           </View>
         </TouchableOpacity>
       )
+    }
+  }
+
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
     }
   }
 }

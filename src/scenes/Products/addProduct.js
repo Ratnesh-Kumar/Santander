@@ -76,7 +76,7 @@ export default class AddProductScreen extends BaseComponent {
             {this.renderSkuAndBarcode()}
             {this.renderWeighView()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-              Actions.addProductCategory();
+             this.handleAddProduct()
             }} />
           </ScrollView>
         </View>
@@ -84,6 +84,31 @@ export default class AddProductScreen extends BaseComponent {
     );
   }
 
+  handleAddProduct(){
+    if(this.isValidString(this.state.productName)){
+      let productDetails= {
+        "productName": this.state.productName,
+        "productDescription" : this.state.productDescription,
+        "productPrice": this.state.productPriceValue,
+        "barcode": this.state.productBarcodeValue,
+        "skuNumber": this.state.productSkuValue,
+        "weight": this.state.productWeight,
+        "weightUnit": "lb"
+      }
+      Actions.addProductCategory({ productDetails: productDetails});
+    }else{
+      this.showAlert();
+    }
+  }
+  showAlert() {
+    Alert.alert(
+      'Info',
+      'Please provide valid product name.',
+      [
+        { text: 'OK' },
+      ]
+    );
+  }
 
 
   renderWeighView() {
@@ -110,32 +135,32 @@ export default class AddProductScreen extends BaseComponent {
               </View>
             </View>
           </View>
-          <View style={productStyle.priceInputWrapper}>
-            <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
-              <TextInputMaterial
-                blurText={this.state.productSaleValue}
-                refsValue={'productWeight'}
-                ref={'productWeight'}
-                label={strings('productScreen.productWeightInputText')}
-                maxLength={100}
-                autoCapitalize={'none'}
-                onChangeText={text => { this.setState({ productWeight: text }) }}
-                returnKeyType={'next'}
-                autoCorrect={false}
-                isLoginScreen={false}
-                keyboardType={'number-pad'}
-                style={productStyle.input}
-                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                value={this.state.productSaleValue}
-                textInputName={this.state.productSaleValue}
-                // errorText={strings('createCampaign.campaignNameErrorText')}
-                underlineHeight={2}
-                onSubmitEditing={event => {
-                  this.refs.productCost.focus();
-                }}
-              />
-            </View>
+        </View>
+        <View style={productStyle.priceInputWrapper}>
+          <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
+            <TextInputMaterial
+              blurText={this.state.productWeight}
+              refsValue={'productWeight'}
+              ref={'productWeight'}
+              label={strings('productScreen.productWeightInputText')}
+              maxLength={100}
+              autoCapitalize={'none'}
+              onChangeText={text => { this.setState({ productWeight: text }) }}
+              returnKeyType={'next'}
+              autoCorrect={false}
+              isLoginScreen={false}
+              keyboardType={'number'}
+              style={productStyle.input}
+              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+              value={this.state.productWeight}
+              textInputName={this.state.productWeight}
+              // errorText={strings('createCampaign.campaignNameErrorText')}
+              underlineHeight={2}
+              onSubmitEditing={event => {
+                this.refs.productCost.focus();
+              }}
+            />
           </View>
         </View>
       </View>

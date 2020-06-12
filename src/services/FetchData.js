@@ -28,9 +28,36 @@ function getPartyPostHeader() {
   }
 }
 
+function fetchJsonGET(url) {
+  return new Promise(function (resolve, reject) {
+    fetch(url, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'SAN.AppId': 'SAN.digitalShop',
+        'SAN.AppSecret': '4d9100df-8187-406e-836f-721d04767874',
+        'Content-Type': 'application/json',
+        'Connection': 'keep-alive',
+        'Accept-Language': 'en;q=1',
+        'Accept-Encoding': 'application/json',
+        'Pragma': 'no-cache',
+      },
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        console.log('There has been a problem with your fetch operation: fetchJsonGET' + error.message);
+        reject(error.message);
+      }).done();
+  }
+  )
+}
+
 function fetchProductGET(url) {
-  console.log("############ fetchProductGET url : "+url)
-  console.log("############ fetchProductGET postHeader : "+JSON.stringify(getPartyPostHeader()))
+  console.log("############ fetchProductGET url : " + url)
+  console.log("############ fetchProductGET postHeader : " + JSON.stringify(getPartyPostHeader()))
   return new Promise(function (resolve, reject) {
     fetch(url, {
       method: "GET",
@@ -102,7 +129,7 @@ function fetchProductPOST(urlString, bodyData) {
     fetch(urlString, {
       method: "POST",
       timeout: 2000,
-      headers: this.getPartyPostHeader(),
+      headers: getPartyPostHeader(),
       body: JSON.stringify(bodyData),
     })
       .then((response) => response.json())
@@ -124,6 +151,7 @@ function fetchProductPOST(urlString, bodyData) {
 
 
 export {
+  fetchJsonGET,
   fetchProductGET,
   fetchPartyPOST,
   fetchIdentityPOST,

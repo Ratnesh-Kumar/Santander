@@ -57,6 +57,7 @@ export const USER_RESET_PASSWORD_STATUS="OK";
 export const USER_LOGIN_STATUS = "Login Success";
 export const USER_REGISTERED_STATUS = "Registered";
 export const CREATE_SHOP_STATUS = "Success";
+export const SUCCESS_STATUS = "Success";
 
 
 //Async const
