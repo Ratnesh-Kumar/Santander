@@ -33,6 +33,7 @@ var s3RegsionName = "";
 var s3accessKey = "";
 var s3SecretKey = "";
 var successActionStatus = 201;
+var businessId = '';
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -261,12 +262,17 @@ export class GlobalData extends Component {
     setSalesTax(Tax) {
         salesTax = Tax;
     }
-    
+
     getSalesTax() {
         return salesTax;
     }
 
-
+    setBusinessId(text) {
+        businessId = text;
+    }
+    getBusinessId() {
+        return businessId;
+    }
 }
 
 export default GlobalData;

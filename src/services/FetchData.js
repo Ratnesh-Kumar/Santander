@@ -1,4 +1,9 @@
 //const URI = 'https://jsonplaceholder.typicode.com/users';
+
+import { AsyncStorage } from 'react-native';
+import GlobalData from '../utils/GlobalData';
+var globalData = new GlobalData();
+
 const IDENTITY_POST_HEADER = {
   "Content-Type": "application/json;charset=utf-8",
   "Accept": "application/json",
@@ -10,6 +15,17 @@ const PARTY_POST_HEADER = {
   "Accept": "application/json",
   "SAN.AppId": "SAN.digitalShop",
   "SAN.AppSecret": "a847fc1b-632a-4dbf-8fac-4ed55c722c3d"
+}
+
+function getPartyPostHeader() {
+  return {
+    "Content-Type": "application/json;charset=utf-8",
+    "Accept": "application/json",
+    "SAN.AppId": "SAN.digitalShop",
+    "SAN.AppSecret": "a847fc1b-632a-4dbf-8fac-4ed55c722c3d",
+    "SAN.Key": globalData.getUserInfo().key,
+    "SAN.Id": globalData.getUserInfo().username
+  }
 }
 
 function fetchJsonGET(url) {
@@ -69,6 +85,30 @@ function fetchPartyPOST(urlString, bodyData) {
     fetch(urlString, {
       method: "POST",
       timeout: 2000,
+      headers: getPartyPostHeader(),
+      body: JSON.stringify(bodyData),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        error.message = "Unable to communicate with server.";
+        console.log('There has been a problem with your fetch operation: fetchPartyPOST');
+
+        resolve(error.message);
+        reject(() => {
+        });
+      }).done();
+  }
+  )
+}
+
+function fetchProductPOST(urlString, bodyData) {
+  return new Promise(function (resolve, reject) {
+    fetch(urlString, {
+      method: "POST",
+      timeout: 2000,
       headers: PARTY_POST_HEADER,
       body: JSON.stringify(bodyData),
     })
@@ -88,8 +128,11 @@ function fetchPartyPOST(urlString, bodyData) {
   )
 }
 
+
+
 export {
   fetchJsonGET,
   fetchPartyPOST,
-  fetchIdentityPOST
+  fetchIdentityPOST,
+  fetchProductPOST
 };
