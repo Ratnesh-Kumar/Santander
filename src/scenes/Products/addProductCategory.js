@@ -41,7 +41,6 @@ export default class AddProductCategory extends BaseComponent {
       dialogModalTitle: '',
     }
     productDetails = props.productDetails;
-    console.log("########### productDetails : " + JSON.stringify(productDetails))
   }
 
   renderActivityIndicatorShow() {
@@ -82,7 +81,6 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   UNSAFE_componentWillReceiveProps(props) {
-    console.log("############## variantInfo = :" + JSON.stringify(props.variantInfo))
     if (this.isValidString(props.variantInfo)) {
       productVariantArray.push(props.variantInfo);
     }
@@ -127,9 +125,12 @@ export default class AddProductCategory extends BaseComponent {
     productDetails.productCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
     productDetails.productCategoryTags = this.getCategoryTags()
     var requestBody = this.getRequestBody(productDetails, variantList);
-    console.log("############ requestBody : " + JSON.stringify(requestBody))
     var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST+globalData.getBusinessId(), requestBody)
-    console.log("############### responeData : "+JSON.stringify(responseData))
+    if(this.isValidString(responseData) && this.isValidString(responseData.statusMessage)){
+      if(responseData.statusMessage === constants.SUCCESS_STATUS){
+        this.showAlert()
+      }
+    }
     this.renderActivityIndicatorHide()
   }
 
@@ -151,9 +152,14 @@ export default class AddProductCategory extends BaseComponent {
   showAlert() {
     Alert.alert(
       'Information',
-      'Your product successfully saved.',
+      'Your product successfully added.',
       [
-        { text: 'OK', onPress: () => Actions.manageProduct() },
+        { text: 'OK', onPress: () => {
+          Actions.manageProduct({type: 'reset'});
+          setTimeout(()=>{
+            Actions.refresh({isRefresh: true});
+          }, 100)
+        } },
       ]
     );
   }

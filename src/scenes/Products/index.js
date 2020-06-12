@@ -44,6 +44,18 @@ export default class ManageProducts extends BaseComponent {
     };
   }
 
+  componentDidUpdate(){
+  }
+
+  componentWillMount(){
+  }
+
+  componentWillReceiveProps(props){
+    if(props.isRefresh){
+      this.getProductList()
+    }
+  }
+
   componentDidMount(){
     this.getProductList()
   }
@@ -52,7 +64,6 @@ export default class ManageProducts extends BaseComponent {
       this.renderActivityIndicatorShow() 
       let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
       //let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
-      console.log("############# responseData : "+JSON.stringify(responseData))
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
         if (responseData.statusMessage == constants.SUCCESS_STATUS) {
           if (this.isValidArray(responseData.properties)) {
