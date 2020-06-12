@@ -78,7 +78,6 @@ export default class ManageProducts extends BaseComponent {
       <View style={productStyle.container}>
         {this.renderModal()}
         <FloatingButton onFloatButtonPressed={()=>{
-          alert('HELLO')
           Actions.addProduct()
         }}/>
         <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
