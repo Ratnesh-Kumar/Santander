@@ -97,6 +97,9 @@ export default (styles = StyleSheet.create({
   createShopButtonText: {
     color: colorConstants.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
   },
+  emptyNoProducttext:{
+    color: colorConstants.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
+  },
   cardViewStyle: {
     backgroundColor: colorConstants.WHITE_COLOR,
     marginTop: 50,

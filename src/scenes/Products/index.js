@@ -63,7 +63,7 @@ export default class ManageProducts extends BaseComponent {
   async getProductList(){
       this.renderActivityIndicatorShow() 
       let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
-      // let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
+      //let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
         if (responseData.statusMessage == constants.SUCCESS_STATUS) {
           if (this.isValidArray(responseData.properties)) {
@@ -75,7 +75,7 @@ export default class ManageProducts extends BaseComponent {
           }
         }
         else{
-          this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorPleasetryAgain'));
+          this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
         }
       }
      
@@ -93,7 +93,7 @@ export default class ManageProducts extends BaseComponent {
         }}/>
         <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
-        <View style={{ margin: 10 }}>
+        <View style={{ margin: 10}}>
           {this.renderFlatList()}
         </View>
       </View>
@@ -101,16 +101,26 @@ export default class ManageProducts extends BaseComponent {
   }
 
   renderFlatList() {
-    return (
-      <View>
-        <FlatList
-          data={this.state.productArr}
-          renderItem={({ item, index }) => this.renderItemView(item, index)}
-          keyExtractor={item => item.id}
-          contentContainerStyle={{ paddingBottom: 10 }}
-        />
-      </View>
-    )
+    if(this.isValidArray(this.state.productArr)){
+      return (
+        <View >
+          <FlatList
+            data={this.state.productArr}
+            renderItem={({ item, index }) => this.renderItemView(item, index)}
+            keyExtractor={item => item.id}
+            contentContainerStyle={{ paddingBottom: 10 }}
+          />
+        </View>
+      )
+    }
+    else{
+      return (
+        <View style={{alignItems:'center',justifyContent:'center',marginTop:constants.SCREEN_HEIGHT/3}}>
+          <Text style={productStyle.emptyNoProducttext}>{strings('productScreen.errorNoProductFound')}</Text>
+        </View>
+      )
+    }
+    
   }
 
   renderItemView = (item, index) => {
@@ -120,22 +130,24 @@ export default class ManageProducts extends BaseComponent {
           <View style={{ padding: 10 }}>
 
             <CardView
-              cardElevation={8}
-              cardMaxElevation={8}
+              cardElevation={(Platform.OS === 'ios') ? 3 : 8}
+              cardMaxElevation={(Platform.OS === 'ios') ? 3 : 8}
               corderOverlap={false}
             >
               <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-                <View>
+                <View style={{flex:1}}>
                   <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productFamily}</Text>
                   <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, textAlign: 'right', alignSelf: 'stretch',marginRight:10}}>{"Quantity - " + item.defaultDetails.productPrice}</Text>
-                </View>
-                <View style={{ justifyContent: 'center' }}>
+                <View style={{flex:1,flexDirection:'row'}}>
+                <View style={{ flex: 1, justifyContent: 'center', }}>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Quantity - " + item.defaultDetails.productPrice}</Text>                
+                  </View>
+                <View style={{ justifyContent: 'center', }}>
 
                   <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
 
+                </View>
                 </View>
               </View>
 
