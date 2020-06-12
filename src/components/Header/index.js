@@ -30,7 +30,7 @@ export default class Header extends Component {
     }
 
     async fetchData() {
-        let responseData = await fetchJsonGET(constants.API_URL);
+        // let responseData = await fetchJsonGET(constants.API_URL);
         console.log("############### responseData")
     }
 

@@ -128,7 +128,7 @@ export default class AddProductCategory extends BaseComponent {
     productDetails.productCategoryTags = this.getCategoryTags()
     var requestBody = this.getRequestBody(productDetails, variantList);
     console.log("############ requestBody : " + JSON.stringify(requestBody))
-    var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f", requestBody)
+    var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST+globalData.getBusinessId(), requestBody)
     console.log("############### responeData : "+JSON.stringify(responseData))
     this.renderActivityIndicatorHide()
   }

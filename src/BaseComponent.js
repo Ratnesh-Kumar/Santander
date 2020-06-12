@@ -97,6 +97,8 @@ export default class BaseComponent extends Component {
           "businessId": businessId,
           "username": globalData.getUserInfo().username
         }
+        globalData.setBusinessId(businessId)
+        console.log("############# createShop businessId : " + businessId);
         let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
         console.log("############# createShop isDataSave : " + JSON.stringify(isDataSave));
       }
