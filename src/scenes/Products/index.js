@@ -104,7 +104,7 @@ export default class ManageProducts extends BaseComponent {
     }
     else{
       return (
-        <View style={{alignItems:'center',justifyContent:'center'}}>
+        <View style={{alignItems:'center',justifyContent:'center',marginTop:constants.SCREEN_HEIGHT/3}}>
           <Text style={productStyle.emptyNoProducttext}>{strings('productScreen.errorNoProductFound')}</Text>
         </View>
       )
@@ -119,22 +119,24 @@ export default class ManageProducts extends BaseComponent {
           <View style={{ padding: 10 }}>
 
             <CardView
-              cardElevation={8}
-              cardMaxElevation={8}
+              cardElevation={(Platform.OS === 'ios') ? 3 : 8}
+              cardMaxElevation={(Platform.OS === 'ios') ? 3 : 8}
               corderOverlap={false}
             >
               <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-                <View>
+                <View style={{flex:1}}>
                   <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productFamily}</Text>
                   <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, textAlign: 'right', alignSelf: 'stretch',marginRight:10}}>{"Quantity - " + item.defaultDetails.productPrice}</Text>                
+                <View style={{flex:1,flexDirection:'row'}}>
+                <View style={{ flex: 1, justifyContent: 'center', }}>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Quantity - " + item.defaultDetails.productPrice}</Text>                
                   </View>
-                <View style={{ justifyContent: 'center' }}>
+                <View style={{ justifyContent: 'center', }}>
 
                   <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
 
+                </View>
                 </View>
               </View>
 
