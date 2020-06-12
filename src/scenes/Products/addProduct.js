@@ -76,7 +76,7 @@ export default class AddProductScreen extends BaseComponent {
             {this.renderSkuAndBarcode()}
             {this.renderWeighView()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-              Actions.addProductCategory();
+             this.handleAddProduct()
             }} />
           </ScrollView>
         </View>
@@ -84,6 +84,31 @@ export default class AddProductScreen extends BaseComponent {
     );
   }
 
+  handleAddProduct(){
+    if(this.isValidString(this.state.productName)){
+      let productDetails= {
+        "productName": this.state.productName,
+        "productDescription" : this.state.productDescription,
+        "productPrice": this.state.productPriceValue,
+        "barcode": this.state.productBarcodeValue,
+        "skuNumber": this.state.productSkuValue,
+        "weight": this.state.productWeight,
+        "weightUnit": "lb"
+      }
+      Actions.addProductCategory({ productDetails: productDetails});
+    }else{
+      this.showAlert();
+    }
+  }
+  showAlert() {
+    Alert.alert(
+      'Info',
+      'Please provide valid product name.',
+      [
+        { text: 'OK' },
+      ]
+    );
+  }
 
 
   renderWeighView() {
@@ -113,7 +138,7 @@ export default class AddProductScreen extends BaseComponent {
         <View style={productStyle.priceInputWrapper}>
           <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
             <TextInputMaterial
-              blurText={this.state.productSaleValue}
+              blurText={this.state.productWeight}
               refsValue={'productWeight'}
               ref={'productWeight'}
               label={strings('productScreen.productWeightInputText')}
@@ -123,12 +148,12 @@ export default class AddProductScreen extends BaseComponent {
               returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
-              keyboardType={'number-pad'}
+              keyboardType={'number'}
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.productSaleValue}
-              textInputName={this.state.productSaleValue}
+              value={this.state.productWeight}
+              textInputName={this.state.productWeight}
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
               onSubmitEditing={event => {

@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import productStyle from './productStyle';
 import { strings } from '../../i18next/i18n';
 import Stepper from '../../components/Stepper/stepper'
+import {fetchProductPOST, fetchPartyPOST} from '../../services/FetchData';
 import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
 import GlobalData from '../../utils/GlobalData';
@@ -14,12 +15,15 @@ import AppButton from '../../components/AppButton'
 import SwitchTextInput from '../../components/SwitchTextInput';
 import QuantityField from '../../components/QuantityField';
 import CreateTagView from './productTagView'
-import { color } from 'react-native-reanimated';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var productConstants = require('./productConstants')
 var colorConstant = require('../../config/colorConstant')
-export default class CampaignScreen extends BaseComponent {
+var productDetails = "";
+var productVariantArray = [];
+export default class AddProductCategory extends BaseComponent {
 
   constructor(props) {
     super(props)
@@ -28,8 +32,59 @@ export default class CampaignScreen extends BaseComponent {
       productQuantity: 1,
       variantsList: [],
       categoryList: [],
-      salesTaxType:'',
-      salesTax:''
+      salesTaxType: '',
+      salesTax: '',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
+    }
+    productDetails = props.productDetails;
+    console.log("########### productDetails : " + JSON.stringify(productDetails))
+  }
+
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(props) {
+    console.log("############## variantInfo = :" + JSON.stringify(props.variantInfo))
+    if (this.isValidString(props.variantInfo)) {
+      productVariantArray.push(props.variantInfo);
     }
   }
 
@@ -39,8 +94,9 @@ export default class CampaignScreen extends BaseComponent {
   render() {
     return (
       <View style={productStyle.container}>
+        {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
-        <Stepper count={2} currentCount={2}/>
+        <Stepper count={2} currentCount={2} />
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
 
           <View>
@@ -53,12 +109,45 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('productScreen.saveButtonText')} onButtonPressed={() => {
-            this.showAlert()
+            this.addProduct()
           }} />
         </ScrollView>
       </View>
     );
   }
+
+  async addProduct() {
+    let variantList = [];
+    this.renderActivityIndicatorShow()
+    if (this.isValidArray(productVariantArray)) {
+      for (let i = 0; i < productVariantArray.length; i++) {
+        variantList.push(this.getProductVariant(productVariantArray[i]))
+      }
+    }
+    productDetails.productCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
+    productDetails.productCategoryTags = this.getCategoryTags()
+    var requestBody = this.getRequestBody(productDetails, variantList);
+    console.log("############ requestBody : " + JSON.stringify(requestBody))
+    var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f", requestBody)
+    console.log("############### responeData : "+JSON.stringify(responseData))
+    this.renderActivityIndicatorHide()
+  }
+
+  getCategoryTags() {
+    let categoryTags = "";
+    if (this.isValidArray(this.state.categoryList)) {
+      for (let i = 0; i < this.state.categoryList.length; i++) {
+        let value = this.state.categoryList[i];
+        if (!this.isValidString(categoryTags)) {
+          categoryTags = categoryTags + ", " + value
+        } else {
+          categoryTags = value;
+        }
+      }
+    }
+    return categoryTags;
+  }
+
   showAlert() {
     Alert.alert(
       'Information',
@@ -83,30 +172,34 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
+  productVariant() {
+    return productVariant;
+  }
+
   renderQuantityView(quantityTitle) {
     return (
-      <QuantityField isVarientQuantityView={true} 
-      onButtonPressed={() => {
-        Actions.productVarient()
-      }}
-      title={quantityTitle} updatedQuantity={(quantity) => {
-        this.setState({
-          productQuantity: quantity
-        })
-      }} />
+      <QuantityField isVarientQuantityView={true}
+        onButtonPressed={() => {
+          Actions.productVarient({ "variantName": quantityTitle })
+        }}
+        title={quantityTitle} updatedQuantity={(quantity) => {
+          this.setState({
+            productQuantity: quantity
+          })
+        }} />
     )
   }
 
   renderCategoryTagView() {
     return (
-      <View style={{ paddingLeft:10,paddingTop: 20 }}>
-      <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
+      <View style={{ paddingLeft: 10, paddingTop: 20 }}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => { globalData.setCategoriesCampaign(categoryList); this.setState({ categoryList: categoryList }) }} />
         <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
         <View style={{ paddingTop: 20 }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.variantsTagText')}</Text>
-        <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
-      </View>
+          <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
+        </View>
       </View>
     )
   }
@@ -135,17 +228,17 @@ export default class CampaignScreen extends BaseComponent {
       </View>
     );
   }
-  renderSalesTaxView(){
-    return(
-        <View style={{ marginTop: 10 }}>
+  renderSalesTaxView() {
+    return (
+      <View style={{ marginTop: 10 }}>
         {this.renderSwitchFields(strings('createCampaignCategories.salesTaxSwitchText'))}
       </View>
-     
+
     )
   }
 
-  renderSalesTaxInput(){
-    return(
+  renderSalesTaxInput() {
+    return (
       <View
         style={productStyle.priceTextInputContainer}>
         <View style={productStyle.priceInputWrapper}>
@@ -184,7 +277,7 @@ export default class CampaignScreen extends BaseComponent {
               label={strings('createCampaignCategories.salesTaxTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => {  this.setState({ salesTax: text }) }}
+              onChangeText={text => { this.setState({ salesTax: text }) }}
               returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
@@ -205,25 +298,65 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
+  getRequestBody(data, variantList) {
+    return {
+      "sourcePrimaryKey": "1234567890-P1",
+      "productName": data.productName,
+      "productFamily": data.productCategory,
+      "productDescription": data.productDescription,
+      "salesDescription": "",
+      "incomeAccount": "Sales",
+      "costAccount": "Cost of Goods",
+      "vendor": "Vendor 1",
+      "tags": data.productCategoryTags,
+      "defaultDetails": {
+        "variantName": "default",
+        "optionalValues": "none",
+        "productPrice": data.productPrice,
+        "barCode": data.barcode,
+        "SKU": data.skuNumber,
+        "weight": data.weight,
+        "weightUnit": data.weightUnit,
+        "trackInventory": true,
+        "reorderLevel": 10,
+        "leadTime": 20,
+        "quantityOnHand": 50,
+        "asOfDate": "12-Jan-2019",
+        "requiredShipping": true,
+        "taxable": true,
+        "taxCode": "CA",
+        "displayProduct": true,
+        "comparePrice": 0
+      },
+      "productVariants": variantList,
+      "extensions": []
+    }
+  }
+
+  getProductVariant(variant) {
+    return {
+      "variantId": "",
+      "variantName": variant.name,
+      "optionalValues": "",
+      "productPrice": variant.price,
+      "barCode": variant.barcode,
+      "SKU": variant.skuNumber,
+      "weight": 0,
+      "weightUnit": "",
+      "trackInventory": true,
+      "reorderLevel": 10,
+      "leadTime": 20,
+      "quantityOnHand": 50,
+      "asOfDate": "12-Jan-2019",
+      "requiredShipping": true,
+      "taxable": true,
+      "taxCode": "CA",
+      "displayProduct": true,
+      "comparePrice": 0
+    }
+  }
+
 }
 
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-  },
-  viewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    flex: 1
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-    color: 'black',
-  },
-});
 

@@ -102,7 +102,7 @@ function fetchProductPOST(urlString, bodyData) {
     fetch(urlString, {
       method: "POST",
       timeout: 2000,
-      headers: this.getPartyPostHeader(),
+      headers: getPartyPostHeader(),
       body: JSON.stringify(bodyData),
     })
       .then((response) => response.json())
