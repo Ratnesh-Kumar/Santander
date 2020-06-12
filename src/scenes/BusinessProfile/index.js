@@ -5,7 +5,7 @@ import {
     Text,
     KeyboardAvoidingView,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -40,7 +40,7 @@ export default class BusinessProfileView extends Component {
             buisnesstaxId: '',
             websiteUrl: '',
             fbUrl: '',
-            yelpUrl: ''
+            yelpUrl: '',
 
         }
     }
@@ -435,12 +435,11 @@ export default class BusinessProfileView extends Component {
     renderPhone() {
         return (
             <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
-
-
                 <View style={businessStyle.inputWrapperPhoneCode}>
                     <View style={businessStyle.validFormSecondFieldView}>
-                       <View style={{borderWidth:1,height:55,alignItems:"center"}}>
-                       <Text style={{paddingLeft:20,paddingTop:20,fontSize:16}}>+1</Text>
+                       <View style={{borderWidth:1,height:55,alignItems:"center",flexDirection:'row'}}>
+                           <Image style={{marginLeft:15,width:27,height:16}} source={require('../../public/images/icon_flag.png')}></Image>
+                       <Text style={{paddingLeft:20,fontSize:16}}>+1</Text>
                        </View>
                     </View>
                 </View>
