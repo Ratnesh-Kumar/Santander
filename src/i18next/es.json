@@ -195,7 +195,10 @@
     "saveButtonText": "Salvar",
     "weightTitle": "Peso",
     "productWeightInputText": "Peso",
-    "productWeightText": "lb"
+    "productWeightText": "lb",
+    "errorNoProductFound":"Ningún producto encontrado",
+    "errorPleasetryAgain":"¡Error! Inténtalo de nuevo",
+    "Info": "Informacion"
   },
   "variantCampaign":{
     "title":"Detalle variante",
