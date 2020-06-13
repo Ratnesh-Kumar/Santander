@@ -5,7 +5,7 @@ import {
     Text,
     KeyboardAvoidingView,
     TouchableOpacity,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -38,6 +38,9 @@ export default class BusinessProfileView extends Component {
             phone: '',
             buisnessName: '',
             buisnesstaxId: '',
+            websiteUrl: '',
+            fbUrl: '',
+            yelpUrl: '',
 
         }
     }
@@ -95,7 +98,7 @@ export default class BusinessProfileView extends Component {
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
-                                this.refs.IBAN.focus();
+                                this.refs.PhoneCode.focus();
                             }}
                         />
                     </View>
@@ -105,7 +108,7 @@ export default class BusinessProfileView extends Component {
                 {this.renderSwitchFields(strings('BuisnessProfile.IndustryTypeText'))}
                 {this.renderSwitchFields(strings('BuisnessProfile.CountryText'))}
 
-                <View style={businessStyle.inputWrapper}>
+                {/* <View style={businessStyle.inputWrapper}>
                     <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.iban}
@@ -131,7 +134,7 @@ export default class BusinessProfileView extends Component {
                             }}
                         />
                     </View>
-                </View>
+                </View> */}
 
 
 
@@ -146,9 +149,9 @@ export default class BusinessProfileView extends Component {
                 behavior="height"
                 style={businessStyle.validAddressViewContainer}>
                 <View style={businessStyle.inputWrapper}>
-                    {/* <View style={businessStyle.validFormSubView}>
-                        <Text style={{ fontSize: 18 }}>Representative Information</Text>
-                    </View> */}
+                    <View style={businessStyle.validFormSubView}>
+                        <Text style={{ fontSize: 18 }}>Address</Text>
+                    </View>
 
                     {/* <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
@@ -225,30 +228,7 @@ export default class BusinessProfileView extends Component {
                             }}
                         />
                     </View> */}
-                     <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.url}
-                            refsValue={"url"}
-                            ref={"url"}
-                            label={strings('BuisnessProfile.URLTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={url => this.setState({ url })}
-                            returnKeyType={'done'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.url}
-                            textInputName={this.state.url}
-                            underlineHeight={2}
-                            keyboardType="email-address"
-                            onSubmitEditing={event => {
-                                this.refs.Address.focus();
-                            }}
-                        />
-                    </View>
+
                     <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.address}
@@ -367,7 +347,7 @@ export default class BusinessProfileView extends Component {
                             errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
                             underlineHeight={2}
                             onSubmitEditing={event => {
-                                
+
                             }}
                         />
                     </View>
@@ -455,33 +435,12 @@ export default class BusinessProfileView extends Component {
     renderPhone() {
         return (
             <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
-
-
                 <View style={businessStyle.inputWrapperPhoneCode}>
                     <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.phone}
-                            refsValue={'PhoneCode'}
-                            ref={'PhoneCode'}
-                            label={strings('BuisnessProfile.PhoneCodeTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={phone => this.setState({ phone })}
-                            returnKeyType={'done'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.phone}
-                            textInputName={this.state.phone}
-                            errorText={strings('BuisnessProfile.PhoneTextInputError')}
-                            underlineHeight={2}
-                            keyboardType="email-address"
-                            onSubmitEditing={event => {
-                                this.refs.Phone.focus();
-                            }}
-                        />
+                       <View style={{borderWidth:1,height:55,alignItems:"center",flexDirection:'row'}}>
+                           <Image style={{marginLeft:15,width:27,height:16}} source={require('../../public/images/icon_flag.png')}></Image>
+                       <Text style={{paddingLeft:20,fontSize:16}}>+1</Text>
+                       </View>
                     </View>
                 </View>
                 <View style={businessStyle.inputWrapperPhone}>
@@ -506,7 +465,7 @@ export default class BusinessProfileView extends Component {
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
-                                this.refs.url.focus();
+                                this.refs.website.focus();
                             }}
                         />
                     </View>
@@ -515,6 +474,88 @@ export default class BusinessProfileView extends Component {
         )
     }
 
+    renderLinks() {
+        return (
+            <KeyboardAvoidingView
+                behavior="height"
+                style={businessStyle.validAddressViewContainer}>
+                <View style={businessStyle.inputWrapper}>
+                    <View style={businessStyle.validFormSecondFieldView}>
+                        <TextInputMaterial
+                            blurText={this.state.websiteUrl}
+                            refsValue={"website"}
+                            ref={"website"}
+                            label={strings('BuisnessProfile.WebsiteTextInput')}
+                            maxLength={100}
+                            autoCapitalize={'none'}
+                            onChangeText={websiteUrl => this.setState({ websiteUrl })}
+                            returnKeyType={'done'}
+                            autoCorrect={false}
+                            isLoginScreen={false}
+                            style={businessStyle.input}
+                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            value={this.state.websiteUrl}
+                            textInputName={this.state.websiteUrl}
+                            underlineHeight={2}
+                            keyboardType="email-address"
+                            onSubmitEditing={event => {
+                                this.refs.fbUrl.focus();
+                            }}
+                        />
+                    </View>
+                    <View style={businessStyle.validFormSecondFieldView}>
+                        <TextInputMaterial
+                            blurText={this.state.yelpUrl}
+                            refsValue={"yelpUrl"}
+                            ref={"yelpUrl"}
+                            label={strings('BuisnessProfile.FbTextInput')}
+                            maxLength={100}
+                            autoCapitalize={'none'}
+                            onChangeText={yelpUrl => this.setState({ yelpUrl })}
+                            returnKeyType={'done'}
+                            autoCorrect={false}
+                            isLoginScreen={false}
+                            style={businessStyle.input}
+                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            value={this.state.yelpUrl}
+                            textInputName={this.state.yelpUrl}
+                            underlineHeight={2}
+                            keyboardType="email-address"
+                            onSubmitEditing={event => {
+                                this.refs.Address.focus();
+                            }}
+                        />
+                    </View>
+                    <View style={businessStyle.validFormSecondFieldView}>
+                        <TextInputMaterial
+                            blurText={this.state.fbUrl}
+                            refsValue={"fbUrl"}
+                            ref={"fbUrl"}
+                            label={strings('BuisnessProfile.YelpTextInput')}
+                            maxLength={100}
+                            autoCapitalize={'none'}
+                            onChangeText={fbUrl => this.setState({ fbUrl })}
+                            returnKeyType={'done'}
+                            autoCorrect={false}
+                            isLoginScreen={false}
+                            style={businessStyle.input}
+                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            value={this.state.fbUrl}
+                            textInputName={this.state.fbUrl}
+                            underlineHeight={2}
+                            keyboardType="email-address"
+                            onSubmitEditing={event => {
+                                this.refs.Address.focus();
+                            }}
+                        />
+                    </View>
+                </View>
+            </KeyboardAvoidingView>
+        )
+    }
 
 
 
@@ -526,6 +567,7 @@ export default class BusinessProfileView extends Component {
                     <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginBottom: 20 }}>
                         {this.renderBuisnessForm()}
                         {this.renderPhone()}
+                        {this.renderLinks()}
                         {this.renderAddressForm()}
                         {this.renderPinCode()}
                         {/* {this.renderDocuments()}

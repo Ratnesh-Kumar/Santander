@@ -150,7 +150,10 @@
     "BuisnessNameTextInput": "Nombre del Negocio",
     "BuisnessNameTextInputError": "Por favor ingrese su nombre comercial",
     "BuisnessTaxIdTextInput": "ID de impuesto comercial",
-    "BuisnessTaxIdTextInputError": "Ingrese su ID de impuesto de negocios"
+    "BuisnessTaxIdTextInputError": "Ingrese su ID de impuesto de negocios",
+    "WebsiteTextInput": "Sitio web",
+    "FbTextInput": "Página de FB",
+    "YelpTextInput": "Gañido"
   },
   "shopSettingsScreen": {
     "ShopSettingsTitle": "Configuraciones de la tienda",
@@ -163,9 +166,9 @@
     "paymentDropDownText": "Procesador de pagos",
     "taxInventory": "Inventario fiscal",
     "taxOnSales": "Impuesto sobre ventas",
-    "taxTypeInput": "Tipo de impuesto (GST, IVA, etc.)",
+    "taxTypeInput": "Tipo de impuesto",
     "flatTaxSwitch": "Impuesto fijo",
-    "taxRateInput": "Tasa de impuesto(%)",
+    "taxRateInput": "%",
     "showDiscountSwitch": "Mostrar descuento",
     "shipProductsSwitch": "Enviar productos",
     "shippingCompany": "Compañía de envios",
@@ -200,8 +203,8 @@
     "errorPleasetryAgain":"¡Error! Inténtalo de nuevo",
     "Info": "Informacion"
   },
-  "variantCampaign":{
-    "title":"Detalle variante",
-    "saveButtonText":"Salvar"
+  "variantCampaign": {
+    "title": "Detalle variante",
+    "saveButtonText": "Salvar"
   }
 }
