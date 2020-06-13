@@ -91,7 +91,7 @@ export default class AddProductCategory extends BaseComponent {
   }
   render() {
     return (
-      <View style={productStyle.container}>
+      <KeyboardAvoidingView style={productStyle.container} behavior="padding"   keyboardVerticalOffset={20}>
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
         <Stepper count={2} currentCount={2} />
@@ -110,7 +110,7 @@ export default class AddProductCategory extends BaseComponent {
             this.addProduct()
           }} />
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 

@@ -64,11 +64,11 @@ export default class AddProductScreen extends BaseComponent {
 
   render() {
     return (
-      <View style={productStyle.container}>
+      <KeyboardAvoidingView style={productStyle.container} behavior="padding"   keyboardVerticalOffset={20}>
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
         <Stepper count={2} currentCount={1} />
         <View>
-          <ScrollView keyboardShouldPersistTaps={'always'} style={productStyle.scrollViewStyle}>
+          <ScrollView ref='scrollView' keyboardShouldPersistTaps={'always'} style={productStyle.scrollViewStyle}>
             {this.renderProductName()}
             {this.createCameraView()}
             {this.renderPriceView()}
@@ -80,8 +80,8 @@ export default class AddProductScreen extends BaseComponent {
             }} />
           </ScrollView>
         </View>
-      </View>
-    );
+        </KeyboardAvoidingView>
+        );
   }
 
   handleAddProduct(){
@@ -146,7 +146,7 @@ export default class AddProductScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { this.setState({ productWeight: text }) }}
-              returnKeyType={'next'}
+              returnKeyType={'done'}
               autoCorrect={false}
               isLoginScreen={false}
               keyboardType={'number'}
@@ -158,7 +158,8 @@ export default class AddProductScreen extends BaseComponent {
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
               onSubmitEditing={event => {
-                this.refs.productCost.focus();
+                Keyboard.dismiss()
+                //this.refs.productCost.focus();
               }}
             />
           </View>
@@ -453,6 +454,7 @@ export default class AddProductScreen extends BaseComponent {
               style={{ fontSize: 16, textAlignVertical: 'top', paddingLeft: 10 }}
               multiline={true}
               maxLength={250}
+              returnKeyType={'next'}
               numberOfLines={3}
               onChangeText={text => { this.setState({ productDescription: text }) }}
               onSubmitEditing={event => {
