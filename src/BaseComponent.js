@@ -10,11 +10,20 @@ import {
 } from 'react-native-google-signin';
 var constants = require('./config/Constants');
 const SHOP_NAME = "DigiShop27"
+var productDetail="";
 export default class BaseComponent extends Component {
 
   constructor() {
     super();
 
+  }
+
+  setProductDetail(prodDetail){
+    productDetail = prodDetail;
+  }
+
+  getProductDetail(){
+    return productDetail;
   }
 
   setUserIdFlurry(userId) {

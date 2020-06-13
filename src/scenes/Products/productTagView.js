@@ -20,7 +20,7 @@ export default class ProductTag extends BaseComponent {
         super(props)
         this.state = {
             tagName: '',
-            tagNameList: []
+            tagNameList: (props.isCategoryTag) ? ((this.isValidArray(props.categoryList)) ? props.categoryList : []) : ((this.isValidArray(props.variantList)) ? props.variantList : [])
         }
     }
 
@@ -67,7 +67,7 @@ export default class ProductTag extends BaseComponent {
 
     renderInputText() {
         return (
-            <View style={{ alignItems: 'center',flexDirection:'row' }}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                 <View style={productStyle.inputWrapperSmall}>
                     <View style={productStyle.validFormSubView}>
                         <TextInputMaterial

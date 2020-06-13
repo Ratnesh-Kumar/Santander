@@ -21,15 +21,18 @@ export default class ProductVarientDetailScreen extends BaseComponent {
     constructor(props) {
         super(props)
         this.state = {
-            varientPriceValue: "",
+            varientPriceValue: (this.isValidString(props.variantDetail))? (this.isValidString(props.variantDetail.price)? props.variantDetail.price.toString(): ""): "",
             varientSaleValue: "",
-            varientCostValue:"",
+            varientCostValue:(this.isValidString(props.variantDetail))? (this.isValidString(props.variantDetail.productCost)? props.variantDetail.productCost.toString(): ""): "",
             varientProfitValue:"",
             varientSku:"",
             varientBarcodeValue:""
 
         }
-        console.log("############### productVariant : "+props.variantName)
+    }
+
+    getValidValue(value){
+
     }
 
     async componentDidMount() {
@@ -58,7 +61,8 @@ export default class ProductVarientDetailScreen extends BaseComponent {
         "name": this.props.variantName,
         "price": this.state.varientPriceValue,
         "barcode": this.state.varientBarcodeValue,
-        "skuNumber": this.state.varientSku
+        "skuNumber": this.state.varientSku,
+        "productCost": this.state.varientCostValue
       }
       // Alert.alert('varient Detail Saved')
       Actions.pop({refresh:{variantInfo: variantInfo}});
@@ -250,7 +254,7 @@ setTimeout(()=>{
                             style={productStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.varientPriceValue}
+                            value={(this.isValidString(this.state.varientPriceValue))?this.state.varientPriceValue.toString(): this.state.varientPriceValue}
                             textInputName={this.state.varientPriceValue}
                             // errorText={strings('createCampaign.priceErrorText')}
                             underlineHeight={2}

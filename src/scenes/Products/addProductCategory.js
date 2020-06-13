@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import productStyle from './productStyle';
 import { strings } from '../../i18next/i18n';
 import Stepper from '../../components/Stepper/stepper'
-import { fetchProductPOST, fetchPartyPOST } from '../../services/FetchData';
+import { fetchProductPOST, fetchPartyPOST, fetchProductPUT } from '../../services/FetchData';
 import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
 import GlobalData from '../../utils/GlobalData';
@@ -24,6 +24,8 @@ var colorConstant = require('../../config/colorConstant')
 var productDetails = "";
 var productVariantArray = [];
 var isUpdate = "";
+var fetchProductData = "";
+var productId = "";
 export default class AddProductCategory extends BaseComponent {
 
   constructor(props) {
@@ -43,6 +45,45 @@ export default class AddProductCategory extends BaseComponent {
     }
     productDetails = props.productDetails;
     isUpdate = props.isUpdate ? props.isUpdate : false
+    productId = props.productId
+    fetchProductData = this.getProductDetail();
+    if(isUpdate){
+      this.setUpdateData();
+    }
+    
+  }
+
+  setUpdateData() {
+    let data = "";
+    if (this.isValidString(fetchProductData)) {
+      if (this.isValidString(fetchProductData.tags)) {
+        let tags = [];
+        if (fetchProductData.tags.includes(",")) {
+          tags = fetchProductData.tags.split(", ")
+
+        } else {
+          tags.push(fetchProductData.tags);
+
+        }
+        this.state.categoryList = tags
+      }
+
+      if (this.isValidArray(fetchProductData.productVariants)) {
+        let productVariant = fetchProductData.productVariants;
+        for (let i = 0; i < productVariant.length; i++) {
+          let variant = productVariant[i];
+          let variantDetail = {};
+          this.state.variantsList.push(variant.variantName)
+          variantDetail.name = variant.variantName;
+          variantDetail.price = variant.productPrice;
+          variantDetail.barcode = ""
+          variantDetail.skuNumber = "";
+          variantDetail.productCost = variant.productCost
+          productVariantArray.push(variantDetail)
+        }
+      }
+    }
+    this.forceUpdate()
   }
 
   renderActivityIndicatorShow() {
@@ -84,7 +125,31 @@ export default class AddProductCategory extends BaseComponent {
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.variantInfo)) {
-      productVariantArray.push(props.variantInfo);
+      if (isUpdate) {
+        this.updateProductVariantArray(props.variantInfo);
+      } else {
+        productVariantArray.push(props.variantInfo);
+      }
+    }
+  }
+
+  updateProductVariantArray(variantInfo) {
+    let isUpdatedFlag = false;
+    if (this.isValidArray(productVariantArray) && this.isValidString(variantInfo)) {
+      for (let i = 0; i < productVariantArray.length; i++) {
+        if (productVariantArray[i].name === variantInfo.name) {
+          isUpdatedFlag = true;
+          productVariantArray[i].price = variantInfo.price;
+          productVariantArray[i].barcode = variantInfo.barcode;
+          productVariantArray[i].skuNumber = variantInfo.skuNumber;
+          productVariantArray[i].productCost = variantInfo.productCost;
+        }
+      }
+      if (!isUpdatedFlag) {
+        productVariantArray.push(variantInfo);
+      }
+    } else if(this.isValidString(variantInfo)){
+      productVariantArray.push(variantInfo);
     }
   }
 
@@ -125,25 +190,42 @@ export default class AddProductCategory extends BaseComponent {
       for (let i = 0; i < productVariantArray.length; i++) {
         variantList.push(this.getProductVariant(productVariantArray[i]))
       }
+    } else { 
+      for (let i = 0; i < this.state.variantsList.length; i++) {
+        let variantItem = {};
+        variantItem.name = this.state.variantsList[i];
+        variantItem.price = "";
+        variantItem.barcode = "";
+        variantItem.skuNumber = "";
+        variantItem.productCost = "";
+        variantList.push(this.getProductVariant(variantItem))
+      }
     }
     productDetails.productCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
-    productDetails.productCategoryTags = this.getCategoryTags()
+    productDetails.productCategoryTags = this.getCategoryTags(this.state.categoryList)
     var requestBody = this.getRequestBody(productDetails, variantList);
-    var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST + globalData.getBusinessId(), requestBody)
+    var responseData = "";
+    if (isUpdate) {
+      let productUpdateURL = constants.GET_PRODUCT_DETAIL.replace(constants.PRODUCT_ID, productId) + globalData.getBusinessId();
+      responseData = await fetchProductPUT(productUpdateURL, requestBody)
+    } else {
+      responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST + globalData.getBusinessId(), requestBody)
+    }
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+        this.setProductDetail("");
         this.showAlert()
       }
     }
     this.renderActivityIndicatorHide()
   }
 
-  getCategoryTags() {
+  getCategoryTags(categoryList) {
     let categoryTags = "";
-    if (this.isValidArray(this.state.categoryList)) {
-      for (let i = 0; i < this.state.categoryList.length; i++) {
-        let value = this.state.categoryList[i];
-        if (!this.isValidString(categoryTags)) {
+    if (this.isValidArray(categoryList)) {
+      for (let i = 0; i < categoryList.length; i++) {
+        let value = categoryList[i];
+        if (this.isValidString(categoryTags)) {
           categoryTags = categoryTags + ", " + value
         } else {
           categoryTags = value;
@@ -155,8 +237,8 @@ export default class AddProductCategory extends BaseComponent {
 
   showAlert() {
     Alert.alert(
-      'Information',
-      'Your product successfully added.',
+      'Info',
+      (isUpdate) ? 'Your product successfully updated.' : 'Your product successfully added.',
       [
         {
           text: 'OK', onPress: () => {
@@ -192,7 +274,7 @@ export default class AddProductCategory extends BaseComponent {
     return (
       <QuantityField isVarientQuantityView={true}
         onButtonPressed={() => {
-          Actions.productVarient({ "variantName": quantityTitle })
+          Actions.productVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
         }}
         title={quantityTitle} updatedQuantity={(quantity) => {
           this.setState({
@@ -202,15 +284,41 @@ export default class AddProductCategory extends BaseComponent {
     )
   }
 
+  getVariantObj(title) {
+    if (this.isValidArray(productVariantArray)) {
+      for (let i = 0; i < productVariantArray.length; i++) {
+        if (productVariantArray[i].name == title) {
+          return productVariantArray[i];
+        }
+      }
+    }
+    return "";
+  }
+
   renderCategoryTagView() {
     return (
       <View style={{ paddingLeft: 10, paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
-        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => { globalData.setCategoriesCampaign(categoryList); this.setState({ categoryList: categoryList }) }} />
+        <CreateTagView
+          labelName={strings('createCampaign.categoryTagTextInput')}
+          isCategoryTag={true}
+          categoryList={this.state.categoryList}
+          updatedList={(categoryList) => {
+            globalData.setCategoriesCampaign(categoryList);
+            this.getCategoryTags(categoryList)
+            this.setState({ categoryList: categoryList })
+          }} />
         <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
         <View style={{ paddingTop: 20 }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.variantsTagText')}</Text>
-          <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
+          <CreateTagView
+            labelName={strings('createCampaign.variantsTagTextInput')}
+            isCategoryTag={false}
+            variantList={this.state.variantsList}
+            updatedList={(variantList) => {
+              globalData.setVariantsCampaign(variantList);
+              this.setState({ variantsList: variantList })
+            }} />
         </View>
       </View>
     )

@@ -20,8 +20,8 @@ import ImagePicker from "react-native-image-picker";
 import { fetchProductGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-var isUpdate="";
-var itemId="";
+var isUpdate = "";
+var itemId = "";
 
 
 export default class AddProductScreen extends BaseComponent {
@@ -62,11 +62,13 @@ export default class AddProductScreen extends BaseComponent {
 
   async getProductData() {
     this.renderActivityIndicatorShow();
-    let responseData = await fetchProductGET(constants.GET_PRODUCT_DETAIL + itemId + "?businessId=c3438f53-4dbe-49c4-ba4d-cf4d5188901c");
+    let productDetailURL = constants.GET_PRODUCT_DETAIL.replace(constants.PRODUCT_ID, itemId) + globalData.getBusinessId();
+    let responseData = await fetchProductGET(productDetailURL);
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
         let fetchData = responseData.properties[0].value;
         this.setState({ fetchData });
+        this.setProductDetail(fetchData);
         this.setProductData(this.state.fetchData);
       }
     }
@@ -96,30 +98,21 @@ export default class AddProductScreen extends BaseComponent {
     message = '';
   }
 
-  setProductData(fetchData){
-    let productName=fetchData.productName;
-    let productDescription=fetchData.productDescription;
-    let productPriceValue= fetchData.defaultDetails.productPrice;
+  setProductData(fetchData) {
+    let productName = fetchData.productName;
+    let productDescription = fetchData.productDescription;
+    let productPriceValue = fetchData.defaultDetails.productPrice;
     let productWeight = fetchData.defaultDetails.weight;
-    let productBarcodeValue=fetchData.defaultDetails.barCode;
+    let productBarcodeValue = fetchData.defaultDetails.barCode;
     //console.log('productWeight ## '+productWeight)
-    this.setState({productName,
+    this.setState({
+      productName,
       productDescription: productDescription,
-      productPriceValue:productPriceValue+"",
-      productWeight:productWeight+"",
-      productBarcodeValue:productBarcodeValue+""
+      productPriceValue: productPriceValue + "",
+      productWeight: productWeight + "",
+      productBarcodeValue: productBarcodeValue + ""
     })
   }
-
-  // UNSAFE_componentWillUpdate = nextProps => {
-  //   this.state.refershData = nextProps.qrcodeData
-  //   console.log("################## UNSAFE_componentWillUpdate : " + nextProps.qrcodeData)
-  //   if (this.isValidString(nextProps.qrcodeData)) {
-  //     // this.setState({
-  //     //   productBarcodeValue: nextProps.qrcodeData
-  //     // })
-  //   }
-  // }
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.qrcodeData)) {
@@ -158,14 +151,34 @@ export default class AddProductScreen extends BaseComponent {
             {this.renderSkuAndBarcode()}
             {this.renderWeighView()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-              isUpdate?this.handleUpdateProduct():this.handleAddProduct()
+              this.handleAddProduct(isUpdate)
             }} />
           </ScrollView>
         </View>
       </KeyboardAvoidingView>
     );
   }
-  handleUpdateProduct(){
+  // handleUpdateProduct() {
+  //   if (this.isValidString(this.state.productName)) {
+  //     let productDetails = {
+  //       "productName": this.state.productName,
+  //       "productDescription": this.state.productDescription,
+  //       "productPrice": this.state.productPriceValue,
+  //       "barcode": this.state.productBarcodeValue,
+  //       "skuNumber": this.state.productSkuValue,
+  //       "weight": this.state.productWeight,
+  //       "weightUnit": "lb"
+  //     }
+
+  //     Actions.addProductCategory({ productDetails: productDetails, isUpdate: true });
+  //   }
+  //   else {
+  //     this.showAlert();
+  //   }
+
+  // }
+
+  handleAddProduct(isUpdate) {
     if (this.isValidString(this.state.productName)) {
       let productDetails = {
         "productName": this.state.productName,
@@ -176,27 +189,7 @@ export default class AddProductScreen extends BaseComponent {
         "weight": this.state.productWeight,
         "weightUnit": "lb"
       }
-      
-      Actions.addProductCategory({ productDetails: productDetails,isUpdate:true });
-    }
-    else {
-      this.showAlert();
-    }
-
-  }
-
-  handleAddProduct() {
-    if (this.isValidString(this.state.productName)) {
-      let productDetails = {
-        "productName": this.state.productName,
-        "productDescription": this.state.productDescription,
-        "productPrice": this.state.productPriceValue,
-        "barcode": this.state.productBarcodeValue,
-        "skuNumber": this.state.productSkuValue,
-        "weight": this.state.productWeight,
-        "weightUnit": "lb"
-      }
-      Actions.addProductCategory({ productDetails: productDetails });
+      Actions.addProductCategory({ productDetails: productDetails, isUpdate: isUpdate, productId: itemId });
     } else {
       this.showAlert();
     }

@@ -31,6 +31,15 @@ export const PRIMARY_TEXT_COLOR = "#e6e6ff";
 export const LOCALE_EN = "en";
 export const LOCALE_ES = "es";
 
+// API Constants
+export const CHECKING_EMAIL_URL_STATUS="OK";
+export const USER_RESET_PASSWORD_STATUS="OK";
+export const USER_LOGIN_STATUS = "Login Success";
+export const USER_REGISTERED_STATUS = "Registered";
+export const CREATE_SHOP_STATUS = "Success";
+export const SUCCESS_STATUS = "Success";
+export const PRODUCT_ID = "#ProductId";
+
 //API urls
 export const COUNTRY_NAME = RNLocalize.getCountry();
 export const DEVICE_LOCALE = RNLocalize.getLocales()[0].languageTag;
@@ -46,19 +55,13 @@ export const USER_LOGIN_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users/login";
 export const USER_RESET_PASSWORD_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users/forgotpassword";
 export const CHECKING_EMAIL_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users";
 export const GET_PRODUCT_LIST = BASE_PRODUCT_SERVICE_URL+"/v1/product?businessId=";
-export const GET_PRODUCT_DETAIL =BASE_PRODUCT_SERVICE_URL+"/v1/product/"
+export const GET_PRODUCT_DETAIL =BASE_PRODUCT_SERVICE_URL+"/v1/product/"+PRODUCT_ID+"?businessId=";
 
 //Party Shop API Url
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
 
 
-// API Constants
-export const CHECKING_EMAIL_URL_STATUS="OK";
-export const USER_RESET_PASSWORD_STATUS="OK";
-export const USER_LOGIN_STATUS = "Login Success";
-export const USER_REGISTERED_STATUS = "Registered";
-export const CREATE_SHOP_STATUS = "Success";
-export const SUCCESS_STATUS = "Success";
+
 
 
 //Async const

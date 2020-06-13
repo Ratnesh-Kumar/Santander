@@ -27,7 +27,6 @@ export default class StepperView extends Component {
     }
 
     renderStepper() {
-        console.log("######## count : "+this.props.count)
         if (this.props.count == 2) {
             return (
                 <View style={{ flexDirection: 'row', marginLeft: 20, marginRight: 20, marginTop: 10 }}>

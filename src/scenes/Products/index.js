@@ -44,6 +44,7 @@ export default class ManageProducts extends BaseComponent {
       dialogModalTitle: '',
       productArr:[]
     };
+    this.setProductDetail("");
   }
 
   componentDidUpdate(){
