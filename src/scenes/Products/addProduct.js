@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView ,Platform, Image, TextInput, ScrollView, Alert, TouchableOpacity, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, Image, TextInput, ScrollView, Alert, TouchableOpacity, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -17,6 +17,12 @@ var productConstants = require('./productConstants')
 var colorConstant = require('../../config/colorConstant')
 import SwitchTextInput from '../../components/SwitchTextInput';
 import ImagePicker from "react-native-image-picker";
+import { fetchProductGET } from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+var isUpdate="";
+var itemId="";
+
 
 export default class AddProductScreen extends BaseComponent {
 
@@ -35,13 +41,74 @@ export default class AddProductScreen extends BaseComponent {
       pickedImage: productConstants.CAMERA_ICON,
       isBarcodeDisplay: false,
       showImage: false,
-      productWeight:''
+      productWeight: '',
+      fetchData: '',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
 
+    }
+    itemId = props.itemId;
+    isUpdate = props.isUpdate ? props.isUpdate : false;
+  }
+
+  componentDidMount() {
+    if (isUpdate) {
+      this.getProductData();
     }
   }
 
-  async componentDidMount() {
+  async getProductData() {
+    this.renderActivityIndicatorShow();
+    let responseData = await fetchProductGET(constants.GET_PRODUCT_DETAIL + itemId + "?businessId=c3438f53-4dbe-49c4-ba4d-cf4d5188901c");
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+        let fetchData = responseData.properties[0].value;
+        this.setState({ fetchData });
+        this.setProductData(this.state.fetchData);
+      }
+    }
+    this.renderActivityIndicatorHide()
+  }
 
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  setProductData(fetchData){
+    let productName=fetchData.productName;
+    let productDescription=fetchData.productDescription;
+    let productPriceValue= fetchData.defaultDetails.productPrice;
+    let productWeight = fetchData.defaultDetails.weight;
+    let productBarcodeValue=fetchData.defaultDetails.barCode;
+    //console.log('productWeight ## '+productWeight)
+    this.setState({productName,
+      productDescription: productDescription,
+      productPriceValue:productPriceValue+"",
+      productWeight:productWeight+"",
+      productBarcodeValue:productBarcodeValue+""
+    })
   }
 
   // UNSAFE_componentWillUpdate = nextProps => {
@@ -62,11 +129,26 @@ export default class AddProductScreen extends BaseComponent {
     }
   }
 
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
+    }
+  }
+
   render() {
     return (
-      <KeyboardAvoidingView style={productStyle.container} behavior="padding"   keyboardVerticalOffset={20}>
+      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={20}>
+        {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
-        <Stepper count={2} currentCount={1}/>
+        <Stepper count={2} currentCount={1} />
         <View>
           <ScrollView ref='scrollView' keyboardShouldPersistTaps={'always'} style={productStyle.scrollViewStyle}>
             {this.renderProductName()}
@@ -76,27 +158,46 @@ export default class AddProductScreen extends BaseComponent {
             {this.renderSkuAndBarcode()}
             {this.renderWeighView()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-             this.handleAddProduct()
+              isUpdate?this.handleUpdateProduct():this.handleAddProduct()
             }} />
           </ScrollView>
         </View>
-        </KeyboardAvoidingView>
-        );
+      </KeyboardAvoidingView>
+    );
   }
-
-  handleAddProduct(){
-    if(this.isValidString(this.state.productName)){
-      let productDetails= {
+  handleUpdateProduct(){
+    if (this.isValidString(this.state.productName)) {
+      let productDetails = {
         "productName": this.state.productName,
-        "productDescription" : this.state.productDescription,
+        "productDescription": this.state.productDescription,
         "productPrice": this.state.productPriceValue,
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
         "weightUnit": "lb"
       }
-      Actions.addProductCategory({ productDetails: productDetails});
-    }else{
+      
+      Actions.addProductCategory({ productDetails: productDetails,isUpdate:true });
+    }
+    else {
+      this.showAlert();
+    }
+
+  }
+
+  handleAddProduct() {
+    if (this.isValidString(this.state.productName)) {
+      let productDetails = {
+        "productName": this.state.productName,
+        "productDescription": this.state.productDescription,
+        "productPrice": this.state.productPriceValue,
+        "barcode": this.state.productBarcodeValue,
+        "skuNumber": this.state.productSkuValue,
+        "weight": this.state.productWeight,
+        "weightUnit": "lb"
+      }
+      Actions.addProductCategory({ productDetails: productDetails });
+    } else {
       this.showAlert();
     }
   }
@@ -114,56 +215,56 @@ export default class AddProductScreen extends BaseComponent {
   renderWeighView() {
     return (
       <View>
-      <View style={{paddingTop:20,paddingLeft:20}}>
-        <Text style={{ fontSize: 20 }}>{strings('productScreen.weightTitle')}</Text>
+        <View style={{ paddingTop: 20, paddingLeft: 20 }}>
+          <Text style={{ fontSize: 20 }}>{strings('productScreen.weightTitle')}</Text>
         </View>
-      <View
-        style={productStyle.priceTextInputContainer}>
-        <View style={productStyle.priceInputWrapper}>
-          <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
-            <View
-              style={productStyle.containerStyleWithBorder}>
-              <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20,fontSize: 16 }}>
-                {strings('productScreen.productWeightText')}</Text>
+        <View
+          style={productStyle.priceTextInputContainer}>
+          <View style={productStyle.priceInputWrapper}>
+            <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
               <View
-                style={{ position: 'absolute', right: 10, top: 10 }}>
-                <Image
-                  style={{ width: 35, height: 35 }}
-                  source={require('../.././public/images/dropDown.png')}
-                />
+                style={productStyle.containerStyleWithBorder}>
+                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
+                  {strings('productScreen.productWeightText')}</Text>
+                <View
+                  style={{ position: 'absolute', right: 10, top: 10 }}>
+                  <Image
+                    style={{ width: 35, height: 35 }}
+                    source={require('../.././public/images/dropDown.png')}
+                  />
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View style={productStyle.priceInputWrapper}>
-          <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
-            <TextInputMaterial
-              blurText={this.state.productWeight}
-              refsValue={'productWeight'}
-              ref={'productWeight'}
-              label={strings('productScreen.productWeightInputText')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ productWeight: text }) }}
-              returnKeyType={'done'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              keyboardType={'number'}
-              style={productStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.productWeight}
-              textInputName={this.state.productWeight}
-              // errorText={strings('createCampaign.campaignNameErrorText')}
-              underlineHeight={2}
-              onSubmitEditing={event => {
-                Keyboard.dismiss()
-                //this.refs.productCost.focus();
-              }}
-            />
+          <View style={productStyle.priceInputWrapper}>
+            <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
+              <TextInputMaterial
+                blurText={this.state.productWeight}
+                refsValue={'productWeight'}
+                ref={'productWeight'}
+                label={strings('productScreen.productWeightInputText')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => { this.setState({ productWeight: text }) }}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                keyboardType={'number'}
+                style={productStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.productWeight}
+                textInputName={this.state.productWeight}
+                // errorText={strings('createCampaign.campaignNameErrorText')}
+                underlineHeight={2}
+                onSubmitEditing={event => {
+                  Keyboard.dismiss()
+                  //this.refs.productCost.focus();
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
       </View>
     )
 
@@ -421,6 +522,7 @@ export default class AddProductScreen extends BaseComponent {
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>
           <View style={{ backgroundColor: colorConstant.SANT_LIGHT_SKY_BLUE, borderWidth: 1, borderColor: colorConstant.SANT_MEDIUM_SKY_BLUE, height: 80, marginTop: 10 }}>
             <TextInput
+              value={this.state.productDescription}
               underlineColorAndroid="transparent"
               placeholder={strings('createCampaign.addDescriptionPlaceholder')}
               ref={'productDescription'}

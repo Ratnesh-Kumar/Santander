@@ -5,7 +5,7 @@ import Header from '../../components/Header';
 import productStyle from './productStyle';
 import { strings } from '../../i18next/i18n';
 import Stepper from '../../components/Stepper/stepper'
-import {fetchProductPOST, fetchPartyPOST} from '../../services/FetchData';
+import { fetchProductPOST, fetchPartyPOST } from '../../services/FetchData';
 import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
 import GlobalData from '../../utils/GlobalData';
@@ -23,6 +23,7 @@ var productConstants = require('./productConstants')
 var colorConstant = require('../../config/colorConstant')
 var productDetails = "";
 var productVariantArray = [];
+var isUpdate = "";
 export default class AddProductCategory extends BaseComponent {
 
   constructor(props) {
@@ -41,6 +42,7 @@ export default class AddProductCategory extends BaseComponent {
       dialogModalTitle: '',
     }
     productDetails = props.productDetails;
+    isUpdate = props.isUpdate ? props.isUpdate : false
   }
 
   renderActivityIndicatorShow() {
@@ -86,12 +88,14 @@ export default class AddProductCategory extends BaseComponent {
     }
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    if (isUpdate) {
 
+    }
   }
   render() {
     return (
-      <KeyboardAvoidingView style={productStyle.container} behavior="padding"   keyboardVerticalOffset={20}>
+      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={20}>
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
         <Stepper count={2} currentCount={2} />
@@ -125,9 +129,9 @@ export default class AddProductCategory extends BaseComponent {
     productDetails.productCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
     productDetails.productCategoryTags = this.getCategoryTags()
     var requestBody = this.getRequestBody(productDetails, variantList);
-    var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST+globalData.getBusinessId(), requestBody)
-    if(this.isValidString(responseData) && this.isValidString(responseData.statusMessage)){
-      if(responseData.statusMessage === constants.SUCCESS_STATUS){
+    var responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST + globalData.getBusinessId(), requestBody)
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      if (responseData.statusMessage === constants.SUCCESS_STATUS) {
         this.showAlert()
       }
     }
@@ -154,12 +158,14 @@ export default class AddProductCategory extends BaseComponent {
       'Information',
       'Your product successfully added.',
       [
-        { text: 'OK', onPress: () => {
-          Actions.manageProduct({type: 'reset'});
-          setTimeout(()=>{
-            Actions.refresh({isRefresh: true});
-          }, 100)
-        } },
+        {
+          text: 'OK', onPress: () => {
+            Actions.manageProduct({ type: 'reset' });
+            setTimeout(() => {
+              Actions.refresh({ isRefresh: true });
+            }, 100)
+          }
+        },
       ]
     );
   }

@@ -29,6 +29,8 @@ var productConstants = require('./productConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
 var colorConstants = require('../../config/colorConstant');
+var itemId="";
+var isUpdate="";
 
 export default class ManageProducts extends BaseComponent {
   constructor(props) {
@@ -63,7 +65,7 @@ export default class ManageProducts extends BaseComponent {
   async getProductList(){
       this.renderActivityIndicatorShow() 
       let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
-      //let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"858323d5-53e0-419c-ae0f-dc1ba5a3f57f");
+     // let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+"c3438f53-4dbe-49c4-ba4d-cf4d5188901c");
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
         if (responseData.statusMessage == constants.SUCCESS_STATUS) {
           if (this.isValidArray(responseData.properties)) {
@@ -126,7 +128,7 @@ export default class ManageProducts extends BaseComponent {
   renderItemView = (item, index) => {
     if (this.isValidString(item)) {
       return (
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => {Actions.addProduct({itemId:item.entityId,isUpdate:true}) }}>
           <View style={{ padding: 10 }}>
 
             <CardView
