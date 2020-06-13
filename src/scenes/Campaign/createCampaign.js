@@ -41,7 +41,7 @@ export default class CampaignScreen extends BaseComponent {
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <Stepper count={3} currentCount={2}/>
-        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
+        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10,marginBottom: 20  }}>
           <View>
             {this.renderSwitchTextInput()}
             {this.renderProductQuantity()}

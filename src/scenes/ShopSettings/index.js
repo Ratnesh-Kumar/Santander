@@ -57,7 +57,7 @@ export default class ShopSettingScreen extends BaseComponent {
         onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
         title={strings('shopSettingsScreen.shipProductsSwitch')}
         />
-        <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.shippingCompany')}/>
+        {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.shippingCompany')}/> */}
         <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
         onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
         title={strings('shopSettingsScreen.estimateProfit')}
@@ -69,7 +69,7 @@ export default class ShopSettingScreen extends BaseComponent {
   renderPaymentBox(){
     return (
       <View style={{ marginTop: 10 }}>
-        <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/>
+        {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/> */}
         <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
         onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
         title={strings('shopSettingsScreen.taxInventory')}
@@ -85,8 +85,8 @@ export default class ShopSettingScreen extends BaseComponent {
   renderTaxBox(){
     return(
       <View
-        style={[shopSettingStyle.validFormViewContainer,{marginTop: 0}]}>
-        <View style={shopSettingStyle.inputWrapper}>
+        style={shopSettingStyle.priceTextInputContainer}>
+        <View style={shopSettingStyle.priceInputWrapper}>
           <View style={shopSettingStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.taxTypeValue}
@@ -114,12 +114,12 @@ export default class ShopSettingScreen extends BaseComponent {
           </View>
         </View>
         <View style={{marginTop:10}}>
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true}
+        {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true}
           onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
           title={strings('shopSettingsScreen.flatTaxSwitch')}
-        />
+        /> */}
         </View>
-        <View style={[shopSettingStyle.inputWrapper, {marginTop: 10}]}>
+        <View style={[shopSettingStyle.priceInputWrapper,]}>
           <View style={shopSettingStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.taxRateValue}

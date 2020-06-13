@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert,TouchableOpacity,ImageBackground } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -35,7 +35,8 @@ export default class CampaignScreen extends BaseComponent {
       campaignSkuValue: '',
       campaignBarcodeValue: '',
       pickedImage: compaignConstants.CAMERA_ICON,
-      isBarcodeDisplay: false
+      isBarcodeDisplay: false,
+      showImage:false
     }
   }
 
@@ -323,6 +324,10 @@ export default class CampaignScreen extends BaseComponent {
       } else if (res.error) {
         console.log("Error", res.error);
       } else {
+        this.setState({
+          pickedImage: { uri: res.uri },
+          showImage:true
+        });
         imageFile.uri = res.uri;
         imageFile.name = res.uri.replace(/^.*[\\\/]/, '');
         imageFile.type = "image/jpg";
@@ -332,23 +337,46 @@ export default class CampaignScreen extends BaseComponent {
           }
           else {
             globalData.setImagePathCampaign(response.body.postResponse.location);
-            this.setState({
-              pickedImage: { uri: res.uri }
-            });
+            
           }
         });
       }
     });
   }
 
+  showPickedImage() {
+    return (
+      <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
+        <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
+        <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
+      </TouchableOpacity>
+    )
+  }
+  renderImage() {
+    return (
+      <View >
+        <ImageBackground source={this.state.pickedImage} style={{ width: "100%", height: "100%" }} >
+          <View style={{ paddingTop: 10,paddingRight: 20, flexDirection: 'row-reverse',  }}>
+            <TouchableOpacity style={{height:40,width:40, borderRadius:80,backgroundColor: '#ffffff',alignItems:'center',opacity:0.6,marginRight:10}} onPress={() => this.pickImageHandler()}>
+              <Image source={compaignConstants.EDIT_ICON} style={{
+                width: 25,
+                height: 25,
+                marginTop:5,
+                opacity:1
+              }} ></Image>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
+
+    )
+  }
 
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, alignItems: 'center' }}>
-          <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
-          <Text onPress={() => this.pickImageHandler()} style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
-
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR,}}>
+        {this.state.showImage === true ? this.renderImage() : this.showPickedImage()}
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>

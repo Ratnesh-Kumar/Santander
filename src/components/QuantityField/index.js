@@ -120,7 +120,7 @@ export default class QuantityField extends Component {
         if (isPlus) {
             if (parseInt(this.state.quantityValue) > 0) {
                 this.setState({
-                    quantityValue: parseInt(this.state.quantityValue) + 1
+                    quantityValue: (parseInt(this.state.quantityValue) + 1).toString()
                 })
                 this.props.updatedQuantity(parseInt(this.state.quantityValue) + 1);
             }
@@ -128,7 +128,7 @@ export default class QuantityField extends Component {
         } else {
             if (parseInt(this.state.quantityValue) > 1) {
                 this.setState({
-                    quantityValue: parseInt(this.state.quantityValue) - 1
+                    quantityValue: (parseInt(this.state.quantityValue) - 1).toString()
                 })
                 this.props.updatedQuantity(parseInt(this.state.quantityValue) - 1);
             }
