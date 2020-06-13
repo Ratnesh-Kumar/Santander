@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert,TouchableOpacity,ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity, ImageBackground } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -36,7 +36,7 @@ export default class CampaignScreen extends BaseComponent {
       campaignBarcodeValue: '',
       pickedImage: compaignConstants.CAMERA_ICON,
       isBarcodeDisplay: false,
-      showImage:false
+      showImage: false
     }
   }
 
@@ -66,7 +66,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View style={campaignStyle.container}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
-        <Stepper count={3} currentCount={1}/>
+        <Stepper count={3} currentCount={1} />
         <View>
           <ScrollView keyboardShouldPersistTaps={'always'} style={campaignStyle.scrollViewStyle}>
             {this.renderCampaignName()}
@@ -77,7 +77,7 @@ export default class CampaignScreen extends BaseComponent {
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               Actions.createCampaign();
             }} />
-            
+
           </ScrollView>
         </View>
       </View>
@@ -326,18 +326,17 @@ export default class CampaignScreen extends BaseComponent {
       } else {
         this.setState({
           pickedImage: { uri: res.uri },
-          showImage:true
+          showImage: true
         });
         imageFile.uri = res.uri;
         imageFile.name = res.uri.replace(/^.*[\\\/]/, '');
-        imageFile.type = "image/jpg";
+        imageFile.type = (res.uri.split('.').pop() === 'png') ? "image/png" : "image/jpg";
         RNS3.put(imageFile, options).then(response => {
           if (response.status !== 201) {
             throw new Error("Failed to upload image to S3");
           }
           else {
             globalData.setImagePathCampaign(response.body.postResponse.location);
-            
           }
         });
       }
@@ -356,13 +355,13 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View >
         <ImageBackground source={this.state.pickedImage} style={{ width: "100%", height: "100%" }} >
-          <View style={{ paddingTop: 10,paddingRight: 20, flexDirection: 'row-reverse',  }}>
-            <TouchableOpacity style={{height:40,width:40, borderRadius:80,backgroundColor: '#ffffff',alignItems:'center',opacity:0.6,marginRight:10}} onPress={() => this.pickImageHandler()}>
+          <View style={{ paddingTop: 10, paddingRight: 20, flexDirection: 'row-reverse', }}>
+            <TouchableOpacity style={{ height: 40, width: 40, borderRadius: 80, backgroundColor: '#ffffff', alignItems: 'center', opacity: 0.6, marginRight: 10 }} onPress={() => this.pickImageHandler()}>
               <Image source={compaignConstants.EDIT_ICON} style={{
                 width: 25,
                 height: 25,
-                marginTop:5,
-                opacity:1
+                marginTop: 5,
+                opacity: 1
               }} ></Image>
             </TouchableOpacity>
           </View>
@@ -375,8 +374,8 @@ export default class CampaignScreen extends BaseComponent {
   createCameraView() {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
-        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR,}}>
-        {this.state.showImage === true ? this.renderImage() : this.showPickedImage()}
+        <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, }}>
+          {this.state.showImage === true ? this.renderImage() : this.showPickedImage()}
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>

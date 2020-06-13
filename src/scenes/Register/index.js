@@ -115,7 +115,7 @@ export default class RegisterView extends BaseComponent {
 
     async fetchService() {
         Keyboard.dismiss()
-        if (!this.isValidRegistrationForm()) {
+        if (this.isValidRegistrationForm()) {
             this.renderActivityIndicatorShow()
             let bodyData = this.getBodyData()
             let businessObject = await this.getAsyncData(constants.ASYNC_BUSINESS_ID)

@@ -70,7 +70,7 @@ export class CommonFunctions extends Component {
 
     postOnFacebook = (globalData) => {
         FacebookShareMessage = (globalData.getTitleCampaign() + '\n\r' + "Product Description :" + globalData.getdescriptionCampaign() + '\n\r' + "Available Quantity :" + globalData.getQuantityCampaign() + '\n\r' + "Price :" + globalData.getPriceCampaign() + '\n\r' + "Sale Price :" + globalData.getSalesPriceCampaign());
-        FacebookShareURL = globalData.getImagePathCampaign();
+        FacebookShareURL = (globalData.getImagePathCampaign() !== "") ? globalData.getImagePathCampaign() : FacebookShareURL;
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
                 facebookParameters = facebookParameters + "?u=" + encodeURI(FacebookShareURL) + "&hashtag=" + ("%23" + globalData.getCategoriesCampaign());
