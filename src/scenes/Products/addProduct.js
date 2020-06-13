@@ -138,7 +138,7 @@ export default class AddProductScreen extends BaseComponent {
 
   render() {
     return (
-      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={20}>
+      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={0}>
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
         <Stepper count={2} currentCount={1} />

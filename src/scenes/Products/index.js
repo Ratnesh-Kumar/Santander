@@ -144,7 +144,7 @@ export default class ManageProducts extends BaseComponent {
                 </View>
                 <View style={{flex:1,flexDirection:'row'}}>
                 <View style={{ flex: 1, justifyContent: 'center', }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Quantity - " + item.defaultDetails.productPrice}</Text>                
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Quantity - " + item.defaultDetails.quantityOnHand}</Text>                
                   </View>
                 <View style={{ justifyContent: 'center', }}>
 
