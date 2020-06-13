@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -47,10 +47,10 @@ export default class AddProductCategory extends BaseComponent {
     isUpdate = props.isUpdate ? props.isUpdate : false
     productId = props.productId
     fetchProductData = this.getProductDetail();
-    if(isUpdate){
+    if (isUpdate) {
       this.setUpdateData();
     }
-    
+
   }
 
   setUpdateData() {
@@ -148,7 +148,7 @@ export default class AddProductCategory extends BaseComponent {
       if (!isUpdatedFlag) {
         productVariantArray.push(variantInfo);
       }
-    } else if(this.isValidString(variantInfo)){
+    } else if (this.isValidString(variantInfo)) {
       productVariantArray.push(variantInfo);
     }
   }
@@ -160,12 +160,11 @@ export default class AddProductCategory extends BaseComponent {
   }
   render() {
     return (
-      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={20}>
+      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={(Platform.OS === "ios") ? 20 : 0}>
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
         <Stepper count={2} currentCount={2} />
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
-
           <View>
             {this.renderSwitchTextInput()}
             {this.renderProductQuantity()}
@@ -190,7 +189,7 @@ export default class AddProductCategory extends BaseComponent {
       for (let i = 0; i < productVariantArray.length; i++) {
         variantList.push(this.getProductVariant(productVariantArray[i]))
       }
-    } else { 
+    } else {
       for (let i = 0; i < this.state.variantsList.length; i++) {
         let variantItem = {};
         variantItem.name = this.state.variantsList[i];

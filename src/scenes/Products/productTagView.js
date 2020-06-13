@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -99,8 +99,8 @@ export default class ProductTag extends BaseComponent {
                 </View>
                 <View style={{ flex: 1, paddingRight: 25 }}>
                     <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
+                        Keyboard.dismiss()
                         this.addItemToTagList()
-
                     }} />
                 </View>
             </View>
