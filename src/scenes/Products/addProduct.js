@@ -114,24 +114,23 @@ export default class AddProductScreen extends BaseComponent {
   renderWeighView() {
     return (
       <View>
-        <View style={{ paddingTop: 20, paddingLeft: 20 }}>
-          <Text style={{ fontSize: 20 }}>{strings('productScreen.weightTitle')}</Text>
+      <View style={{paddingTop:20,paddingLeft:20}}>
+        <Text style={{ fontSize: 20 }}>{strings('productScreen.weightTitle')}</Text>
         </View>
-        <View
-          style={productStyle.priceTextInputContainer}>
-          <View style={productStyle.priceInputWrapper}>
-            <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
+      <View
+        style={productStyle.priceTextInputContainer}>
+        <View style={productStyle.priceInputWrapper}>
+          <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
+            <View
+              style={productStyle.containerStyleWithBorder}>
+              <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20,fontSize: 16 }}>
+                {strings('productScreen.productWeightText')}</Text>
               <View
-                style={productStyle.containerStyleWithBorder}>
-                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
-                  {strings('productScreen.productWeightText')}</Text>
-                <View
-                  style={{ position: 'absolute', right: 10, top: 10 }}>
-                  <Image
-                    style={{ width: 35, height: 35 }}
-                    source={require('../.././public/images/dropDown.png')}
-                  />
-                </View>
+                style={{ position: 'absolute', right: 10, top: 10 }}>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={require('../.././public/images/dropDown.png')}
+                />
               </View>
             </View>
           </View>
@@ -164,6 +163,7 @@ export default class AddProductScreen extends BaseComponent {
             />
           </View>
         </View>
+      </View>
       </View>
     )
 
