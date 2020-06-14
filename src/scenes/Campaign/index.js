@@ -333,7 +333,7 @@ export default class CampaignScreen extends BaseComponent {
         imageFile.type = (res.uri.split('.').pop() === 'png') ? "image/png" : "image/jpg";
         RNS3.put(imageFile, options).then(response => {
           if (response.status !== 201) {
-            throw new Error("Failed to upload image to S3");
+            console.log("Failed to upload image to S3");
           }
           else {
             globalData.setImagePathCampaign(response.body.postResponse.location);

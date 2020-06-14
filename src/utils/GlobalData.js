@@ -28,6 +28,7 @@ var salesPriceCampaign = 0;
 var salesTaxType = '';
 var salesTax = 0;
 var imagePathCampaign = "";
+var imagePathProduct = "";
 var s3BucketName = "";
 var s3RegsionName = "";
 var s3accessKey = "";
@@ -86,6 +87,14 @@ export class GlobalData extends Component {
     getImagePathCampaign() {
         return imagePathCampaign;
     }
+
+    setImagePathProduct(path) {
+        imagePathProduct = path;
+    }
+    getImagePathProduct() {
+        return imagePathProduct;
+    }
+
     setImageCampaign(image) {
         imageCampaign = image;
     }

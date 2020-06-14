@@ -20,9 +20,11 @@ import ImagePicker from "react-native-image-picker";
 import { fetchProductGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
+import { RNS3 } from 'react-native-aws3';
 var isUpdate = "";
 var itemId = "";
-
+var imageFile = {}
+var options = {}
 
 export default class AddProductScreen extends BaseComponent {
 
@@ -485,8 +487,16 @@ export default class AddProductScreen extends BaseComponent {
       </View>
     )
   }
-
+  initializeOptions() {
+    options.keyPrefix = productConstants.S3_UPLOAD_FOLDER;
+    options.bucket = globalData.getS3BucketName();
+    options.region = globalData.getS3RegionName();
+    options.accessKey = globalData.getS3AccessKey();
+    options.secretKey = globalData.getS3SecretKey();
+    options.successActionStatus = productConstants.S3_SUCCESS_ACTION_STATUS;
+  }
   pickImageHandler = () => {
+    this.initializeOptions();
     ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
@@ -497,7 +507,17 @@ export default class AddProductScreen extends BaseComponent {
           pickedImage: { uri: res.uri },
           showImage: true
         });
-
+        imageFile.uri = res.uri;
+        imageFile.name = res.uri.replace(/^.*[\\\/]/, '');
+        imageFile.type = (res.uri.split('.').pop() === 'png') ? "image/png" : "image/jpg";
+        RNS3.put(imageFile, options).then(response => {
+          if (response.status !== 201) {
+            console.log("Failed to upload image to S3");
+          }
+          else {
+            globalData.setImagePathProduct(response.body.postResponse.location);
+          }
+        });
       }
     });
   }
@@ -514,13 +534,13 @@ export default class AddProductScreen extends BaseComponent {
     return (
       <View >
         <ImageBackground source={this.state.pickedImage} style={{ width: "100%", height: "100%" }} >
-          <View style={{ paddingTop: 10,paddingRight: 20, flexDirection: 'row-reverse',  }}>
-            <TouchableOpacity style={{height:40,width:40, borderRadius:80,backgroundColor: '#ffffff',alignItems:'center',opacity:0.6,marginRight:10}} onPress={() => this.pickImageHandler()}>
+          <View style={{ paddingTop: 10, paddingRight: 20, flexDirection: 'row-reverse', }}>
+            <TouchableOpacity style={{ height: 40, width: 40, borderRadius: 80, backgroundColor: '#ffffff', alignItems: 'center', opacity: 0.6, marginRight: 10 }} onPress={() => this.pickImageHandler()}>
               <Image source={productConstants.EDIT_ICON} style={{
                 width: 25,
                 height: 25,
-                marginTop:5,
-                opacity:1
+                marginTop: 5,
+                opacity: 1
               }} ></Image>
             </TouchableOpacity>
           </View>
