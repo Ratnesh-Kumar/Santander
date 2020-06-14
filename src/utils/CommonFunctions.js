@@ -68,8 +68,20 @@ export class CommonFunctions extends Component {
         //     });
     };
 
+    isValidString(strText) {
+        if (strText.toString().trim() !== "" && strText.toString().trim() !== " " && strText.toString().trim() !== undefined && strText.toString().trim() !== null) {
+            return true;
+        }
+        return false;
+    }
+
     postOnFacebook = (globalData) => {
-        FacebookShareMessage = (globalData.getTitleCampaign() + '\n\r' + "Product Description :" + globalData.getdescriptionCampaign() + '\n\r' + "Available Quantity :" + globalData.getQuantityCampaign() + '\n\r' + "Price :" + globalData.getPriceCampaign() + '\n\r' + "Sale Price :" + globalData.getSalesPriceCampaign());
+        var campaignTitle = (this.isValidString(globalData.getTitleCampaign())) ? (globalData.getTitleCampaign() + '\n\r') : "\n\r";
+        var campaignProductDescription = (this.isValidString(globalData.getdescriptionCampaign())) ? (globalData.getdescriptionCampaign() + '\n\r') : "\n\r";
+        var campaignQuantity = (this.isValidString(globalData.getQuantityCampaign())) ? (globalData.getQuantityCampaign() + '\n\r') : "\n\r";
+        var campaignPrice = (this.isValidString(globalData.getPriceCampaign())) ? (globalData.getPriceCampaign() + '\n\r') : "\n\r";
+        var campaignSalesPrice = (this.isValidString(globalData.getSalesPriceCampaign())) ? globalData.getSalesPriceCampaign() : "\n\r";
+        FacebookShareMessage = (campaignTitle + "Product Description :" + campaignProductDescription + "Available Quantity :" + campaignQuantity + "Price :" + campaignPrice + "Sale Price :" + campaignSalesPrice);
         FacebookShareURL = (globalData.getImagePathCampaign() !== "") ? globalData.getImagePathCampaign() : FacebookShareURL;
         if (FacebookShareURL != undefined) {
             if (facebookParameters.includes("?") == false) {
