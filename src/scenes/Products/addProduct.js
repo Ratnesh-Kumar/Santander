@@ -66,6 +66,7 @@ export default class AddProductScreen extends BaseComponent {
     this.renderActivityIndicatorShow();
     let productDetailURL = constants.GET_PRODUCT_DETAIL.replace(constants.PRODUCT_ID, itemId) + globalData.getBusinessId();
     let responseData = await fetchProductGET(productDetailURL);
+    console.log('###### responseData ::: ',responseData);
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
         let fetchData = responseData.properties[0].value;
@@ -241,10 +242,10 @@ export default class AddProductScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => { this.setState({ productWeight: text }) }}
-                returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
-                keyboardType={'number'}
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                 style={productStyle.input}
                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                 underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -355,7 +356,8 @@ export default class AddProductScreen extends BaseComponent {
                 textInputName={this.state.productCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                 onSubmitEditing={event => {
                   this.refs.productProfit.focus();
                 }}
@@ -374,7 +376,6 @@ export default class AddProductScreen extends BaseComponent {
                   maxLength={100}
                   autoCapitalize={'none'}
                   onChangeText={text => this.setState({ productProfitValue: text })}
-                  returnKeyType={'next'}
                   backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                   autoCorrect={false}
                   isLoginScreen={false}
@@ -385,7 +386,8 @@ export default class AddProductScreen extends BaseComponent {
                   textInputName={this.state.productProfitValue}
                   // errorText={strings('createCampaign.priceErrorText')}
                   underlineHeight={2}
-                  keyboardType="number"
+                  returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                  keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                   onSubmitEditing={event => {
                     this.refs.productMargin.focus();
                   }}
@@ -413,7 +415,8 @@ export default class AddProductScreen extends BaseComponent {
                   textInputName={this.state.productMarginValue}
                   // errorText={strings('createCampaign.campaignNameErrorText')}
                   underlineHeight={2}
-                  keyboardType="email-address"
+                  returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                  keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                   onSubmitEditing={event => {
                     this.refs.productSkuValue.focus();
                   }}
@@ -440,7 +443,6 @@ export default class AddProductScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { this.setState({ productPriceValue: text }) }}
-              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
               style={productStyle.input}
@@ -450,7 +452,8 @@ export default class AddProductScreen extends BaseComponent {
               textInputName={this.state.productPriceValue}
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
-              keyboardType={'number-pad'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               onSubmitEditing={event => {
                 this.refs.productSalePrice.focus();
               }}
@@ -467,10 +470,10 @@ export default class AddProductScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { this.setState({ productSaleValue: text }) }}
-              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
-              keyboardType={'number-pad'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'numeric'}
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}

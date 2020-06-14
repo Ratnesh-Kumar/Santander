@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -440,10 +440,10 @@ export default class AddProductCategory extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { this.setState({ salesTax: text }) }}
-              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
-              keyboardType={'number-pad'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number-pad'}
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -452,6 +452,7 @@ export default class AddProductCategory extends BaseComponent {
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
               onSubmitEditing={event => {
+                Keyboard.dismiss()
               }}
             />
           </View>
