@@ -89,6 +89,9 @@ export default class Header extends Component {
         const leftIcon = (this.props.isCrossIconVisible) ? headerConstants.CLOSE_ICON : headerConstants.BACK_ARROW;
         if (flag) {
             return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
+                if(typeof this.props.onLeftArrowPressed() == 'function' ){
+                    this.props.onLeftArrowPressed()
+                }
                 Actions.pop();
             }} style={{ position: 'absolute', left: 0, top: 0, height: 50, justifyContent: 'center' }}>
                 <View testID="browseHeader_imageView_leftArrow" accessibilityLabel="browseHeader_imageView_leftArrow" style={headerStyle.leftImageView}>

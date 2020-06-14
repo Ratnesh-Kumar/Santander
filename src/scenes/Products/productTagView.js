@@ -52,7 +52,7 @@ export default class ProductTag extends BaseComponent {
         return (
             <View style={{ height: 32, marginTop: 10, marginRight: 10, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, padding: 10, borderRadius: 12, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => {
-                    this.state.tagNameList.pop(tagName)
+                    this.state.tagNameList.splice( this.state.tagNameList.indexOf(tagName),1)
                     this.props.updatedList(this.state.tagNameList)
                     this.setState({
                         tagNameList: this.state.tagNameList

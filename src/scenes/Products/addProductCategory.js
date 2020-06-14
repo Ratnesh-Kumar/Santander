@@ -54,7 +54,7 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   setUpdateData() {
-    let data = "";
+    productVariantArray = [];
     if (this.isValidString(fetchProductData)) {
       if (this.isValidString(fetchProductData.tags)) {
         let tags = [];
@@ -158,11 +158,26 @@ export default class AddProductCategory extends BaseComponent {
 
     }
   }
+
+  componentWillUnmount() {
+    productVariantArray = [];
+    this.setState({
+      variantsList: [],
+      categoryList: []
+    })
+  }
+
   render() {
     return (
       <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={0}>
         {this.renderModal()}
-        <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
+        <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} onLeftArrowPressed={() => {
+          productVariantArray = [];
+          this.setState({
+            variantsList: [],
+            categoryList: []
+          })
+        }} />
         <Stepper count={2} currentCount={2} />
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
           <View>
@@ -210,15 +225,19 @@ export default class AddProductCategory extends BaseComponent {
     } else {
       responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST + globalData.getBusinessId(), requestBody)
     }
-    console.log('######## responseData of create and add product ....',responseData);
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+        productVariantArray = [];
+        this.setState({
+          variantsList: [],
+          categoryList: []
+        })
         this.renderActivityIndicatorHide()
         this.setProductDetail("");
         setTimeout(() => {
           this.showAlert()
         }, 100)
-        
+
       }
     }
     this.renderActivityIndicatorHide()
@@ -309,7 +328,6 @@ export default class AddProductCategory extends BaseComponent {
           categoryList={this.state.categoryList}
           updatedList={(categoryList) => {
             globalData.setCategoriesCampaign(categoryList);
-            this.getCategoryTags(categoryList)
             this.setState({ categoryList: categoryList })
           }} />
         <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
@@ -321,11 +339,31 @@ export default class AddProductCategory extends BaseComponent {
             variantList={this.state.variantsList}
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
+              this.updateProductVariantList(variantList)
               this.setState({ variantsList: variantList })
             }} />
         </View>
       </View>
     )
+  }
+
+  updateProductVariantList(variantList) {
+    if (this.isValidArray(productVariantArray) && this.isValidArray(variantList)) {
+      for (let i = 0; i < productVariantArray.length; i++) {
+        let isExistFlag = false
+        for (let j = 0; j < variantList.length; j++) {
+          if (productVariantArray[i].name === variantList[i]) {
+            isExistFlag = true;
+          }
+        }
+        if (!isExistFlag) {
+          productVariantArray.splice(productVariantArray.indexOf(productVariantArray[i]), 1)
+        }
+      }
+    } else {
+      productVariantArray = variantList;
+    }
+
   }
 
   renderProductQuantity() {
@@ -476,7 +514,8 @@ export default class AddProductCategory extends BaseComponent {
       "taxable": true,
       "taxCode": "CA",
       "displayProduct": true,
-      "comparePrice": 0
+      "comparePrice": 0,
+      "productCost": variant.productCost
     }
   }
 
