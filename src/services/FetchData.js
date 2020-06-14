@@ -56,8 +56,6 @@ function fetchJsonGET(url) {
 }
 
 function fetchProductGET(url) {
-  console.log("############ fetchProductGET url : " + url)
-  console.log("############ fetchProductGET postHeader : " + JSON.stringify(getPartyPostHeader()))
   return new Promise(function (resolve, reject) {
     fetch(url, {
       method: "GET",

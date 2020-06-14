@@ -66,7 +66,6 @@ export default class AddProductScreen extends BaseComponent {
     this.renderActivityIndicatorShow();
     let productDetailURL = constants.GET_PRODUCT_DETAIL.replace(constants.PRODUCT_ID, itemId) + globalData.getBusinessId();
     let responseData = await fetchProductGET(productDetailURL);
-    console.log('###### responseData ::: ',responseData);
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
         let fetchData = responseData.properties[0].value;
