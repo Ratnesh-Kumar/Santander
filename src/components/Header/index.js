@@ -89,7 +89,7 @@ export default class Header extends Component {
         const leftIcon = (this.props.isCrossIconVisible) ? headerConstants.CLOSE_ICON : headerConstants.BACK_ARROW;
         if (flag) {
             return (<TouchableOpacity testID="browseHeader_button_leftArrow" accessibilityLabel="browseHeader_button_leftArrow" accessible={false} onPress={() => {
-                if(typeof this.props.onLeftArrowPressed() == 'function' ){
+                if(typeof this.props.onLeftArrowPressed == 'function' ){
                     this.props.onLeftArrowPressed()
                 }
                 Actions.pop();
