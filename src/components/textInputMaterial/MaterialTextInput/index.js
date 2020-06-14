@@ -209,6 +209,7 @@ export default class extends PureComponent {
           ref="input"
           style={[inputStyle, paddingStyle]}
           underlineColorAndroid="transparent"
+          blurOnSubmit={this.props.blurOnSubmit}
           onFocus={this._handleFocus}
           onBlur={this._handleBlur}
           onChangeText={this._handleChangeText}

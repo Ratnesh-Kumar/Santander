@@ -174,7 +174,7 @@ export default class LoginView extends BaseComponent {
 
   async loginButtonTapped() {
     // Actions.tabbar();
-    //Keyboard.dismiss()
+    Keyboard.dismiss()
     if (this.checkForLoginFormValidation()) {
       this.renderActivityIndicatorShow()
       let bodyData = this.getLoginBodyData()
@@ -418,6 +418,7 @@ export default class LoginView extends BaseComponent {
                 isValidPassword={(flag) => { this.setState({ isValidPassword: flag }) }}
                 errorText={strings('loginScreen.PasswordTextInputError')}
                 onFocus={() => this.inputFocused.bind(this)}
+                onSubmitEditing={()=> Keyboard.dismiss()}
               />
               <TouchableOpacity
                 activeOpacity={0.7}

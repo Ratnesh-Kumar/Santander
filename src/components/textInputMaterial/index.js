@@ -333,10 +333,12 @@ export default class TextInputMaterial extends PureComponent {
 
   checkValidText(textInput) {
     let blnIsValidString = false;
-    if (textInput.trim().length > 2) {
-      blnIsValidString = true;
-    } else {
-      blnIsValidString = false;
+    if(this.isValidString(textInput)){
+      if (textInput.trim().length > 2) {
+        blnIsValidString = true;
+      } else {
+        blnIsValidString = false;
+      }
     }
     if (this.props.refsValue === 'password') {
     }
@@ -505,6 +507,10 @@ export default class TextInputMaterial extends PureComponent {
       this.props.textContentType != undefined
         ? this.props.textContentType
         : 'none';
+    let blurOnSubmit =
+      this.props.blurOnSubmit != undefined
+        ? this.props.blurOnSubmit
+        : false;
     let label = this.props.label;
     let placeHolder = this.isValidString(this.props.placeHolder)
       ? this.props.placeHolder
@@ -524,7 +530,6 @@ export default class TextInputMaterial extends PureComponent {
     // let textInputName = this.props.textInputName;
     let keyBoardType = this.props.keyBoardType;
     let secureTextEntry = this.props.secureTextEntry;
-
     return (
       <View>
         <View
@@ -540,6 +545,7 @@ export default class TextInputMaterial extends PureComponent {
             maxLength={maxLength}
             autoCapitalize={autoCapitalize}
             label={label}
+            blurOnSubmit={blurOnSubmit}
             labelColor={(labelColor === this.errorColorCode)? labelColor: this.uneditColorCode}
             placeHolder={placeHolder}
             placeholderColor={placeholderColor}

@@ -210,10 +210,15 @@ export default class AddProductCategory extends BaseComponent {
     } else {
       responseData = await fetchPartyPOST(constants.GET_PRODUCT_LIST + globalData.getBusinessId(), requestBody)
     }
+    console.log('######## responseData of create and add product ....',responseData);
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+        this.renderActivityIndicatorHide()
         this.setProductDetail("");
-        this.showAlert()
+        setTimeout(() => {
+          this.showAlert()
+        }, 100)
+        
       }
     }
     this.renderActivityIndicatorHide()

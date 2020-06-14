@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity, Keyboard, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -60,7 +60,7 @@ export default class ProductTag extends BaseComponent {
                 }}>
                     <Image source={require('../../public/images/Close_icon.png')} style={{ height: 12, width: 12, tintColor: colorConstant.GREY_DARK_COLOR1 }} />
                 </TouchableOpacity>
-                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1 }}>{tagName}</Text>
+                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1 , marginTop:(Platform.OS === 'ios') ? -4 : 0 }}>{tagName}</Text>
             </View>
         );
     }

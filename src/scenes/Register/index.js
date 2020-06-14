@@ -381,6 +381,8 @@ export default class RegisterView extends BaseComponent {
                                 secureTextEntry={this.state.showPass}
                                 blurText={this.state.password}
                                 //refsValue={constants.TEXT_INPUT_PASSWORD}
+                                blurOnSubmit={false}
+                                textContentType={'none'}
                                 showIcon={false}
                                 value={this.state.password}
                                 textInputName={this.state.password}
@@ -426,6 +428,8 @@ export default class RegisterView extends BaseComponent {
                                 secureTextEntry={this.state.showConfirmPass}
                                 blurText={this.state.confirmPass}
                                 showIcon={false}
+                                blurOnSubmit={false}
+                                textContentType={'none'}
                                 value={this.state.confirmPass}
                                 textInputName={this.state.confirmPass}
                                 refsValue={"confirmPassword"}
@@ -445,6 +449,9 @@ export default class RegisterView extends BaseComponent {
                                 underlineColorAndroid={colorConstant.UNDERLINE_COLOR_ANDROID}
                                 errorText={strings('registerScreen.ConfirmPasswordTextInputError')}
                                 onFocus={() => this.inputFocused.bind(this)}
+                                onSubmitEditing={event => {
+                                    Keyboard.dismiss()
+                                }}
                             />
                             <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setConfirmPasswordVisibility()}>
                                 <Image source={imgSource} style={registerStyle.iconEye} />
