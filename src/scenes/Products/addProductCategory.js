@@ -128,9 +128,26 @@ export default class AddProductCategory extends BaseComponent {
       if (isUpdate) {
         this.updateProductVariantArray(props.variantInfo);
       } else {
-        productVariantArray.push(props.variantInfo);
+        if (!this.isVariantExist(props.variantInfo)) {
+          productVariantArray.push(props.variantInfo);
+        }
       }
     }
+  }
+
+  isVariantExist(variantInfo) {
+    if (this.isValidArray(productVariantArray) && this.isValidString(variantInfo)) {
+      for (let i = 0; i < productVariantArray.length; i++) {
+        if (productVariantArray[i].name === variantInfo.name) {
+          productVariantArray[i].price = variantInfo.price;
+          productVariantArray[i].barcode = variantInfo.barcode;
+          productVariantArray[i].skuNumber = variantInfo.skuNumber;
+          productVariantArray[i].productCost = variantInfo.productCost;
+          return true
+        }
+      }
+    }
+    return false
   }
 
   updateProductVariantArray(variantInfo) {
@@ -197,23 +214,31 @@ export default class AddProductCategory extends BaseComponent {
     );
   }
 
+
+  getVariantItem(variant) {
+    if (this.isValidArray(productVariantArray)) {
+      for (let i = 0; i < productVariantArray.length; i++) {
+        if (productVariantArray[i].name === variant) {
+          return productVariantArray[i]
+        }
+      }
+    }
+    let variantItem = {};
+    variantItem.name = variant;
+    variantItem.price = "";
+    variantItem.barcode = "";
+    variantItem.skuNumber = "";
+    variantItem.productCost = "";
+    return variantItem;
+  }
+
   async addProduct() {
     let variantList = [];
     this.renderActivityIndicatorShow()
-    if (this.isValidArray(productVariantArray)) {
-      for (let i = 0; i < productVariantArray.length; i++) {
-        variantList.push(this.getProductVariant(productVariantArray[i]))
-      }
-    } else {
-      for (let i = 0; i < this.state.variantsList.length; i++) {
-        let variantItem = {};
-        variantItem.name = this.state.variantsList[i];
-        variantItem.price = "";
-        variantItem.barcode = "";
-        variantItem.skuNumber = "";
-        variantItem.productCost = "";
-        variantList.push(this.getProductVariant(variantItem))
-      }
+
+    for (let i = 0; i < this.state.variantsList.length; i++) {
+      let variantItem = this.getVariantItem(this.state.variantsList[i]);
+      variantList.push(this.getProductVariant(variantItem))
     }
     productDetails.productCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
     productDetails.productCategoryTags = this.getCategoryTags(this.state.categoryList)
@@ -347,12 +372,14 @@ export default class AddProductCategory extends BaseComponent {
     )
   }
 
+
+
   updateProductVariantList(variantList) {
     if (this.isValidArray(productVariantArray) && this.isValidArray(variantList)) {
       for (let i = 0; i < productVariantArray.length; i++) {
         let isExistFlag = false
         for (let j = 0; j < variantList.length; j++) {
-          if (productVariantArray[i].name === variantList[i]) {
+          if (productVariantArray[i].name === variantList[j]) {
             isExistFlag = true;
           }
         }
@@ -360,6 +387,7 @@ export default class AddProductCategory extends BaseComponent {
           productVariantArray.splice(productVariantArray.indexOf(productVariantArray[i]), 1)
         }
       }
+
     } else {
       productVariantArray = [];
     }

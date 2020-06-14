@@ -52,7 +52,7 @@ export default class ProductTag extends BaseComponent {
         return (
             <View style={{ height: 32, marginTop: 10, marginRight: 10, backgroundColor: colorConstant.GRAY_MEDIUM_COLOR, padding: 10, borderRadius: 12, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => {
-                    this.state.tagNameList.splice( this.state.tagNameList.indexOf(tagName),1)
+                    this.state.tagNameList.splice(this.state.tagNameList.indexOf(tagName), 1)
                     this.props.updatedList(this.state.tagNameList)
                     this.setState({
                         tagNameList: this.state.tagNameList
@@ -60,7 +60,7 @@ export default class ProductTag extends BaseComponent {
                 }}>
                     <Image source={require('../../public/images/Close_icon.png')} style={{ height: 12, width: 12, tintColor: colorConstant.GREY_DARK_COLOR1 }} />
                 </TouchableOpacity>
-                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1 , marginTop:(Platform.OS === 'ios') ? -4 : 0 }}>{tagName}</Text>
+                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1, marginTop: (Platform.OS === 'ios') ? -4 : 0 }}>{tagName}</Text>
             </View>
         );
     }
