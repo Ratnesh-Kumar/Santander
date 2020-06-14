@@ -361,7 +361,7 @@ export default class AddProductCategory extends BaseComponent {
         }
       }
     } else {
-      productVariantArray = variantList;
+      productVariantArray = [];
     }
 
   }
