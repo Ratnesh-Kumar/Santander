@@ -86,7 +86,6 @@ setTimeout(()=>{
                     maxLength={100}
                     autoCapitalize={'none'}
                     onChangeText={text => this.setState({ varientCostValue: text })}
-                    returnKeyType={'next'}
                     backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                     autoCorrect={false}
                     isLoginScreen={false}
@@ -97,7 +96,8 @@ setTimeout(()=>{
                     textInputName={this.state.varientCostValue}
                     // errorText={strings('createCampaign.campaignNameErrorText')}
                     underlineHeight={2}
-                    keyboardType="number"
+                    returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                    keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                     onSubmitEditing={event => {
                       this.refs.varientProfit.focus();
                     }}
@@ -116,7 +116,6 @@ setTimeout(()=>{
                       maxLength={100}
                       autoCapitalize={'none'}
                       onChangeText={text => this.setState({ varientProfitValue: text })}
-                      returnKeyType={'next'}
                       backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                       autoCorrect={false}
                       isLoginScreen={false}
@@ -127,7 +126,8 @@ setTimeout(()=>{
                       textInputName={this.state.varientProfitValue}
                       // errorText={strings('createCampaign.priceErrorText')}
                       underlineHeight={2}
-                      keyboardType="number"
+                      returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                      keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                       onSubmitEditing={event => {
                         this.refs.productVarientMargin.focus();
                       }}
@@ -144,7 +144,6 @@ setTimeout(()=>{
                       maxLength={100}
                       autoCapitalize={'none'}
                       onChangeText={text => this.setState({ varientMarginValue: text })}
-                      returnKeyType={'next'}
                       backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                       autoCorrect={false}
                       isLoginScreen={false}
@@ -155,7 +154,8 @@ setTimeout(()=>{
                       textInputName={this.state.varientMarginValue}
                       // errorText={strings('createCampaign.campaignNameErrorText')}
                       underlineHeight={2}
-                      keyboardType="email-address"
+                      returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                       keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                       onSubmitEditing={event => {
                         this.refs.productVarientSku.focus();
                       }}
@@ -248,7 +248,6 @@ setTimeout(()=>{
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => { this.setState({ varientPriceValue: text }) }}
-                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={productStyle.input}
@@ -258,7 +257,8 @@ setTimeout(()=>{
                             textInputName={this.state.varientPriceValue}
                             // errorText={strings('createCampaign.priceErrorText')}
                             underlineHeight={2}
-                            keyboardType={'number-pad'}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                            keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                             onSubmitEditing={event => {
                                 this.refs.productVarientSalePrice.focus();
                             }}
@@ -275,10 +275,10 @@ setTimeout(()=>{
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => { this.setState({ varientSaleValue: text }) }}
-                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            keyboardType={'number-pad'}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                            keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                             style={productStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}

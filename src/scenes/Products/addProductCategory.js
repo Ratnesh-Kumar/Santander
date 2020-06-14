@@ -471,7 +471,7 @@ export default class AddProductCategory extends BaseComponent {
               autoCorrect={false}
               isLoginScreen={false}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number-pad'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
