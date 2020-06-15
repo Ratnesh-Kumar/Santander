@@ -75,6 +75,7 @@ export default class QuantityField extends BaseComponent {
                         onChangeText={quantityValue => this.changeQtyValue(quantityValue)}
                         maxLength={4}
                         defaultValue={1}
+                        returnKeyType={'done'}
                         value={this.state.quantityValue}
                         onSubmitEditing={event => {
                         }}

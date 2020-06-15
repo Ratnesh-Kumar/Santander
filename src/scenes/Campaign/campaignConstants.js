@@ -20,17 +20,20 @@ export const CAMPAIGN_ARRAY = [
     {
         campaignDate: "12-May-20",
         campaignName: "Summer Clothes",
-        cost: "$1020.95"
+        cost: "$1020.95",
+        publishStatus:"Published"
     },
     {
         campaignDate: "19-May-20",
         campaignName: "Summer Clothes",
-        cost: "$500.55"
+        cost: "$500.55",
+        publishStatus:"Published"
     },
     {
         campaignDate: "17-Jun-20",
         campaignName: "Back to school",
-        cost: "$1967.20"
+        cost: "$1967.20",
+        publishStatus:"In progress"
     }
 ];
 
