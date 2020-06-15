@@ -202,7 +202,8 @@
       "saveButtontext":"Save"
     },
     "manageCampaignScreen":{
-      "ManageCampaign":"Manage Campaign"
+      "ManageCampaign":"Manage Campaign",
+      "errorNoCampaignFound":"No Campaign Found"
     },
     "productScreen":{
       "manageProducts": "Manage Products",
