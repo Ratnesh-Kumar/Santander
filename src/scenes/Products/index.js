@@ -78,7 +78,7 @@ export default class ManageProducts extends BaseComponent {
           }
         }
         else{
-          this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
+         // this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
         }
       }
      
