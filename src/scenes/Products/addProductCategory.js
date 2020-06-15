@@ -32,7 +32,7 @@ export default class AddProductCategory extends BaseComponent {
     super(props)
     this.state = {
       productName: '',
-      productQuantity: 1,
+      productQuantity: "1",
       variantsList: [],
       categoryList: [],
       salesTaxType: '',
@@ -68,17 +68,24 @@ export default class AddProductCategory extends BaseComponent {
         this.state.categoryList = tags
       }
 
+      productDetails.productQuantity = fetchProductData.defaultDetails.quantityOnHand;
+      this.setState({
+        productQuantity: fetchProductData.defaultDetails.quantityOnHand
+      })
       if (this.isValidArray(fetchProductData.productVariants)) {
         let productVariant = fetchProductData.productVariants;
+
         for (let i = 0; i < productVariant.length; i++) {
           let variant = productVariant[i];
           let variantDetail = {};
           this.state.variantsList.push(variant.variantName)
           variantDetail.name = variant.variantName;
-          variantDetail.price = variant.productPrice;
-          variantDetail.barcode = ""
-          variantDetail.skuNumber = "";
-          variantDetail.productCost = variant.productCost
+          variantDetail.price = variant.comparePrice;
+          variantDetail.barcode = variant.barCode;
+          variantDetail.skuNumber = variant.sku;
+          variantDetail.salePrice = variant.productPrice;
+          variantDetail.productCost = variant.productCost;
+          variantDetail.quantity = variant.quantityOnHand;
           productVariantArray.push(variantDetail)
         }
       }
@@ -141,8 +148,10 @@ export default class AddProductCategory extends BaseComponent {
         if (productVariantArray[i].name === variantInfo.name) {
           productVariantArray[i].price = variantInfo.price;
           productVariantArray[i].barcode = variantInfo.barcode;
+          productVariantArray[i].salePrice = variantInfo.salePrice;
           productVariantArray[i].skuNumber = variantInfo.skuNumber;
           productVariantArray[i].productCost = variantInfo.productCost;
+          productVariantArray[i].quantity = variantInfo.quantity;
           return true
         }
       }
@@ -158,8 +167,10 @@ export default class AddProductCategory extends BaseComponent {
           isUpdatedFlag = true;
           productVariantArray[i].price = variantInfo.price;
           productVariantArray[i].barcode = variantInfo.barcode;
+          productVariantArray[i].salePrice = variantInfo.salePrice;
           productVariantArray[i].skuNumber = variantInfo.skuNumber;
           productVariantArray[i].productCost = variantInfo.productCost;
+          productVariantArray[i].quantity = variantInfo.quantity;
         }
       }
       if (!isUpdatedFlag) {
@@ -226,9 +237,11 @@ export default class AddProductCategory extends BaseComponent {
     let variantItem = {};
     variantItem.name = variant;
     variantItem.price = "";
-    variantItem.barcode = "";
+    variantItem.salePrice = "",
+      variantItem.barcode = "";
     variantItem.skuNumber = "";
     variantItem.productCost = "";
+    variantItem.quantity="1"
     return variantItem;
   }
 
@@ -324,7 +337,10 @@ export default class AddProductCategory extends BaseComponent {
         onButtonPressed={() => {
           Actions.productVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
         }}
+        quantity={this.getVariantObj(quantityTitle).quantity}
         title={quantityTitle} updatedQuantity={(quantity) => {
+          let variantObj = this.getVariantObj(quantityTitle);
+          variantObj.quantity = quantity;
           this.setState({
             productQuantity: quantity
           })
@@ -396,7 +412,13 @@ export default class AddProductCategory extends BaseComponent {
 
   renderProductQuantity() {
     return (
-      <QuantityField title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { globalData.setQuantityCampaign(quantity) }} />
+      <QuantityField title={strings('createCampaign.quanitytTitle')} quantity={productDetails.productQuantity} updatedQuantity={(quantity) => {
+        globalData.setQuantityCampaign(quantity)
+        productDetails.productQuantity = quantity
+        this.setState({
+          productQuantity: quantity
+        })
+      }} />
     )
   }
 
@@ -503,26 +525,28 @@ export default class AddProductCategory extends BaseComponent {
       "defaultDetails": {
         "variantName": "default",
         "optionalValues": "none",
-        "productPrice": data.productPrice,
-        "barCode": data.barcode,
-        "SKU": data.skuNumber,
+        "productPrice": data.productSalePrice,
+        "barCode": "9867543210",
+        "sku": data.skuNumber,
         "weight": data.weight,
         "weightUnit": data.weightUnit,
         "trackInventory": true,
         "reorderLevel": 10,
         "leadTime": 20,
-        "quantityOnHand": 50,
+        "quantityOnHand": this.isValidString(data.productQuantity) ? data.productQuantity : "1",
         "asOfDate": "12-Jan-2019",
         "requiredShipping": true,
         "taxable": true,
         "taxCode": "CA",
         "displayProduct": true,
-        "comparePrice": 0,
-        
+        "comparePrice": data.productPrice,
+        "productCost": data.productCost,
+        "defaultProfitMargetSet": !this.isValidString(data.productCost)
       },
       "productVariants": variantList,
       "extensions": []
     }
+    //discountinuedProduct
   }
 
   getProductVariant(variant) {
@@ -530,25 +554,25 @@ export default class AddProductCategory extends BaseComponent {
       "variantId": "",
       "variantName": variant.name,
       "optionalValues": "",
-      "productPrice": variant.price,
-      "barCode": variant.barcode,
-      "SKU": variant.skuNumber,
+      "productPrice": variant.salePrice,
+      "barCode": "9867543210",
+      "sku": variant.skuNumber,
       "weight": 0,
       "weightUnit": "",
       "trackInventory": true,
       "reorderLevel": 10,
       "leadTime": 20,
-      "quantityOnHand": 50,
+      "quantityOnHand": this.isValidString(variant.quantity) ? variant.quantity : "1",
       "asOfDate": "12-Jan-2019",
       "requiredShipping": true,
       "taxable": true,
       "taxCode": "CA",
       "displayProduct": true,
-      "comparePrice": 0,
+      "comparePrice": variant.price,
       "productCost": variant.productCost,
+      "defaultProfitMargetSet": !this.isValidString(variant.productCost),
       "productImage": productDetails.productImage,
-      "productURL": productDetails.productURL,
-
+      "productURL": productDetails.productURL
     }
   }
 

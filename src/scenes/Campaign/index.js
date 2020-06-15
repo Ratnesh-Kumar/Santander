@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity, ImageBackground, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -64,7 +64,7 @@ export default class CampaignScreen extends BaseComponent {
 
   render() {
     return (
-      <View style={campaignStyle.container}>
+      <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'}>
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <Stepper count={3} currentCount={1} />
         <View>
@@ -80,7 +80,7 @@ export default class CampaignScreen extends BaseComponent {
 
           </ScrollView>
         </View>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -108,9 +108,11 @@ export default class CampaignScreen extends BaseComponent {
               textInputName={this.state.campaignSku}
               // errorText={strings('createCampaign.skuErrorText')}
               underlineHeight={2}
-              keyboardType="email-address"
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               onSubmitEditing={event => {
-                this.refs.campaignBarcdoe.focus();
+                Keyboard.dismiss()
+                //this.refs.campaignBarcdoe.focus();
               }}
             />
           </View>
@@ -126,7 +128,6 @@ export default class CampaignScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => this.setState({ campaignBarcodeValue: text })}
-              returnKeyType={'done'}
               autoCorrect={false}
               isLoginScreen={false}
               style={campaignStyle.input}
@@ -136,11 +137,13 @@ export default class CampaignScreen extends BaseComponent {
               textInputName={this.state.campaignBarcodeValue}
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
-              keyboardType="email-address"
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               editable={false}
               isBarcodeDisplay={true}
               onBarcodeTapped={() => { Actions.qrCode({ title: "Barcode Scanner" }) }}
               onSubmitEditing={event => {
+                Keyboard.dismiss()
               }}
             />
           </View>
@@ -163,7 +166,6 @@ export default class CampaignScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ campaignCostValue: text })}
-                returnKeyType={'next'}
                 backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                 autoCorrect={false}
                 isLoginScreen={false}
@@ -174,7 +176,8 @@ export default class CampaignScreen extends BaseComponent {
                 textInputName={this.state.campaignCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                 onSubmitEditing={event => {
                   this.refs.campaignProfit.focus();
                 }}
@@ -193,7 +196,6 @@ export default class CampaignScreen extends BaseComponent {
                   maxLength={100}
                   autoCapitalize={'none'}
                   onChangeText={text => this.setState({ campaignProfitValue: text })}
-                  returnKeyType={'next'}
                   backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                   autoCorrect={false}
                   isLoginScreen={false}
@@ -204,7 +206,8 @@ export default class CampaignScreen extends BaseComponent {
                   textInputName={this.state.campaignProfitValue}
                   // errorText={strings('createCampaign.priceErrorText')}
                   underlineHeight={2}
-                  keyboardType="number"
+                  returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                  keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                   onSubmitEditing={event => {
                     this.refs.campaignMargin.focus();
                   }}
@@ -259,7 +262,6 @@ export default class CampaignScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { globalData.setPriceCampaign(text); this.setState({ campaignPriceValue: text }) }}
-              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
               style={campaignStyle.input}
@@ -269,7 +271,8 @@ export default class CampaignScreen extends BaseComponent {
               textInputName={this.state.campaignPriceValue}
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
-              keyboardType={'number-pad'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               onSubmitEditing={event => {
                 this.refs.campaignSalePrice.focus();
               }}
@@ -286,10 +289,10 @@ export default class CampaignScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { globalData.setSalesPriceCampaign(text); this.setState({ campaignSaleValue: text }) }}
-              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
-              keyboardType={'number-pad'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               style={campaignStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -298,7 +301,7 @@ export default class CampaignScreen extends BaseComponent {
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
               onSubmitEditing={event => {
-                this.refs.campaignCost.focus();
+                this.refs.campaignSku.focus();
               }}
             />
           </View>

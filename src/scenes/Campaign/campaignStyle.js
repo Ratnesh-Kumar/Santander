@@ -103,5 +103,8 @@ export default (styles = StyleSheet.create({
     marginTop: 50,
     marginLeft: 5,
     marginRight: 5
+  },
+  emptyNoCampaignText:{
+    color: colorConstants.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
   }
 }));
