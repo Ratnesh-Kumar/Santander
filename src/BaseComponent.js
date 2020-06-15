@@ -9,7 +9,7 @@ import {
   statusCodes,
 } from 'react-native-google-signin';
 var constants = require('./config/Constants');
-const SHOP_NAME = "DigiShop28"
+const SHOP_NAME = "DigiShop - "+globalData.getUserInfo.username;
 var productDetail="";
 export default class BaseComponent extends Component {
 
@@ -98,6 +98,7 @@ export default class BaseComponent extends Component {
       "locale": "en_us"
     }
     var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, createShopBody);
+    console.log("############## responseData : "+JSON.stringify(responseData))
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
       if (this.isValidString(businessId)) {

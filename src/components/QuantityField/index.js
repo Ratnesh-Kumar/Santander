@@ -11,13 +11,14 @@ import quantityStyle from './quantityStyle';
 import quantityConstants from './quantityConstant';
 import { Text } from 'native-base';
 import CardView from 'react-native-cardview'
+import BaseComponent from '../../BaseComponent';
 var colorConstant = require('../../config/colorConstant')
 
-export default class QuantityField extends Component {
+export default class QuantityField extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            quantityValue: "1"
+            quantityValue: this.isValidString(props.quantity)?props.quantity.toString():"1"
         }
     }
 

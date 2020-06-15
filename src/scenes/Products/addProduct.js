@@ -25,6 +25,7 @@ var isUpdate = "";
 var itemId = "";
 var imageFile = {}
 var options = {}
+var productInfo = "";
 
 export default class AddProductScreen extends BaseComponent {
 
@@ -101,18 +102,33 @@ export default class AddProductScreen extends BaseComponent {
   }
 
   setProductData(fetchData) {
-    let productName = fetchData.productName;
-    let productDescription = fetchData.productDescription;
-    let productPriceValue = fetchData.defaultDetails.productPrice;
-    let productWeight = fetchData.defaultDetails.weight;
-    let productBarcodeValue = fetchData.defaultDetails.barCode;
-    //console.log('productWeight ## '+productWeight)
+    productInfo = {
+      "productName": fetchData.productName,
+      "productDescription": fetchData.productDescription,
+      "productPriceValue": fetchData.defaultDetails.comparePrice,
+      "productSalePriceValue": fetchData.defaultDetails.productPrice,
+      "productWeight": fetchData.defaultDetails.weight,
+      "productBarcodeValue": fetchData.defaultDetails.barCode,
+      "productCostValue": fetchData.defaultDetails.productCost,
+      "productSku": fetchData.defaultDetails.sku
+    };
+    // // this.productInfo.productName = fetchData.productName;
+    // this.productInfo.productDescription = fetchData.productDescription;
+    // this.productInfo.productPriceValue = fetchData.defaultDetails.comparePrice;
+    // this.productInfo.productSalePriceValue = fetchData.defaultDetails.productPrice
+    // this.productInfo.productWeight = fetchData.defaultDetails.weight;
+    // this.productInfo.productBarcodeValue = fetchData.defaultDetails.barCode;
+    // this.productInfo.productCostValue = fetchData.defaultDetails.productCost;
+  
     this.setState({
-      productName,
-      productDescription: productDescription,
-      productPriceValue: productPriceValue + "",
-      productWeight: productWeight + "",
-      productBarcodeValue: productBarcodeValue + ""
+      productName: productInfo.productName,
+      productDescription: productInfo.productDescription,
+      productPriceValue: productInfo.productPriceValue + "",
+      productSaleValue: productInfo.productSalePriceValue+"",
+      productWeight: productInfo.productWeight + "",
+      productBarcodeValue: productInfo.productBarcodeValue + "",
+      productCostValue: productInfo.productCostValue+"",
+      productSkuValue: productInfo.productSku
     })
   }
 
@@ -186,11 +202,14 @@ export default class AddProductScreen extends BaseComponent {
         "productName": this.state.productName,
         "productDescription": this.state.productDescription,
         "productPrice": this.state.productPriceValue,
+        "productSalePrice": this.state.productSaleValue,
+        "productCost": this.state.productCostValue,
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
         "weightUnit": "lb"
       }
+      
       Actions.addProductCategory({ productDetails: productDetails, isUpdate: isUpdate, productId: itemId });
     } else {
       this.showAlert();
