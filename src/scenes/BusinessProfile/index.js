@@ -67,7 +67,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.buisnesstaxId}
                             textInputName={this.state.buisnesstaxId}
-                            errorText={strings('BuisnessProfile.BuisnessTaxIdTextInputError')}
+                            //errorText={strings('BuisnessProfile.BuisnessTaxIdTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
@@ -94,11 +94,11 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.buisnessName}
                             textInputName={this.state.buisnessName}
-                            errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
+                            //errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
-                                this.refs.PhoneCode.focus();
+                                this.refs.Phone.focus();
                             }}
                         />
                     </View>
@@ -246,7 +246,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.address}
                             textInputName={this.state.address}
-                            errorText={strings('BuisnessProfile.AddressTextInputError')}
+                            //errorText={strings('BuisnessProfile.AddressTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
@@ -271,7 +271,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.city}
                             textInputName={this.state.city}
-                            errorText={strings('BuisnessProfile.CityTextInputError')}
+                            //errorText={strings('BuisnessProfile.CityTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
@@ -317,7 +317,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.postalState}
                             textInputName={this.state.postalState}
-                            errorText={strings('BuisnessProfile.StateTextInputError')}
+                            //errorText={strings('BuisnessProfile.StateTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
@@ -344,7 +344,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.postalCode}
                             textInputName={this.state.postalCode}
-                            errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
+                            //errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
                             underlineHeight={2}
                             onSubmitEditing={event => {
 
@@ -395,7 +395,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.documentNum}
                             textInputName={this.state.documentNum}
-                            errorText={strings('BuisnessProfile.DocumentTextInputError')}
+                            //errorText={strings('BuisnessProfile.DocumentTextInputError')}
                             underlineHeight={2}
                             onSubmitEditing={event => {
                                 this.refs.ExpiryDate.focus();
@@ -421,7 +421,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.expDate}
                             textInputName={this.state.expDate}
-                            errorText={strings('BuisnessProfile.ExpiryTextInputError')}
+                            //errorText={strings('BuisnessProfile.ExpiryTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onFocus={() => this.inputFocused.bind(this)}
@@ -461,7 +461,7 @@ export default class BusinessProfileView extends Component {
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.phone}
                             textInputName={this.state.phone}
-                            errorText={strings('BuisnessProfile.PhoneTextInputError')}
+                            //errorText={strings('BuisnessProfile.PhoneTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {

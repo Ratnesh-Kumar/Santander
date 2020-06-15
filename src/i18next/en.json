@@ -169,7 +169,7 @@
       "handlingCostInput":"Handling cost",
       "defaultsTitle":"DEFAULTS",
       "paymentDropDownText":"Payment Processor",
-      "taxInventory":"Tax Inventory",
+      "taxInventory":"Track Inventory",
       "taxOnSales":"Tax on sales",
       "taxTypeInput":"Tax type",
       "flatTaxSwitch":"Flat tax",

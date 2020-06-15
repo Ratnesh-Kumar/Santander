@@ -517,7 +517,8 @@ export default class AddProductCategory extends BaseComponent {
         "taxable": true,
         "taxCode": "CA",
         "displayProduct": true,
-        "comparePrice": 0
+        "comparePrice": 0,
+        
       },
       "productVariants": variantList,
       "extensions": []
@@ -544,7 +545,10 @@ export default class AddProductCategory extends BaseComponent {
       "taxCode": "CA",
       "displayProduct": true,
       "comparePrice": 0,
-      "productCost": variant.productCost
+      "productCost": variant.productCost,
+      "productImage": productDetails.productImage,
+      "productURL": productDetails.productURL,
+
     }
   }
 

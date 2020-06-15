@@ -106,13 +106,16 @@ export default class AddProductScreen extends BaseComponent {
     let productPriceValue = fetchData.defaultDetails.productPrice;
     let productWeight = fetchData.defaultDetails.weight;
     let productBarcodeValue = fetchData.defaultDetails.barCode;
-    //console.log('productWeight ## '+productWeight)
+    let imageURl=fetchData.productVariants[0].productURL;
+    console.log('imageUrl  ## '+JSON.stringify(imageURl))
     this.setState({
       productName,
       productDescription: productDescription,
       productPriceValue: productPriceValue + "",
       productWeight: productWeight + "",
-      productBarcodeValue: productBarcodeValue + ""
+      productBarcodeValue: productBarcodeValue + "",
+      pickedImage: {uri:imageURl},
+      showImage: true
     })
   }
 
@@ -189,7 +192,9 @@ export default class AddProductScreen extends BaseComponent {
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
-        "weightUnit": "lb"
+        "weightUnit": "lb",
+        "productImage":imageFile.name,
+        "productURL":globalData.getImagePathProduct()
       }
       Actions.addProductCategory({ productDetails: productDetails, isUpdate: isUpdate, productId: itemId });
     } else {
@@ -291,7 +296,7 @@ export default class AddProductScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="email-address"
               onSubmitEditing={event => {
-                this.refs.productBarcdoe.focus();
+                this.refs.productWeight.focus();
               }}
             />
           </View>
@@ -517,7 +522,11 @@ export default class AddProductScreen extends BaseComponent {
             console.log("Failed to upload image to S3");
           }
           else {
+            console.log("imagePath1 ##### - "+response.body.postResponse.location)
             globalData.setImagePathProduct(response.body.postResponse.location);
+            console.log("image name  "+imageFile.name)
+            console.log("image path globalData  "+globalData.getImagePathProduct())
+            
           }
         });
       }
