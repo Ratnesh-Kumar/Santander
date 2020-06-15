@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, Keyboard, ScrollView, Alert, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -38,7 +38,7 @@ export default class CampaignScreen extends BaseComponent {
   }
   render() {
     return (
-      <View style={campaignStyle.container}>
+      <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'} >
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <Stepper count={3} currentCount={2}/>
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10,marginBottom: 20  }}>
@@ -55,7 +55,7 @@ export default class CampaignScreen extends BaseComponent {
             Actions.createCampaignShare()
           }} />
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -180,10 +180,10 @@ export default class CampaignScreen extends BaseComponent {
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => { globalData.setSalesTax(text); this.setState({ salesTax: text }) }}
-              returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
-              keyboardType={'number-pad'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               style={campaignStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -192,6 +192,7 @@ export default class CampaignScreen extends BaseComponent {
               // errorText={strings('createCampaign.campaignNameErrorText')}
               underlineHeight={2}
               onSubmitEditing={event => {
+                Keyboard.dismiss()
               }}
             />
           </View>

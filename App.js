@@ -111,6 +111,7 @@ export default class App extends Component {
           <Scene key="manageCampaign" component={ManageCampaign} title="Manage Campaign" hideNavBar />
           <Scene key="qrCode" component={QRCode} title="Terms" hideNavBar />
           <Scene key="campaignVarient" component={VarientDetail} title="Varient Detail" hideNavBar />
+          <Scene key="browser" component={Browser} title="Facebook Share" duration={0} />
         </Scene>
 
         <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
