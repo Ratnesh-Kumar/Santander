@@ -19,19 +19,90 @@ var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
+var campaignDetails = "";
+var campaignVariantArray = [];
+var isUpdate = "";
+var campaignId = "";
+var fetchCampaignData = "";
+
 export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
     this.state = {
       campaignName: '',
-      productQuantity: 1,
+      campaignQuantity: "1",
       variantsList: [],
       categoryList: [],
-      salesTax:0,
+      salesTax:'',
       salesTaxType:''
     }
+    campaignDetails = props.campaignDetails;
+    isUpdate = props.isUpdate ? props.isUpdate : false
+    campaignId = props.campaignId
+    fetchCampaignData = this.getProductDetail();
+    // if (isUpdate) {
+    //   this.setUpdateData();
+    // }
   }
+
+  UNSAFE_componentWillReceiveProps(props) {
+    if (this.isValidString(props.variantInfo)) {
+      if (isUpdate) {
+        this.updateCampaignVariantArray(props.variantInfo);
+      } else {
+        if (!this.isVariantExist(props.variantInfo)) {
+          campaignVariantArray.push(props.variantInfo);
+        }
+      }
+    }
+  }
+
+  isVariantExist(variantInfo) {
+    if (this.isValidArray(campaignVariantArray) && this.isValidString(variantInfo)) {
+      for (let i = 0; i < campaignVariantArray.length; i++) {
+        if (campaignVariantArray[i].name === variantInfo.name) {
+          campaignVariantArray[i].price = variantInfo.price;
+          campaignVariantArray[i].barcode = variantInfo.barcode;
+          campaignVariantArray[i].salePrice = variantInfo.salePrice;
+          campaignVariantArray[i].skuNumber = variantInfo.skuNumber;
+          campaignVariantArray[i].quantity = variantInfo.quantity;
+          return true
+        }
+      }
+    }
+    return false
+  }
+
+  updateCampaignVariantArray(variantInfo) {
+    let isUpdatedFlag = false;
+    if (this.isValidArray(campaignVariantArray) && this.isValidString(variantInfo)) {
+      for (let i = 0; i < campaignVariantArray.length; i++) {
+        if (campaignVariantArray[i].name === variantInfo.name) {
+          isUpdatedFlag = true;
+          campaignVariantArray[i].price = variantInfo.price;
+          campaignVariantArray[i].barcode = variantInfo.barcode;
+          campaignVariantArray[i].salePrice = variantInfo.salePrice;
+          campaignVariantArray[i].skuNumber = variantInfo.skuNumber;
+          campaignVariantArray[i].quantity = variantInfo.quantity;
+        }
+      }
+      if (!isUpdatedFlag) {
+        campaignVariantArray.push(variantInfo);
+      }
+    } else if (this.isValidString(variantInfo)) {
+      campaignVariantArray.push(variantInfo);
+    }
+  }
+
+  componentWillUnmount() {
+    campaignVariantArray = [];
+    this.setState({
+      variantsList: [],
+      categoryList: []
+    })
+  }
+
 
   async componentDidMount() {
 
@@ -39,12 +110,18 @@ export default class CampaignScreen extends BaseComponent {
   render() {
     return (
       <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'} >
-        <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
+        <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} onLeftArrowPressed={() => {
+          campaignVariantArray = [];
+          this.setState({
+            variantsList: [],
+            categoryList: []
+          })
+        }}/>
         <Stepper count={3} currentCount={2}/>
         <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10,marginBottom: 20  }}>
           <View>
             {this.renderSwitchTextInput()}
-            {this.renderProductQuantity()}
+            {this.rendercampaignQuantity()}
             <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
             {this.renderCategoryTagView()}
             {this.renderVariantsQantityView()}
@@ -53,10 +130,67 @@ export default class CampaignScreen extends BaseComponent {
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
             Actions.createCampaignShare()
+            //this.addCampaign()
           }} />
         </ScrollView>
       </KeyboardAvoidingView>
     );
+  }
+
+  getCategoryTags(categoryList) {
+    let categoryTags = "";
+    if (this.isValidArray(categoryList)) {
+      for (let i = 0; i < categoryList.length; i++) {
+        let value = categoryList[i];
+        if (this.isValidString(categoryTags)) {
+          categoryTags = categoryTags + ", " + value
+        } else {
+          categoryTags = value;
+        }
+      }
+    }
+    return categoryTags;
+  }
+
+  getVariantItem(variant) {
+    if (this.isValidArray(campaignVariantArray)) {
+      for (let i = 0; i < campaignVariantArray.length; i++) {
+        if (campaignVariantArray[i].name === variant) {
+          return campaignVariantArray[i]
+        }
+      }
+    }
+    let variantItem = {};
+    variantItem.name = variant;
+    variantItem.price = "";
+    variantItem.salePrice = "",
+    variantItem.barcode = "";
+    variantItem.skuNumber = "";
+    variantItem.quantity="1"
+    return variantItem;
+  }
+  
+  addCampaign(){
+    let variantList = [];
+    console.log('############# this.state.variantsList',this.state.variantsList);
+    for (let i = 0; i < this.state.variantsList.length; i++) {
+      let variantItem = this.getVariantItem(this.state.variantsList[i]);
+      console.log('############# variantItem',variantItem);
+      variantList.push(this.getCampaignVariant(variantItem))
+    }
+    campaignDetails.campaignCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
+    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)
+    //Actions.createCampaignShare()
+    var requestBody = this.getRequestBody(campaignDetails, variantList);
+
+    
+    console.log('############# variantList',variantList);
+
+    
+    console.log('############# requestBody ::::::',requestBody);
+
+
+
   }
 
   renderVariantsQantityView() {
@@ -76,40 +210,72 @@ export default class CampaignScreen extends BaseComponent {
 
   renderQuantityView(quantityTitle) {
     return (
-      <QuantityField isVarientQuantityView={true} 
-      onButtonPressed={() => {
-        Actions.campaignVarient()
-      }}
+      <QuantityField isVarientQuantityView={true}
+        onButtonPressed={() => {
+          Actions.campaignVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
+          //Actions.campaignVarient()
+        }}
        title={quantityTitle} updatedQuantity={(quantity) => {
         this.setState({
-          productQuantity: quantity
+          campaignQuantity: quantity
         })
       }} />
     )
+  }
+
+  getVariantObj(title) {
+    if (this.isValidArray(campaignVariantArray)) {
+      for (let i = 0; i < campaignVariantArray.length; i++) {
+        if (campaignVariantArray[i].name == title) {
+          return campaignVariantArray[i];
+        }
+      }
+    }
+    return "";
   }
 
   renderCategoryTagView() {
     return (
       <View style={{ paddingLeft:10,paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
-        <CreateTagView labelName={strings('createCampaign.categoryTagTextInput')} updatedList={(categoryList) => { globalData.setCategoriesCampaign(categoryList); this.setState({ categoryList: categoryList }) }} />
+        <CreateTagView
+          labelName={strings('createCampaign.categoryTagTextInput')}
+          isCategoryTag={true}
+          categoryList={this.state.categoryList}
+          updatedList={(categoryList) => {
+            globalData.setCategoriesCampaign(categoryList);
+            this.setState({ categoryList: categoryList })
+          }} />
         <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
         <View style={{ paddingTop: 20 }}>
           <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.variantsTagText')}</Text>
-          <CreateTagView labelName={strings('createCampaign.variantsTagTextInput')} updatedList={(variantList) => { globalData.setVariantsCampaign(variantList); this.setState({ variantsList: variantList }) }} />
+          <CreateTagView
+            labelName={strings('createCampaign.variantsTagTextInput')}
+            isCategoryTag={false}
+            variantList={this.state.variantsList}
+            updatedList={(variantList) => {
+              globalData.setVariantsCampaign(variantList);
+              //this.updateProductVariantList(variantList)
+              this.setState({ variantsList: variantList })
+            }} />
         </View>
       </View>
     )
   }
 
-
-
-
-  renderProductQuantity() {
+  rendercampaignQuantity() {
     return (
-      <QuantityField isVarientQuantityView={false} title={strings('createCampaign.quanitytTitle')} updatedQuantity={(quantity) => { globalData.setQuantityCampaign(quantity) }} />
+      <QuantityField title={strings('createCampaign.quanitytTitle')} quantity={campaignDetails.campaignQuantity} updatedQuantity={(quantity) => {
+        globalData.setQuantityCampaign(quantity)
+        campaignDetails.campaignQuantity = quantity
+        this.setState({
+          campaignQuantity: quantity
+        })
+      }} />
     )
   }
+
+
 
   renderSwitchTextInput() {
     return (
@@ -199,6 +365,69 @@ export default class CampaignScreen extends BaseComponent {
         </View>
       </View>
     )
+  }
+
+  getRequestBody(data, variantList) {
+    console.log('######### data :::: ',data);
+    return {
+      "username": globalData.getUserInfo().username,
+      // "businessId": data.campaignName,
+      // "campaignId": data.campaignCategory,
+      // "campaignStatus": data.campaignDescription,
+      "businessId": globalData.getBusinessId(),
+      "campaignId": "",
+      "campaignStatus": "DRAFT",
+      "tags": data.campaignCategoryTags,
+      "defaultDetails": {
+        "variantName": "default",
+        "optionalValues": "none",
+        "productPrice": data.campaignSalePrice,
+        "barCode": "9867543210",
+        "sku": data.campaignskuNumber,
+        "weight": data.weight,
+        "weightUnit": data.weightUnit,
+        "trackInventory": true,
+        "reorderLevel": 10,
+        "leadTime": 20,
+        "quantityOnHand": this.isValidString(data.campaignQuantity) ? data.campaignQuantity : "1",
+        "asOfDate": "12-Jan-2019",
+        "requiredShipping": true,
+        "taxable": true,
+        "taxCode": "CA",
+        "displayProduct": true,
+        "comparePrice": data.campaignPrice,
+        "productCost":"",
+      },
+      "productVariants": variantList,
+      "extensions": []
+    }
+    //discountinuedProduct
+  }
+
+  getCampaignVariant(variant) {
+    console.log('######### getCampaignVariant :::: ',variant);
+    return {
+      "variantId": "",
+      "variantName": variant.name,
+      "optionalValues": "",
+      "productPrice": variant.salePrice,
+      "barCode": "9867543210",
+      "sku": variant.skuNumber,
+      "weight": 0,
+      "weightUnit": "",
+      "trackInventory": true,
+      "reorderLevel": 10,
+      "leadTime": 20,
+      "quantityOnHand": this.isValidString(variant.quantity) ? variant.quantity : "1",
+      "asOfDate": "12-Jan-2019",
+      "requiredShipping": true,
+      "taxable": true,
+      "taxCode": "CA",
+      "displayProduct": true,
+      "comparePrice": variant.price,
+      "productCost": variant.productCost,
+      "defaultProfitMargetSet": !this.isValidString(variant.productCost)
+    }
   }
 
 

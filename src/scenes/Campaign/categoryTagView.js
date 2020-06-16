@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, TouchableOpacity,Platform  } from 'react-native';
+import { StyleSheet, Text, View, Keyboard, Image, TextInput, ScrollView, TouchableOpacity,Platform  } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -20,7 +20,7 @@ export default class CampaignScreen extends BaseComponent {
         super(props)
         this.state = {
             tagName: '',
-            tagNameList: []
+            tagNameList: (props.isCategoryTag) ? ((this.isValidArray(props.categoryList)) ? props.categoryList : []) : ((this.isValidArray(props.variantList)) ? props.variantList : [])
         }
     }
 
@@ -101,6 +101,7 @@ export default class CampaignScreen extends BaseComponent {
 
                <View style={{flex:1,paddingRight:25}}>
                 <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
+                    Keyboard.dismiss()
           this.addItemToTagList()
           
         }}/>

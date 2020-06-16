@@ -41,6 +41,15 @@ export default class CreateCampaiganShare extends BaseComponent {
   }
 
 
+  UNSAFE_componentWillReceiveProps(nextProps){
+    console.log('####### nextprops of campaign share field : ',nextProps.sendData)
+    if (nextProps.sendData) {
+      console.log('####### CALL API for post published and send data to API');
+      Actions.tabbar()
+    }
+  }
+
+
 
   render() {
     return (
