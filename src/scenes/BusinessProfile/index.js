@@ -28,7 +28,9 @@ import ActivityIndicatorView from '../../components/activityindicator/ActivityIn
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 var globalData = new GlobalData();
 //var businessData = globalData.getshopDetail();
-var shopName="";
+var shopName = "DigiShop - test@yopmail.com";
+var businessInfo = "";
+var businessTaxId = ""
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
         super(props);
@@ -60,36 +62,26 @@ export default class BusinessProfileView extends BaseComponent {
         shopInfo = props.shopInfo;
     }
 
-   
+
     componentDidMount() {
-        
+
     }
 
+
     async handleBusinessProfile() {
-        let businessInfo = {
-            "businessTaxId": this.state.buisnesstaxId,
-            "businessName": this.state.businessName,
-            "industryType": "",
-            "country": "US",
-            "phone": this.state.phone,
-            "website": this.state.websiteUrl,
-            "fb": this.state.fbUrl,
-            "yelp": this.state.yelpUrl,
-            "address": this.state.address,
-            "city": this.state.city,
-            "state": this.state.postalState,
-            "postalCode": this.state.postalCode
-        }
+
         this.renderActivityIndicatorShow();
-        let shopUpdateURL = constants.UPDATE_SHOP.replace(constants.SHOP_NAME, shopName);
-        var requestBody = this.getRequestBody(businessInfo, shopInfo);
+        let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, shopName);
+        console.log("shopUpdateURl : " + shopUpdateURL)
+        var requestBody = this.getRequestBody(shopInfo);
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-            if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+            if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
                 console.log(fetchData)
+                Actions.shop();
             }
-            else{
+            else {
                 console.log('error');
             }
         }
@@ -202,7 +194,7 @@ export default class BusinessProfileView extends BaseComponent {
                     <SwitchTextInput
                         isDropDownVisbile={true}
                         title={strings('BuisnessProfile.IndustryTypeText')}
-                        //onPress={() => Alert.alert('test')}
+                    //onPress={() => Alert.alert('test')}
                     />
                 </View>
 
@@ -211,7 +203,7 @@ export default class BusinessProfileView extends BaseComponent {
                     <SwitchTextInput
                         isDropDownVisbile={true}
                         title={strings('BuisnessProfile.CountryText')}
-                        //onPress={() => Alert.alert('test')}
+                    //onPress={() => Alert.alert('test')}
                     />
                 </View>
 
@@ -672,7 +664,7 @@ export default class BusinessProfileView extends BaseComponent {
         //console.log("########## shopData : " + businessData.shopName)
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
-               {this.renderModal()}
+                {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
                 <View style={businessStyle.viewContainer}>
                     <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginBottom: 20 }}>
@@ -704,28 +696,28 @@ export default class BusinessProfileView extends BaseComponent {
         }, 50);
     }
 
-    getRequestBody(businessData, data) {
+    getRequestBody(data) {
         return {
             "shopName": shopName,
-            "taxId": businessData.businessTaxId,
-            "country": businessData.country,
+            "taxId": this.state.businessTaxId,
+            "country": this.state.country,
             "bankRoutingNumber": "1-----1",
             "locale": "en_us",
             "currency": "USD",
             "firstName": "John 2",
             "lastName": "Smith 2",
             "nationality": "USA",
-            "address": businessData.address,
-            "city": businessData.city,
-            "state": businessData.postalState,
+            "address": this.state.address,
+            "city": this.state.city,
+            "state": this.state.postalState,
             "district": "Santa ----",
-            "postalCode": businessData.postalCode,
+            "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
             "preferredLanguage": "en_us",
             "businessSettings": {
                 "sourcePrimaryKey": "1234567890",
                 "defaultProfitMargin": data.defaultProfitMargin,
-                "businessName": businessData.buisnessName,
+                "businessName": this.state.buisnessName,
                 "trackInventory": data.trackInventory,
                 "taxOnSales": data.taxOnSales,
                 "taxOnPurchase": true,
