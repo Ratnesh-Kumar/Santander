@@ -74,19 +74,21 @@ export default class AddProductCategory extends BaseComponent {
       })
       if (this.isValidArray(fetchProductData.productVariants)) {
         let productVariant = fetchProductData.productVariants;
-
         for (let i = 0; i < productVariant.length; i++) {
           let variant = productVariant[i];
-          let variantDetail = {};
-          this.state.variantsList.push(variant.variantName)
-          variantDetail.name = variant.variantName;
-          variantDetail.price = variant.comparePrice;
-          variantDetail.barcode = variant.barCode;
-          variantDetail.skuNumber = variant.sku;
-          variantDetail.salePrice = variant.productPrice;
-          variantDetail.productCost = variant.productCost;
-          variantDetail.quantity = variant.quantityOnHand;
-          productVariantArray.push(variantDetail)
+          if(!variant.discountinuedProduct){
+            let variantDetail = {};
+            this.state.variantsList.push(variant.variantName)
+            variantDetail.name = variant.variantName;
+            variantDetail.price = variant.comparePrice;
+            variantDetail.barcode = variant.barCode;
+            variantDetail.skuNumber = variant.sku;
+            variantDetail.salePrice = variant.productPrice;
+            variantDetail.productCost = variant.productCost;
+            variantDetail.quantity = variant.quantityOnHand;
+            variantDetail.discountinuedProduct = variant.discountinuedProduct;
+            productVariantArray.push(variantDetail)
+          }
         }
       }
     }
