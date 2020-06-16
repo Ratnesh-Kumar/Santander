@@ -106,8 +106,9 @@ export default class BaseComponent extends Component {
           "businessId": businessId,
           "username": globalData.getUserInfo().username
         }
-        globalData.setBusinessId(businessId)
+        globalData.setBusinessId(businessId);
         console.log("############# createShop businessId : " + businessId);
+        console.log("########### shopName : "+ SHOP_NAME)
         let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
       }
 
@@ -124,6 +125,8 @@ export default class BaseComponent extends Component {
       }
     }
   }
+
+
 
   async saveBusinessId(businessId) {
 

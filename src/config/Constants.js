@@ -39,6 +39,7 @@ export const USER_REGISTERED_STATUS = "Registered";
 export const CREATE_SHOP_STATUS = "Success";
 export const SUCCESS_STATUS = "Success";
 export const PRODUCT_ID = "#ProductId";
+export const SHOP_NAME = "#ShopName";
 
 //API urls
 export const COUNTRY_NAME = RNLocalize.getCountry();
@@ -56,6 +57,7 @@ export const USER_RESET_PASSWORD_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users/forgot
 export const CHECKING_EMAIL_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users";
 export const GET_PRODUCT_LIST = BASE_PRODUCT_SERVICE_URL+"/v1/product?businessId=";
 export const GET_PRODUCT_DETAIL =BASE_PRODUCT_SERVICE_URL+"/v1/product/"+PRODUCT_ID+"?businessId=";
+export const UPDATE_SHOP=BASE_PARTY_SERVICE_URL+"/v1/party/shop"+SHOP_NAME;
 
 //Party Shop API Url
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";

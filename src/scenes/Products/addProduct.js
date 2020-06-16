@@ -555,7 +555,7 @@ export default class AddProductScreen extends BaseComponent {
   showPickedImage() {
     return (
       <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
-        <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
+        <Image source={this.state.pickedImage?this.state.image:null} style={{ height: 60, width: 60, marginTop: 20 }} />
         <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
       </TouchableOpacity>
     )

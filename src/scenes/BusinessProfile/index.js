@@ -6,7 +6,10 @@ import {
     KeyboardAvoidingView,
     TouchableOpacity,
     ScrollView,
+    Alert,
+    Keyboard,
 } from 'react-native';
+import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
 import Constants from '../../config/Constants';
@@ -19,9 +22,14 @@ import AppButton from '../../components/AppButton';
 import SwitchTextInput from '../../components/SwitchTextInput';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
-
-
-export default class BusinessProfileView extends Component {
+import GlobalData from '../../utils/GlobalData';
+import { fetchPartyPUT } from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+var globalData = new GlobalData();
+//var businessData = globalData.getshopDetail();
+var shopName="";
+export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -41,9 +49,91 @@ export default class BusinessProfileView extends Component {
             websiteUrl: '',
             fbUrl: '',
             yelpUrl: '',
+            country: '',
+            isActivityIndicatorVisible: false,
+            activityIndicatorText: '',
+            isDialogModalVisible: false,
+            dialogModalText: '',
+            dialogModalTitle: '',
 
         }
+        shopInfo = props.shopInfo;
     }
+
+   
+    componentDidMount() {
+        
+    }
+
+    async handleBusinessProfile() {
+        let businessInfo = {
+            "businessTaxId": this.state.buisnesstaxId,
+            "businessName": this.state.businessName,
+            "industryType": "",
+            "country": "US",
+            "phone": this.state.phone,
+            "website": this.state.websiteUrl,
+            "fb": this.state.fbUrl,
+            "yelp": this.state.yelpUrl,
+            "address": this.state.address,
+            "city": this.state.city,
+            "state": this.state.postalState,
+            "postalCode": this.state.postalCode
+        }
+        this.renderActivityIndicatorShow();
+        let shopUpdateURL = constants.UPDATE_SHOP.replace(constants.SHOP_NAME, shopName);
+        var requestBody = this.getRequestBody(businessInfo, shopInfo);
+        let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
+        if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+            if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+                let fetchData = responseData.properties[0].value;
+                console.log(fetchData)
+            }
+            else{
+                console.log('error');
+            }
+        }
+        this.renderActivityIndicatorHide()
+
+    }
+
+    renderActivityIndicatorShow() {
+        this.setState({
+            isActivityIndicatorVisible: true,
+            activityIndicatorText: 'Loading...'
+        });
+    }
+
+    renderActivityIndicatorHide() {
+        this.setState({
+            isActivityIndicatorVisible: false,
+            activityIndicatorText: ''
+        });
+    }
+
+    renderDialogModal(title, message) {
+        this.setState({
+            isDialogModalVisible: true,
+            dialogModalText: message,
+            dialogModalTitle: title
+        });
+        message = '';
+    }
+
+    renderModal() {
+        if (this.state.isDialogModalVisible) {
+            return (
+                <DialogModalView isVisible={this.state.isDialogModalVisible}
+                    title={this.state.dialogModalTitle}
+                    message={this.state.dialogModalText}
+                    handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+        } else if (this.state.isActivityIndicatorVisible) {
+            return (
+                <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+            );
+        }
+    }
+
     renderBuisnessForm() {
         return (
             <KeyboardAvoidingView
@@ -105,8 +195,25 @@ export default class BusinessProfileView extends Component {
 
 
                 </View>
-                {this.renderSwitchFields(strings('BuisnessProfile.IndustryTypeText'))}
-                {this.renderSwitchFields(strings('BuisnessProfile.CountryText'))}
+                {/*this.renderSwitchFields(strings('BuisnessProfile.IndustryTypeText'))*/}
+                {/*this.renderSwitchFields(strings('BuisnessProfile.CountryText'))*/}
+
+                <View style={{ paddingTop: 10 }}>
+                    <SwitchTextInput
+                        isDropDownVisbile={true}
+                        title={strings('BuisnessProfile.IndustryTypeText')}
+                        //onPress={() => Alert.alert('test')}
+                    />
+                </View>
+
+
+                <View style={{}}>
+                    <SwitchTextInput
+                        isDropDownVisbile={true}
+                        title={strings('BuisnessProfile.CountryText')}
+                        //onPress={() => Alert.alert('test')}
+                    />
+                </View>
 
                 {/* <View style={businessStyle.inputWrapper}>
                     <View style={businessStyle.validFormSecondFieldView}>
@@ -284,12 +391,13 @@ export default class BusinessProfileView extends Component {
         )
     }
 
-    renderSwitchFields(title) {
+    renderSwitchFields(title, onPress) {
         return (
             <View style={{}}>
                 <SwitchTextInput
                     isDropDownVisbile={true}
                     title={title}
+                    onPress={() => Alert.alert('test')}
                 />
             </View>
         );
@@ -347,6 +455,7 @@ export default class BusinessProfileView extends Component {
                             //errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
                             underlineHeight={2}
                             onSubmitEditing={event => {
+                                Keyboard.dismiss()
 
                             }}
                         />
@@ -437,10 +546,10 @@ export default class BusinessProfileView extends Component {
             <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperPhoneCode}>
                     <View style={businessStyle.validFormSecondFieldView}>
-                       <View style={{borderWidth:1,height:55,alignItems:"center",flexDirection:'row'}}>
-                           <Image style={{marginLeft:15,width:27,height:16}} source={require('../../public/images/icon_flag.png')}></Image>
-                       <Text style={{paddingLeft:20,fontSize:16}}>+1</Text>
-                       </View>
+                        <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
+                            <Image style={{ marginLeft: 15, width: 27, height: 16 }} source={require('../../public/images/icon_flag.png')}></Image>
+                            <Text style={{ paddingLeft: 20, fontSize: 16 }}>+1</Text>
+                        </View>
                     </View>
                 </View>
                 <View style={businessStyle.inputWrapperPhone}>
@@ -507,8 +616,8 @@ export default class BusinessProfileView extends Component {
                     <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.yelpUrl}
-                            refsValue={"yelpUrl"}
-                            ref={"yelpUrl"}
+                            refsValue={"fbUrl"}
+                            ref={"fbUrl"}
                             label={strings('BuisnessProfile.FbTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
@@ -524,15 +633,15 @@ export default class BusinessProfileView extends Component {
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
-                                this.refs.Address.focus();
+                                this.refs.yelpUrl.focus();
                             }}
                         />
                     </View>
                     <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.fbUrl}
-                            refsValue={"fbUrl"}
-                            ref={"fbUrl"}
+                            refsValue={"yelpUrl"}
+                            ref={"yelpUrl"}
                             label={strings('BuisnessProfile.YelpTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
@@ -560,8 +669,10 @@ export default class BusinessProfileView extends Component {
 
 
     render() {
+        //console.log("########## shopData : " + businessData.shopName)
         return (
-            <View style={businessStyle.renderContainer}>
+            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
+               {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
                 <View style={businessStyle.viewContainer}>
                     <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginBottom: 20 }}>
@@ -573,11 +684,11 @@ export default class BusinessProfileView extends Component {
                         {/* {this.renderDocuments()}
                         {this.renderDocumentDetail()} */}
                         <AppButton buttonText={strings('BuisnessProfile.NextButton')} onButtonPressed={() => {
-                            Actions.tabbar();
+                            this.handleBusinessProfile()
                         }} />
                     </ScrollView>
                 </View>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 
@@ -592,6 +703,58 @@ export default class BusinessProfileView extends Component {
             );
         }, 50);
     }
+
+    getRequestBody(businessData, data) {
+        return {
+            "shopName": shopName,
+            "taxId": businessData.businessTaxId,
+            "country": businessData.country,
+            "bankRoutingNumber": "1-----1",
+            "locale": "en_us",
+            "currency": "USD",
+            "firstName": "John 2",
+            "lastName": "Smith 2",
+            "nationality": "USA",
+            "address": businessData.address,
+            "city": businessData.city,
+            "state": businessData.postalState,
+            "district": "Santa ----",
+            "postalCode": businessData.postalCode,
+            "dateFormat": "MM/DD/YY",
+            "preferredLanguage": "en_us",
+            "businessSettings": {
+                "sourcePrimaryKey": "1234567890",
+                "defaultProfitMargin": data.defaultProfitMargin,
+                "businessName": businessData.buisnessName,
+                "trackInventory": data.trackInventory,
+                "taxOnSales": data.taxOnSales,
+                "taxOnPurchase": true,
+                "purchaseTaxReclaimable": false,
+                "multiCurrency": false,
+                "defaultNetDays": 90,
+                "defaultInventoryLeadTime": 5,
+                "defaultInventoryReorderSize": 10,
+                "defaultaInventoryLevelMin": 5,
+                "defaultShippingCost": data.defaultShippingCost,
+                "defaultHandlingCost": data.defaultHandlingCost,
+                "flatTaxRate": data.flatTaxRate,
+                "defaultPaymentType": "CREDIDCARD",
+                "txSettings": [{
+                    "appTransactionType": "DEFAULT",
+                    "lineItemDiscount": false,
+                    "transactionDiscount": true,
+                    "defaultTaxInclusive": false,
+                    "defaultShipCharged": false,
+                    "discountAllowed": data.showDiscount,
+                    "calcCommissions": false,
+                    "showWeights": true
+                }
+                ]
+            }
+        }
+    }
+
+
 
 }
 BusinessProfileView.propTypes = {
