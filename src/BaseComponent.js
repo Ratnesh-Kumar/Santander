@@ -149,4 +149,19 @@ export default class BaseComponent extends Component {
       }
     });
   }
+
+  handlerBusinessId(businessObject) {
+    if (this.isValidString(businessObject)) {
+      businessObject = JSON.parse(businessObject)
+      if (businessObject.username == globalData.getUserInfo().username) {
+        globalData.setBusinessId(businessObject.businessId)
+      }
+
+    }
+    console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
+    if (!this.isValidString(globalData.getBusinessId())) {
+      console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
+      this.createShop()
+    }
+  }
 }
