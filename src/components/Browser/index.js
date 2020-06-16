@@ -82,10 +82,11 @@ export default class Browser extends Component {
           [
             {
               text: 'OK', onPress: () => {
-                Actions.manageCampaign({ type: 'reset' });
-                setTimeout(() => {
-                  Actions.refresh({ isRefresh: true });
-                }, 100)
+                  Actions.pop({refresh: {sendData: true}} )
+                // Actions.manageCampaign({ type: 'reset' });
+                // setTimeout(() => {
+                //   Actions.refresh({ isRefresh: true });
+                // }, 100)
              }
             },
           ]

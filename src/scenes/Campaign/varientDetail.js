@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, TouchableOpacity, Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -18,17 +18,18 @@ var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
-
+var variantDetails = "";
 export default class VarientDetailScreen extends BaseComponent {
 
     constructor(props) {
         super(props)
         this.state = {
-            varientPriceValue: "",
-            varientSaleValue: "",
-            varientSku:"",
-            varientBarcodeValue:""
+            varientPriceValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.price) ? props.variantDetail.price.toString() : "") : "",
+            varientSaleValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.salePrice) ? props.variantDetail.salePrice.toString() : "") : "",
+            varientSku: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.skuNumber) ? props.variantDetail.skuNumber.toString() : "") : "",
+            varientBarcodeValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.barcode) ? props.variantDetail.barcode.toString() : "") : "",
         }
+        variantDetails = props.variantDetail;
     }
 
     async componentDidMount() {
@@ -39,18 +40,32 @@ export default class VarientDetailScreen extends BaseComponent {
             <View style={campaignStyle.container}>
                 <Header title={strings('variantCampaign.title')} isCrossIconVisible={false} />
                 <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
-                    <View>
-                    </View>
                     {this.renderPriceView()}
                     {this.renderSkuAndBarcode()}
                     <AppButton isLightTheme={false} buttonText={strings('variantCampaign.saveButtonText')} onButtonPressed={() => {
-                        Alert.alert('varient Detail Saved')
-                        Actions.pop()
+                         this.saveVariant()
                     }} />
                 </ScrollView>
             </View>
         )
     }
+
+    saveVariant() {
+        let variantInfo = {
+          "name": this.props.variantName,
+          "price": this.state.varientPriceValue,
+          "barcode": this.state.varientBarcodeValue,
+          "skuNumber": this.state.varientSku,
+          "salePrice": this.state.varientSaleValue
+        }
+        // Alert.alert('varient Detail Saved')
+        Actions.pop({ refresh: { variantInfo: variantInfo } });
+        setTimeout(() => {
+          Actions.refresh({ variantInfo: variantInfo })
+        }, 100)
+        // Actions.refresh({variantInfo: variantInfo})
+      }
+    
 
     renderSkuAndBarcode() {
         return (
@@ -66,7 +81,6 @@ export default class VarientDetailScreen extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => this.setState({ varientSku: text })}
-                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={campaignStyle.input}
@@ -76,9 +90,11 @@ export default class VarientDetailScreen extends BaseComponent {
                             textInputName={this.state.varientSku}
                             // errorText={strings('createCampaign.skuErrorText')}
                             underlineHeight={2}
-                            keyboardType="email-address"
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                            keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                             onSubmitEditing={event => {
-                                this.refs.campaignBarcdoe.focus();
+                                Keyboard.dismiss()
+                                //this.refs.campaignBarcdoe.focus();
                             }}
                         />
                     </View>
@@ -94,7 +110,8 @@ export default class VarientDetailScreen extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => this.setState({ varientBarcodeValue: text })}
-                            returnKeyType={'done'}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                            keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={campaignStyle.input}
@@ -109,6 +126,7 @@ export default class VarientDetailScreen extends BaseComponent {
                             isBarcodeDisplay={true}
                             onBarcodeTapped={() => { Actions.qrCode({ title: "Barcode Scanner" }) }}
                             onSubmitEditing={event => {
+                                Keyboard.dismiss()
                             }}
                         />
                     </View>
@@ -132,7 +150,6 @@ export default class VarientDetailScreen extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => { this.setState({ varientPriceValue: text }) }}
-                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={campaignStyle.input}
@@ -142,7 +159,8 @@ export default class VarientDetailScreen extends BaseComponent {
                             textInputName={this.state.varientPriceValue}
                             // errorText={strings('createCampaign.priceErrorText')}
                             underlineHeight={2}
-                            keyboardType={'number-pad'}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                            keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                             onSubmitEditing={event => {
                                 this.refs.varientSalePrice.focus();
                             }}
@@ -159,10 +177,10 @@ export default class VarientDetailScreen extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={text => { this.setState({ varientSaleValue: text }) }}
-                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            keyboardType={'number-pad'}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                            keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
                             style={campaignStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}

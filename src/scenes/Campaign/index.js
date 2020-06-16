@@ -17,6 +17,8 @@ var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 import { RNS3 } from 'react-native-aws3';
+var isUpdate = "";
+var itemId = "";
 var imageFile = {}
 var options = {}
 
@@ -26,7 +28,7 @@ export default class CampaignScreen extends BaseComponent {
     super(props)
     this.state = {
       campaignName: '',
-      productDescription: '',
+      campaignDescription: '',
       campaignPriceValue: '',
       campaignSaleValue: '',
       campaignCostValue: '',
@@ -38,6 +40,8 @@ export default class CampaignScreen extends BaseComponent {
       isBarcodeDisplay: false,
       showImage: false
     }
+    itemId = props.itemId;
+    isUpdate = props.isUpdate ? props.isUpdate : false;
   }
 
   async componentDidMount() {
@@ -75,7 +79,7 @@ export default class CampaignScreen extends BaseComponent {
             {/* {this.renderCostView()} */}
             {this.renderSkuAndBarcode()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-              Actions.createCampaign();
+              this.nextButtonTapped()
             }} />
 
           </ScrollView>
@@ -393,7 +397,7 @@ export default class CampaignScreen extends BaseComponent {
               multiline={true}
               maxLength={250}
               numberOfLines={3}
-              onChangeText={text => { globalData.setdescriptionCampaign(text); this.setState({ productDescription: text }) }}
+              onChangeText={text => { globalData.setdescriptionCampaign(text); this.setState({ campaignDescription: text }) }}
               onSubmitEditing={event => {
                 this.refs.campaignPrice.focus();
               }}
@@ -438,6 +442,29 @@ export default class CampaignScreen extends BaseComponent {
         </View>
       </View>
     );
+  }
+
+  nextButtonTapped(){
+    if (this.isValidString(this.state.campaignName)) {
+      let campaignDetails = {
+        "campaignName": this.state.campaignName,
+        "campaignDescription": this.state.campaignDescription,
+        "campaignPrice": this.state.campaignPriceValue,
+        "campaignSalePrice": this.state.campaignSaleValue,
+        "camapignbarcode": this.state.camapignbarcode,
+        "campaignskuNumber": this.state.campaignSku,
+      }
+      console.log('########## campaign Details :::: ',campaignDetails)
+      Actions.createCampaign({ campaignDetails: campaignDetails, isUpdate: false, campaignId: itemId });
+    } else {
+      Alert.alert(
+        'Info',
+        'Please provide valid campaign name.',
+        [
+          { text: 'OK' },
+        ]
+      );
+    }
   }
 
 

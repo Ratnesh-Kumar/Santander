@@ -95,7 +95,7 @@ export default class ManageCampaign extends BaseComponent {
                 <View style={{ flex: 1, justifyContent: 'center', }}>
                   <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Revenue - " + item.cost}</Text>                
                   </View>
-                <View style={{ justifyContent: 'center', }}>
+                <View style={{ justifyContent: 'center',marginRight:5 }}>
                   <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
                 </View>
                 </View>

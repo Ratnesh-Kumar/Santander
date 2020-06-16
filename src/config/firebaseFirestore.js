@@ -37,7 +37,6 @@ export function getRemoteConfig() {
             .then(documentSnapshot => {
                 if (documentSnapshot.exists) {
                     var data = documentSnapshot.data();
-                    console.log("############## remoteConfig : "+JSON.stringify(data))
                     remoteConfigHandle(data)
                     resolve(data)
                 }else{
