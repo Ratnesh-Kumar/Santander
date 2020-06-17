@@ -164,7 +164,7 @@
     "handlingCostInput": "Costo de manipulación",
     "defaultsTitle": "Valores predeterminados",
     "paymentDropDownText": "Procesador de pagos",
-    "taxInventory": "Inventario fiscal",
+    "taxInventory": "Seguimiento de inventario",
     "taxOnSales": "Impuesto sobre ventas",
     "taxTypeInput": "Tipo de impuesto",
     "flatTaxSwitch": "Impuesto fijo",

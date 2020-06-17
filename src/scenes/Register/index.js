@@ -141,6 +141,7 @@ export default class RegisterView extends BaseComponent {
           businessObject = JSON.parse(businessObject)
           if(businessObject.username == globalData.getUserInfo().username){
             globalData.setBusinessId(businessObject.businessId)
+            globalData.setShopName(businessObject.shopName)
           }
           
         }

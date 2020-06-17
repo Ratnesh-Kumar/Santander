@@ -170,6 +170,49 @@ function fetchProductPUT(urlString, bodyData) {
   )
 }
 
+function fetchPartyPUT(urlString, bodyData) {
+  return new Promise(function (resolve, reject) {
+    fetch(urlString, {
+      method: "PUT",
+      timeout: 2000,
+      headers: getPartyPostHeader(),
+      body: JSON.stringify(bodyData),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        error.message = "Unable to communicate with server.";
+        console.log('There has been a problem with your fetch operation: fetchPartyPOST');
+
+        resolve(error.message);
+        reject(() => {
+        });
+      }).done();
+  }
+  )
+}
+
+function fetchPartyGET(url) {
+  return new Promise(function (resolve, reject) {
+    fetch(url, {
+      method: "GET",
+      headers: getPartyPostHeader()
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        console.log('There has been a problem with your fetch operation: fetchJsonGET' + error.message);
+        reject(error.message);
+      }).done();
+  }
+  )
+}
+
+
 
 
 export {
@@ -178,5 +221,7 @@ export {
   fetchPartyPOST,
   fetchIdentityPOST,
   fetchProductPOST,
-  fetchProductPUT
+  fetchProductPUT,
+  fetchPartyPUT,
+  fetchPartyGET
 };
