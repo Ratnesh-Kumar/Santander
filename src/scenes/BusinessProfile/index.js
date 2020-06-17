@@ -8,7 +8,6 @@ import {
     ScrollView,
     Alert,
     Keyboard,
-    Picker
 } from 'react-native';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
