@@ -23,6 +23,9 @@ import CommonFunctions from '../../utils/CommonFunctions';
 import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
 import { create } from 'react-test-renderer';
+import {fetchProductGET} from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
@@ -32,15 +35,46 @@ export default class ManageCampaign extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-        searchText: ''
+      searchText: '',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
+      manageCampaignArr: []
     };
   }
 
+  componentDidMount(){
+    this.getCampaignList()
+  }
 
+  async getCampaignList(){
+    this.renderActivityIndicatorShow() 
+    let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
+    console.log('######## responseData ::: '+JSON.stringify(responseData))
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
+      if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+        if (this.isValidArray(responseData.properties)) {
+          let manageCampaignArr = responseData.properties[0].value;
+          this.setState({manageCampaignArr})
+        }
+        else{
+          this.renderDialogModal(strings('manageCampaignScreen.Info'),strings('manageCampaignScreen.errorNoCampaignFound'));
+        }
+      }
+      else{
+       // this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
+      }
+    }
+   
+    this.renderActivityIndicatorHide()
+  }
 
   render() {
     return (
       <View style={createStyle.container}>
+        {this.renderModal()}
         <FloatingButton onFloatButtonPressed={()=>{
           Actions.campaign()
         }}/>
@@ -104,6 +138,42 @@ export default class ManageCampaign extends BaseComponent {
           </View>
         </TouchableOpacity>
       )
+    }
+  }
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
     }
   }
 }

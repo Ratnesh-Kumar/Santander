@@ -15,6 +15,9 @@ import QuantityField from '../../components/QuantityField';
 import CreateTagView from './categoryTagView'
 import Stepper from '../../components/Stepper/stepper'
 import { color } from 'react-native-reanimated';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+import { fetchCampaignPOST } from '../../services/FetchData';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -35,12 +38,17 @@ export default class CampaignScreen extends BaseComponent {
       variantsList: [],
       categoryList: [],
       salesTax:'',
-      salesTaxType:''
+      salesTaxType:'',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
     }
     campaignDetails = props.campaignDetails;
     isUpdate = props.isUpdate ? props.isUpdate : false
     campaignId = props.campaignId
-    fetchCampaignData = this.getProductDetail();
+    fetchCampaignData = this.setCampaignDetail();
     // if (isUpdate) {
     //   this.setUpdateData();
     // }
@@ -110,6 +118,7 @@ export default class CampaignScreen extends BaseComponent {
   render() {
     return (
       <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'} >
+        {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           campaignVariantArray = [];
           this.setState({
@@ -129,8 +138,8 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-            //Actions.createCampaignShare()
-            this.addCampaign()
+            Actions.createCampaignShare()
+            //this.addCampaign()
           }} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -171,6 +180,7 @@ export default class CampaignScreen extends BaseComponent {
   }
   
   addCampaign(){
+    this.renderActivityIndicatorShow()
     let variantList = [];
     //console.log('############# this.state.variantsList',this.state.variantsList);
     for (let i = 0; i < this.state.variantsList.length; i++) {
@@ -186,6 +196,25 @@ export default class CampaignScreen extends BaseComponent {
     var requestBody = this.getRequestBody(productListArr);
     console.log('############# requestBody ::::::',JSON.stringify(requestBody));
 
+    // Call API for the save campaigan as a DRAFT 
+    var responseData = "";
+    let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUSINESS_ID, globalData.getBusinessId());
+    console.log('############# campaignSaveURL ::::::',campaignSaveURL);
+    // responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
+    // if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+    //   if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+    //     campaignVariantArray = [];
+    //     this.setState({
+    //       variantsList: [],
+    //       categoryList: []
+    //     })
+    //     this.renderActivityIndicatorHide()
+    //     this.setCampaignDetail("");
+    //   }
+    // }
+    this.renderActivityIndicatorHide()
+    
+    
 
 
   }
@@ -427,6 +456,43 @@ export default class CampaignScreen extends BaseComponent {
       "taxCode": "CA",
       "displayProduct": true,
       "comparePrice": variant.price,
+    }
+  }
+
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
     }
   }
 

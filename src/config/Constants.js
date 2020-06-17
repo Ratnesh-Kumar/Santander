@@ -39,7 +39,7 @@ export const USER_REGISTERED_STATUS = "Registered";
 export const CREATE_SHOP_STATUS = "Success";
 export const SUCCESS_STATUS = "Success";
 export const PRODUCT_ID = "#ProductId";
-
+export const BUSINESS_ID = "#BusinessId";
 //API urls
 export const COUNTRY_NAME = RNLocalize.getCountry();
 export const DEVICE_LOCALE = RNLocalize.getLocales()[0].languageTag;
@@ -47,9 +47,11 @@ export const BASE_URL = "http://3.135.192.164";
 export const IDENTITY_SERVICE_PORT =":8096";
 export const PARTY_SERVICE_PORT =":8094";
 export const PRODUCT_SERVICE_PORT =":8093";
+export const TRANSCATION_SERVICE_PORT =":9001";
 export const BASE_IDENTITY_SERVICE_URL = BASE_URL+IDENTITY_SERVICE_PORT;
 export const BASE_PARTY_SERVICE_URL = BASE_URL+PARTY_SERVICE_PORT;
 export const BASE_PRODUCT_SERVICE_URL = BASE_URL+PRODUCT_SERVICE_PORT;
+export const BASE_TRANSACTION_SERVICE_URL = BASE_URL+TRANSCATION_SERVICE_PORT;
 export const USER_REGISTRATION_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users";
 export const USER_LOGIN_URL = BASE_IDENTITY_SERVICE_URL+"/v1/users/login";
 export const USER_RESET_PASSWORD_URL=BASE_IDENTITY_SERVICE_URL+"/v1/users/forgotpassword";
@@ -60,8 +62,9 @@ export const GET_PRODUCT_DETAIL =BASE_PRODUCT_SERVICE_URL+"/v1/product/"+PRODUCT
 //Party Shop API Url
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
 
-
-
+// Campaigan API List
+export const GET_CAMPAIGN_LIST = BASE_TRANSACTION_SERVICE_URL+"/v1/party/"+BUSINESS_ID+"/transaction/campaign";
+export const GET_CAMPAIGN_DETAIL = BASE_TRANSACTION_SERVICE_URL+"/v1/party/"+BUSINESS_ID+"/transaction/campaign/";
 
 
 //Async const

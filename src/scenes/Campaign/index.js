@@ -459,7 +459,7 @@ export default class CampaignScreen extends BaseComponent {
     } else {
       Alert.alert(
         'Info',
-        'Please provide valid campaign name.',
+        'Please provide valid campaign title.',
         [
           { text: 'OK' },
         ]

@@ -11,11 +11,20 @@ import {
 var constants = require('./config/Constants');
 const SHOP_NAME = "DigiShop - "+globalData.getUserInfo.username;
 var productDetail="";
+var campaignDetail="";
 export default class BaseComponent extends Component {
 
   constructor() {
     super();
 
+  }
+
+  setCampaignDetail(campaignDetail){
+    campaignDetail = campaignDetail;
+  }
+
+  getCampaignDetail(){
+    return campaignDetail;
   }
 
   setProductDetail(prodDetail){
