@@ -110,7 +110,8 @@ export default class AddProductScreen extends BaseComponent {
       "productWeight": fetchData.defaultDetails.weight,
       "productBarcodeValue": fetchData.defaultDetails.barCode,
       "productCostValue": fetchData.defaultDetails.productCost,
-      "productSku": fetchData.defaultDetails.sku
+      "productSku": fetchData.defaultDetails.sku,
+      "imageURl":fetchData.productVariants[0].productURL
     };
     // // this.productInfo.productName = fetchData.productName;
     // this.productInfo.productDescription = fetchData.productDescription;
@@ -128,7 +129,9 @@ export default class AddProductScreen extends BaseComponent {
       productWeight: productInfo.productWeight + "",
       productBarcodeValue: productInfo.productBarcodeValue + "",
       productCostValue: productInfo.productCostValue+"",
-      productSkuValue: productInfo.productSku
+      productSkuValue: productInfo.productSku,
+      pickedImage: {uri:productInfo.imageURl},
+      showImage: true
     })
   }
 
@@ -207,7 +210,9 @@ export default class AddProductScreen extends BaseComponent {
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
-        "weightUnit": "lb"
+        "weightUnit": "lb",
+        "productImage":imageFile.name,
+        "productURL":globalData.getImagePathProduct()
       }
       
       Actions.addProductCategory({ productDetails: productDetails, isUpdate: isUpdate, productId: itemId });
@@ -310,7 +315,7 @@ export default class AddProductScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="email-address"
               onSubmitEditing={event => {
-                this.refs.productBarcdoe.focus();
+                this.refs.productWeight.focus();
               }}
             />
           </View>
@@ -536,7 +541,11 @@ export default class AddProductScreen extends BaseComponent {
             console.log("Failed to upload image to S3");
           }
           else {
+            console.log("imagePath1 ##### - "+response.body.postResponse.location)
             globalData.setImagePathProduct(response.body.postResponse.location);
+            console.log("image name  "+imageFile.name)
+            console.log("image path globalData  "+globalData.getImagePathProduct())
+            
           }
         });
       }
@@ -546,7 +555,7 @@ export default class AddProductScreen extends BaseComponent {
   showPickedImage() {
     return (
       <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
-        <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
+        <Image source={this.state.pickedImage?this.state.image:null} style={{ height: 60, width: 60, marginTop: 20 }} />
         <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
       </TouchableOpacity>
     )

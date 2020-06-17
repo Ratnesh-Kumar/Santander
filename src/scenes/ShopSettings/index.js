@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView,Keyboard } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import shopSettingStyle from './ShopSettingsStyle';
@@ -8,12 +8,16 @@ import SwitchTextInput from '../../components/SwitchTextInput';
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
-import AppButton from '../../components/AppButton'
+import AppButton from '../../components/AppButton';
+import {fetchPartyGET} from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
 var constants = require('../../config/Constants');
 var shopSettingConstants = require('./ShopSettingsConstants')
 var colorConstant = require('../../config/colorConstant')
-export default class ShopSettingScreen extends BaseComponent {
+var globalData = new GlobalData();
 
+export default class ShopSettingScreen extends BaseComponent {
   constructor(props) {
     super(props)
     this.state = {
@@ -21,16 +25,146 @@ export default class ShopSettingScreen extends BaseComponent {
       shippingCostValue:'',
       handlingCostValue:'',
       taxTypeValue:'',
-      taxRateValue:''
+      taxRateValue:'',
+      trackInventory:false,
+      taxOnSales:false,
+      showDiscount:false,
+      shipProducts:false,
+      estimateProfit:false,
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
+
+    }
+  }
+  componentDidUpdate(){
+  }
+
+  componentWillMount(){
+  }
+
+  componentWillReceiveProps(props){
+    if(props.isRefresh){
+      this.getShopData()
     }
   }
 
-  async componentDidMount() {
+   componentDidMount() {
+     this.getShopData()
+     //console.log(globalData.getshopDetail().shopName);
 
   }
+  renderActivityIndicatorShow() {
+    this.setState({
+        isActivityIndicatorVisible: true,
+        activityIndicatorText: 'Loading...'
+    });
+}
+
+renderActivityIndicatorHide() {
+    this.setState({
+        isActivityIndicatorVisible: false,
+        activityIndicatorText: ''
+    });
+}
+
+renderDialogModal(title, message) {
+    this.setState({
+        isDialogModalVisible: true,
+        dialogModalText: message,
+        dialogModalTitle: title
+    });
+    message = '';
+}
+
+renderModal() {
+    if (this.state.isDialogModalVisible) {
+        return (
+            <DialogModalView isVisible={this.state.isDialogModalVisible}
+                title={this.state.dialogModalTitle}
+                message={this.state.dialogModalText}
+                handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+        return (
+            <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+        );
+    }
+}
+  async getShopData(){
+    this.renderActivityIndicatorShow() 
+    let shopSettingUrl= constants.GET_SHOP_SETTING.replace(constants.BUISNESS_ID,globalData.getBusinessId())
+    console.log(globalData.getUserInfo().key)
+    let responseData = await fetchPartyGET(shopSettingUrl);
+    console.log(responseData)
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
+      if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+        if (this.isValidArray(responseData.properties)) {
+          let productArr = responseData.properties[0].value
+          this.setShopData(productArr);
+          console.log(productArr)
+        }
+      }
+    }
+    this.renderActivityIndicatorHide()
+  }
+
+  setShopData(fetchData){
+    shopInfo = {
+      "trackInventory": fetchData.trackInventory,
+      "taxOnSales": fetchData.taxOnSales,
+      "taxType": fetchData.defaultTaxType,
+      "tax": fetchData.flatTaxRate,
+      "showDiscounts": fetchData.showDiscounts,
+      "shipProducts": fetchData.shipProducts,
+      "estimateProfit": fetchData.estimateProfit,
+      "defaultProfitMargin":fetchData.defaultProfitMargin,
+      "defaultShippingCost":fetchData.defaultShippingCost,
+      "defaultHandlingCost":fetchData.defaultHandlingCost
+
+    };
+    console.log("TAx : "+shopInfo.tax)
+    this.setState({
+      trackInventory:shopInfo.trackInventory?true:false,
+      taxOnSales:fetchData.taxOnSales,
+      taxTypeValue:fetchData.taxType+"",
+      taxRateValue:fetchData.tax+"",
+      showDiscount:fetchData.showDiscount,
+      shipProducts:fetchData.shipProducts,
+      estimateProfit:fetchData.estimateProfit,
+      profitMarginValue:fetchData.defaultProfitMargin+"",
+      shippingCostValue:fetchData.defaultShippingCost+"",
+      handlingCostValue:fetchData.defaultHandlingCost+""
+    })
+    console.log("trackInvenory : "+this.state.trackInventory)
+    console.log("taxRate : "+this.state.taxRateValue)
+  }
+
+  handleShopSettings(){
+    let shopInfo={
+      "trackInventory": this.state.trackInventory,
+      "taxOnSales":this.state.taxOnSales,
+      "flatTaxRateType":this.state.taxTypeValue,
+      "flatTaxRate":this.state.flatTaxRate,
+      "showDiscount":this.state.showDiscount,
+      "shipProducts":this.state.shipProducts,
+      "estimateProfit":this.state.estimateProfit,
+      "defaultProfitMargin":this.state.defaultProfitMargin,
+      "defaultShippingCost":this.state.defaultShippingCost,
+      "defaultHandlingCost":this.state.defaultHandlingCost
+
+    };
+    Actions.businessProfile({ shopInfo: shopInfo });
+    
+  }
+
+
+
   render() {
     return (
-      <View style={shopSettingStyle.container}>
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={shopSettingStyle.container}>
+        {this.renderModal()}
         <Header title={strings('shopSettingsScreen.ShopSettingsTitle')} isCrossIconVisible={false} />
           <ScrollView keyboardShouldPersistTaps={'always'}>
             {this.renderPaymentBox()}
@@ -38,28 +172,29 @@ export default class ShopSettingScreen extends BaseComponent {
             {this.renderDiscountBox()}
             {this.renderDefaultsText()}
             {this.renderDefaultsTextInput()}
+            
             <AppButton buttonText={strings('shopSettingsScreen.nextButtonText')} onButtonPressed={()=>{
-                // Actions.businessProfile();
+                this.handleShopSettings()
             }}/>
           </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
   renderDiscountBox(){
     return (
       <View style={{ marginTop: 10 }}>
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
-        onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.showDiscount} 
+        onRightPressed={(value) => { console.log('showDiscount ::::', value),this.setState({showDiscount:value}) }} 
         title={strings('shopSettingsScreen.showDiscountSwitch')}
         />
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
-        onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.shipProducts} 
+        onRightPressed={(value) => { console.log('shipProducts ::::', value),this.setState({shipProducts:value}) }} 
         title={strings('shopSettingsScreen.shipProductsSwitch')}
         />
         {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.shippingCompany')}/> */}
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
-        onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.estimateProfit} 
+        onRightPressed={(value) => { console.log('estimateProfit ::::', value),this.setState({estimateProfit:value}) }} 
         title={strings('shopSettingsScreen.estimateProfit')}
         />
       </View>
@@ -67,15 +202,17 @@ export default class ShopSettingScreen extends BaseComponent {
   }
 
   renderPaymentBox(){
+    const {trackInventory,taxOnSales}=this.state;
     return (
       <View style={{ marginTop: 10 }}>
+        
         {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/> */}
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
-        onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={trackInventory} 
+        onRightPressed={(value) => { console.log('trackInventory ::::', value),this.setState({trackInventory:value}) }} 
         title={strings('shopSettingsScreen.taxInventory')}
         />
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true} 
-        onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={taxOnSales} 
+        onRightPressed={(value) => { console.log('taxOnSales ::::', value),this.setState({taxOnSales:value}) }} 
         title={strings('shopSettingsScreen.taxOnSales')}
         />
       </View>
@@ -95,7 +232,7 @@ export default class ShopSettingScreen extends BaseComponent {
               label={strings('shopSettingsScreen.taxTypeInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => this.setState({ taxRateValue: text })}
+              onChangeText={text => this.setState({ taxTypeValue: text })}
               returnKeyType={'done'}
               autoCorrect={false}
               isLoginScreen={false}
@@ -108,7 +245,7 @@ export default class ShopSettingScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="number"
               onSubmitEditing={event => {
-                this.refs.campaignBarcdoe.focus();
+                this.refs.taxRate.focus();
               }}
             />
           </View>
@@ -141,6 +278,7 @@ export default class ShopSettingScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="number"
               onSubmitEditing={event => {
+                this.refs.profitMargin.focus();
               }}
             />
           </View>
@@ -185,7 +323,7 @@ export default class ShopSettingScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="number"
               onSubmitEditing={event => {
-                this.refs.campaignBarcdoe.focus();
+                this.refs.shippingCost.focus();
               }}
             />
           </View>
@@ -213,6 +351,7 @@ export default class ShopSettingScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="number"
               onSubmitEditing={event => {
+                this.refs.handlingCost.focus();
               }}
             />
           </View>
@@ -240,6 +379,7 @@ export default class ShopSettingScreen extends BaseComponent {
               underlineHeight={2}
               keyboardType="number"
               onSubmitEditing={event => {
+                Keyboard.dismiss()
               }}
             />
           </View>

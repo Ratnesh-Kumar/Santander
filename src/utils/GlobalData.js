@@ -35,6 +35,7 @@ var s3accessKey = "";
 var s3SecretKey = "";
 var successActionStatus = 201;
 var businessId = '';
+var shopName = '';
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -281,6 +282,13 @@ export class GlobalData extends Component {
     }
     getBusinessId() {
         return businessId;
+    }
+
+    setShopName(text){
+        shopName=text;
+    }
+    getShopName(){
+        return shopName;
     }
 }
 
