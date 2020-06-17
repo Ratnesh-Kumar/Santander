@@ -28,7 +28,6 @@ import ActivityIndicatorView from '../../components/activityindicator/ActivityIn
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import { fetchIdentityPOST } from '../../services/FetchData';
 import TouchID from 'react-native-touch-id';
-import ConfirmGoogleCaptcha from 'react-native-google-recaptcha-v2';
 // import Auth from '@react-native-firebase/auth';
 import loginStyle from './LoginStyle';
 import {
@@ -160,14 +159,6 @@ export default class LoginView extends BaseComponent {
           Actions.register();
         }} />
         {this.renderUpdateText()}
-        {/* {this.renderTouchIdAndFaceId()}
-        <ConfirmGoogleCaptcha
-          ref={_ref => this.captchaForm = _ref
-          siteKey={siteKey}
-          baseUrl={baseUrl}
-          languageCode='en'
-          onMessage={()=>this.onMessage()}
-        /> */}
       </View>
     );
   }
@@ -202,11 +193,11 @@ export default class LoginView extends BaseComponent {
   handlerBusinessId(businessObject) {
     if (this.isValidString(businessObject)) {
       businessObject = JSON.parse(businessObject)
-      if(businessObject.username == globalData.getUserInfo().username){
+      if (businessObject.username == globalData.getUserInfo().username) {
         globalData.setBusinessId(businessObject.businessId)
         globalData.setShopName(businessObject.shopName)
       }
-      
+
     }
     console.log("########## shopName(login) : "+globalData.getShopName())
     console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
@@ -420,7 +411,7 @@ export default class LoginView extends BaseComponent {
                 isValidPassword={(flag) => { this.setState({ isValidPassword: flag }) }}
                 errorText={strings('loginScreen.PasswordTextInputError')}
                 onFocus={() => this.inputFocused.bind(this)}
-                onSubmitEditing={()=> Keyboard.dismiss()}
+                onSubmitEditing={() => Keyboard.dismiss()}
               />
               <TouchableOpacity
                 activeOpacity={0.7}
