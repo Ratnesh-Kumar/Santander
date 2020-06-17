@@ -129,8 +129,8 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-            Actions.createCampaignShare()
-            //this.addCampaign()
+            //Actions.createCampaignShare()
+            this.addCampaign()
           }} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -172,22 +172,19 @@ export default class CampaignScreen extends BaseComponent {
   
   addCampaign(){
     let variantList = [];
-    console.log('############# this.state.variantsList',this.state.variantsList);
+    //console.log('############# this.state.variantsList',this.state.variantsList);
     for (let i = 0; i < this.state.variantsList.length; i++) {
       let variantItem = this.getVariantItem(this.state.variantsList[i]);
-      console.log('############# variantItem',variantItem);
+      //console.log('############# variantItem',variantItem);
       variantList.push(this.getCampaignVariant(variantItem))
     }
     campaignDetails.campaignCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
     campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)
-    //Actions.createCampaignShare()
-    var requestBody = this.getRequestBody(campaignDetails, variantList);
-
-    
-    console.log('############# variantList',variantList);
-
-    
-    console.log('############# requestBody ::::::',requestBody);
+    let productListArr = [];
+    productListArr.push(this.getProductRequestBody(campaignDetails, variantList));
+    //console.log('############# productListArr ::::::',productListArr);
+    var requestBody = this.getRequestBody(productListArr);
+    console.log('############# requestBody ::::::',JSON.stringify(requestBody));
 
 
 
@@ -367,16 +364,23 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
-  getRequestBody(data, variantList) {
+  getRequestBody(productArr){
+    return{
+      "campaignStatus": "DRAFT",
+      "products": productArr,
+    };
+  }
+
+  getProductRequestBody(data, variantList) {
     console.log('######### data :::: ',data);
     return {
-      "username": globalData.getUserInfo().username,
-      // "businessId": data.campaignName,
-      // "campaignId": data.campaignCategory,
-      // "campaignStatus": data.campaignDescription,
-      "businessId": globalData.getBusinessId(),
-      "campaignId": "",
-      "campaignStatus": "DRAFT",
+      "productName": data.campaignName,
+      "productFamily": data.campaignCategory,
+      "productDescription": data.campaignDescription,
+      "salesDescription": "",
+      "incomeAccount": "Sales",
+      "costAccount": "Cost of Goods",
+      "vendor": "Vendor 1",
       "tags": data.campaignCategoryTags,
       "defaultDetails": {
         "variantName": "default",
@@ -396,10 +400,8 @@ export default class CampaignScreen extends BaseComponent {
         "taxCode": "CA",
         "displayProduct": true,
         "comparePrice": data.campaignPrice,
-        "productCost":"",
       },
       "productVariants": variantList,
-      "extensions": []
     }
     //discountinuedProduct
   }
@@ -425,8 +427,6 @@ export default class CampaignScreen extends BaseComponent {
       "taxCode": "CA",
       "displayProduct": true,
       "comparePrice": variant.price,
-      "productCost": variant.productCost,
-      "defaultProfitMargetSet": !this.isValidString(variant.productCost)
     }
   }
 
