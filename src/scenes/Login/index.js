@@ -204,9 +204,11 @@ export default class LoginView extends BaseComponent {
       businessObject = JSON.parse(businessObject)
       if(businessObject.username == globalData.getUserInfo().username){
         globalData.setBusinessId(businessObject.businessId)
+        globalData.setShopName(businessObject.shopName)
       }
       
     }
+    console.log("########## shopName(login) : "+globalData.getShopName())
     console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
     if (!this.isValidString(globalData.getBusinessId())) {
       console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())

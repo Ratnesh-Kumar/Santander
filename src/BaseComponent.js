@@ -101,14 +101,17 @@ export default class BaseComponent extends Component {
     console.log("############## responseData : "+JSON.stringify(responseData))
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
+      let shopName = this.getShopName(responseData);
       if (this.isValidString(businessId)) {
         let businessObj = {
           "businessId": businessId,
-          "username": globalData.getUserInfo().username
+          "username": globalData.getUserInfo().username,
+          "shopName":shopName
         }
         globalData.setBusinessId(businessId);
+        globalData.setShopName(shopName);
         console.log("############# createShop businessId : " + businessId);
-        console.log("########### shopName : "+ SHOP_NAME)
+        console.log("########### shopName : "+ shopName);
         let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
       }
 
@@ -122,6 +125,17 @@ export default class BaseComponent extends Component {
         let shopValue = shopDetail.value;
         let businessId = shopValue.businessSettings.businessId;
         return businessId;
+      }
+    }
+  }
+
+  getShopName(response){
+    if (this.isValidArray(response.properties)) {
+      let shopDetail = response.properties[0];
+      if (this.isValidString(shopDetail)) {
+        let shopValue = shopDetail.value;
+        let shopname = shopValue.shopName;
+        return shopname;
       }
     }
   }

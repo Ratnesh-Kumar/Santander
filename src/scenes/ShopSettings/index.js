@@ -8,14 +8,16 @@ import SwitchTextInput from '../../components/SwitchTextInput';
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
-import AppButton from '../../components/AppButton'
+import AppButton from '../../components/AppButton';
+import {fetchPartyGET} from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
 var constants = require('../../config/Constants');
 var shopSettingConstants = require('./ShopSettingsConstants')
 var colorConstant = require('../../config/colorConstant')
 var globalData = new GlobalData();
 
 export default class ShopSettingScreen extends BaseComponent {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -24,19 +26,119 @@ export default class ShopSettingScreen extends BaseComponent {
       handlingCostValue:'',
       taxTypeValue:'',
       taxRateValue:'',
-      trackInventory:true,
-      taxOnSales:true,
-      showDiscount:true,
-      shipProducts:true,
-      estimateProfit:true
+      trackInventory:false,
+      taxOnSales:false,
+      showDiscount:false,
+      shipProducts:false,
+      estimateProfit:false,
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
 
+    }
+  }
+  componentDidUpdate(){
+  }
+
+  componentWillMount(){
+  }
+
+  componentWillReceiveProps(props){
+    if(props.isRefresh){
+      this.getShopData()
     }
   }
 
    componentDidMount() {
-     //this.getShopSetting()
+     this.getShopData()
      //console.log(globalData.getshopDetail().shopName);
 
+  }
+  renderActivityIndicatorShow() {
+    this.setState({
+        isActivityIndicatorVisible: true,
+        activityIndicatorText: 'Loading...'
+    });
+}
+
+renderActivityIndicatorHide() {
+    this.setState({
+        isActivityIndicatorVisible: false,
+        activityIndicatorText: ''
+    });
+}
+
+renderDialogModal(title, message) {
+    this.setState({
+        isDialogModalVisible: true,
+        dialogModalText: message,
+        dialogModalTitle: title
+    });
+    message = '';
+}
+
+renderModal() {
+    if (this.state.isDialogModalVisible) {
+        return (
+            <DialogModalView isVisible={this.state.isDialogModalVisible}
+                title={this.state.dialogModalTitle}
+                message={this.state.dialogModalText}
+                handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+        return (
+            <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+        );
+    }
+}
+  async getShopData(){
+    this.renderActivityIndicatorShow() 
+    let shopSettingUrl= constants.GET_SHOP_SETTING.replace(constants.BUISNESS_ID,globalData.getBusinessId())
+    console.log(globalData.getUserInfo().key)
+    let responseData = await fetchPartyGET(shopSettingUrl);
+    console.log(responseData)
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
+      if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+        if (this.isValidArray(responseData.properties)) {
+          let productArr = responseData.properties[0].value
+          this.setShopData(productArr);
+          console.log(productArr)
+        }
+      }
+    }
+    this.renderActivityIndicatorHide()
+  }
+
+  setShopData(fetchData){
+    shopInfo = {
+      "trackInventory": fetchData.trackInventory,
+      "taxOnSales": fetchData.taxOnSales,
+      "taxType": fetchData.defaultTaxType,
+      "tax": fetchData.flatTaxRate,
+      "showDiscounts": fetchData.showDiscounts,
+      "shipProducts": fetchData.shipProducts,
+      "estimateProfit": fetchData.estimateProfit,
+      "defaultProfitMargin":fetchData.defaultProfitMargin,
+      "defaultShippingCost":fetchData.defaultShippingCost,
+      "defaultHandlingCost":fetchData.defaultHandlingCost
+
+    };
+    console.log("TAx : "+shopInfo.tax)
+    this.setState({
+      trackInventory:shopInfo.trackInventory?true:false,
+      taxOnSales:fetchData.taxOnSales,
+      taxTypeValue:fetchData.taxType+"",
+      taxRateValue:fetchData.tax+"",
+      showDiscount:fetchData.showDiscount,
+      shipProducts:fetchData.shipProducts,
+      estimateProfit:fetchData.estimateProfit,
+      profitMarginValue:fetchData.defaultProfitMargin+"",
+      shippingCostValue:fetchData.defaultShippingCost+"",
+      handlingCostValue:fetchData.defaultHandlingCost+""
+    })
+    console.log("trackInvenory : "+this.state.trackInventory)
+    console.log("taxRate : "+this.state.taxRateValue)
   }
 
   handleShopSettings(){
@@ -47,7 +149,7 @@ export default class ShopSettingScreen extends BaseComponent {
       "flatTaxRate":this.state.flatTaxRate,
       "showDiscount":this.state.showDiscount,
       "shipProducts":this.state.shipProducts,
-      "estimateProfite":this.state.estimateProfit,
+      "estimateProfit":this.state.estimateProfit,
       "defaultProfitMargin":this.state.defaultProfitMargin,
       "defaultShippingCost":this.state.defaultShippingCost,
       "defaultHandlingCost":this.state.defaultHandlingCost
@@ -62,6 +164,7 @@ export default class ShopSettingScreen extends BaseComponent {
   render() {
     return (
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={shopSettingStyle.container}>
+        {this.renderModal()}
         <Header title={strings('shopSettingsScreen.ShopSettingsTitle')} isCrossIconVisible={false} />
           <ScrollView keyboardShouldPersistTaps={'always'}>
             {this.renderPaymentBox()}
@@ -99,14 +202,16 @@ export default class ShopSettingScreen extends BaseComponent {
   }
 
   renderPaymentBox(){
+    const {trackInventory,taxOnSales}=this.state;
     return (
       <View style={{ marginTop: 10 }}>
+        
         {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/> */}
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.trackInventory} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={trackInventory} 
         onRightPressed={(value) => { console.log('trackInventory ::::', value),this.setState({trackInventory:value}) }} 
         title={strings('shopSettingsScreen.taxInventory')}
         />
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.taxOnSales} 
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={taxOnSales} 
         onRightPressed={(value) => { console.log('taxOnSales ::::', value),this.setState({taxOnSales:value}) }} 
         title={strings('shopSettingsScreen.taxOnSales')}
         />

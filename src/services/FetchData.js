@@ -194,6 +194,23 @@ function fetchPartyPUT(urlString, bodyData) {
   )
 }
 
+function fetchPartyGET(url) {
+  return new Promise(function (resolve, reject) {
+    fetch(url, {
+      method: "GET",
+      headers: getPartyPostHeader()
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        console.log('There has been a problem with your fetch operation: fetchJsonGET' + error.message);
+        reject(error.message);
+      }).done();
+  }
+  )
+}
 
 
 
@@ -205,5 +222,6 @@ export {
   fetchIdentityPOST,
   fetchProductPOST,
   fetchProductPUT,
-  fetchPartyPUT
+  fetchPartyPUT,
+  fetchPartyGET
 };

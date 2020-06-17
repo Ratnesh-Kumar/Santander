@@ -8,6 +8,7 @@ import {
     ScrollView,
     Alert,
     Keyboard,
+    Picker
 } from 'react-native';
 import BaseComponent from '../../BaseComponent';
 import TextInputMaterial from '../../components/textInputMaterial';
@@ -28,9 +29,6 @@ import ActivityIndicatorView from '../../components/activityindicator/ActivityIn
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 var globalData = new GlobalData();
 //var businessData = globalData.getshopDetail();
-var shopName = "DigiShop - test@yopmail.com";
-var businessInfo = "";
-var businessTaxId = ""
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
         super(props);
@@ -64,14 +62,14 @@ export default class BusinessProfileView extends BaseComponent {
 
 
     componentDidMount() {
-
+        
     }
 
 
     async handleBusinessProfile() {
-
+        console.log("######### shopName(BusinessProfile) : "+globalData.getShopName())
         this.renderActivityIndicatorShow();
-        let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, shopName);
+        let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, globalData.getShopName());
         console.log("shopUpdateURl : " + shopUpdateURL)
         var requestBody = this.getRequestBody(shopInfo);
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
@@ -658,10 +656,8 @@ export default class BusinessProfileView extends BaseComponent {
         )
     }
 
-
-
     render() {
-        //console.log("########## shopData : " + businessData.shopName)
+        console.log("######### shopName(BusinessProfile) : "+globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -698,7 +694,7 @@ export default class BusinessProfileView extends BaseComponent {
 
     getRequestBody(data) {
         return {
-            "shopName": shopName,
+            "shopName": globalData.getShopName(),
             "taxId": this.state.businessTaxId,
             "country": this.state.country,
             "bankRoutingNumber": "1-----1",
@@ -730,6 +726,10 @@ export default class BusinessProfileView extends BaseComponent {
                 "defaultShippingCost": data.defaultShippingCost,
                 "defaultHandlingCost": data.defaultHandlingCost,
                 "flatTaxRate": data.flatTaxRate,
+                "defaultTaxType": data.flatTaxRateType,
+                "showDiscounts":data.showDiscount,
+                "shipProducts":data.shipProducts,
+                "estimateProfit":data.estimateProfit,
                 "defaultPaymentType": "CREDIDCARD",
                 "txSettings": [{
                     "appTransactionType": "DEFAULT",
@@ -737,7 +737,7 @@ export default class BusinessProfileView extends BaseComponent {
                     "transactionDiscount": true,
                     "defaultTaxInclusive": false,
                     "defaultShipCharged": false,
-                    "discountAllowed": data.showDiscount,
+                    "discountAllowed": false,
                     "calcCommissions": false,
                     "showWeights": true
                 }
