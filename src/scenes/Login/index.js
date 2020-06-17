@@ -26,7 +26,7 @@ import AppButton from '../../components/AppButton'
 // import Realm from 'realm';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-import { fetchIdentityPOST } from '../../services/FetchData';
+import { fetchIdentityPOST, fetchJsonGET } from '../../services/FetchData';
 import TouchID from 'react-native-touch-id';
 // import Auth from '@react-native-firebase/auth';
 import loginStyle from './LoginStyle';
@@ -121,7 +121,6 @@ export default class LoginView extends BaseComponent {
   }
 
   onMessage = event => {
-    console.log('########## onMeassage: ' + event);
     if (event && event.nativeEvent.data) {
       if (['cancel', 'error', 'expired'].includes(event.nativeEvent.data)) {
         console.log('error', event.nativeEvent.data);
@@ -152,7 +151,7 @@ export default class LoginView extends BaseComponent {
         {this.renderValidationForm()}
         {this.renderForgotPassword()}
         <AppButton isLightTheme={false} buttonText={strings('loginScreen.SignInButtonText')} onButtonPressed={() => {
-          this.loginButtonTapped()
+          this.loginButtonTapped(this.state.username, this.state.password)
         }} />
         {this.renderTermsView()}
         <AppButton isLightTheme={true} buttonText={strings('loginScreen.SignUpButttonText')} onButtonPressed={() => {
@@ -163,16 +162,14 @@ export default class LoginView extends BaseComponent {
     );
   }
 
-  async loginButtonTapped() {
-    // Actions.tabbar();
+  async loginButtonTapped(username, password) {
     Keyboard.dismiss()
-    if (this.checkForLoginFormValidation()) {
+    if (this.checkForLoginFormValidation(username, password)) {
       this.renderActivityIndicatorShow()
-      let bodyData = this.getLoginBodyData()
+      let bodyData = this.getLoginBodyData(username, password)
 
       let businessObject = await this.getAsyncData(constants.ASYNC_BUSINESS_ID)
       var responseData = await fetchIdentityPOST(constants.USER_LOGIN_URL, bodyData)
-
       if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
         if (responseData.statusMessage == constants.USER_LOGIN_STATUS) {
           this.saveUserInfo(responseData);
@@ -202,20 +199,19 @@ export default class LoginView extends BaseComponent {
     console.log("########## shopName(login) : "+globalData.getShopName())
     console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
     if (!this.isValidString(globalData.getBusinessId())) {
-      console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
       this.createShop()
     }
   }
-  getLoginBodyData() {
+  getLoginBodyData(username, password) {
     let bodyData = {
-      "username": this.state.username,
-      "password": this.state.password,
+      "username": username,
+      "password": password,
     };
     return bodyData
   }
 
-  checkForLoginFormValidation() {
-    if (this.state.username && this.state.password) {
+  checkForLoginFormValidation(username, password) {
+    if (username && password) {
       return true
     }
     return false;
@@ -272,29 +268,7 @@ export default class LoginView extends BaseComponent {
     )
   }
 
-  async googleSignIn() {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      if (this.isValidString(userInfo)) {
-        this.setState({ googleUserInfo: userInfo });
-        globalData.setGoogleUserInfo(userInfo);
-        Actions.tabbar();
-      }
-
-    } catch (error) {
-      console.log(error.onMessage)
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (f.e. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
-  };
+  
 
   renderTouchIdAndFaceId() {
     return (
@@ -501,6 +475,43 @@ export default class LoginView extends BaseComponent {
     }
   }
 
+  async googleSignIn() {
+    let isAlreadyExist = false;
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      if (this.isValidString(userInfo) && this.isValidString(userInfo.user)) {
+        if (this.isValidString(userInfo)) {
+          this.setState({ googleUserInfo: userInfo });
+          globalData.setGoogleUserInfo(userInfo);
+          // Actions.tabbar();
+        }
+        if (this.isValidString(userInfo.user.email)) {
+          let username = userInfo.user.email;
+          let password = userInfo.user.id;
+          isAlreadyExist = await this.isCheckedEmailExist(username)
+          console.log("############ alreadyExist : "+isAlreadyExist)
+          if (isAlreadyExist) {
+            await this.loginButtonTapped(username, "Tester@123")
+          } else {
+            await this.fetchService(username, "Tester@123");
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error.onMessage)
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (f.e. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
+
   inputFocused(refName) {
     setTimeout(() => {
       let scrollResponder = this.refs.scrollView.getScrollResponder();
@@ -512,6 +523,48 @@ export default class LoginView extends BaseComponent {
       );
     }, 50);
   }
+
+  async isCheckedEmailExist(userName) {
+    console.log('check')
+    if (this.isValidString(userName)) {
+      var responseData = await fetchJsonGET(constants.CHECKING_EMAIL_URL + "/" + userName);
+      if (responseData.statusMessage == constants.CHECKING_EMAIL_URL_STATUS) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  async fetchService(username, password) {
+    Keyboard.dismiss()
+    this.renderActivityIndicatorShow()
+    let bodyData = this.getBodyData(username, password)
+    let businessObject = await this.getAsyncData(constants.ASYNC_BUSINESS_ID)
+    var responseData = await fetchIdentityPOST(constants.USER_REGISTRATION_URL, bodyData)
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      if (responseData.statusMessage == constants.USER_REGISTERED_STATUS) {
+        this.saveUserInfo(responseData);
+        this.handlerBusinessId(businessObject)
+        Actions.registerCreateCampaign();
+      }
+      else {
+        this.renderDialogModal(strings('registerScreen.Info'), responseData.statusMessage)
+      }
+    }
+    this.renderActivityIndicatorHide()
+  }
+
+  getBodyData(username, password) {
+    let locale = constants.DEVICE_LOCALE.replace("-", "_").toLocaleLowerCase()
+    return {
+      "username": username,
+      "password": password,
+      "confirmPassword": password,
+      "country": constants.COUNTRY_NAME,
+      "locale": locale
+    }
+  }
+
 }
 LoginView.propTypes = {
   source: PropTypes.number.isRequired,
