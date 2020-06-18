@@ -33,7 +33,7 @@ function getPartyPostHeader() {
     "Content-Type": "application/json;charset=utf-8",
     "Accept": "application/json",
     "SAN.AppId": "SAN.digitalShop",
-    "SAN.AppSecret": "47baaefc-0603-486b-bce8-04e68bbf488f",
+    "SAN.AppSecret": "a847fc1b-632a-4dbf-8fac-4ed55c722c3d",
     "SAN.Key": globalData.getUserInfo().key,
     "SAN.Id": globalData.getUserInfo().username
   }
