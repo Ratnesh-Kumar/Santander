@@ -182,20 +182,17 @@ export default class CampaignScreen extends BaseComponent {
   async addCampaign(){
     this.renderActivityIndicatorShow()
     let variantList = [];
-    //console.log('############# this.state.variantsList',this.state.variantsList);
+    let productListArr = [];
+    console.log('############# globalData ::: ',globalData.getBusinessId());
     for (let i = 0; i < this.state.variantsList.length; i++) {
       let variantItem = this.getVariantItem(this.state.variantsList[i]);
-      //console.log('############# variantItem',variantItem);
       variantList.push(this.getCampaignVariant(variantItem))
     }
     campaignDetails.campaignCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
-    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)
-    let productListArr = [];
+    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)    
     productListArr.push(this.getProductRequestBody(campaignDetails, variantList));
-    //console.log('############# productListArr ::::::',productListArr);
     var requestBody = this.getRequestBody(productListArr);
     console.log('############# requestBody ::::::',JSON.stringify(requestBody));
-
     // Call API for the save campaigan as a DRAFT 
     var responseData = "";
     let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
@@ -204,22 +201,44 @@ export default class CampaignScreen extends BaseComponent {
     console.log('############# responseData ::::::',responseData);
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+        let campaiganSuccessDetail = responseData.properties[0].value;
+        this.setCampaignDetail(campaiganSuccessDetail);
         campaignVariantArray = [];
         this.setState({
           variantsList: [],
           categoryList: []
         })
         this.renderActivityIndicatorHide()
-        this.setCampaignDetail("");
-        //Show Alert
-        
+        //Actions.createCampaignShare()
+        setTimeout(() => {
+          this.showAlert()
+        }, 100);
       }
     }
     this.renderActivityIndicatorHide()
-    
-    
 
+  }
 
+  showAlert() {
+    Alert.alert(
+      'Info',
+      'Your campaign successfully added as a draft. Do you want to publish it ?',
+      [
+        {
+          text: 'PUBLISH', onPress: () => {
+            Actions.createCampaignShare()
+          }
+        },
+        {
+          text: 'NO', onPress: () => {
+            Actions.manageCampaign({ type: 'reset' });
+            setTimeout(() => {
+              Actions.refresh({ isRefresh: true });
+            }, 100)
+          }
+        },
+      ]
+    );
   }
 
   renderVariantsQantityView() {

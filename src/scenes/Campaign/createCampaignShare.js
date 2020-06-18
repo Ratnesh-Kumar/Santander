@@ -27,6 +27,7 @@ var comonFunctions = new CommonFunctions();
 var campaignConstants = require('./campaignConstants');
 var constants = require('../../config/Constants');
 var globalData = new GlobalData();
+var campaignDetail = "";
 
 export default class CreateCampaiganShare extends BaseComponent {
   constructor(props) {
@@ -47,6 +48,12 @@ export default class CreateCampaiganShare extends BaseComponent {
       console.log('####### CALL API for post published and send data to API');
       Actions.tabbar()
     }
+  }
+
+
+  componentDidMount(){
+    campaignDetail = this.getProductDetail();;
+    console.log('####### ncampaignDetail in component did mount : ',campaignDetail)
   }
 
 
