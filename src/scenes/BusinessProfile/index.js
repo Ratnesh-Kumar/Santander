@@ -23,7 +23,7 @@ import SwitchTextInput from '../../components/SwitchTextInput';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 import GlobalData from '../../utils/GlobalData';
-import { fetchPartyPUT } from '../../services/FetchData';
+import { fetchPartyPUT,fetchPartyGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 var globalData = new GlobalData();
@@ -61,12 +61,42 @@ export default class BusinessProfileView extends BaseComponent {
 
 
     componentDidMount() {
-        
+        this.getBusinessData()
     }
 
+    async getBusinessData() {
+        this.renderActivityIndicatorShow()
+        let shopSettingUrl = commonConstants.GET_SHOP_SETTING_FULL.replace(commonConstants.BUISNESS_ID, globalData.getBusinessId())
+        console.log(globalData.getUserInfo().key)
+        let responseData = await fetchPartyGET(shopSettingUrl);
+        console.log("@@@@@@@@@@@@@@@@@@@@@@ shop setting full " + JSON.stringify(responseData));
+        if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+            if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
+                if (this.isValidArray(responseData.properties)) {
+                    let businessArr = responseData.properties[0].value
+                    this.setBusinessData(businessArr);
+                    //console.log(businessArr)
+                }
+            }
+        }
+        this.renderActivityIndicatorHide()
+    }
+
+    setBusinessData(responseData) {
+        console.log("taxId "+responseData.taxId)
+        this.setState({
+            buisnessName: responseData.businessSettings.businessName,
+            businessTaxId: responseData.party.taxId+"",
+            postalCode: responseData.party.postalCode+"",
+            postalState: responseData.party.state+"",
+            address: responseData.party.address+"",
+            city: responseData.party.city+"",
+            country: responseData.country+""
+        })
+    }
 
     async handleBusinessProfile() {
-        console.log("######### shopName(BusinessProfile) : "+globalData.getShopName())
+        console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         this.renderActivityIndicatorShow();
         let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, globalData.getShopName());
         console.log("shopUpdateURl : " + shopUpdateURL)
@@ -656,7 +686,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-        console.log("######### shopName(BusinessProfile) : "+globalData.getShopName())
+        console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -705,7 +735,7 @@ export default class BusinessProfileView extends BaseComponent {
             "address": this.state.address,
             "city": this.state.city,
             "state": this.state.postalState,
-            "district": "Santa ----",
+            "district": "Santa ",
             "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
             "preferredLanguage": "en_us",
@@ -726,9 +756,9 @@ export default class BusinessProfileView extends BaseComponent {
                 "defaultHandlingCost": data.defaultHandlingCost,
                 "flatTaxRate": data.flatTaxRate,
                 "defaultTaxType": data.flatTaxRateType,
-                "showDiscounts":data.showDiscount,
-                "shipProducts":data.shipProducts,
-                "estimateProfit":data.estimateProfit,
+                "showDiscounts": data.showDiscount,
+                "shipProducts": data.shipProducts,
+                "estimateProfit": data.estimateProfit,
                 "defaultPaymentType": "CREDIDCARD",
                 "txSettings": [{
                     "appTransactionType": "DEFAULT",
