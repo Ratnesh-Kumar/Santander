@@ -111,7 +111,8 @@ renderModal() {
   }
 
   setShopData(fetchData){
-    shopInfo = {
+    console.log("fetchData : "+JSON.stringify(fetchData))
+    let shopInfo = {
       "trackInventory": fetchData.trackInventory,
       "taxOnSales": fetchData.taxOnSales,
       "taxType": fetchData.defaultTaxType,
@@ -126,10 +127,10 @@ renderModal() {
     };
     console.log("TAx : "+shopInfo.tax)
     this.setState({
-      trackInventory:shopInfo.trackInventory,
+      trackInventory:shopInfo.trackInventory?true:false,
       taxOnSales:shopInfo.taxOnSales,
-      taxTypeValue:shopInfo.taxType+"",
-      taxRateValue:shopInfo.tax+"",
+      taxTypeValue:JSON.stringify(shopInfo.taxType),
+      taxRateValue:JSON.stringify(shopInfo.tax),
       showDiscount:shopInfo.showDiscount,
       shipProducts:shopInfo.shipProducts,
       estimateProfit:shopInfo.estimateProfit,
