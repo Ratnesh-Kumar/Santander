@@ -9,8 +9,8 @@ import {
   statusCodes,
 } from 'react-native-google-signin';
 var constants = require('./config/Constants');
-const SHOP_NAME = "DigiShop - "+globalData.getUserInfo.username;
-var productDetail="";
+const SHOP_NAME = "DigiShop - " + globalData.getUserInfo.username;
+var productDetail = "";
 export default class BaseComponent extends Component {
 
   constructor() {
@@ -18,11 +18,11 @@ export default class BaseComponent extends Component {
 
   }
 
-  setProductDetail(prodDetail){
+  setProductDetail(prodDetail) {
     productDetail = prodDetail;
   }
 
-  getProductDetail(){
+  getProductDetail() {
     return productDetail;
   }
 
@@ -98,7 +98,7 @@ export default class BaseComponent extends Component {
       "locale": "en_us"
     }
     var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, createShopBody);
-    console.log("############## responseData : "+JSON.stringify(responseData))
+    console.log("############## responseData createShop : " + JSON.stringify(responseData))
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
       let shopName = this.getShopName(responseData);
@@ -106,12 +106,12 @@ export default class BaseComponent extends Component {
         let businessObj = {
           "businessId": businessId,
           "username": globalData.getUserInfo().username,
-          "shopName":shopName
+          "shopName": shopName
         }
         globalData.setBusinessId(businessId);
         globalData.setShopName(shopName);
         console.log("############# createShop businessId : " + businessId);
-        console.log("########### shopName : "+ shopName);
+        console.log("########### shopName : " + shopName);
         let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
       }
 
@@ -129,7 +129,7 @@ export default class BaseComponent extends Component {
     }
   }
 
-  getShopName(response){
+  getShopName(response) {
     if (this.isValidArray(response.properties)) {
       let shopDetail = response.properties[0];
       if (this.isValidString(shopDetail)) {
@@ -168,17 +168,34 @@ export default class BaseComponent extends Component {
   }
 
   handlerBusinessId(businessObject) {
+    console.log("@@@@ Business OBject :" + JSON.stringify(businessObject));
     if (this.isValidString(businessObject)) {
       businessObject = JSON.parse(businessObject)
       if (businessObject.username == globalData.getUserInfo().username) {
         globalData.setBusinessId(businessObject.businessId)
+        globalData.setShopName(businessObject.shopName)
       }
 
     }
+    console.log("########## shopName(login) : " + globalData.getShopName())
     console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
     if (!this.isValidString(globalData.getBusinessId())) {
-      console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
       this.createShop()
     }
   }
+
+  // handlerBusinessId(businessObject) {
+  //   if (this.isValidString(businessObject)) {
+  //     businessObject = JSON.parse(businessObject)
+  //     if (businessObject.username == globalData.getUserInfo().username) {
+  //       globalData.setBusinessId(businessObject.businessId)
+  //     }
+
+  //   }
+  //   console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
+  //   if (!this.isValidString(globalData.getBusinessId())) {
+  //     console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
+  //     this.createShop()
+  //   }
+  // }
 }
