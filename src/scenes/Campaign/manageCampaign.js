@@ -23,7 +23,7 @@ import CommonFunctions from '../../utils/CommonFunctions';
 import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
 import { create } from 'react-test-renderer';
-import {fetchProductGET} from '../../services/FetchData';
+import {fetchCampaignGET} from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 var campaignConstants = require('./campaignConstants');
@@ -51,7 +51,10 @@ export default class ManageCampaign extends BaseComponent {
 
   async getCampaignList(){
     this.renderActivityIndicatorShow() 
-    let responseData = await fetchProductGET(constants.GET_PRODUCT_LIST+globalData.getBusinessId());
+    let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
+    console.log('######## get Campaign URL ::: ',campaignSaveURL)
+
+    let responseData = await fetchCampaignGET(constants.GET_CAMPAIGN_LIST);
     console.log('######## responseData ::: '+JSON.stringify(responseData))
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {

@@ -138,8 +138,8 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-            Actions.createCampaignShare()
-            //this.addCampaign()
+            //Actions.createCampaignShare()
+            this.addCampaign()
           }} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -179,7 +179,7 @@ export default class CampaignScreen extends BaseComponent {
     return variantItem;
   }
   
-  addCampaign(){
+  async addCampaign(){
     this.renderActivityIndicatorShow()
     let variantList = [];
     //console.log('############# this.state.variantsList',this.state.variantsList);
@@ -198,20 +198,23 @@ export default class CampaignScreen extends BaseComponent {
 
     // Call API for the save campaigan as a DRAFT 
     var responseData = "";
-    let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUSINESS_ID, globalData.getBusinessId());
+    let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
     console.log('############# campaignSaveURL ::::::',campaignSaveURL);
-    // responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
-    // if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-    //   if (responseData.statusMessage === constants.SUCCESS_STATUS) {
-    //     campaignVariantArray = [];
-    //     this.setState({
-    //       variantsList: [],
-    //       categoryList: []
-    //     })
-    //     this.renderActivityIndicatorHide()
-    //     this.setCampaignDetail("");
-    //   }
-    // }
+    responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
+    console.log('############# responseData ::::::',responseData);
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+        campaignVariantArray = [];
+        this.setState({
+          variantsList: [],
+          categoryList: []
+        })
+        this.renderActivityIndicatorHide()
+        this.setCampaignDetail("");
+        //Show Alert
+        
+      }
+    }
     this.renderActivityIndicatorHide()
     
     
