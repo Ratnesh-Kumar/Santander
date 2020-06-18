@@ -9,7 +9,7 @@ import {
   statusCodes,
 } from 'react-native-google-signin';
 var constants = require('./config/Constants');
-const SHOP_NAME = "DigiShop - " + globalData.getUserInfo.username;
+const SHOP_NAME = "DigiShop - " + globalData.getUserInfo().username;
 var productDetail = "";
 export default class BaseComponent extends Component {
 
