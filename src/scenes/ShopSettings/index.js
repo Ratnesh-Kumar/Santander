@@ -126,16 +126,16 @@ renderModal() {
     };
     console.log("TAx : "+shopInfo.tax)
     this.setState({
-      trackInventory:shopInfo.trackInventory?true:false,
-      taxOnSales:fetchData.taxOnSales,
-      taxTypeValue:fetchData.taxType+"",
-      taxRateValue:fetchData.tax+"",
-      showDiscount:fetchData.showDiscount,
-      shipProducts:fetchData.shipProducts,
-      estimateProfit:fetchData.estimateProfit,
-      profitMarginValue:fetchData.defaultProfitMargin+"",
-      shippingCostValue:fetchData.defaultShippingCost+"",
-      handlingCostValue:fetchData.defaultHandlingCost+""
+      trackInventory:shopInfo.trackInventory,
+      taxOnSales:shopInfo.taxOnSales,
+      taxTypeValue:shopInfo.taxType+"",
+      taxRateValue:shopInfo.tax+"",
+      showDiscount:shopInfo.showDiscount,
+      shipProducts:shopInfo.shipProducts,
+      estimateProfit:shopInfo.estimateProfit,
+      profitMarginValue:shopInfo.defaultProfitMargin+"",
+      shippingCostValue:shopInfo.defaultShippingCost+"",
+      handlingCostValue:shopInfo.defaultHandlingCost+""
     })
     console.log("trackInvenory : "+this.state.trackInventory)
     console.log("taxRate : "+this.state.taxRateValue)
