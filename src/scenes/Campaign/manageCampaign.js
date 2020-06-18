@@ -23,7 +23,7 @@ import CommonFunctions from '../../utils/CommonFunctions';
 import SearchBar from '../../components/SearchBar';
 import BaseComponent from '../../BaseComponent';
 import { create } from 'react-test-renderer';
-import {fetchCampaignGET} from '../../services/FetchData';
+import { fetchCampaignGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 var campaignConstants = require('./campaignConstants');
@@ -45,32 +45,32 @@ export default class ManageCampaign extends BaseComponent {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.getCampaignList()
   }
 
-  async getCampaignList(){
-    this.renderActivityIndicatorShow() 
+  async getCampaignList() {
+    this.renderActivityIndicatorShow()
     let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
-    console.log('######## get Campaign URL ::: ',campaignSaveURL)
+    console.log('######## get Campaign URL ::: ', campaignSaveURL)
 
     let responseData = await fetchCampaignGET(campaignSaveURL);
-    console.log('######## responseData ::: '+JSON.stringify(responseData))
-    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
+    console.log('######## responseData ::: ' + JSON.stringify(responseData))
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
         if (this.isValidArray(responseData.properties)) {
           let manageCampaignArr = responseData.properties[0].value;
-          this.setState({manageCampaignArr})
+          this.setState({ manageCampaignArr })
         }
-        else{
-          this.renderDialogModal(strings('manageCampaignScreen.Info'),strings('manageCampaignScreen.errorNoCampaignFound'));
+        else {
+          this.renderDialogModal(strings('manageCampaignScreen.Info'), strings('manageCampaignScreen.errorNoCampaignFound'));
         }
       }
-      else{
-       // this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
+      else {
+        // this.renderDialogModal(strings('productScreen.Info'),strings('productScreen.errorNoProductFound'));
       }
     }
-   
+
     this.renderActivityIndicatorHide()
   }
 
@@ -78,12 +78,12 @@ export default class ManageCampaign extends BaseComponent {
     return (
       <View style={createStyle.container}>
         {this.renderModal()}
-        <FloatingButton onFloatButtonPressed={()=>{
+        <FloatingButton onFloatButtonPressed={() => {
           Actions.campaign()
-        }}/>
+        }} />
         <Header isleftArrowDisplay={true} title={strings('manageCampaignScreen.ManageCampaign')} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
-        <View style={{margin:10}}>
+        <View style={{ margin: 10 }}>
           {this.renderFlatList()}
         </View>
       </View>
@@ -91,7 +91,7 @@ export default class ManageCampaign extends BaseComponent {
   }
 
   renderFlatList() {
-    if(this.isValidArray(campaignConstants.CAMPAIGN_ARRAY)){
+    if (this.isValidArray(campaignConstants.CAMPAIGN_ARRAY)) {
       return (
         <View>
           <FlatList
@@ -103,9 +103,9 @@ export default class ManageCampaign extends BaseComponent {
         </View>
       )
     }
-    else{
+    else {
       return (
-        <View style={{alignItems:'center',justifyContent:'center',marginTop:constants.SCREEN_HEIGHT/3}}>
+        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: constants.SCREEN_HEIGHT / 3 }}>
           <Text style={createStyle.emptyNoCampaignText}>{strings('manageCampaignScreen.errorNoCampaignFound')}</Text>
         </View>
       )
@@ -113,11 +113,14 @@ export default class ManageCampaign extends BaseComponent {
   }
 
   renderItemView = (item, index) => {
-    console.log("################ item : "+JSON.stringify(item))
+    console.log("################ item : " + JSON.stringify(item))
     let productItem = item.products[0];
     if (this.isValidString(item)) {
       return (
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => {
+          this.setCampaignDetail(productItem)
+          Actions.campaign({ campaignId: item.campaignId, isCampaignUpdate: true })
+        }}>
           <View style={{ padding: 10 }}>
             <CardView
               cardElevation={(Platform.OS === 'ios') ? 3 : 8}
@@ -125,18 +128,18 @@ export default class ManageCampaign extends BaseComponent {
               corderOverlap={false}
             >
               <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-                <View style={{flex:1}}>
+                <View style={{ flex: 1 }}>
                   <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{productItem.defaultDetails.asOfDate}</Text>
                   <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{productItem.productName}</Text>
-                  <Text style={{ color: (item.publishStatus == 'Published') ? 'green' : colorConstants.SANT_RED_COLOR  , fontSize: 14 }}>{item.campaignStatus}</Text>
+                  <Text style={{ color: (item.publishStatus == 'Published') ? 'green' : colorConstants.SANT_RED_COLOR, fontSize: 14 }}>{item.campaignStatus}</Text>
                 </View>
-                <View style={{flex:1,flexDirection:'row'}}>
-                <View style={{ flex: 1, justifyContent: 'center', }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Revenue - " + productItem.defaultDetails.productPrice}</Text>                
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                  <View style={{ flex: 1, justifyContent: 'center', }}>
+                    <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, }}>{"Revenue - " + productItem.defaultDetails.productPrice}</Text>
                   </View>
-                <View style={{ justifyContent: 'center',marginRight:5 }}>
-                  <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
-                </View>
+                  <View style={{ justifyContent: 'center', marginRight: 5 }}>
+                    <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
+                  </View>
                 </View>
               </View>
             </CardView>

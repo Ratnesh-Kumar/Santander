@@ -17,14 +17,14 @@ import Stepper from '../../components/Stepper/stepper'
 import { color } from 'react-native-reanimated';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-import { fetchCampaignPOST } from '../../services/FetchData';
+import { fetchCampaignPOST, fetchCampaignPUT } from '../../services/FetchData';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 var campaignDetails = "";
 var campaignVariantArray = [];
-var isUpdate = "";
+var isCampaignUpdate = "";
 var campaignId = "";
 var fetchCampaignData = "";
 
@@ -46,17 +46,59 @@ export default class CampaignScreen extends BaseComponent {
       dialogModalTitle: '',
     }
     campaignDetails = props.campaignDetails;
-    isUpdate = props.isUpdate ? props.isUpdate : false
+    isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false
     campaignId = props.campaignId
-    fetchCampaignData = this.setCampaignDetail();
-    // if (isUpdate) {
-    //   this.setUpdateData();
-    // }
+    fetchCampaignData = this.getCampaignDetail();
+    if (isCampaignUpdate) {
+      this.setUpdateData(fetchCampaignData);
+    }
+  }
+
+  setUpdateData(fetchCampaignData) {
+    campaignVariantArray = [];
+    if (this.isValidString(fetchCampaignData)) {
+      if (this.isValidString(fetchCampaignData.tags)) {
+        let tags = [];
+        if (fetchCampaignData.tags.includes(",")) {
+          tags = fetchCampaignData.tags.split(", ")
+
+        } else {
+          tags.push(fetchCampaignData.tags);
+
+        }
+        this.state.categoryList = tags
+      }
+
+      campaignDetails.campaignQuantity = fetchCampaignData.defaultDetails.quantityOnHand;
+      this.setState({
+        campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand
+      })
+      if (this.isValidArray(fetchCampaignData.productVariants)) {
+        let productVariant = fetchCampaignData.productVariants;
+        for (let i = 0; i < productVariant.length; i++) {
+          let variant = productVariant[i];
+          if(!variant.discountinuedProduct){
+            let variantDetail = {};
+            this.state.variantsList.push(variant.variantName)
+            variantDetail.name = variant.variantName;
+            variantDetail.price = variant.comparePrice;
+            variantDetail.barcode = variant.barCode;
+            variantDetail.skuNumber = variant.sku;
+            variantDetail.salePrice = variant.productPrice;
+            variantDetail.productCost = variant.productCost;
+            variantDetail.quantity = variant.quantityOnHand;
+            variantDetail.discountinuedProduct = variant.discountinuedProduct;
+            campaignVariantArray.push(variantDetail)
+          }
+        }
+      }
+    }
+    this.forceUpdate()
   }
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.variantInfo)) {
-      if (isUpdate) {
+      if (isCampaignUpdate) {
         this.updateCampaignVariantArray(props.variantInfo);
       } else {
         if (!this.isVariantExist(props.variantInfo)) {
@@ -183,7 +225,6 @@ export default class CampaignScreen extends BaseComponent {
     this.renderActivityIndicatorShow()
     let variantList = [];
     let productListArr = [];
-    console.log('############# globalData ::: ',globalData.getBusinessId());
     for (let i = 0; i < this.state.variantsList.length; i++) {
       let variantItem = this.getVariantItem(this.state.variantsList[i]);
       variantList.push(this.getCampaignVariant(variantItem))
@@ -192,13 +233,16 @@ export default class CampaignScreen extends BaseComponent {
     campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)    
     productListArr.push(this.getProductRequestBody(campaignDetails, variantList));
     var requestBody = this.getRequestBody(productListArr);
-    console.log('############# requestBody ::::::',JSON.stringify(requestBody));
     // Call API for the save campaigan as a DRAFT 
     var responseData = "";
-    let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
-    console.log('############# campaignSaveURL ::::::',campaignSaveURL);
-    responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
-    console.log('############# responseData ::::::',responseData);
+    if(isCampaignUpdate){
+      let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId())+campaignId;
+      responseData = await fetchCampaignPUT(campaignUpdateURL, requestBody)
+    }else{
+      let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
+      responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
+      
+    }
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage === constants.SUCCESS_STATUS) {
         let campaiganSuccessDetail = responseData.properties[0].value;
@@ -255,19 +299,18 @@ export default class CampaignScreen extends BaseComponent {
         
     )
   }
-
+  
   renderQuantityView(quantityTitle) {
     return (
       <QuantityField isVarientQuantityView={true}
         onButtonPressed={() => {
           Actions.campaignVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
-          //Actions.campaignVarient()
         }}
-       title={quantityTitle} updatedQuantity={(quantity) => {
-        this.setState({
-          campaignQuantity: quantity
-        })
-      }} />
+        quantity={this.getVariantObj(quantityTitle).quantity}
+        title={quantityTitle} updatedQuantity={(quantity) => {
+          let variantObj = this.getVariantObj(quantityTitle);
+          variantObj.quantity = quantity;
+        }} />
     )
   }
 
@@ -423,7 +466,6 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   getProductRequestBody(data, variantList) {
-    console.log('######### data :::: ',data);
     return {
       "productName": data.campaignName,
       "productFamily": data.campaignCategory,
@@ -458,7 +500,6 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   getCampaignVariant(variant) {
-    console.log('######### getCampaignVariant :::: ',variant);
     return {
       "variantId": "",
       "variantName": variant.name,

@@ -74,6 +74,13 @@ export default class QuantityField extends BaseComponent {
                         style={{ fontSize: 18, paddingTop: 0, paddingBottom: 0, textAlign:'center' }}
                         onChangeText={quantityValue => this.changeQtyValue(quantityValue)}
                         maxLength={4}
+                        onBlur={()=>{
+                            if(!this.isValidString(this.state.quantityValue)){
+                                this.setState({
+                                    quantityValue: "1"
+                                })
+                            }
+                        }}
                         defaultValue={1}
                         returnKeyType={'done'}
                         value={this.state.quantityValue}
@@ -87,12 +94,12 @@ export default class QuantityField extends BaseComponent {
     }
 
     changeQtyValue(quantityValue) {
-        if (quantityValue > 0) {
+        // if (quantityValue > 0) {
             this.setState({
                 quantityValue: quantityValue
             })
             this.props.updatedQuantity(quantityValue);
-        }
+        // }
 
     }
 

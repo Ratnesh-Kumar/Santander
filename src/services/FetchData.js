@@ -248,6 +248,30 @@ function fetchPartyPUT(urlString, bodyData) {
   )
 }
 
+function fetchCampaignPUT(urlString, bodyData) {
+  return new Promise(function (resolve, reject) {
+    fetch(urlString, {
+      method: "PUT",
+      timeout: 2000,
+      headers: getTranscationPostHeader(),
+      body: JSON.stringify(bodyData),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        resolve(responseData);
+      })
+      .catch((error) => {
+        error.message = "Unable to communicate with server.";
+        console.log('There has been a problem with your fetch operation: fetchPartyPOST');
+
+        resolve(error.message);
+        reject(() => {
+        });
+      }).done();
+  }
+  )
+}
+
 function fetchPartyGET(url) {
   return new Promise(function (resolve, reject) {
     fetch(url, {
@@ -279,5 +303,6 @@ export {
   fetchProductPOST,
   fetchProductPUT,
   fetchPartyPUT,
-  fetchPartyGET
+  fetchPartyGET,
+  fetchCampaignPUT
 };
