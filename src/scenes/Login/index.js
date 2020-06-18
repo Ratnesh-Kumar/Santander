@@ -187,7 +187,7 @@ export default class LoginView extends BaseComponent {
     }
   }
 
-  handlerBusinessId(businessObject) {
+  handlerBusinessIds(businessObject) {
     if (this.isValidString(businessObject)) {
       businessObject = JSON.parse(businessObject)
       if (businessObject.username == globalData.getUserInfo().username) {
