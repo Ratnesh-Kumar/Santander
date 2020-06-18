@@ -101,7 +101,7 @@ export default class ShopSettingScreen extends BaseComponent {
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
         if (this.isValidArray(responseData.properties)) {
-          let productArr = responseData.properties[0].value
+          let productArr = responseData.properties[0].value.businessSettings
           this.setShopData(productArr);
           console.log(productArr)
         }
@@ -127,16 +127,16 @@ export default class ShopSettingScreen extends BaseComponent {
     };
     console.log("TAx : " + shopInfo.tax)
     this.setState({
-      trackInventory: shopInfo.trackInventory ? true : false,
-      taxOnSales: fetchData.taxOnSales,
-      taxTypeValue: JSON.stringify(shopInfo.taxType),
+      trackInventory: shopInfo.trackInventory,
+      taxOnSales: shopInfo.taxOnSales,
+      taxTypeValue: shopInfo.taxType,
       taxRateValue: JSON.stringify(shopInfo.tax),
-      showDiscount: fetchData.showDiscount,
-      shipProducts: fetchData.shipProducts,
-      estimateProfit: fetchData.estimateProfit,
-      profitMarginValue: fetchData.defaultProfitMargin + "",
-      shippingCostValue: fetchData.defaultShippingCost + "",
-      handlingCostValue: fetchData.defaultHandlingCost + ""
+      showDiscount: shopInfo.showDiscount,
+      shipProducts: shopInfo.shipProducts,
+      estimateProfit: shopInfo.estimateProfit,
+      profitMarginValue: shopInfo.defaultProfitMargin + "",
+      shippingCostValue: shopInfo.defaultShippingCost + "",
+      handlingCostValue: shopInfo.defaultHandlingCost + ""
     })
     console.log("trackInvenory : " + this.state.trackInventory)
     console.log("taxRate : " + this.state.taxRateValue)
