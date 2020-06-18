@@ -60,6 +60,7 @@ export const GET_PRODUCT_LIST = BASE_PRODUCT_SERVICE_URL+"/v1/product?businessId
 export const GET_PRODUCT_DETAIL =BASE_PRODUCT_SERVICE_URL+"/v1/product/"+PRODUCT_ID+"?businessId=";
 export const UPDATE_SHOP=BASE_PARTY_SERVICE_URL+"/v1/party/shop/"+SHOP_NAME;
 export const GET_SHOP_SETTING=BASE_PARTY_SERVICE_URL+"/v1/party/"+BUISNESS_ID+"/settings";
+export const GET_SHOP_SETTING_FULL= BASE_PARTY_SERVICE_URL+"/v1/party/"+BUISNESS_ID+"/full";
 
 //Party Shop API Url
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/";
