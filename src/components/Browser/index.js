@@ -11,7 +11,7 @@ export default class Browser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isActivityIndicatorVisible: true,
+            isActivityIndicatorVisible: false,
             activityIndicatorText: 'Loading...',
         };
     }
@@ -33,7 +33,7 @@ export default class Browser extends Component {
         }
     }
     render() {
-        console.log("##########################################" + this.props.url);
+        //console.log("##########################################" + this.props.url);
         var publishURL = this.props.url;
         return (
             // <WebView source={{ uri: this.props.url }} />
