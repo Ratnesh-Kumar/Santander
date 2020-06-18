@@ -23,7 +23,7 @@ import SwitchTextInput from '../../components/SwitchTextInput';
 var commonConstants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 import GlobalData from '../../utils/GlobalData';
-import { fetchPartyPUT,fetchPartyGET } from '../../services/FetchData';
+import { fetchPartyPUT, fetchPartyGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 var globalData = new GlobalData();
@@ -83,22 +83,22 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     setBusinessData(responseData) {
-        console.log("taxId "+responseData.taxId)
+        console.log("taxId " + responseData.taxId)
         this.setState({
             buisnessName: responseData.businessSettings.businessName,
-            businessTaxId: responseData.party.taxId+"",
-            postalCode: responseData.party.postalCode+"",
-            postalState: responseData.party.state+"",
-            address: responseData.party.address+"",
-            city: responseData.party.city+"",
-            country: responseData.country+""
+            businessTaxId: responseData.party.taxId + "",
+            postalCode: responseData.party.postalCode + "",
+            postalState: responseData.party.state + "",
+            address: responseData.party.address + "",
+            city: responseData.party.city + "",
+            country: responseData.country + ""
         })
     }
 
     async handleBusinessProfile() {
         console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         this.renderActivityIndicatorShow();
-        let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, globalData.getShopName());
+        let shopUpdateURL = commonConstants.UPDATE_SHOP_SETTING;
         console.log("shopUpdateURl : " + shopUpdateURL)
         var requestBody = this.getRequestBody(shopInfo);
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
@@ -722,62 +722,46 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     getRequestBody(data) {
+        console.log("getRequestBody :" + JSON.stringify(data))
         return {
-            "shopName": globalData.getShopName(),
-            "taxId": this.state.businessTaxId,
-            "country": this.state.country,
-            "bankRoutingNumber": "1-----1",
-            "locale": "en_us",
-            "currency": "USD",
-            "firstName": "John 2",
-            "lastName": "Smith 2",
-            "nationality": "USA",
-            "address": this.state.address,
-            "city": this.state.city,
-            "state": this.state.postalState,
-            "district": "Santa ",
-            "postalCode": this.state.postalCode,
-            "dateFormat": "MM/DD/YY",
-            "preferredLanguage": "en_us",
-            "businessSettings": {
-                "sourcePrimaryKey": "1234567890",
-                "defaultProfitMargin": data.defaultProfitMargin,
-                "businessName": this.state.buisnessName,
-                "trackInventory": data.trackInventory,
-                "taxOnSales": data.taxOnSales,
-                "taxOnPurchase": true,
-                "purchaseTaxReclaimable": false,
-                "multiCurrency": false,
-                "defaultNetDays": 90,
-                "defaultInventoryLeadTime": 5,
-                "defaultInventoryReorderSize": 10,
-                "defaultaInventoryLevelMin": 5,
-                "defaultShippingCost": data.defaultShippingCost,
-                "defaultHandlingCost": data.defaultHandlingCost,
-                "flatTaxRate": data.flatTaxRate,
-                "defaultTaxType": data.flatTaxRateType,
-                "showDiscounts": data.showDiscount,
-                "shipProducts": data.shipProducts,
-                "estimateProfit": data.estimateProfit,
-                "defaultPaymentType": "CREDIDCARD",
-                "txSettings": [{
-                    "appTransactionType": "DEFAULT",
-                    "lineItemDiscount": false,
-                    "transactionDiscount": true,
-                    "defaultTaxInclusive": false,
-                    "defaultShipCharged": false,
-                    "discountAllowed": false,
-                    "calcCommissions": false,
-                    "showWeights": true
-                }
-                ]
+            "trackInventory": data.trackInventory,
+            "taxOnSales": data.taxOnSales,
+            "taxOnPurchase": data.taxOnPurchase,
+            "purchaseTaxReclaimable": data.purchaseTaxReclaimable,
+            "defaultTaxType": data.defaultTaxType,
+            "flatTaxRate": data.flatTaxRate,
+            "showDiscounts": false,
+            "shipProducts": false,
+            "estimateProfit": true,
+            "defaultProfitMargin": 10,
+            "defaultShippingCost": data.defaultShippingCost,
+            "defaultHandlingCost": data.defaultHandlingCost,
+            "txSettings": [{
+                "appTransactionType": "DEFAULT",
+                "lineItemDiscount": false,
+                "transactionDiscount": false,
+                "defaultTaxInclusive": false,
+                "defaultShipCharged": false,
+                "discountAllowed": false,
+                "calcCommissions": false,
+                "showWeights": false,
+            }, {
+                "appTransactionType": "ORDER",
+                "lineItemDiscount": true,
+                "transactionDiscount": false,
+                "defaultTaxInclusive": false,
+                "defaultShipCharged": false,
+                "discountAllowed": true,
+                "calcCommissions": false,
+                "showWeights": true
             }
+            ],
+            "hostedPod": "DEFAULT"
         }
+
     }
-
-
-
 }
+
 BusinessProfileView.propTypes = {
     source: PropTypes.number.isRequired,
     placeholder: PropTypes.string.isRequired,

@@ -112,50 +112,35 @@ export default class ShopSettingScreen extends BaseComponent {
 
   setShopData(fetchData) {
     console.log("fetchData : " + JSON.stringify(fetchData))
-    let shopInfo = {
-      "trackInventory": fetchData.trackInventory,
-      "taxOnSales": fetchData.taxOnSales,
-      "taxType": fetchData.defaultTaxType,
-      "tax": fetchData.flatTaxRate,
-      "showDiscounts": fetchData.showDiscounts,
-      "shipProducts": fetchData.shipProducts,
-      "estimateProfit": fetchData.estimateProfit,
-      "defaultProfitMargin": fetchData.defaultProfitMargin,
-      "defaultShippingCost": fetchData.defaultShippingCost,
-      "defaultHandlingCost": fetchData.defaultHandlingCost
-
-    };
-    console.log("TAx : " + shopInfo.tax)
     this.setState({
-      trackInventory: shopInfo.trackInventory,
-      taxOnSales: shopInfo.taxOnSales,
-      taxTypeValue: shopInfo.taxType,
-      taxRateValue: JSON.stringify(shopInfo.tax),
-      showDiscount: shopInfo.showDiscount,
-      shipProducts: shopInfo.shipProducts,
-      estimateProfit: shopInfo.estimateProfit,
-      profitMarginValue: shopInfo.defaultProfitMargin + "",
-      shippingCostValue: shopInfo.defaultShippingCost + "",
-      handlingCostValue: shopInfo.defaultHandlingCost + ""
+      trackInventory: fetchData.trackInventory,
+      taxOnSales: fetchData.taxOnSales,
+      taxTypeValue: fetchData.defaultTaxType,
+      taxRateValue: fetchData.flatTaxRate,
+      showDiscount: fetchData.showDiscounts,
+      shipProducts: fetchData.shipProducts,
+      estimateProfit: fetchData.estimateProfit,
+      defaultProfitMargin: fetchData.defaultProfitMargin,
+      defaultShippingCost: fetchData.defaultShippingCost,
+      defaultHandlingCost: fetchData.defaultHandlingCost
     })
     console.log("trackInvenory : " + this.state.trackInventory)
     console.log("taxRate : " + this.state.taxRateValue)
   }
 
   handleShopSettings() {
-    let shopInfo = {
-      "trackInventory": this.state.trackInventory,
-      "taxOnSales": this.state.taxOnSales,
-      "flatTaxRateType": this.state.taxTypeValue,
-      "flatTaxRate": this.state.flatTaxRate,
-      "showDiscount": this.state.showDiscount,
-      "shipProducts": this.state.shipProducts,
-      "estimateProfit": this.state.estimateProfit,
-      "defaultProfitMargin": this.state.defaultProfitMargin,
-      "defaultShippingCost": this.state.defaultShippingCost,
-      "defaultHandlingCost": this.state.defaultHandlingCost
-
-    };
+    var shopInfo = {};
+    shopInfo.trackInventory = this.state.trackInventory;
+    shopInfo.taxOnSales = this.state.taxOnSales;
+    shopInfo.flatTaxRateType = this.state.taxTypeValue;
+    shopInfo.flatTaxRate = this.state.taxRateValue;
+    shopInfo.showDiscount = this.state.showDiscount;
+    shopInfo.shipProducts = this.state.shipProducts;
+    shopInfo.estimateProfit = this.state.estimateProfit;
+    shopInfo.defaultProfitMargin = this.state.profitMarginValue;
+    shopInfo.defaultShippingCost = this.state.shippingCostValue;
+    shopInfo.defaultHandlingCost = this.state.handlingCostValue;
+    console.log("shop info :" + JSON.stringify(shopInfo))
     Actions.businessProfile({ shopInfo: shopInfo });
 
   }
@@ -173,7 +158,6 @@ export default class ShopSettingScreen extends BaseComponent {
           {this.renderDiscountBox()}
           {this.renderDefaultsText()}
           {this.renderDefaultsTextInput()}
-
           <AppButton buttonText={strings('shopSettingsScreen.nextButtonText')} onButtonPressed={() => {
             this.handleShopSettings()
           }} />
@@ -388,8 +372,6 @@ export default class ShopSettingScreen extends BaseComponent {
       </View>
     );
   }
-
-
 }
 
 

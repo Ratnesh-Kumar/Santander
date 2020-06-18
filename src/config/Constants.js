@@ -64,6 +64,7 @@ export const GET_SHOP_SETTING_FULL= BASE_PARTY_SERVICE_URL+"/v1/party/"+BUISNESS
 
 //Party Shop API Url
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
+export const UPDATE_SHOP_SETTING = BASE_PARTY_SERVICE_URL+ "/v1/party/"+ BUISNESS_ID+"/shopsettings";
 
 
 
