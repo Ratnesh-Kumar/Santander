@@ -54,7 +54,7 @@ export default class ManageCampaign extends BaseComponent {
     let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
     console.log('######## get Campaign URL ::: ',campaignSaveURL)
 
-    let responseData = await fetchCampaignGET(constants.GET_CAMPAIGN_LIST);
+    let responseData = await fetchCampaignGET(campaignSaveURL);
     console.log('######## responseData ::: '+JSON.stringify(responseData))
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage )) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
@@ -95,7 +95,7 @@ export default class ManageCampaign extends BaseComponent {
       return (
         <View>
           <FlatList
-            data={campaignConstants.CAMPAIGN_ARRAY}
+            data={this.state.manageCampaignArr}
             renderItem={({ item, index }) => this.renderItemView(item, index)}
             keyExtractor={item => item.id}
             contentContainerStyle={{ paddingBottom: 10 }}
@@ -113,6 +113,8 @@ export default class ManageCampaign extends BaseComponent {
   }
 
   renderItemView = (item, index) => {
+    console.log("################ item : "+JSON.stringify(item))
+    let productItem = item.products[0];
     if (this.isValidString(item)) {
       return (
         <TouchableOpacity onPress={() => { }}>
@@ -124,13 +126,13 @@ export default class ManageCampaign extends BaseComponent {
             >
               <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
                 <View style={{flex:1}}>
-                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.campaignDate}</Text>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.campaignName}</Text>
-                  <Text style={{ color: (item.publishStatus == 'Published') ? 'green' : colorConstants.SANT_RED_COLOR  , fontSize: 14 }}>{item.publishStatus}</Text>
+                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{productItem.defaultDetails.asOfDate}</Text>
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{productItem.productName}</Text>
+                  <Text style={{ color: (item.publishStatus == 'Published') ? 'green' : colorConstants.SANT_RED_COLOR  , fontSize: 14 }}>{item.campaignStatus}</Text>
                 </View>
                 <View style={{flex:1,flexDirection:'row'}}>
                 <View style={{ flex: 1, justifyContent: 'center', }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Revenue - " + item.cost}</Text>                
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Revenue - " + productItem.defaultDetails.productPrice}</Text>                
                   </View>
                 <View style={{ justifyContent: 'center',marginRight:5 }}>
                   <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
