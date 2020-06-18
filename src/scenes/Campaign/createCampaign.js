@@ -185,7 +185,7 @@ export default class CampaignScreen extends BaseComponent {
     //console.log('############# productListArr ::::::',productListArr);
     var requestBody = this.getRequestBody(productListArr);
     console.log('############# requestBody ::::::',JSON.stringify(requestBody));
-
+    Actions.createCampaignShare();
 
 
   }
