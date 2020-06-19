@@ -114,15 +114,15 @@ export default class ShopSettingScreen extends BaseComponent {
     console.log("fetchData : " + JSON.stringify(fetchData))
     this.setState({
       trackInventory: fetchData.trackInventory,
-      taxOnSales: fetchData.taxOnSales,
+      taxOnSales: fetchData.taxOnSales+"",
       taxTypeValue: fetchData.defaultTaxType,
-      taxRateValue: fetchData.flatTaxRate,
+      taxRateValue: fetchData.flatTaxRate+"",
       showDiscount: fetchData.showDiscounts,
       shipProducts: fetchData.shipProducts,
       estimateProfit: fetchData.estimateProfit,
-      defaultProfitMargin: fetchData.defaultProfitMargin,
-      defaultShippingCost: fetchData.defaultShippingCost,
-      defaultHandlingCost: fetchData.defaultHandlingCost
+      profitMarginValue: fetchData.defaultProfitMargin+"",
+      shippingCostValue: fetchData.defaultShippingCost+"",
+      handlingCostValue: fetchData.defaultHandlingCost+""
     })
     console.log("trackInvenory : " + this.state.trackInventory)
     console.log("taxRate : " + this.state.taxRateValue)
