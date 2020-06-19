@@ -508,6 +508,8 @@ export default class CampaignScreen extends BaseComponent {
         "taxCode": "CA",
         "displayProduct": true,
         "comparePrice": data.campaignPrice,
+        "productImage": data.productImage,
+        "productURL": data.productURL
       },
       "productVariants": variantList,
     }

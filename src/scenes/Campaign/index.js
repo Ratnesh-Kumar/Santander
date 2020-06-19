@@ -77,25 +77,15 @@ export default class CampaignScreen extends BaseComponent {
 
   setCampaignData(fetchData) {
     let productItem = fetchData.products[0];
-
-    let campaignInfo = {
-      "campaignName": productItem.productName,
-      "campaignDescription": productItem.productDescription,
-      "campaignPriceValue": productItem.defaultDetails.comparePrice,
-      "campaignSalePriceValue": productItem.defaultDetails.productPrice,
-      "campaigntBarcodeValue": productItem.defaultDetails.barCode,
-      "campaigntSku": productItem.defaultDetails.sku,
-      "imageURl":productItem.productVariants[0].productURL
-    };
   
     this.setState({
-      campaignName: campaignInfo.campaignName,
-      campaignDescription: campaignInfo.campaignDescription,
-      campaignPriceValue: campaignInfo.campaignPriceValue + "",
-      campaignSaleValue: campaignInfo.campaignSalePriceValue+"",
-      campaignBarcodeValue: campaignInfo.campaigntBarcodeValue + "",
-      campaignSkuValue: campaignInfo.campaigntSku,
-      pickedImage: {uri:campaignInfo.imageURl},
+      campaignName: productItem.productName,
+      campaignDescription: productItem.productDescription,
+      campaignPriceValue: productItem.defaultDetails.comparePrice + "",
+      campaignSaleValue: productItem.defaultDetails.productPrice+"",
+      campaignBarcodeValue:  productItem.defaultDetails.barCode + "",
+      campaignSkuValue: productItem.defaultDetails.sku,
+      pickedImage: (this.isValidString(productItem.defaultDetails.productURL))?{uri:productItem.defaultDetails.productURL}: compaignConstants.CAMERA_ICON,
       showImage: true
     })
   }

@@ -46,6 +46,8 @@ export default class ManageCampaign extends BaseComponent {
   }
 
   componentDidMount() {
+    this.setCampaignID("");
+    this.setCampaignResponse("");
     this.getCampaignList()
   }
 

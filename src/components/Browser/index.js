@@ -25,19 +25,16 @@ export default class Browser extends BaseComponent {
         if (!url) return true;
         if (url.includes('dialog/share/submit')) {
             console.log('URL: inside dialog share modal -- ', url);
-            this.callPublishAPI()
-            // setTimeout(() => {
-            //     this.showFacebookAlert()
-            // }, 100)
+            setTimeout(() => {
+                this.callPublishAPI()
+            }, 100)
             return true;
         }
         if (!webViewState || (url === this.props.url)){
-            this.renderActivityIndicatorHide();
             return true;
         }
     }
     render() {
-        this.callPublishAPI()
         //console.log("##########################################" + this.props.url);
         var publishURL = this.props.url;
         return (
@@ -98,6 +95,7 @@ export default class Browser extends BaseComponent {
                 }, 100)
             }
         }
+        this.renderActivityIndicatorHide()
     }
 
     showFacebookAlert() {
