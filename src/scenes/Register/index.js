@@ -5,7 +5,8 @@ import {
     Text,
     KeyboardAvoidingView,
     TouchableOpacity,
-    Keyboard
+    Keyboard,
+    TouchableHighlight
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -135,20 +136,6 @@ export default class RegisterView extends BaseComponent {
             this.renderDialogModal(strings('registerScreen.Info'), strings('registerScreen.ValidInformation'))
         }
     }
-
-    // handlerBusinessId(businessObject) {
-    //     if (this.isValidString(businessObject)) {
-    //       businessObject = JSON.parse(businessObject)
-    //       if(businessObject.username == globalData.getUserInfo().username){
-    //         globalData.setBusinessId(businessObject.businessId)
-    //         globalData.setShopName(businessObject.shopName)
-    //       }
-          
-    //     }
-    //     if (!this.isValidString(globalData.getBusinessId())) {
-    //       this.createShop()
-    //     }
-    //   }
 
     getBodyData() {
         let locale = constants.DEVICE_LOCALE.replace("-", "_").toLocaleLowerCase()
@@ -406,11 +393,10 @@ export default class RegisterView extends BaseComponent {
                                     this.refs.confirmPassword.focus();
                                 }}
                             />
-                            <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setPasswordVisibility()}>
+                             <TouchableOpacity style={[registerStyle.btnEye]} onPress={() => this.setPasswordVisibility()}>
                                 <Image source={imgSource} style={registerStyle.iconEye} />
                             </TouchableOpacity>
                         </View>
-
                     </View>
                 </View>
             </KeyboardAvoidingView>
