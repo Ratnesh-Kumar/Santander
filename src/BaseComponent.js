@@ -12,11 +12,27 @@ var constants = require('./config/Constants');
 const SHOP_NAME = "DigiShop - ";
 var productDetail = "";
 var campaignDetail = "";
+var campaignResponse = "";
+var campaignID = "";
 export default class BaseComponent extends Component {
 
   constructor() {
     super();
 
+  }
+
+  setCampaignID(data) {
+    campaignID = data
+  }
+  getCampaignID() {
+    return campaignID;
+  }
+
+  setCampaignResponse(data) {
+    campaignResponse = data
+  }
+  getCampaignResponse(data) {
+    return campaignResponse;
   }
 
   setCampaignDetail(data) {

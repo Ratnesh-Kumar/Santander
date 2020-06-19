@@ -131,7 +131,7 @@ export default class ManageCampaign extends BaseComponent {
                 <View style={{ flex: 1 }}>
                   <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{productItem.defaultDetails.asOfDate}</Text>
                   <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{productItem.productName}</Text>
-                  <Text style={{ color: (item.publishStatus == 'Published') ? 'green' : colorConstants.SANT_RED_COLOR, fontSize: 14 }}>{item.campaignStatus}</Text>
+                  <Text style={{ color: (item.campaignStatus === 'PUBLISHED') ? 'green' : colorConstants.SANT_RED_COLOR, fontSize: 14 }}>{item.campaignStatus}</Text>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row' }}>
                   <View style={{ flex: 1, justifyContent: 'center', }}>

@@ -3,11 +3,14 @@ import { View , Alert } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { WebView } from 'react-native-webview';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import { fetchCampaignPUT } from '../../services/FetchData';
 import Header from '../Header';
+import BaseComponent from '../../BaseComponent';
+import GlobalData from '../../utils/GlobalData';
 var colorConstants = require('../../config/colorConstant')
 var constants = require('../../config/Constants')
-
-export default class Browser extends Component {
+var globalData = new GlobalData();
+export default class Browser extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,9 +25,10 @@ export default class Browser extends Component {
         if (!url) return true;
         if (url.includes('dialog/share/submit')) {
             console.log('URL: inside dialog share modal -- ', url);
-            setTimeout(() => {
-                this.showFacebookAlert()
-            }, 100)
+            this.callPublishAPI()
+            // setTimeout(() => {
+            //     this.showFacebookAlert()
+            // }, 100)
             return true;
         }
         if (!webViewState || (url === this.props.url)){
@@ -33,6 +37,7 @@ export default class Browser extends Component {
         }
     }
     render() {
+        this.callPublishAPI()
         //console.log("##########################################" + this.props.url);
         var publishURL = this.props.url;
         return (
@@ -75,6 +80,26 @@ export default class Browser extends Component {
         });
     }
 
+    async callPublishAPI(){
+        this.renderActivityIndicatorShow();
+        let campaignRequestResponse = this.getCampaignResponse()
+        let campaignID = this.getCampaignID();
+        console.log('######## campaignID ',JSON.stringify(campaignID))
+        console.log('######## campaignResponse in browser file ',JSON.stringify(campaignRequestResponse))
+        let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId())+campaignID;
+        console.log('######## campaignUpdateURL ',JSON.stringify(campaignUpdateURL))
+        let responseData = await fetchCampaignPUT(campaignUpdateURL, campaignRequestResponse)
+        console.log('######## PUBLISHED RESPONSE ',JSON.stringify(responseData))
+        if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+            if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+                this.renderActivityIndicatorHide()
+                setTimeout(() => {
+                    this.showFacebookAlert()
+                }, 100)
+            }
+        }
+    }
+
     showFacebookAlert() {
         Alert.alert(
           'Info',
@@ -82,11 +107,11 @@ export default class Browser extends Component {
           [
             {
               text: 'OK', onPress: () => {
-                  Actions.pop({refresh: {sendData: true}} )
-                // Actions.manageCampaign({ type: 'reset' });
-                // setTimeout(() => {
-                //   Actions.refresh({ isRefresh: true });
-                // }, 100)
+                 // Actions.pop({refresh: {sendData: true}} )
+                Actions.manageCampaign({ type: 'reset' });
+                setTimeout(() => {
+                  Actions.refresh({ isRefresh: true });
+                }, 100)
              }
             },
           ]

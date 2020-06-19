@@ -232,26 +232,30 @@ export default class CampaignScreen extends BaseComponent {
     campaignDetails.campaignCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
     campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)    
     productListArr.push(this.getProductRequestBody(campaignDetails, variantList));
-    var requestBody = this.getRequestBody(productListArr);
+    var requestBody = this.getRequestBody(productListArr,"DRAFT");
     // Call API for the save campaigan as a DRAFT 
     var responseData = "";
     if(isCampaignUpdate){
       let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId())+campaignId;
+      //console.log('####### campaignUpdateURL :',campaignUpdateURL)
       responseData = await fetchCampaignPUT(campaignUpdateURL, requestBody)
+      this.setCampaignID(campaignId)
     }else{
       let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
       responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
-      
+      let campaiganIDCreated = responseData.properties[0].value.campaignId;
+      this.setCampaignID(campaiganIDCreated)
     }
+
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage === constants.SUCCESS_STATUS) {
-        let campaiganSuccessDetail = responseData.properties[0].value;
-        this.setCampaignDetail(campaiganSuccessDetail);
+        await this.createRequestBodyforPublish(productListArr)
         campaignVariantArray = [];
         this.setState({
           variantsList: [],
           categoryList: []
         })
+        this.setCampaignDetail('');
         this.renderActivityIndicatorHide()
         //Actions.createCampaignShare()
         setTimeout(() => {
@@ -261,6 +265,15 @@ export default class CampaignScreen extends BaseComponent {
     }
     this.renderActivityIndicatorHide()
 
+  }
+
+  createRequestBodyforPublish(productListArr){
+    let campaignRequestbody = this.getRequestBody(productListArr,"PUBLISHED");
+    if(isCampaignUpdate){
+      this.setCampaignResponse(campaignRequestbody)
+    }else{
+      this.setCampaignResponse(campaignRequestbody)
+    }
   }
 
   showAlert() {
@@ -275,6 +288,8 @@ export default class CampaignScreen extends BaseComponent {
         },
         {
           text: 'NO', onPress: () => {
+            this.setCampaignID("")
+            this.setCampaignResponse("")
             Actions.manageCampaign({ type: 'reset' });
             setTimeout(() => {
               Actions.refresh({ isRefresh: true });
@@ -458,9 +473,9 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
-  getRequestBody(productArr){
+  getRequestBody(productArr,campaignStatus){
     return{
-      "campaignStatus": "DRAFT",
+      "campaignStatus": campaignStatus,
       "products": productArr,
     };
   }
