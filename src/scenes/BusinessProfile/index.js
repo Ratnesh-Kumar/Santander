@@ -67,9 +67,9 @@ export default class BusinessProfileView extends BaseComponent {
     async getBusinessData() {
         this.renderActivityIndicatorShow()
         let shopSettingUrl = commonConstants.GET_SHOP_SETTING_FULL.replace(commonConstants.BUISNESS_ID, globalData.getBusinessId())
-        console.log(globalData.getUserInfo().key)
+        //console.log(globalData.getUserInfo().key)
         let responseData = await fetchPartyGET(shopSettingUrl);
-        console.log("@@@@@@@@@@@@@@@@@@@@@@ shop setting full " + JSON.stringify(responseData));
+        //console.log("@@@@@@@@@@@@@@@@@@@@@@ shop setting full " + JSON.stringify(responseData));
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
                 if (this.isValidArray(responseData.properties)) {
@@ -83,7 +83,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     setBusinessData(responseData) {
-        console.log("taxId " + responseData.taxId)
+        //console.log("taxId " + responseData.taxId)
         this.setState({
             buisnessName: responseData.businessSettings.businessName,
             businessTaxId: responseData.party.taxId + "",
@@ -96,17 +96,22 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     async handleBusinessProfile() {
-        console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
+        //console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         this.renderActivityIndicatorShow();
-        let shopUpdateURL = commonConstants.UPDATE_SHOP_SETTING;
-        console.log("shopUpdateURl : " + shopUpdateURL)
+        let shopUpdateURL = commonConstants.UPDATE_SHOP_SETTING.replace(commonConstants.BUISNESS_ID, globalData.getBusinessId());;
+        //console.log("shopUpdateURl : " + shopUpdateURL)
         var requestBody = this.getRequestBody(shopInfo);
+        console.log(requestBody)
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
+        console.log("ResponseData :" + JSON.stringify(responseData))
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
                 console.log(fetchData)
-                Actions.shop();
+                setTimeout(() => {
+                    this.showAlert()
+                  }, 100)
+                //Actions.shop();
             }
             else {
                 console.log('error');
@@ -115,6 +120,23 @@ export default class BusinessProfileView extends BaseComponent {
         this.renderActivityIndicatorHide()
 
     }
+
+    showAlert() {
+        Alert.alert(
+          'Info',
+          'Data Successfully Saved.',
+          [
+            {
+              text: 'OK', onPress: () => {
+                Actions.shop({ type: 'reset' });
+                setTimeout(() => {
+                  Actions.refresh({ isRefresh: true });
+                }, 100)
+              }
+            },
+          ]
+        );
+      }
 
     renderActivityIndicatorShow() {
         this.setState({
@@ -686,7 +708,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-        console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
+       // console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -724,49 +746,49 @@ export default class BusinessProfileView extends BaseComponent {
     getRequestBody(data) {
         console.log("getRequestBody :" + JSON.stringify(data))
         return {
-            "trackInventory": data.trackInventory,
+            "trackInventory": false, 
             "taxOnSales": data.taxOnSales,
-            "taxOnPurchase": data.taxOnPurchase,
-            "purchaseTaxReclaimable": data.purchaseTaxReclaimable,
-            "defaultTaxType": data.defaultTaxType,
+            "taxOnPurchase": true,
+            "purchaseTaxReclaimable": false,
+            "defaultTaxType": data.flatTaxRateType,
             "flatTaxRate": data.flatTaxRate,
-            "showDiscounts": false,
-            "shipProducts": false,
-            "estimateProfit": true,
-            "defaultProfitMargin": 10,
+            "showDiscounts": data.showDiscount,
+            "shipProducts": data.shipProducts,
+            "estimateProfit": data.estimateProfit,
+            "defaultProfitMargin": data.defaultProfitMargin,
             "defaultShippingCost": data.defaultShippingCost,
             "defaultHandlingCost": data.defaultHandlingCost,
             "txSettings": [{
-                "appTransactionType": "DEFAULT",
-                "lineItemDiscount": false,
-                "transactionDiscount": false,
-                "defaultTaxInclusive": false,
-                "defaultShipCharged": false,
-                "discountAllowed": false,
-                "calcCommissions": false,
-                "showWeights": false,
-            }, {
-                "appTransactionType": "ORDER",
-                "lineItemDiscount": true,
-                "transactionDiscount": false,
-                "defaultTaxInclusive": false,
-                "defaultShipCharged": false,
-                "discountAllowed": true,
-                "calcCommissions": false,
-                "showWeights": true
-            }
+                    "appTransactionType": "DEFAULT",
+                    "lineItemDiscount": false,
+                    "transactionDiscount": false,
+                    "defaultTaxInclusive": false,
+                    "defaultShipCharged": false,
+                    "discountAllowed": false,
+                    "calcCommissions": false,
+                    "showWeights": false
+                },
+                {
+                    "appTransactionType": "ORDER",
+                    "lineItemDiscount": true,
+                    "transactionDiscount": false,
+                    "defaultTaxInclusive": false,
+                    "defaultShipCharged": false,
+                    "discountAllowed": true,
+                    "calcCommissions": false,
+                    "showWeights": true
+                }
             ],
             "hostedPod": "DEFAULT"
         }
-
     }
 }
 
-BusinessProfileView.propTypes = {
-    source: PropTypes.number.isRequired,
-    placeholder: PropTypes.string.isRequired,
-    secureTextEntry: PropTypes.bool,
-    autoCorrect: PropTypes.bool,
-    autoCapitalize: PropTypes.string,
-    returnKeyType: PropTypes.string,
-};
+    BusinessProfileView.propTypes = {
+        source: PropTypes.number.isRequired,
+        placeholder: PropTypes.string.isRequired,
+        secureTextEntry: PropTypes.bool,
+        autoCorrect: PropTypes.bool,
+        autoCapitalize: PropTypes.string,
+        returnKeyType: PropTypes.string,
+    };
