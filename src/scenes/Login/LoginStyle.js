@@ -44,14 +44,13 @@ export default (styles = StyleSheet.create({
     position: 'absolute',
     bottom:7,
     right:7,
-    top:50
+    top:15,
+    zIndex: 999
   },
   iconEye: {
     width: 25,
     height: 25,
     //tintColor: 'rgba(0,0,0,0.2)',
-    marginTop:-35,
-    marginRight:5,
     resizeMode:'contain'
   },
   button: {

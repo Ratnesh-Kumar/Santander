@@ -13,7 +13,8 @@ import {
   Easing,
   Alert,
   Platform,
-  Keyboard
+  Keyboard,
+  TouchableHighlight
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import BaseComponent from '../../BaseComponent';
@@ -187,7 +188,6 @@ export default class LoginView extends BaseComponent {
     }
   }
 
-  
   getLoginBodyData(username, password) {
     let bodyData = {
       "username": username,
@@ -254,7 +254,7 @@ export default class LoginView extends BaseComponent {
     )
   }
 
-  
+
 
   renderTouchIdAndFaceId() {
     return (
@@ -348,6 +348,7 @@ export default class LoginView extends BaseComponent {
               }}
             />
             <View style={loginStyle.validFormSecondFieldView}>
+
               <TextInputMaterial
                 secureTextEntry={this.state.showPass}
                 blurText={this.state.password}
@@ -374,9 +375,8 @@ export default class LoginView extends BaseComponent {
                 onSubmitEditing={() => Keyboard.dismiss()}
               />
               <TouchableOpacity
-                activeOpacity={0.7}
                 style={loginStyle.btnEye}
-                onPress={this.showPass}>
+                onPress={() => { this.showPass() }}>
                 <Image source={imgSource} style={loginStyle.iconEye} />
               </TouchableOpacity>
             </View>
@@ -476,7 +476,7 @@ export default class LoginView extends BaseComponent {
           let username = userInfo.user.email;
           let password = userInfo.user.id;
           isAlreadyExist = await this.isCheckedEmailExist(username)
-          console.log("############ alreadyExist : "+isAlreadyExist)
+          console.log("############ alreadyExist : " + isAlreadyExist)
           if (isAlreadyExist) {
             await this.loginButtonTapped(username, "Tester@123")
           } else {

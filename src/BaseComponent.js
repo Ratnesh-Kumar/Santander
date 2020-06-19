@@ -9,7 +9,7 @@ import {
   statusCodes,
 } from 'react-native-google-signin';
 var constants = require('./config/Constants');
-const SHOP_NAME = "DigiShop - " + globalData.getUserInfo().username;
+const SHOP_NAME = "DigiShop - ";
 var productDetail = "";
 export default class BaseComponent extends Component {
 
@@ -93,12 +93,12 @@ export default class BaseComponent extends Component {
 
   async createShop() {
     let createShopBody = {
-      "shopName": SHOP_NAME,
+      "shopName": SHOP_NAME+this.getRandomNumber(),
       "country": "US",
       "locale": "en_us"
     }
     var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, createShopBody);
-    console.log("############## responseData createShop : " + JSON.stringify(responseData))
+    console.log("############## responseData : " + JSON.stringify(responseData))
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
       let shopName = this.getShopName(responseData);
@@ -167,6 +167,21 @@ export default class BaseComponent extends Component {
     });
   }
 
+  //   handlerBusinessId(businessObject) {
+  //     if (this.isValidString(businessObject)) {
+  //       businessObject = JSON.parse(businessObject)
+  //       if (businessObject.username == globalData.getUserInfo().username) {
+  //         globalData.setBusinessId(businessObject.businessId)
+  //       }
+
+  //     }
+  //     console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
+  //     if (!this.isValidString(globalData.getBusinessId())) {
+  //       console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
+  //       this.createShop()
+  //     }
+  //   }
+  // }
   handlerBusinessId(businessObject) {
     console.log("@@@@ Business OBject :" + JSON.stringify(businessObject));
     if (this.isValidString(businessObject)) {
@@ -182,20 +197,13 @@ export default class BaseComponent extends Component {
     if (!this.isValidString(globalData.getBusinessId())) {
       this.createShop()
     }
+
   }
 
-  // handlerBusinessId(businessObject) {
-  //   if (this.isValidString(businessObject)) {
-  //     businessObject = JSON.parse(businessObject)
-  //     if (businessObject.username == globalData.getUserInfo().username) {
-  //       globalData.setBusinessId(businessObject.businessId)
-  //     }
+  getRandomNumber(){
+    var x = Math.floor((Math.random() * 1000) + 1)
+    return x.toString()
+  }
 
-  //   }
-  //   console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
-  //   if (!this.isValidString(globalData.getBusinessId())) {
-  //     console.log("################ handlerBusinessId 5 : " + globalData.getBusinessId())
-  //     this.createShop()
-  //   }
-  // }
+  
 }

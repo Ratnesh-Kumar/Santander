@@ -102,37 +102,25 @@ export default class AddProductScreen extends BaseComponent {
   }
 
   setProductData(fetchData) {
-    productInfo = {
-      "productName": fetchData.productName,
-      "productDescription": fetchData.productDescription,
-      "productPriceValue": fetchData.defaultDetails.comparePrice,
-      "productSalePriceValue": fetchData.defaultDetails.productPrice,
-      "productWeight": fetchData.defaultDetails.weight,
-      "productBarcodeValue": fetchData.defaultDetails.barCode,
-      "productCostValue": fetchData.defaultDetails.productCost,
-      "productSku": fetchData.defaultDetails.sku,
-      "imageURl":fetchData.productVariants[0].productURL
-    };
-    // // this.productInfo.productName = fetchData.productName;
-    // this.productInfo.productDescription = fetchData.productDescription;
-    // this.productInfo.productPriceValue = fetchData.defaultDetails.comparePrice;
-    // this.productInfo.productSalePriceValue = fetchData.defaultDetails.productPrice
-    // this.productInfo.productWeight = fetchData.defaultDetails.weight;
-    // this.productInfo.productBarcodeValue = fetchData.defaultDetails.barCode;
-    // this.productInfo.productCostValue = fetchData.defaultDetails.productCost;
-  
-    this.setState({
-      productName: productInfo.productName,
-      productDescription: productInfo.productDescription,
-      productPriceValue: productInfo.productPriceValue + "",
-      productSaleValue: productInfo.productSalePriceValue+"",
-      productWeight: productInfo.productWeight + "",
-      productBarcodeValue: productInfo.productBarcodeValue + "",
-      productCostValue: productInfo.productCostValue+"",
-      productSkuValue: productInfo.productSku,
-      pickedImage: (this.isValidString(productUrl))?{uri:productUrl}: productConstants.CAMERA_ICON,
-      showImage:(this.isValidString(productUrl))?true: false
-    })
+    let productUrl = '';
+    if(this.isValidString(fetchData)){
+
+      if(this.isValidString(fetchData.defaultDetails)){
+        productUrl = fetchData.defaultDetails.productURL
+      }
+      this.setState({
+        productName: fetchData.productName,
+        productDescription: fetchData.productDescription,
+        productPriceValue: fetchData.defaultDetails.comparePrice + "",
+        productSaleValue: fetchData.defaultDetails.productPrice+"",
+        productWeight: fetchData.defaultDetails.weight + "",
+        productBarcodeValue: fetchData.defaultDetails.barCode + "",
+        productCostValue: fetchData.defaultDetails.productCost+"",
+        productSkuValue: fetchData.defaultDetails.sku,
+        pickedImage: (this.isValidString(productUrl))?{uri:productUrl}: productConstants.CAMERA_ICON,
+        showImage: (this.isValidString(productUrl))?true: false
+      })
+    }
   }
 
   UNSAFE_componentWillReceiveProps(props) {
@@ -555,7 +543,7 @@ export default class AddProductScreen extends BaseComponent {
   showPickedImage() {
     return (
       <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
-        <Image source={this.state.pickedImage} style={{ height: 60, width: 60, marginTop: 20 }} />
+        <Image source={this.state.pickedImage?this.state.pickedImage:null} style={{ height: 60, width: 60, marginTop: 20 }} />
         <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
       </TouchableOpacity>
     )
@@ -584,7 +572,7 @@ export default class AddProductScreen extends BaseComponent {
     return (
       <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
         <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, }}>
-          {this.state.showImage === true ? this.renderImage() : this.showPickedImage()}
+          {(this.state.showImage) ? this.renderImage() : this.showPickedImage()}
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>

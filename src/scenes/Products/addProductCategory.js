@@ -515,7 +515,7 @@ export default class AddProductCategory extends BaseComponent {
 
   getRequestBody(data, variantList) {
     return {
-      "sourcePrimaryKey": "1234567890-P1",
+      "sourcePrimaryKey": "",
       "productName": data.productName,
       "productFamily": data.productCategory,
       "productDescription": data.productDescription,
@@ -528,7 +528,7 @@ export default class AddProductCategory extends BaseComponent {
         "variantName": "default",
         "optionalValues": "none",
         "productPrice": data.productSalePrice,
-        "barCode": "9867543210",
+        "barCode": "",
         "sku": data.skuNumber,
         "weight": data.weight,
         "weightUnit": data.weightUnit,
@@ -543,7 +543,9 @@ export default class AddProductCategory extends BaseComponent {
         "displayProduct": true,
         "comparePrice": data.productPrice,
         "productCost": data.productCost,
-        "defaultProfitMargetSet": !this.isValidString(data.productCost)
+        "defaultProfitMargetSet": !this.isValidString(data.productCost),
+        "productImage": productDetails.productImage,
+        "productURL": productDetails.productURL
       },
       "productVariants": variantList,
       "extensions": []
@@ -557,7 +559,7 @@ export default class AddProductCategory extends BaseComponent {
       "variantName": variant.name,
       "optionalValues": "",
       "productPrice": variant.salePrice,
-      "barCode": "9867543210",
+      "barCode": "",
       "sku": variant.skuNumber,
       "weight": 0,
       "weightUnit": "",
@@ -572,9 +574,7 @@ export default class AddProductCategory extends BaseComponent {
       "displayProduct": true,
       "comparePrice": variant.price,
       "productCost": variant.productCost,
-      "defaultProfitMargetSet": !this.isValidString(variant.productCost),
-      "productImage": productDetails.productImage,
-      "productURL": productDetails.productURL
+      "defaultProfitMargetSet": !this.isValidString(variant.productCost)
     }
   }
 
