@@ -29,7 +29,7 @@ export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
-    
+
     this.state = {
       campaignName: '',
       campaignDescription: '',
@@ -55,7 +55,7 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   async componentDidMount() {
-    if(isCampaignUpdate){
+    if (isCampaignUpdate) {
       await this.getCampaignData()
     }
   }
@@ -69,37 +69,29 @@ export default class CampaignScreen extends BaseComponent {
         let fetchData = responseData.properties[0].value;
         this.setState({ fetchData });
         this.setCampaignDetail(fetchData.products[0]);
-        this.setCampaignData(this.state.fetchData);
+        this.setCampaignData(fetchData);
       }
     }
     this.renderActivityIndicatorHide()
   }
 
   setCampaignData(fetchData) {
-    let productItem = fetchData.products[0];
-  
-    this.setState({
-      campaignName: productItem.productName,
-      campaignDescription: productItem.productDescription,
-      campaignPriceValue: productItem.defaultDetails.comparePrice + "",
-      campaignSaleValue: productItem.defaultDetails.productPrice+"",
-      campaignBarcodeValue:  productItem.defaultDetails.barCode + "",
-      campaignSkuValue: productItem.defaultDetails.sku,
-      pickedImage: (this.isValidString(productItem.defaultDetails.productURL))?{uri:productItem.defaultDetails.productURL}: compaignConstants.CAMERA_ICON,
-      showImage: true
-    })
+    if (this.isValidString(fetchData)) {
+      let productItem = fetchData.products[0];
+
+      this.setState({
+        campaignName: productItem.productName,
+        campaignDescription: productItem.productDescription,
+        campaignPriceValue: productItem.defaultDetails.comparePrice + "",
+        campaignSaleValue: productItem.defaultDetails.productPrice + "",
+        campaignBarcodeValue: productItem.defaultDetails.barCode + "",
+        campaignSkuValue: productItem.defaultDetails.sku,
+        pickedImage: (this.isValidString(productItem.defaultDetails.productURL)) ? { uri: productItem.defaultDetails.productURL } : compaignConstants.CAMERA_ICON,
+        showImage: (this.isValidString(productItem.defaultDetails.productURL)) ? true: false
+      })
+    }
   }
 
-
-  // UNSAFE_componentWillUpdate = nextProps => {
-  //   this.state.refershData = nextProps.qrcodeData
-  //   console.log("################## UNSAFE_componentWillUpdate : " + nextProps.qrcodeData)
-  //   if (this.isValidString(nextProps.qrcodeData)) {
-  //     // this.setState({
-  //     //   campaignBarcodeValue: nextProps.qrcodeData
-  //     // })
-  //   }
-  // }
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.qrcodeData)) {
@@ -526,7 +518,7 @@ export default class CampaignScreen extends BaseComponent {
     );
   }
 
-  nextButtonTapped(){
+  nextButtonTapped() {
     if (this.isValidString(this.state.campaignName)) {
       let campaignDetails = {
         "campaignName": this.state.campaignName,
@@ -535,6 +527,8 @@ export default class CampaignScreen extends BaseComponent {
         "campaignSalePrice": this.state.campaignSaleValue,
         "camapignbarcode": this.state.camapignbarcode,
         "campaignskuNumber": this.state.campaignSku,
+        "productImage": imageFile.name,
+        "productURL": globalData.getImagePathCampaign()
       }
       Actions.createCampaign({ campaignDetails: campaignDetails, isCampaignUpdate: isCampaignUpdate, campaignId: campaignId });
     } else {

@@ -54,10 +54,8 @@ export default class ManageCampaign extends BaseComponent {
   async getCampaignList() {
     this.renderActivityIndicatorShow()
     let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
-    console.log('######## get Campaign URL ::: ', campaignSaveURL)
 
     let responseData = await fetchCampaignGET(campaignSaveURL);
-    console.log('######## responseData ::: ' + JSON.stringify(responseData))
     if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
       if (responseData.statusMessage == constants.SUCCESS_STATUS) {
         if (this.isValidArray(responseData.properties)) {
@@ -115,7 +113,6 @@ export default class ManageCampaign extends BaseComponent {
   }
 
   renderItemView = (item, index) => {
-    console.log("################ item : " + JSON.stringify(item))
     let productItem = item.products[0];
     if (this.isValidString(item)) {
       return (

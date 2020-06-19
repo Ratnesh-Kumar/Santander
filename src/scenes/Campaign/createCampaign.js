@@ -237,7 +237,6 @@ export default class CampaignScreen extends BaseComponent {
     var responseData = "";
     if(isCampaignUpdate){
       let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId())+campaignId;
-      //console.log('####### campaignUpdateURL :',campaignUpdateURL)
       responseData = await fetchCampaignPUT(campaignUpdateURL, requestBody)
       this.setCampaignID(campaignId)
     }else{
