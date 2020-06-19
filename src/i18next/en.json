@@ -203,7 +203,8 @@
     },
     "manageCampaignScreen":{
       "ManageCampaign":"Manage Campaign",
-      "errorNoCampaignFound":"No Campaign Found"
+      "errorNoCampaignFound":"No Campaign Found",
+      "Info":"Info"
     },
     "productScreen":{
       "manageProducts": "Manage Products",

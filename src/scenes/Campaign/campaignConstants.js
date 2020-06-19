@@ -1,8 +1,7 @@
 export const HOME_SCREEN = "Home Screen";
 export const CREATE_STORE_SCREEN = "Digishop";
-export const CAMERA_ICON =require('../../public/images/camera_icon.png');
 export const EDIT_ICON=require('../../public/images/icon_Pencil.png');
-
+export const CAMERA_ICON =require('../../public/images/camera_icon.png');
 export const PUBLISH_EMAIL = "Email";
 export const PUBLISH_FACEBOOK_MARKETPLACE = "FacebookMarketPlace";
 export const PUBLISH_FACEBOOK_MESSANGER = "FacebookMessanger";

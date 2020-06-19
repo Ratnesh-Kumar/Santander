@@ -190,7 +190,8 @@
   },
   "manageCampaignScreen": {
     "ManageCampaign": "Administrar campaña",
-    "errorNoCampaignFound":"No se encontró campaña"
+    "errorNoCampaignFound":"No se encontró campaña",
+    "Info": "Informacion"
   },
   "productScreen": {
     "manageProducts": "Gestionar productos",

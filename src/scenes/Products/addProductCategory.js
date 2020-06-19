@@ -544,8 +544,8 @@ export default class AddProductCategory extends BaseComponent {
         "comparePrice": data.productPrice,
         "productCost": data.productCost,
         "defaultProfitMargetSet": !this.isValidString(data.productCost),
-        "productImage": productDetails.productImage,
-        "productURL": productDetails.productURL
+        "productImage": data.productImage,
+        "productURL": data.productURL
       },
       "productVariants": variantList,
       "extensions": []

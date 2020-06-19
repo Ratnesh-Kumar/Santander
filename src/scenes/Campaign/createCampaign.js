@@ -15,13 +15,16 @@ import QuantityField from '../../components/QuantityField';
 import CreateTagView from './categoryTagView'
 import Stepper from '../../components/Stepper/stepper'
 import { color } from 'react-native-reanimated';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
+import { fetchCampaignPOST, fetchCampaignPUT } from '../../services/FetchData';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 var campaignDetails = "";
 var campaignVariantArray = [];
-var isUpdate = "";
+var isCampaignUpdate = "";
 var campaignId = "";
 var fetchCampaignData = "";
 
@@ -35,20 +38,67 @@ export default class CampaignScreen extends BaseComponent {
       variantsList: [],
       categoryList: [],
       salesTax:'',
-      salesTaxType:''
+      salesTaxType:'',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
     }
     campaignDetails = props.campaignDetails;
-    isUpdate = props.isUpdate ? props.isUpdate : false
+    isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false
     campaignId = props.campaignId
-    fetchCampaignData = this.getProductDetail();
-    // if (isUpdate) {
-    //   this.setUpdateData();
-    // }
+    fetchCampaignData = this.getCampaignDetail();
+    if (isCampaignUpdate) {
+      this.setUpdateData(fetchCampaignData);
+    }
+  }
+
+  setUpdateData(fetchCampaignData) {
+    campaignVariantArray = [];
+    if (this.isValidString(fetchCampaignData)) {
+      if (this.isValidString(fetchCampaignData.tags)) {
+        let tags = [];
+        if (fetchCampaignData.tags.includes(",")) {
+          tags = fetchCampaignData.tags.split(", ")
+
+        } else {
+          tags.push(fetchCampaignData.tags);
+
+        }
+        this.state.categoryList = tags
+      }
+
+      campaignDetails.campaignQuantity = fetchCampaignData.defaultDetails.quantityOnHand;
+      this.setState({
+        campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand
+      })
+      if (this.isValidArray(fetchCampaignData.productVariants)) {
+        let productVariant = fetchCampaignData.productVariants;
+        for (let i = 0; i < productVariant.length; i++) {
+          let variant = productVariant[i];
+          if(!variant.discountinuedProduct){
+            let variantDetail = {};
+            this.state.variantsList.push(variant.variantName)
+            variantDetail.name = variant.variantName;
+            variantDetail.price = variant.comparePrice;
+            variantDetail.barcode = variant.barCode;
+            variantDetail.skuNumber = variant.sku;
+            variantDetail.salePrice = variant.productPrice;
+            variantDetail.productCost = variant.productCost;
+            variantDetail.quantity = variant.quantityOnHand;
+            variantDetail.discountinuedProduct = variant.discountinuedProduct;
+            campaignVariantArray.push(variantDetail)
+          }
+        }
+      }
+    }
+    this.forceUpdate()
   }
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.variantInfo)) {
-      if (isUpdate) {
+      if (isCampaignUpdate) {
         this.updateCampaignVariantArray(props.variantInfo);
       } else {
         if (!this.isVariantExist(props.variantInfo)) {
@@ -110,6 +160,7 @@ export default class CampaignScreen extends BaseComponent {
   render() {
     return (
       <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'} >
+        {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           campaignVariantArray = [];
           this.setState({
@@ -129,8 +180,8 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-            Actions.createCampaignShare()
-            //this.addCampaign()
+            //Actions.createCampaignShare()
+            this.addCampaign()
           }} />
         </ScrollView>
       </KeyboardAvoidingView>
@@ -170,24 +221,82 @@ export default class CampaignScreen extends BaseComponent {
     return variantItem;
   }
   
-  addCampaign(){
+  async addCampaign(){
+    this.renderActivityIndicatorShow()
     let variantList = [];
-    //console.log('############# this.state.variantsList',this.state.variantsList);
+    let productListArr = [];
     for (let i = 0; i < this.state.variantsList.length; i++) {
       let variantItem = this.getVariantItem(this.state.variantsList[i]);
-      //console.log('############# variantItem',variantItem);
       variantList.push(this.getCampaignVariant(variantItem))
     }
     campaignDetails.campaignCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
-    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)
-    let productListArr = [];
+    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)    
     productListArr.push(this.getProductRequestBody(campaignDetails, variantList));
-    //console.log('############# productListArr ::::::',productListArr);
-    var requestBody = this.getRequestBody(productListArr);
-    console.log('############# requestBody ::::::',JSON.stringify(requestBody));
-    Actions.createCampaignShare();
+    var requestBody = this.getRequestBody(productListArr,"DRAFT");
+    // Call API for the save campaigan as a DRAFT 
+    var responseData = "";
+    if(isCampaignUpdate){
+      let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId())+campaignId;
+      responseData = await fetchCampaignPUT(campaignUpdateURL, requestBody)
+      this.setCampaignID(campaignId)
+    }else{
+      let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
+      responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
+      let campaiganIDCreated = responseData.properties[0].value.campaignId;
+      this.setCampaignID(campaiganIDCreated)
+    }
 
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      if (responseData.statusMessage === constants.SUCCESS_STATUS) {
+        await this.createRequestBodyforPublish(productListArr)
+        campaignVariantArray = [];
+        this.setState({
+          variantsList: [],
+          categoryList: []
+        })
+        this.setCampaignDetail('');
+        this.renderActivityIndicatorHide()
+        //Actions.createCampaignShare()
+        setTimeout(() => {
+          this.showAlert()
+        }, 100);
+      }
+    }
+    this.renderActivityIndicatorHide()
 
+  }
+
+  createRequestBodyforPublish(productListArr){
+    let campaignRequestbody = this.getRequestBody(productListArr,"PUBLISHED");
+    if(isCampaignUpdate){
+      this.setCampaignResponse(campaignRequestbody)
+    }else{
+      this.setCampaignResponse(campaignRequestbody)
+    }
+  }
+
+  showAlert() {
+    Alert.alert(
+      'Info',
+      'Your campaign successfully added as a draft. Do you want to publish it ?',
+      [
+        {
+          text: 'PUBLISH', onPress: () => {
+            Actions.createCampaignShare()
+          }
+        },
+        {
+          text: 'NO', onPress: () => {
+            this.setCampaignID("")
+            this.setCampaignResponse("")
+            Actions.manageCampaign({ type: 'reset' });
+            setTimeout(() => {
+              Actions.refresh({ isRefresh: true });
+            }, 100)
+          }
+        },
+      ]
+    );
   }
 
   renderVariantsQantityView() {
@@ -204,19 +313,18 @@ export default class CampaignScreen extends BaseComponent {
         
     )
   }
-
+  
   renderQuantityView(quantityTitle) {
     return (
       <QuantityField isVarientQuantityView={true}
         onButtonPressed={() => {
           Actions.campaignVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
-          //Actions.campaignVarient()
         }}
-       title={quantityTitle} updatedQuantity={(quantity) => {
-        this.setState({
-          campaignQuantity: quantity
-        })
-      }} />
+        quantity={this.getVariantObj(quantityTitle).quantity}
+        title={quantityTitle} updatedQuantity={(quantity) => {
+          let variantObj = this.getVariantObj(quantityTitle);
+          variantObj.quantity = quantity;
+        }} />
     )
   }
 
@@ -364,15 +472,14 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
-  getRequestBody(productArr){
+  getRequestBody(productArr,campaignStatus){
     return{
-      "campaignStatus": "DRAFT",
+      "campaignStatus": campaignStatus,
       "products": productArr,
     };
   }
 
   getProductRequestBody(data, variantList) {
-    // console.log('######### data :::: ',data);
     return {
       "productName": data.campaignName,
       "productFamily": data.campaignCategory,
@@ -400,6 +507,8 @@ export default class CampaignScreen extends BaseComponent {
         "taxCode": "CA",
         "displayProduct": true,
         "comparePrice": data.campaignPrice,
+        "productImage": data.productImage,
+        "productURL": data.productURL
       },
       "productVariants": variantList,
     }
@@ -407,7 +516,6 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   getCampaignVariant(variant) {
-    // console.log('######### getCampaignVariant :::: ',variant);
     return {
       "variantId": "",
       "variantName": variant.name,
@@ -427,6 +535,43 @@ export default class CampaignScreen extends BaseComponent {
       "taxCode": "CA",
       "displayProduct": true,
       "comparePrice": variant.price,
+    }
+  }
+
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
     }
   }
 

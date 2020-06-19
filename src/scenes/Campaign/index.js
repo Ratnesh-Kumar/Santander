@@ -12,20 +12,24 @@ import TextInputMaterial from '../../components/textInputMaterial';
 import AppButton from '../../components/AppButton'
 import ImagePicker from "react-native-image-picker";
 import Stepper from '../../components/Stepper/stepper'
+import { fetchCampaignPOST, fetchCampaignGET } from '../../services/FetchData';
+import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
+import DialogModalView from '../../components/modalcomponent/DialogModal';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 import { RNS3 } from 'react-native-aws3';
-var isUpdate = "";
-var itemId = "";
+var campaignId = "";
 var imageFile = {}
 var options = {}
+var isCampaignUpdate = false;
 
 export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
+
     this.state = {
       campaignName: '',
       campaignDescription: '',
@@ -38,25 +42,56 @@ export default class CampaignScreen extends BaseComponent {
       campaignBarcodeValue: '',
       pickedImage: compaignConstants.CAMERA_ICON,
       isBarcodeDisplay: false,
-      showImage: false
+      showImage: false,
+      fetchData: '',
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: '',
+      isDialogModalVisible: false,
+      dialogModalText: '',
+      dialogModalTitle: '',
     }
-    itemId = props.itemId;
-    isUpdate = props.isUpdate ? props.isUpdate : false;
+    campaignId = props.campaignId;
+    isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false;
   }
 
   async componentDidMount() {
-
+    if (isCampaignUpdate) {
+      await this.getCampaignData()
+    }
   }
 
-  // UNSAFE_componentWillUpdate = nextProps => {
-  //   this.state.refershData = nextProps.qrcodeData
-  //   console.log("################## UNSAFE_componentWillUpdate : " + nextProps.qrcodeData)
-  //   if (this.isValidString(nextProps.qrcodeData)) {
-  //     // this.setState({
-  //     //   campaignBarcodeValue: nextProps.qrcodeData
-  //     // })
-  //   }
-  // }
+  async getCampaignData() {
+    this.renderActivityIndicatorShow();
+    let campaignDetailURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId()) + campaignId;
+    let responseData = await fetchCampaignGET(campaignDetailURL);
+    if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
+      if (responseData.statusMessage == constants.SUCCESS_STATUS) {
+        let fetchData = responseData.properties[0].value;
+        this.setState({ fetchData });
+        this.setCampaignDetail(fetchData.products[0]);
+        this.setCampaignData(fetchData);
+      }
+    }
+    this.renderActivityIndicatorHide()
+  }
+
+  setCampaignData(fetchData) {
+    if (this.isValidString(fetchData)) {
+      let productItem = fetchData.products[0];
+
+      this.setState({
+        campaignName: productItem.productName,
+        campaignDescription: productItem.productDescription,
+        campaignPriceValue: productItem.defaultDetails.comparePrice + "",
+        campaignSaleValue: productItem.defaultDetails.productPrice + "",
+        campaignBarcodeValue: productItem.defaultDetails.barCode + "",
+        campaignSkuValue: productItem.defaultDetails.sku,
+        pickedImage: (this.isValidString(productItem.defaultDetails.productURL)) ? { uri: productItem.defaultDetails.productURL } : compaignConstants.CAMERA_ICON,
+        showImage: (this.isValidString(productItem.defaultDetails.productURL)) ? true: false
+      })
+    }
+  }
+
 
   UNSAFE_componentWillReceiveProps(props) {
     if (this.isValidString(props.qrcodeData)) {
@@ -66,9 +101,47 @@ export default class CampaignScreen extends BaseComponent {
     }
   }
 
+  renderActivityIndicatorShow() {
+    this.setState({
+      isActivityIndicatorVisible: true,
+      activityIndicatorText: 'Loading...'
+    });
+  }
+
+  renderActivityIndicatorHide() {
+    this.setState({
+      isActivityIndicatorVisible: false,
+      activityIndicatorText: ''
+    });
+  }
+
+  renderDialogModal(title, message) {
+    this.setState({
+      isDialogModalVisible: true,
+      dialogModalText: message,
+      dialogModalTitle: title
+    });
+    message = '';
+  }
+
+  renderModal() {
+    if (this.state.isDialogModalVisible) {
+      return (
+        <DialogModalView isVisible={this.state.isDialogModalVisible}
+          title={this.state.dialogModalTitle}
+          message={this.state.dialogModalText}
+          handleClick={() => { this.setState({ isDialogModalVisible: false, dialogModalText: '' }) }} />);
+    } else if (this.state.isActivityIndicatorVisible) {
+      return (
+        <ActivityIndicatorView isVisible={this.state.isActivityIndicatorVisible} text={this.state.activityIndicatorText} />
+      );
+    }
+  }
+
   render() {
     return (
       <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'}>
+        {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <Stepper count={3} currentCount={1} />
         <View>
@@ -397,6 +470,7 @@ export default class CampaignScreen extends BaseComponent {
               multiline={true}
               maxLength={250}
               numberOfLines={3}
+              value={this.state.campaignDescription}
               onChangeText={text => { globalData.setdescriptionCampaign(text); this.setState({ campaignDescription: text }) }}
               onSubmitEditing={event => {
                 this.refs.campaignPrice.focus();
@@ -444,7 +518,7 @@ export default class CampaignScreen extends BaseComponent {
     );
   }
 
-  nextButtonTapped(){
+  nextButtonTapped() {
     if (this.isValidString(this.state.campaignName)) {
       let campaignDetails = {
         "campaignName": this.state.campaignName,
@@ -453,13 +527,14 @@ export default class CampaignScreen extends BaseComponent {
         "campaignSalePrice": this.state.campaignSaleValue,
         "camapignbarcode": this.state.camapignbarcode,
         "campaignskuNumber": this.state.campaignSku,
+        "productImage": imageFile.name,
+        "productURL": globalData.getImagePathCampaign()
       }
-      console.log('########## campaign Details :::: ',campaignDetails)
-      Actions.createCampaign({ campaignDetails: campaignDetails, isUpdate: false, campaignId: itemId });
+      Actions.createCampaign({ campaignDetails: campaignDetails, isCampaignUpdate: isCampaignUpdate, campaignId: campaignId });
     } else {
       Alert.alert(
         'Info',
-        'Please provide valid campaign name.',
+        'Please provide valid campaign title.',
         [
           { text: 'OK' },
         ]
