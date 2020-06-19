@@ -66,6 +66,8 @@ export const GET_SHOP_SETTING=BASE_PARTY_SERVICE_URL+"/v1/party/"+BUISNESS_ID+"/
 //Party Shop API Url
 export const CREATE_SHOP_URL = BASE_PARTY_SERVICE_URL+"/v1/party/shop";
 
+
+
 // Campaigan API List
 export const GET_CAMPAIGN_LIST = BASE_TRANSACTION_SERVICE_URL+"/v1/party/"+BUISNESS_ID+"/transaction/campaign";
 export const GET_CAMPAIGN_DETAIL = BASE_TRANSACTION_SERVICE_URL+"/v1/party/"+BUISNESS_ID+"/transaction/campaign/";

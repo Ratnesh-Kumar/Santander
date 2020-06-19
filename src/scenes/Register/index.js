@@ -143,12 +143,21 @@ export default class RegisterView extends BaseComponent {
             globalData.setBusinessId(businessObject.businessId)
             globalData.setShopName(businessObject.shopName)
           }
+        }
+    }
+    // handlerBusinessId(businessObject) {
+    //     if (this.isValidString(businessObject)) {
+    //       businessObject = JSON.parse(businessObject)
+    //       if(businessObject.username == globalData.getUserInfo().username){
+    //         globalData.setBusinessId(businessObject.businessId)
+    //         globalData.setShopName(businessObject.shopName)
+    //       }
           
-        }
-        if (!this.isValidString(globalData.getBusinessId())) {
-          this.createShop()
-        }
-      }
+    //     }
+    //     if (!this.isValidString(globalData.getBusinessId())) {
+    //       this.createShop()
+    //     }
+    //   }
 
     getBodyData() {
         let locale = constants.DEVICE_LOCALE.replace("-", "_").toLocaleLowerCase()
