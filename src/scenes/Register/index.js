@@ -5,7 +5,8 @@ import {
     Text,
     KeyboardAvoidingView,
     TouchableOpacity,
-    Keyboard
+    Keyboard,
+    TouchableHighlight
 } from 'react-native';
 import TextInputMaterial from '../../components/textInputMaterial';
 import PropTypes from 'prop-types';
@@ -415,11 +416,10 @@ export default class RegisterView extends BaseComponent {
                                     this.refs.confirmPassword.focus();
                                 }}
                             />
-                            <TouchableOpacity style={registerStyle.btnEye} onPress={() => this.setPasswordVisibility()}>
+                             <TouchableOpacity style={[registerStyle.btnEye]} onPress={() => this.setPasswordVisibility()}>
                                 <Image source={imgSource} style={registerStyle.iconEye} />
                             </TouchableOpacity>
                         </View>
-
                     </View>
                 </View>
             </KeyboardAvoidingView>
