@@ -180,8 +180,8 @@ export default class CampaignScreen extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-            Actions.createCampaignShare()
-            //this.addCampaign()
+            //Actions.createCampaignShare()
+            this.addCampaign()
           }} />
         </ScrollView>
       </KeyboardAvoidingView>

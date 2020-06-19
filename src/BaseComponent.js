@@ -11,6 +11,7 @@ import {
 var constants = require('./config/Constants');
 const SHOP_NAME = "DigiShop - ";
 var productDetail = "";
+var campaignDetail = "";
 export default class BaseComponent extends Component {
 
   constructor() {
@@ -18,6 +19,12 @@ export default class BaseComponent extends Component {
 
   }
 
+  setCampaignDetail(data) {
+    campaignDetail = data
+  }
+  getCampaignDetail() {
+    return campaignDetail;
+  }
   setProductDetail(prodDetail) {
     productDetail = prodDetail;
   }
