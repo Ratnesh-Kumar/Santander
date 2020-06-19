@@ -372,7 +372,7 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   getProductRequestBody(data, variantList) {
-    console.log('######### data :::: ',data);
+    // console.log('######### data :::: ',data);
     return {
       "productName": data.campaignName,
       "productFamily": data.campaignCategory,
@@ -386,7 +386,7 @@ export default class CampaignScreen extends BaseComponent {
         "variantName": "default",
         "optionalValues": "none",
         "productPrice": data.campaignSalePrice,
-        "barCode": "9867543210",
+        "barCode": "",
         "sku": data.campaignskuNumber,
         "weight": data.weight,
         "weightUnit": data.weightUnit,
@@ -407,13 +407,13 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   getCampaignVariant(variant) {
-    console.log('######### getCampaignVariant :::: ',variant);
+    // console.log('######### getCampaignVariant :::: ',variant);
     return {
       "variantId": "",
       "variantName": variant.name,
       "optionalValues": "",
       "productPrice": variant.salePrice,
-      "barCode": "9867543210",
+      "barCode": "",
       "sku": variant.skuNumber,
       "weight": 0,
       "weightUnit": "",
