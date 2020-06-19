@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import {
     View,
     Switch,
-    Image
+    Image,
+    TouchableOpacity
 } from 'react-native';
 import switchTextInputStyle from './switchTextInputStyle';
 import { Text } from 'native-base';
+
 var colorConstants = require('../../config/colorConstant');
 export default class SwitchTextInput extends Component {
     constructor(props) {
@@ -31,13 +33,13 @@ export default class SwitchTextInput extends Component {
     renderSwitch(isDropDownVisbile) {
         if(isDropDownVisbile){
             return (
-                <View
+                <TouchableOpacity onPress={()=>{this.props.onDropDownPressed()}}
                   style={{position: 'absolute', right: 10, top: 10}}>
                   <Image
               style={{width: 35, height: 35}}
               source={require('../.././public/images/dropDown.png')}
             />
-                </View>
+                </TouchableOpacity>
               );  
         }
         return (

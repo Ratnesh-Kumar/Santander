@@ -26,7 +26,10 @@ import GlobalData from '../../utils/GlobalData';
 import { fetchPartyPUT, fetchPartyGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
+import Picker from 'react-native-picker';
 var globalData = new GlobalData();
+var industryTypeData=[];
+var countryNameData=[];
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -54,11 +57,11 @@ export default class BusinessProfileView extends BaseComponent {
             isDialogModalVisible: false,
             dialogModalText: '',
             dialogModalTitle: '',
+            industryType:''
 
         }
         shopInfo = props.shopInfo;
     }
-
 
     componentDidMount() {
         this.getBusinessData()
@@ -83,15 +86,15 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     setBusinessData(responseData) {
-        //console.log("taxId " + responseData.taxId)
+        console.log("taxId " + responseData.party.country)
         this.setState({
             buisnessName: responseData.businessSettings.businessName,
             businessTaxId: responseData.party.taxId + "",
             postalCode: responseData.party.postalCode + "",
-            postalState: responseData.party.state + "",
+            postalState: responseData.party.state+"" ,
             address: responseData.party.address + "",
             city: responseData.party.city + "",
-            country: responseData.country + ""
+            country: responseData.party.country + ""
         })
     }
 
@@ -176,6 +179,8 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderBuisnessForm() {
+        industryTitle=this.state.industryType===''?strings('BuisnessProfile.IndustryTypeText'):this.state.industryType
+        countryTitle=this.state.country===''?strings('BuisnessProfile.CountryText'):this.state.country
         return (
             <KeyboardAvoidingView
                 behavior="height"
@@ -240,10 +245,12 @@ export default class BusinessProfileView extends BaseComponent {
                 {/*this.renderSwitchFields(strings('BuisnessProfile.CountryText'))*/}
 
                 <View style={{ paddingTop: 10 }}>
+                    
                     <SwitchTextInput
                         isDropDownVisbile={true}
-                        title={strings('BuisnessProfile.IndustryTypeText')}
-                    //onPress={() => Alert.alert('test')}
+                        //strings('BuisnessProfile.IndustryTypeText')
+                        title={industryTitle}
+                        onDropDownPressed={() => this.renderIndustryPicker()}
                     />
                 </View>
 
@@ -251,8 +258,8 @@ export default class BusinessProfileView extends BaseComponent {
                 <View style={{}}>
                     <SwitchTextInput
                         isDropDownVisbile={true}
-                        title={strings('BuisnessProfile.CountryText')}
-                    //onPress={() => Alert.alert('test')}
+                        title={countryTitle}
+                    onDropDownPressed={() => this.renderCountryPicker()}
                     />
                 </View>
 
@@ -729,6 +736,57 @@ export default class BusinessProfileView extends BaseComponent {
                 </View>
             </KeyboardAvoidingView>
         );
+    }
+
+    renderIndustryPicker(){
+        industryTypeData=['Auto Repair','Bars','Coffee $ Tea','Delivery','General Constrator','Hair Salons','Hardware Stores','Heating and Cooling','Home Goods Store','Jewellery','Liquor Store','Painter','Plumber','Professional','Real Estate Agents','Restaurnts','Retail Stores'];
+        Picker.init({
+            pickerData: industryTypeData,
+            pickerTitleText: 'Select Industry Type',
+            pickerConfirmBtnText: 'Done',
+            pickerCancelBtnText: 'Cancel',
+            selectedValue: [this.state.industryType],
+            pickerBg: [255, 255, 255, 1],
+      
+            onPickerConfirm: data => {
+              this.setState({
+                industryType:data
+              })
+            },
+            onPickerCancel: data => {
+              Picker.hide();
+            },
+            onPickerSelect: data => {
+              //console.log(data);
+            }
+          });
+          Picker.show();
+
+    }
+
+    renderCountryPicker(){
+        countryNameData=['Brazil','Maxico','Poland','Spain','UK','US'];
+        Picker.init({
+            pickerData: countryNameData,
+            pickerTitleText: 'Select Country',
+            pickerConfirmBtnText: 'Done',
+            pickerCancelBtnText: 'Cancel',
+            selectedValue: [this.state.country],
+            pickerBg: [255, 255, 255, 1],
+      
+            onPickerConfirm: data => {
+              this.setState({
+                country:data
+              })
+            },
+            onPickerCancel: data => {
+              Picker.hide();
+            },
+            onPickerSelect: data => {
+              //console.log(data);
+            }
+          });
+          Picker.show();
     }
 
     inputFocused(refName) {
