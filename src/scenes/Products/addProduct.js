@@ -130,17 +130,9 @@ export default class AddProductScreen extends BaseComponent {
       productBarcodeValue: productInfo.productBarcodeValue + "",
       productCostValue: productInfo.productCostValue+"",
       productSkuValue: productInfo.productSku,
-      pickedImage: {uri:productInfo.imageURl},
-      showImage:true
+      pickedImage: (this.isValidString(productUrl))?{uri:productUrl}: productConstants.CAMERA_ICON,
+      showImage:(this.isValidString(productUrl))?true: false
     })
-    //console.log("image : "+JSON.stringify(this.state.pickedImage.uri))
-    if(this.state.pickedImage.uri===undefined || this.state.pickedImage.uri==='undefined'|| this.state.pickedImage.uri==='' || this.state.pickedImage.uri===null || this.state.pickedImage.uri==='null')
-    {
-      this.setState({
-        pickedImage:productConstants.CAMERA_ICON,
-        showImage: false,
-      })
-    }
   }
 
   UNSAFE_componentWillReceiveProps(props) {
