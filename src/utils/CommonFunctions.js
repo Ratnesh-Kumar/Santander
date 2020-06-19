@@ -77,10 +77,10 @@ export class CommonFunctions extends Component {
 
     postOnFacebook = (globalData) => {
         var campaignTitle = (this.isValidString(globalData.getTitleCampaign())) ? (globalData.getTitleCampaign().trim() + '\n\r') : "\n\r";
-        var campaignProductDescription = (this.isValidString(globalData.getdescriptionCampaign())) ? (globalData.getdescriptionCampaign() .trim()+ '\n\r') : "\n\r";
-        var campaignQuantity = (this.isValidString(globalData.getQuantityCampaign())) ? (globalData.getQuantityCampaign().toString() .trim()+ '\n\r') : "\n\r";
+        var campaignProductDescription = (this.isValidString(globalData.getdescriptionCampaign())) ? (globalData.getdescriptionCampaign().trim() + '\n\r') : "\n\r";
+        var campaignQuantity = (this.isValidString(globalData.getQuantityCampaign())) ? (globalData.getQuantityCampaign().toString().trim() + '\n\r') : "\n\r";
         var campaignPrice = (this.isValidString(globalData.getPriceCampaign())) ? (globalData.getPriceCampaign().toString().trim() + '\n\r') : "\n\r";
-        var campaignSalesPrice = (this.isValidString(globalData.getSalesPriceCampaign())) ? globalData.getSalesPriceCampaign().trim() : "\n\r";
+        var campaignSalesPrice = (this.isValidString(globalData.getSalesPriceCampaign())) ? globalData.getSalesPriceCampaign().toString().trim() : "\n\r";
         FacebookShareMessage = (campaignTitle + "Product Description :" + campaignProductDescription + "Available Quantity :" + campaignQuantity + "Price :" + campaignPrice + "Sale Price :" + campaignSalesPrice);
         FacebookShareURL = (globalData.getImagePathCampaign() !== "") ? globalData.getImagePathCampaign() : FacebookShareURL;
         if (FacebookShareURL != undefined) {

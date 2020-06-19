@@ -102,12 +102,11 @@ export default class AddProductScreen extends BaseComponent {
   }
 
   setProductData(fetchData) {
-    console.log("############### fetchData : "+JSON.stringify(fetchData))
     let productUrl = '';
     if(this.isValidString(fetchData)){
 
-      if(this.isValidArray(fetchData.productVariants)){
-        productUrl = fetchData.productVariants[0].productURL
+      if(this.isValidString(fetchData.defaultDetails)){
+        productUrl = fetchData.defaultDetails.productURL
       }
       this.setState({
         productName: fetchData.productName,
@@ -542,7 +541,6 @@ export default class AddProductScreen extends BaseComponent {
   }
 
   showPickedImage() {
-    console.log("################# this.state.pickedImage : "+this.state.pickedImage)
     return (
       <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
         <Image source={this.state.pickedImage?this.state.pickedImage:null} style={{ height: 60, width: 60, marginTop: 20 }} />

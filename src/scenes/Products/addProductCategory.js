@@ -543,7 +543,9 @@ export default class AddProductCategory extends BaseComponent {
         "displayProduct": true,
         "comparePrice": data.productPrice,
         "productCost": data.productCost,
-        "defaultProfitMargetSet": !this.isValidString(data.productCost)
+        "defaultProfitMargetSet": !this.isValidString(data.productCost),
+        "productImage": productDetails.productImage,
+        "productURL": productDetails.productURL
       },
       "productVariants": variantList,
       "extensions": []
@@ -572,9 +574,7 @@ export default class AddProductCategory extends BaseComponent {
       "displayProduct": true,
       "comparePrice": variant.price,
       "productCost": variant.productCost,
-      "defaultProfitMargetSet": !this.isValidString(variant.productCost),
-      "productImage": productDetails.productImage,
-      "productURL": productDetails.productURL
+      "defaultProfitMargetSet": !this.isValidString(variant.productCost)
     }
   }
 
