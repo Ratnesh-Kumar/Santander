@@ -61,5 +61,25 @@ export default (styles = StyleSheet.create({
   },
   bottomTextStyle:{
     fontSize: 15, color: colorConstants.BLACK_COLOR ,  textAlign:'center',padding:30 ,
-  }
+  },
+  textStyle:{
+    paddingLeft:5,
+    paddingRight:70,
+    textAlign:'left',
+    marginTop:20,
+    fontSize:16
+  },
+  containerStyle:{
+    width:constants.SCREEN_WIDTH-40,
+    backgroundColor:colorConstants.WHITE_COLOR,
+    height:50,
+    //borderColor:colorConstants.GREY_BORDER_COLOR,
+    //borderWidth:2,
+    //borderRadius:2,
+    //borderBottomColor:colorConstants.GREY_DARK_COLOR,
+    marginRight: 20,
+    marginLeft: 20, 
+    marginTop: 5,
+    marginBottom : 5
+  },
 }));

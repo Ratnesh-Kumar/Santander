@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Keyboard, Switch } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import shopSettingStyle from './ShopSettingsStyle';
@@ -12,7 +12,6 @@ import AppButton from '../../components/AppButton';
 import { fetchPartyGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-import { Switch } from 'native-base';
 var constants = require('../../config/Constants');
 var shopSettingConstants = require('./ShopSettingsConstants')
 var colorConstant = require('../../config/colorConstant')
@@ -114,13 +113,13 @@ export default class ShopSettingScreen extends BaseComponent {
   setShopData(fetchData) {
     console.log("fetchData : " + JSON.stringify(fetchData))
     this.setState({
-      trackInventory: fetchData.trackInventory,
+      trackInventory: (Boolean)(fetchData.trackInventory),
       taxOnSales: (Boolean)(fetchData.taxOnSales),
       taxTypeValue: fetchData.defaultTaxType,
       taxRateValue: fetchData.flatTaxRate + "",
       showDiscount: (Boolean)(fetchData.showDiscounts),
-      shipProducts: fetchData.shipProducts,
-      estimateProfit: fetchData.estimateProfit,
+      shipProducts: (Boolean)(fetchData.shipProducts),
+      estimateProfit: (Boolean)(fetchData.estimateProfit),
       profitMarginValue: fetchData.defaultProfitMargin + "",
       shippingCostValue: fetchData.defaultShippingCost + "",
       handlingCostValue: fetchData.defaultHandlingCost + ""
@@ -170,19 +169,55 @@ export default class ShopSettingScreen extends BaseComponent {
   renderDiscountBox() {
     return (
       <View style={{ marginTop: 10 }}>
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.showDiscount}
+         {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.showDiscount}
           onRightPressed={(value) => { console.log('showDiscount ::::', value), this.setState({ showDiscount: value }) }}
           title={strings('shopSettingsScreen.showDiscountSwitch')}
-        />
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.shipProducts}
+        /> 
+         <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.shipProducts}
           onRightPressed={(value) => { console.log('shipProducts ::::', value), this.setState({ shipProducts: value }) }}
           title={strings('shopSettingsScreen.shipProductsSwitch')}
-        />
-        {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.shippingCompany')}/> */}
-        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.estimateProfit}
+        /> 
+         <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.shippingCompany')}/> 
+         <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.estimateProfit}
           onRightPressed={(value) => { console.log('estimateProfit ::::', value), this.setState({ estimateProfit: value }) }}
           title={strings('shopSettingsScreen.estimateProfit')}
-        />
+        />  */}
+
+        <View
+          style={shopSettingStyle.containerStyle}>
+          <Text style={shopSettingStyle.textStyle}>{strings('shopSettingsScreen.showDiscountSwitch')}</Text>
+          <View
+            style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Switch
+              value={this.state.showDiscount}
+              onValueChange={(value) => { this.setState({ showDiscount: value }) }}
+            />
+          </View>
+        </View>
+
+        <View
+          style={shopSettingStyle.containerStyle}>
+          <Text style={shopSettingStyle.textStyle}>{strings('shopSettingsScreen.shipProductsSwitch')}</Text>
+          <View
+            style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Switch
+              value={this.state.shipProducts}
+              onValueChange={(value) => { this.setState({ shipProducts: value }) }}
+            />
+          </View>
+        </View>
+
+        <View
+          style={shopSettingStyle.containerStyle}>
+          <Text style={shopSettingStyle.textStyle}>{strings('shopSettingsScreen.estimateProfit')}</Text>
+          <View
+            style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Switch
+              value={this.state.estimateProfit}
+              onValueChange={(value) => { this.setState({ estimateProfit: value }) }}
+            />
+          </View>
+        </View>
       </View>
     )
   }
@@ -192,50 +227,40 @@ export default class ShopSettingScreen extends BaseComponent {
     // const { trackInventory, taxOnSales } = this.state;
     return (
       <View style={{ marginTop: 10 }}>
-
-        {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/> */}
-        {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.trackInventory}
+         {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/>
+        <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.trackInventory}
           onRightPressed={(value) => { console.log('trackInventory ::::', value), this.setState({ trackInventory: value }) }}
           title={strings('shopSettingsScreen.taxInventory')}
-        /> */}
-        {this.renderSwitchTrackInventory(strings('shopSettingsScreen.taxInventory'))}
-        {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.taxOnSales}
+        /> 
+         <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.taxOnSales}
           onRightPressed={(value) => { console.log('taxOnSales ::::', value), this.setState({ taxOnSales: value }) }}
           title={strings('shopSettingsScreen.taxOnSales')}
-        /> */}
-        {this.renderSwitchTaxOnSales(strings('shopSettingsScreen.taxOnSales'))}
+        />  */}
+        <View
+          style={shopSettingStyle.containerStyle}>
+          <Text style={shopSettingStyle.textStyle}>{strings('shopSettingsScreen.taxInventory')}</Text>
+          <View
+            style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Switch
+              value={this.state.trackInventory}
+              onValueChange={(value) => { this.setState({ trackInventory: value }) }}
+            />
+          </View>
+        </View>
+
+        <View
+          style={shopSettingStyle.containerStyle}>
+          <Text style={shopSettingStyle.textStyle}>{strings('shopSettingsScreen.taxOnSales')}</Text>
+          <View
+            style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Switch
+              value={this.state.taxOnSales}
+              onValueChange={(value) => { this.setState({ taxOnSales: value }) }}
+            />
+          </View>
+        </View>
 
       </View>
-    )
-  }
-
-  renderSwitchTrackInventory(title) {
-    console.log("renderSwitch method:" + this.state.trackInventory)
-    return (
-      <View style={{ flex: 1, flexDirection: 'row', margin: 20 }}>
-        <View style={{ flex: 1 }}>
-          <Text>{title}</Text>
-        </View>
-        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-          <Switch title={title} value={this.state.trackInventory} onValueChange={(value) => { console.log('trackInventory ::::', value), this.setState({ trackInventory: value }) }} />
-        </View>
-      </View>
-      // <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.trackInventory}
-      //   onRightPressed={(value) => { console.log('trackInventory ::::', value), this.setState({ trackInventory: value }) }}
-      //   title={title}
-      // />
-    )
-  }
-
-  renderSwitchTaxOnSales(title) {
-    console.log("renderSwitch taxonsales:" + this.state.taxOnSales)
-    return (
-      <Switch title={title} value={this.state.taxOnSales} onValueChange={(value) => { console.log('trackInventory ::::', value), this.setState({ taxOnSales: value }) }} />
-
-      // <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.taxOnSales}
-      //   onRightPressed={(value) => { console.log('trackInventory ::::', value), this.setState({ taxOnSales: value }) }}
-      //   title={title}
-      // />
     )
   }
   renderTaxBox() {
