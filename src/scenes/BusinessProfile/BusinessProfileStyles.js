@@ -13,7 +13,7 @@ export default (styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flex: 1
-      },
+    },
     validFormViewContainer: {
         marginTop: 50,
         alignItems: 'center'
@@ -35,34 +35,37 @@ export default (styles = StyleSheet.create({
         width: DEVICE_WIDTH - 20,
     },
     inputWrapperSmall: {
-        width: (DEVICE_WIDTH - 20)/2,
+        width: (DEVICE_WIDTH - 20) / 2,
     },
     inputWrapperPhoneCode: {
-        flex:1
+        flex: 1
         // width: (DEVICE_WIDTH - 20)/3,
     },
     inputWrapperPhone: {
-        flex:3
+        flex: 3
         // width: (DEVICE_WIDTH - 150),
     },
 
     validFormSecondFieldView: {
-        marginTop: 15,paddingLeft:15,paddingRight:15
+        marginTop: 15, paddingLeft: 15, paddingRight: 15
     },
-    validFormSecondFieldViewZip:{
-        marginTop: 15,paddingRight:15
+    validFormSecondFieldViewZip: {
+        marginTop: 15, paddingRight: 15
     },
-    
+
     validAddressViewContainer: {
         marginTop: 10,
         alignItems: 'center'
     },
 
     validFormViewContainerZip: {
-        flex:1,
-        marginLeft:10,marginRight:10,flexDirection:'row', justifyContent:'center', alignItems:'center'
+        flex: 1,
+        marginLeft: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
 
     },
+    phoneInput: {
+        borderWidth: 1, marginLeft: 10, height: 55, borderColor: 'gray', borderBottomColor: '#257fa4', marginTop: 15
+    }
 
 
 }))

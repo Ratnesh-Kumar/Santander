@@ -49,8 +49,8 @@ export default class LoginView extends BaseComponent {
     this.state = {
       showPass: true,
       press: false,
-      username: '',
-      password: '',
+      username: 'test108@yopmail.com',
+      password: 'Tester@123',
       isTouchIdSupported: false,
       isFaceIdSupported: false,
       googleUserInfo: '',
