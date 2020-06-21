@@ -129,7 +129,8 @@ export default class BusinessProfileView extends BaseComponent {
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
-            country: (this.isValidString(responseData.party.country) ? responseData.party.country : "")
+            country: (this.isValidString(responseData.party.country) ? responseData.party.country : ""),
+            industryType:(this.isValidString(responseData.party.industry)? responseData.party.industry : "")
         })
     }
 
@@ -766,7 +767,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-        // console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
+         console.log("######### userId : " + globalData.getUserInfo().key)
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -800,7 +801,7 @@ export default class BusinessProfileView extends BaseComponent {
             pickerTitleText: 'Select Industry Type',
             pickerConfirmBtnText: 'Done',
             pickerCancelBtnText: 'Cancel',
-            selectedValue: [this.state.industryType],
+            selectedValue: this.state.industryType,
             pickerBg: [255, 255, 255, 1],
 
             onPickerConfirm: data => {
@@ -828,7 +829,7 @@ export default class BusinessProfileView extends BaseComponent {
             pickerTitleText: 'Select Country',
             pickerConfirmBtnText: 'Done',
             pickerCancelBtnText: 'Cancel',
-            selectedValue: [this.state.country],
+            selectedValue: this.state.country,
             pickerBg: [255, 255, 255, 1],
 
             onPickerConfirm: data => {
@@ -876,6 +877,7 @@ export default class BusinessProfileView extends BaseComponent {
             "district": "Santa ----",
             "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
+            "industry":this.state.industryType,
             "preferredLanguage": "en_us",
             "businessSettings": {
                 "sourcePrimaryKey": "1234567890",
