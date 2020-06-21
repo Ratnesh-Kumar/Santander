@@ -30,9 +30,6 @@ import Picker from 'react-native-picker';
 var globalData = new GlobalData();
 var industryTypeData=[];
 var countryNameData=[];
-var shopInfo="";
-var industryTitle;
-var countryTitle;
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -60,8 +57,7 @@ export default class BusinessProfileView extends BaseComponent {
             isDialogModalVisible: false,
             dialogModalText: '',
             dialogModalTitle: '',
-            industryType:'',
-            
+            industryType:''
 
         }
         shopInfo = props.shopInfo;
@@ -89,17 +85,16 @@ export default class BusinessProfileView extends BaseComponent {
         this.renderActivityIndicatorHide()
     }
 
-
     setBusinessData(responseData) {
         console.log("taxId " + responseData.party.country)
         this.setState({
-            buisnessName: (this.isValidString(responseData.businessSettings.businessName)?responseData.businessSettings.businessName:""),
-            businessTaxId: (this.isValidString(responseData.party.taxId + "")?responseData.party.taxId + "":""),
-            postalCode: (this.isValidString(responseData.party.postalCode)?(responseData.party.postalCode + ""):""),
-            postalState: (this.isValidString(responseData.party.state)?responseData.party.state:"") ,
-            address: (this.isValidString(responseData.party.address)?responseData.party.address:""),
-            city: (this.isValidString(responseData.party.city)?responseData.party.city:"") ,
-            country: (this.isValidString(responseData.party.country )?responseData.party.country:"")
+            buisnessName: responseData.businessSettings.businessName,
+            businessTaxId: responseData.party.taxId + "",
+            postalCode: responseData.party.postalCode + "",
+            postalState: responseData.party.state+"" ,
+            address: responseData.party.address + "",
+            city: responseData.party.city + "",
+            country: responseData.party.country + ""
         })
     }
 
@@ -211,7 +206,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.BuisnessTaxIdTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.BuisnessName.focus();
                             }}
@@ -239,7 +233,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.Phone.focus();
                             }}
@@ -291,7 +284,6 @@ export default class BusinessProfileView extends BaseComponent {
                             errorText={strings('BuisnessProfile.IBANTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.PhoneCode.focus();
                             }}
@@ -336,7 +328,6 @@ export default class BusinessProfileView extends BaseComponent {
                             errorText={strings('BuisnessProfile.FirstNameTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.LastName.focus();
                             }}
@@ -362,7 +353,6 @@ export default class BusinessProfileView extends BaseComponent {
                             errorText={strings('BuisnessProfile.LastNameTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.Nationality.focus();
                             }}
@@ -388,7 +378,6 @@ export default class BusinessProfileView extends BaseComponent {
                             errorText={strings('BuisnessProfile.NationalityTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.Address.focus();
                             }}
@@ -415,7 +404,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.AddressTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.City.focus();
                             }}
@@ -441,7 +429,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.CityTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.State.focus();
                             }}
@@ -489,7 +476,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.StateTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.PostalCode.focus();
                             }}
@@ -516,7 +502,6 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.postalCode}
                             //errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
                             underlineHeight={2}
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 Keyboard.dismiss()
 
@@ -569,7 +554,6 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.documentNum}
                             //errorText={strings('BuisnessProfile.DocumentTextInputError')}
                             underlineHeight={2}
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.ExpiryDate.focus();
                             }}
@@ -597,7 +581,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.ExpiryTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onFocus={() => this.inputFocused.bind(this)}
                         />
                     </View>
@@ -638,7 +621,6 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.PhoneTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.website.focus();
                             }}
@@ -674,7 +656,6 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.websiteUrl}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.fbUrl.focus();
                             }}
@@ -699,7 +680,6 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.yelpUrl}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.yelpUrl.focus();
                             }}
@@ -724,7 +704,6 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.fbUrl}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 this.refs.Address.focus();
                             }}
@@ -740,8 +719,7 @@ export default class BusinessProfileView extends BaseComponent {
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
-                <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} 
-                onLeftArrowPressed={()=>{  Picker.hide() }}/>
+                <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')} />
                 <View style={businessStyle.viewContainer}>
                     <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginBottom: 20 }}>
                         {this.renderBuisnessForm()}
@@ -752,7 +730,6 @@ export default class BusinessProfileView extends BaseComponent {
                         {/* {this.renderDocuments()}
                         {this.renderDocumentDetail()} */}
                         <AppButton buttonText={strings('BuisnessProfile.NextButton')} onButtonPressed={() => {
-                             Picker.hide();
                             this.handleBusinessProfile()
                         }} />
                     </ScrollView>
@@ -762,8 +739,6 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderIndustryPicker(){
-        Keyboard.dismiss()
-        Picker.hide();
         industryTypeData=['Auto Repair','Bars','Coffee $ Tea','Delivery','General Constrator','Hair Salons','Hardware Stores','Heating and Cooling','Home Goods Store','Jewellery','Liquor Store','Painter','Plumber','Professional','Real Estate Agents','Restaurnts','Retail Stores'];
         Picker.init({
             pickerData: industryTypeData,
@@ -790,9 +765,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderCountryPicker(){
-        Picker.hide();
         countryNameData=['Brazil','Maxico','Poland','Spain','UK','US'];
-        Keyboard.dismiss()
         Picker.init({
             pickerData: countryNameData,
             pickerTitleText: 'Select Country',
