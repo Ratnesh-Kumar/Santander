@@ -31,7 +31,7 @@ export default class SwitchTextInput extends Component {
     }
 
     renderSwitch(isDropDownVisbile) {
-        console.log("SwitchTextInput renderSwitch :" + this.state.switchvalue)
+        //console.log("SwitchTextInput renderSwitch :" + this.state.switchvalue)
         if(isDropDownVisbile){
             return (
                 <TouchableOpacity onPress={()=>{this.props.onDropDownPressed()}}

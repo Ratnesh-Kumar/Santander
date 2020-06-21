@@ -123,7 +123,7 @@ export default class BusinessProfileView extends BaseComponent {
     setBusinessData(responseData) {
         console.log("taxId " + responseData.party.country)
         this.setState({
-            buisnessName: (this.isValidString(responseData.businessSettings.businessName) ? responseData.businessSettings.businessName : ""),
+            buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
             businessTaxId: (this.isValidString(responseData.party.taxId + "") ? responseData.party.taxId + "" : ""),
             postalCode: (this.isValidString(responseData.party.postalCode) ? (responseData.party.postalCode + "") : ""),
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
@@ -136,8 +136,8 @@ export default class BusinessProfileView extends BaseComponent {
     async handleBusinessProfile() {
         //console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         this.renderActivityIndicatorShow();
-        let shopUpdateURL = commonConstants.UPDATE_SHOP_SETTING.replace(commonConstants.BUISNESS_ID, globalData.getBusinessId());;
-        //console.log("shopUpdateURl : " + shopUpdateURL)
+        let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, globalData.getShopName());;
+        console.log("shopUpdateURl : " + shopUpdateURL)
         var requestBody = this.getRequestBody(shopInfo);
         console.log(requestBody)
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
@@ -861,41 +861,56 @@ export default class BusinessProfileView extends BaseComponent {
     getRequestBody(data) {
         console.log("getRequestBody :" + JSON.stringify(data))
         return {
-            "trackInventory": data.trackInventory,
-            "taxOnSales": data.taxOnSales,
-            "taxOnPurchase": true,
-            "purchaseTaxReclaimable": false,
-            "defaultTaxType": data.flatTaxRateType,
-            "flatTaxRate": data.flatTaxRate,
-            "showDiscounts": data.showDiscount,
-            "shipProducts": data.shipProducts,
-            "estimateProfit": data.estimateProfit,
-            "defaultProfitMargin": data.defaultProfitMargin,
-            "defaultShippingCost": data.defaultShippingCost,
-            "defaultHandlingCost": data.defaultHandlingCost,
-            "txSettings": [{
-                "appTransactionType": "DEFAULT",
-                "lineItemDiscount": false,
-                "transactionDiscount": false,
-                "defaultTaxInclusive": false,
-                "defaultShipCharged": false,
-                "discountAllowed": false,
-                "calcCommissions": false,
-                "showWeights": false
-            },
-            {
-                "appTransactionType": "ORDER",
-                "lineItemDiscount": true,
-                "transactionDiscount": false,
-                "defaultTaxInclusive": false,
-                "defaultShipCharged": false,
-                "discountAllowed": true,
-                "calcCommissions": false,
-                "showWeights": true
+            "shopName": this.state.buisnessName,
+            "taxId": this.state.buisnesstaxId,
+            "country": this.state.country,
+            "bankRoutingNumber": "1-----1",
+            "locale": "en_us",
+            "currency": "USD",
+            "firstName": "John 2",
+            "lastName": "Smith 2",
+            "nationality": "USA",
+            "address": this.state.address,
+            "city": this.state.city,
+            "state": this.state.postalState,
+            "district": "Santa ----",
+            "postalCode": this.state.postalCode,
+            "dateFormat": "MM/DD/YY",
+            "preferredLanguage": "en_us",
+            "businessSettings": {
+                "sourcePrimaryKey": "1234567890",
+                "defaultProfitMargin": data.defaultProfitMargin,
+                "businessName": this.state.buisnessName,
+                "trackInventory": data.trackInventory,
+                "taxOnSales": data.taxOnSales,
+                "taxOnPurchase": true,
+                "purchaseTaxReclaimable": false,
+                "multiCurrency": false,
+                "defaultNetDays": 90,
+                "defaultInventoryLeadTime": 5,
+                "defaultInventoryReorderSize": 10,
+                "defaultaInventoryLevelMin": 5,
+                "defaultShippingCost": data.defaultShippingCost,
+                "defaultHandlingCost": data.defaultHandlingCost,
+                "flatTaxRate": data.flatTaxRate,
+                "showDiscounts":data.showDiscount,
+                "shipProducts":data.shipProducts,
+                "defaultTaxType":data.flatTaxRateType,
+                "defaultPaymentType": "CREDIDCARD",
+                "txSettings": [{
+                        "appTransactionType": "DEFAULT",
+                        "lineItemDiscount": false,
+                        "transactionDiscount": true,
+                        "defaultTaxInclusive": false,
+                        "defaultShipCharged": false,
+                        "discountAllowed": true,
+                        "calcCommissions": false,
+                        "showWeights": true
+                    }
+                ]
             }
-            ],
-            "hostedPod": "DEFAULT"
         }
+        
     }
 }
 
