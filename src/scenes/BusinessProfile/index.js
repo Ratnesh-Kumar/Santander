@@ -109,9 +109,13 @@ export default class BusinessProfileView extends BaseComponent {
         return (
             <View>
                 <PhoneInput
-                    style={{borderWidth:1,marginLeft:10, height:55, borderColor:'red', marginTop:15}}
-                    // ref="phone"
-                    ref={(ref) => { this.phone = ref; }}
+                    style={{ borderWidth: 1, marginLeft: 10, height: 55, borderColor: 'red', marginTop: 15 }}
+                    ref="phoneCountry"
+                    // ref={(ref) => { this.phoneCountry = ref; }}
+                    returnKeyType={'Next'}
+                    onSubmitEditing={event => {
+                        this.refs.Phone.focus();
+                    }}
                 />
             </View>
         )
@@ -226,7 +230,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={buisnesstaxId => this.setState({ buisnesstaxId })}
-                            returnKeyType={'done'}
+                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -253,7 +257,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={buisnessName => this.setState({ buisnessName })}
-                            returnKeyType={'done'}
+                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -265,7 +269,7 @@ export default class BusinessProfileView extends BaseComponent {
                             underlineHeight={2}
                             keyboardType="email-address"
                             onSubmitEditing={event => {
-                                this.refs.Phone.focus();
+                                this.refs.phoneCountry.focus();
                             }}
                         />
                     </View>
@@ -424,7 +428,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={address => this.setState({ address })}
-                            returnKeyType={'done'}
+                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -449,7 +453,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={city => this.setState({ city })}
-                            returnKeyType={'done'}
+                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -496,7 +500,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={postalState => this.setState({ postalState })}
-                            returnKeyType={'done'}
+                            returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -625,11 +629,11 @@ export default class BusinessProfileView extends BaseComponent {
             <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperPhoneCode}>
                     {/* <View style={businessStyle.validFormSecondFieldView}> */}
-                        {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
+                    {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
                             <Image style={{ marginLeft: 15, width: 27, height: 16 }} source={require('../../public/images/icon_flag.png')}></Image>
                             <Text style={{ paddingLeft: 20, fontSize: 16 }}>+1</Text>
                         </View> */}
-                        {this.renderPhoneInput()}
+                    {this.renderPhoneInput()}
                     {/* </View> */}
                 </View>
                 <View style={businessStyle.inputWrapperPhone}>
@@ -642,7 +646,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={phone => this.setState({ phone })}
-                            returnKeyType={'done'}
+                            returnKeyType={'Next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -652,7 +656,7 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.phone}
                             //errorText={strings('BuisnessProfile.PhoneTextInputError')}
                             underlineHeight={2}
-                            keyboardType="email-address"
+                            keyboardType={'phone-pad'}
                             onSubmitEditing={event => {
                                 this.refs.website.focus();
                             }}
