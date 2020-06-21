@@ -50,7 +50,7 @@ export default class BusinessProfileView extends BaseComponent {
             phone: '',
             pickerData: '',
             buisnessName: '',
-            buisnesstaxId: '',
+            businessTaxId: '',
             websiteUrl: '',
             fbUrl: '',
             yelpUrl: '',
@@ -865,7 +865,7 @@ export default class BusinessProfileView extends BaseComponent {
         console.log("getRequestBody :" + JSON.stringify(data))
         return {
             "shopName": this.state.buisnessName,
-            "taxId": this.state.buisnesstaxId,
+            "taxId": this.state.businessTaxId,
             "country": this.state.country.toString(),
             "bankRoutingNumber": "1-----1",
             "locale": "en_us",
