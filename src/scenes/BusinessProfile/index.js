@@ -831,7 +831,7 @@ export default class BusinessProfileView extends BaseComponent {
     getRequestBody(data) {
         console.log("getRequestBody :" + JSON.stringify(data))
         return {
-            "trackInventory": false, 
+            "trackInventory": data.trackInventory, 
             "taxOnSales": data.taxOnSales,
             "taxOnPurchase": true,
             "purchaseTaxReclaimable": false,
