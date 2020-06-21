@@ -130,7 +130,7 @@ export default class BusinessProfileView extends BaseComponent {
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
             country: (this.isValidString(responseData.party.country) ? responseData.party.country : ""),
-            industryType:(this.isValidString(responseData.party.industry)? responseData.party.industry : "")
+            industryType: (this.isValidString(responseData.party.industry) ? responseData.party.industry : "")
         })
     }
 
@@ -767,7 +767,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-         console.log("######### userId : " + globalData.getUserInfo().key)
+        console.log("######### userId : " + globalData.getUserInfo().key)
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -801,7 +801,7 @@ export default class BusinessProfileView extends BaseComponent {
             pickerTitleText: 'Select Industry Type',
             pickerConfirmBtnText: 'Done',
             pickerCancelBtnText: 'Cancel',
-            selectedValue: this.state.industryType,
+            selectedValue: [industryTypeData[0].toString().trim()],
             pickerBg: [255, 255, 255, 1],
 
             onPickerConfirm: data => {
@@ -813,7 +813,9 @@ export default class BusinessProfileView extends BaseComponent {
                 Picker.hide();
             },
             onPickerSelect: data => {
-                //console.log(data);
+                this.setState({
+                    industryType: data
+                })
             }
         });
         Picker.show();
@@ -829,7 +831,7 @@ export default class BusinessProfileView extends BaseComponent {
             pickerTitleText: 'Select Country',
             pickerConfirmBtnText: 'Done',
             pickerCancelBtnText: 'Cancel',
-            selectedValue: this.state.country,
+            selectedValue: [countryNameData[0].toString().trim()],
             pickerBg: [255, 255, 255, 1],
 
             onPickerConfirm: data => {
@@ -864,7 +866,7 @@ export default class BusinessProfileView extends BaseComponent {
         return {
             "shopName": this.state.buisnessName,
             "taxId": this.state.buisnesstaxId,
-            "country": this.state.country,
+            "country": this.state.country.toString(),
             "bankRoutingNumber": "1-----1",
             "locale": "en_us",
             "currency": "USD",
@@ -877,7 +879,7 @@ export default class BusinessProfileView extends BaseComponent {
             "district": "Santa ----",
             "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
-            "industry":this.state.industryType,
+            "industry": this.state.industryType.toString(),
             "preferredLanguage": "en_us",
             "businessSettings": {
                 "sourcePrimaryKey": "1234567890",
@@ -895,24 +897,24 @@ export default class BusinessProfileView extends BaseComponent {
                 "defaultShippingCost": data.defaultShippingCost,
                 "defaultHandlingCost": data.defaultHandlingCost,
                 "flatTaxRate": data.flatTaxRate,
-                "showDiscounts":data.showDiscount,
-                "shipProducts":data.shipProducts,
-                "defaultTaxType":data.flatTaxRateType,
+                "showDiscounts": data.showDiscount,
+                "shipProducts": data.shipProducts,
+                "defaultTaxType": data.flatTaxRateType,
                 "defaultPaymentType": "CREDIDCARD",
                 "txSettings": [{
-                        "appTransactionType": "DEFAULT",
-                        "lineItemDiscount": false,
-                        "transactionDiscount": true,
-                        "defaultTaxInclusive": false,
-                        "defaultShipCharged": false,
-                        "discountAllowed": true,
-                        "calcCommissions": false,
-                        "showWeights": true
-                    }
+                    "appTransactionType": "DEFAULT",
+                    "lineItemDiscount": false,
+                    "transactionDiscount": true,
+                    "defaultTaxInclusive": false,
+                    "defaultShipCharged": false,
+                    "discountAllowed": true,
+                    "calcCommissions": false,
+                    "showWeights": true
+                }
                 ]
             }
         }
-        
+
     }
 }
 
