@@ -27,9 +27,11 @@ import { fetchPartyPUT, fetchPartyGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import Picker from 'react-native-picker';
+import PhoneInput from 'react-native-phone-input'
+
 var globalData = new GlobalData();
-var industryTypeData=[];
-var countryNameData=[];
+var industryTypeData = [];
+var countryNameData = [];
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -46,6 +48,7 @@ export default class BusinessProfileView extends BaseComponent {
             fname: '',
             iban: '',
             phone: '',
+            pickerData: '',
             buisnessName: '',
             buisnesstaxId: '',
             websiteUrl: '',
@@ -57,12 +60,23 @@ export default class BusinessProfileView extends BaseComponent {
             isDialogModalVisible: false,
             dialogModalText: '',
             dialogModalTitle: '',
-            industryType:''
+            industryType: '',
+            validPhone: "",
+            typePhone: "",
+            valuePhone: ""
 
         }
         shopInfo = props.shopInfo;
+        this.updateInfo = this.updateInfo.bind(this);
     }
 
+    updateInfo() {
+        this.setState({
+            validPhone: this.phone.isValidNumber(),
+            typePhone: this.phone.getNumberType(),
+            valuePhone: this.phone.getValue()
+        });
+    }
     componentDidMount() {
         this.getBusinessData()
     }
@@ -84,14 +98,31 @@ export default class BusinessProfileView extends BaseComponent {
         }
         this.renderActivityIndicatorHide()
     }
+    onPressFlag() {
+        this.myCountryPicker.open()
+    }
 
+    selectCountry(country) {
+        this.phone.selectCountry(country.iso2)
+    }
+    renderPhoneInput() {
+        return (
+            <View>
+                <PhoneInput
+                    style={{borderWidth:1,marginLeft:10, height:55, borderColor:'red', marginTop:15}}
+                    // ref="phone"
+                    ref={(ref) => { this.phone = ref; }}
+                />
+            </View>
+        )
+    }
     setBusinessData(responseData) {
         console.log("taxId " + responseData.party.country)
         this.setState({
             buisnessName: responseData.businessSettings.businessName,
             businessTaxId: responseData.party.taxId + "",
             postalCode: responseData.party.postalCode + "",
-            postalState: responseData.party.state+"" ,
+            postalState: responseData.party.state + "",
             address: responseData.party.address + "",
             city: responseData.party.city + "",
             country: responseData.party.country + ""
@@ -113,7 +144,7 @@ export default class BusinessProfileView extends BaseComponent {
                 console.log(fetchData)
                 setTimeout(() => {
                     this.showAlert()
-                  }, 100)
+                }, 100)
                 //Actions.shop();
             }
             else {
@@ -126,20 +157,20 @@ export default class BusinessProfileView extends BaseComponent {
 
     showAlert() {
         Alert.alert(
-          'Info',
-          'Data Successfully Saved.',
-          [
-            {
-              text: 'OK', onPress: () => {
-                Actions.shop({ type: 'reset' });
-                setTimeout(() => {
-                  Actions.refresh({ isRefresh: true });
-                }, 100)
-              }
-            },
-          ]
+            'Info',
+            'Data Successfully Saved.',
+            [
+                {
+                    text: 'OK', onPress: () => {
+                        Actions.shop({ type: 'reset' });
+                        setTimeout(() => {
+                            Actions.refresh({ isRefresh: true });
+                        }, 100)
+                    }
+                },
+            ]
         );
-      }
+    }
 
     renderActivityIndicatorShow() {
         this.setState({
@@ -179,8 +210,8 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderBuisnessForm() {
-        industryTitle=this.state.industryType===''?strings('BuisnessProfile.IndustryTypeText'):this.state.industryType
-        countryTitle=this.state.country===''?strings('BuisnessProfile.CountryText'):this.state.country
+        industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
+        countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
         return (
             <KeyboardAvoidingView
                 behavior="height"
@@ -245,7 +276,7 @@ export default class BusinessProfileView extends BaseComponent {
                 {/*this.renderSwitchFields(strings('BuisnessProfile.CountryText'))*/}
 
                 <View style={{ paddingTop: 10 }}>
-                    
+
                     <SwitchTextInput
                         isDropDownVisbile={true}
                         //strings('BuisnessProfile.IndustryTypeText')
@@ -259,7 +290,7 @@ export default class BusinessProfileView extends BaseComponent {
                     <SwitchTextInput
                         isDropDownVisbile={true}
                         title={countryTitle}
-                    onDropDownPressed={() => this.renderCountryPicker()}
+                        onDropDownPressed={() => this.renderCountryPicker()}
                     />
                 </View>
 
@@ -593,12 +624,13 @@ export default class BusinessProfileView extends BaseComponent {
         return (
             <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperPhoneCode}>
-                    <View style={businessStyle.validFormSecondFieldView}>
-                        <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
+                    {/* <View style={businessStyle.validFormSecondFieldView}> */}
+                        {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
                             <Image style={{ marginLeft: 15, width: 27, height: 16 }} source={require('../../public/images/icon_flag.png')}></Image>
                             <Text style={{ paddingLeft: 20, fontSize: 16 }}>+1</Text>
-                        </View>
-                    </View>
+                        </View> */}
+                        {this.renderPhoneInput()}
+                    {/* </View> */}
                 </View>
                 <View style={businessStyle.inputWrapperPhone}>
                     <View style={businessStyle.validFormSecondFieldView}>
@@ -715,7 +747,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-       // console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
+        // console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -738,8 +770,8 @@ export default class BusinessProfileView extends BaseComponent {
         );
     }
 
-    renderIndustryPicker(){
-        industryTypeData=['Auto Repair','Bars','Coffee $ Tea','Delivery','General Constrator','Hair Salons','Hardware Stores','Heating and Cooling','Home Goods Store','Jewellery','Liquor Store','Painter','Plumber','Professional','Real Estate Agents','Restaurnts','Retail Stores'];
+    renderIndustryPicker() {
+        industryTypeData = ['Auto Repair', 'Bars', 'Coffee $ Tea', 'Delivery', 'General Constrator', 'Hair Salons', 'Hardware Stores', 'Heating and Cooling', 'Home Goods Store', 'Jewellery', 'Liquor Store', 'Painter', 'Plumber', 'Professional', 'Real Estate Agents', 'Restaurnts', 'Retail Stores'];
         Picker.init({
             pickerData: industryTypeData,
             pickerTitleText: 'Select Industry Type',
@@ -747,25 +779,25 @@ export default class BusinessProfileView extends BaseComponent {
             pickerCancelBtnText: 'Cancel',
             selectedValue: [this.state.industryType],
             pickerBg: [255, 255, 255, 1],
-      
+
             onPickerConfirm: data => {
-              this.setState({
-                industryType:data
-              })
+                this.setState({
+                    industryType: data
+                })
             },
             onPickerCancel: data => {
-              Picker.hide();
+                Picker.hide();
             },
             onPickerSelect: data => {
-              //console.log(data);
+                //console.log(data);
             }
-          });
-          Picker.show();
+        });
+        Picker.show();
 
     }
 
-    renderCountryPicker(){
-        countryNameData=['Brazil','Maxico','Poland','Spain','UK','US'];
+    renderCountryPicker() {
+        countryNameData = ['Brazil', 'Maxico', 'Poland', 'Spain', 'UK', 'US'];
         Picker.init({
             pickerData: countryNameData,
             pickerTitleText: 'Select Country',
@@ -773,20 +805,20 @@ export default class BusinessProfileView extends BaseComponent {
             pickerCancelBtnText: 'Cancel',
             selectedValue: [this.state.country],
             pickerBg: [255, 255, 255, 1],
-      
+
             onPickerConfirm: data => {
-              this.setState({
-                country:data
-              })
+                this.setState({
+                    country: data
+                })
             },
             onPickerCancel: data => {
-              Picker.hide();
+                Picker.hide();
             },
             onPickerSelect: data => {
-              //console.log(data);
+                //console.log(data);
             }
-          });
-          Picker.show();
+        });
+        Picker.show();
     }
 
     inputFocused(refName) {
@@ -804,7 +836,7 @@ export default class BusinessProfileView extends BaseComponent {
     getRequestBody(data) {
         console.log("getRequestBody :" + JSON.stringify(data))
         return {
-            "trackInventory": data.trackInventory, 
+            "trackInventory": data.trackInventory,
             "taxOnSales": data.taxOnSales,
             "taxOnPurchase": true,
             "purchaseTaxReclaimable": false,
@@ -817,36 +849,36 @@ export default class BusinessProfileView extends BaseComponent {
             "defaultShippingCost": data.defaultShippingCost,
             "defaultHandlingCost": data.defaultHandlingCost,
             "txSettings": [{
-                    "appTransactionType": "DEFAULT",
-                    "lineItemDiscount": false,
-                    "transactionDiscount": false,
-                    "defaultTaxInclusive": false,
-                    "defaultShipCharged": false,
-                    "discountAllowed": false,
-                    "calcCommissions": false,
-                    "showWeights": false
-                },
-                {
-                    "appTransactionType": "ORDER",
-                    "lineItemDiscount": true,
-                    "transactionDiscount": false,
-                    "defaultTaxInclusive": false,
-                    "defaultShipCharged": false,
-                    "discountAllowed": true,
-                    "calcCommissions": false,
-                    "showWeights": true
-                }
+                "appTransactionType": "DEFAULT",
+                "lineItemDiscount": false,
+                "transactionDiscount": false,
+                "defaultTaxInclusive": false,
+                "defaultShipCharged": false,
+                "discountAllowed": false,
+                "calcCommissions": false,
+                "showWeights": false
+            },
+            {
+                "appTransactionType": "ORDER",
+                "lineItemDiscount": true,
+                "transactionDiscount": false,
+                "defaultTaxInclusive": false,
+                "defaultShipCharged": false,
+                "discountAllowed": true,
+                "calcCommissions": false,
+                "showWeights": true
+            }
             ],
             "hostedPod": "DEFAULT"
         }
     }
 }
 
-    BusinessProfileView.propTypes = {
-        source: PropTypes.number.isRequired,
-        placeholder: PropTypes.string.isRequired,
-        secureTextEntry: PropTypes.bool,
-        autoCorrect: PropTypes.bool,
-        autoCapitalize: PropTypes.string,
-        returnKeyType: PropTypes.string,
-    };
+BusinessProfileView.propTypes = {
+    source: PropTypes.number.isRequired,
+    placeholder: PropTypes.string.isRequired,
+    secureTextEntry: PropTypes.bool,
+    autoCorrect: PropTypes.bool,
+    autoCapitalize: PropTypes.string,
+    returnKeyType: PropTypes.string,
+};

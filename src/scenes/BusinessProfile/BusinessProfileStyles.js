@@ -38,10 +38,12 @@ export default (styles = StyleSheet.create({
         width: (DEVICE_WIDTH - 20)/2,
     },
     inputWrapperPhoneCode: {
-        width: (DEVICE_WIDTH - 20)/3,
+        flex:1
+        // width: (DEVICE_WIDTH - 20)/3,
     },
     inputWrapperPhone: {
-        width: (DEVICE_WIDTH - 150),
+        flex:3
+        // width: (DEVICE_WIDTH - 150),
     },
 
     validFormSecondFieldView: {
@@ -57,8 +59,9 @@ export default (styles = StyleSheet.create({
     },
 
     validFormViewContainerZip: {
-        paddingLeft:10,flexDirection:'row'
-        
+        flex:1,
+        marginLeft:10,marginRight:10,flexDirection:'row', justifyContent:'center', alignItems:'center'
+
     },
 
 
