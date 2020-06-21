@@ -121,11 +121,11 @@ export default class BusinessProfileView extends BaseComponent {
         )
     }
     setBusinessData(responseData) {
-        console.log("taxId " + responseData.party.country)
+        console.log("taxId " + responseData.party.taxId)
         this.setState({
             buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
-            businessTaxId: (this.isValidString(responseData.party.taxId + "") ? responseData.party.taxId + "" : ""),
-            postalCode: (this.isValidString(responseData.party.postalCode) ? (responseData.party.postalCode + "") : ""),
+            businessTaxId: (this.isValidString(responseData.party.taxId.toString().trim()) ? responseData.party.taxId.toString().trim() : ""),
+            postalCode: (this.isValidString(responseData.party.postalCode.toString().trim()) ? (responseData.party.postalCode.toString().trim()) : ""),
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
@@ -224,21 +224,21 @@ export default class BusinessProfileView extends BaseComponent {
                 <View style={businessStyle.inputWrapper}>
                     <View style={businessStyle.validFormSubView}>
                         <TextInputMaterial
-                            blurText={this.state.buisnesstaxId}
+                            blurText={this.state.businessTaxId}
                             refsValue={'BuisnessTaxId'}
                             ref={"BuisnessTaxId"}
                             label={strings('BuisnessProfile.BuisnessTaxIdTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
-                            onChangeText={buisnesstaxId => this.setState({ buisnesstaxId })}
+                            onChangeText={businessTaxId => this.setState({ businessTaxId })}
                             returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.buisnesstaxId}
-                            textInputName={this.state.buisnesstaxId}
+                            value={this.state.businessTaxId}
+                            textInputName={this.state.businessTaxId}
                             //errorText={strings('BuisnessProfile.BuisnessTaxIdTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
