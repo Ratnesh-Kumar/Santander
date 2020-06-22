@@ -39,7 +39,7 @@ var s3SecretKey = "";
 var successActionStatus = 201;
 var businessId = '';
 var shopName = '';
-var shopAutoCreated = '';
+var shopAutoCreated = false;
 export class GlobalData extends Component {
     constructor() {
         super();

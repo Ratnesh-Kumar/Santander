@@ -124,6 +124,7 @@ export default class ShopSettingScreen extends BaseComponent {
       shippingCostValue: fetchData.defaultShippingCost + "",
       handlingCostValue: fetchData.defaultHandlingCost + ""
     })
+    globalData.setIsAutoCrated(fetchData.autoCreate);
     console.log("trackInvenory : " + this.state.trackInventory)
     console.log("taxRate : " + this.state.taxRateValue)
   }
@@ -348,33 +349,33 @@ export default class ShopSettingScreen extends BaseComponent {
     if (this.state.estimateProfit)
       return (
         <View style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
-        <View style={shopSettingStyle.inputWrapper}>
-          <View style={shopSettingStyle.validFormSubView}>
-            <TextInputMaterial
-              blurText={this.state.profitMarginValue}
-              refsValue={'profitMargin'}
-              ref={'profitMargin'}
-              label={strings('shopSettingsScreen.profitMarginInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => this.setState({ profitMarginValue: text })}
-              returnKeyType={'done'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              style={shopSettingStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.profitMarginValue}
-              textInputName={this.state.profitMarginValue}
-              // errorText={strings('createCampaign.skuErrorText')}
-              underlineHeight={2}
-              keyboardType="number"
-              onSubmitEditing={event => {
-                this.refs.shippingCost.focus();
-              }}
-            />
+          <View style={shopSettingStyle.inputWrapper}>
+            <View style={shopSettingStyle.validFormSubView}>
+              <TextInputMaterial
+                blurText={this.state.profitMarginValue}
+                refsValue={'profitMargin'}
+                ref={'profitMargin'}
+                label={strings('shopSettingsScreen.profitMarginInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => this.setState({ profitMarginValue: text })}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                style={shopSettingStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.profitMarginValue}
+                textInputName={this.state.profitMarginValue}
+                // errorText={strings('createCampaign.skuErrorText')}
+                underlineHeight={2}
+                keyboardType="number"
+                onSubmitEditing={event => {
+                  this.refs.shippingCost.focus();
+                }}
+              />
+            </View>
           </View>
-        </View>
         </View>
       )
   }
