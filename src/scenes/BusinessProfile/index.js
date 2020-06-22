@@ -66,7 +66,7 @@ export default class BusinessProfileView extends BaseComponent {
             valuePhone: ""
 
         }
-        shopInfo = props.shopInfo===undefined?"":props.shopInfo;
+        shopInfo = props.shopInfo === undefined ? "" : props.shopInfo;
         this.updateInfo = this.updateInfo.bind(this);
     }
 
@@ -265,7 +265,7 @@ export default class BusinessProfileView extends BaseComponent {
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.buisnessName}
+                            value={(globalData.getIsAutoCreated()) ? '' : this.state.buisnessName}
                             textInputName={this.state.buisnessName}
                             //errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
                             underlineHeight={2}

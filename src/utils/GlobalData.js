@@ -39,6 +39,7 @@ var s3SecretKey = "";
 var successActionStatus = 201;
 var businessId = '';
 var shopName = '';
+var shopAutoCreated = false;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -85,6 +86,12 @@ export class GlobalData extends Component {
         return titleCampaign;
     }
 
+    setIsAutoCrated(flag) {
+        shopAutoCreated = flag;
+    }
+    getIsAutoCreated() {
+        return shopAutoCreated;
+    }
     setImagePathCampaign(path) {
         imagePathCampaign = path;
     }
@@ -192,11 +199,11 @@ export class GlobalData extends Component {
         return isWhatsAppEnable;
     }
 
-    setTrackQuantityDisplay(flag){
+    setTrackQuantityDisplay(flag) {
         isTrackQuantityDisplay = flag
     }
 
-    isTrackQuantityDisplay(){
+    isTrackQuantityDisplay() {
         return isTrackQuantityDisplay;
     }
 
@@ -256,19 +263,19 @@ export class GlobalData extends Component {
         return isFacebookMarketplaceEnabled;
     }
 
-    setBusinessProfileFBPage(flag){
+    setBusinessProfileFBPage(flag) {
         isBusinessProfileFBPage = flag;
     }
 
-    isBusinessProfileFBPage(){
+    isBusinessProfileFBPage() {
         return isBusinessProfileFBPage;
     }
 
-    setBusinessProfileYelp(flag){
+    setBusinessProfileYelp(flag) {
         isBusinessProfileYelp = flag;
     }
 
-    isBusinessProfileYelp(){
+    isBusinessProfileYelp() {
         return isBusinessProfileYelp;
     }
 
@@ -311,14 +318,14 @@ export class GlobalData extends Component {
         return businessId;
     }
 
-    setShopName(text){
-        shopName=text;
+    setShopName(text) {
+        shopName = text;
     }
-    getShopName(){
+    getShopName() {
         return shopName;
     }
 
-    
+
 }
 
 export default GlobalData;

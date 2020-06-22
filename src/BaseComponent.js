@@ -158,6 +158,7 @@ export default class BaseComponent extends Component {
       if (this.isValidString(shopDetail)) {
         let shopValue = shopDetail.value;
         let shopname = shopValue.shopName;
+        globalData.setIsAutoCrated(shopValue.autoCreate);
         return shopname;
       }
     }
