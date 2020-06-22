@@ -236,7 +236,7 @@ export default class AddProductScreen extends BaseComponent {
                 <View
                   style={{ position: 'absolute', right: 10, top: 10 }}>
                   <Image
-                    style={{ width: 35, height: 35 }}
+                    style={{ width: 35, height: 35 ,tintColor:colorConstant.GREY_DARK_COLOR}}
                     source={require('../.././public/images/dropDown.png')}
                   />
                 </View>
