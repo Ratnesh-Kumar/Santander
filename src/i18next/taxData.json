@@ -1,0 +1,56 @@
+[
+    {
+        "country":"Poland",
+        "code":"PL",
+        "type":"PL-VAT",
+        "rate":"23"
+    },
+    {
+        "country":"Spain",
+        "code":"ES",
+        "type":"ES-VAT",
+        "rate":"21"
+    },
+    {
+        "country":"UK",
+        "code":"UK",
+        "type":"UK-VAT",
+        "rate":"20"
+    },
+    {
+        "country":"Mexico",
+        "code":"MX",
+        "type":"MX-Sales Tax",
+        "rate":"20"
+    },
+    {
+        "country":"Brazil",
+        "code":"BR",
+        "type":"BR-Sales Tax",
+        "rate":"20"
+    },
+    {
+        "country":"USA",
+        "code":"US",
+        "type":"US-Sales Tax",
+        "rate":""
+    },
+    {
+        "country":"Germany",
+        "code":"DE",
+        "type":"DE-VAT",
+        "rate":"19"
+    },
+    {
+        "country":"Argentina",
+        "code":"AR",
+        "type":"AR-VAT",
+        "rate":"21"
+    },
+    {
+        "country":"Chile",
+        "code":"CL",
+        "type":"CL-VAT",
+        "rate":"19"
+    }
+]
