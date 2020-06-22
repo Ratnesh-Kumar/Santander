@@ -11,11 +11,6 @@ import ForgotPasswordScreen from './src/scenes/ForgotPassword';
 import TermsScreen from './src/scenes/TermsAndPrivacy';
 // import Realm from 'realm';
 import HomeScreen from './src/scenes/Home';
-import MyProfileScreen from './src/scenes/MyProfile';
-import MoreScreen from './src/scenes/More';
-import FavouriteScreen from './src/scenes/Favourites';
-import FBaseWrite from './src/scenes/FirebaseRW/FBaseWrite';
-import FBaseReadItems from './src/scenes/FirebaseRW/FBaseReadItems';
 import TabIcon from './src/TabIcon';
 import Campaign from './src/scenes/Campaign'
 import CreateCampaign from './src/scenes/Campaign/createCampaign';
