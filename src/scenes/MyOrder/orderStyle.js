@@ -87,5 +87,8 @@ textStyle:{
   textAlign:'left',
   marginTop:20
 },
+emptyNoProducttext:{
+  color: colorConstant.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
+},
 
 }));

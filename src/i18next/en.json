@@ -195,6 +195,9 @@
       "QtyText":"Quantity - ",
       "AmtText":"Amount - "
     },
+    "orderScreen":{
+      "comingSoon":"Coming soon"
+    },
     "TrackQuantityScreen":{
       "EnterTacking":"Enter Tracking Information",
       "trackingTitle":"Tracking #",
