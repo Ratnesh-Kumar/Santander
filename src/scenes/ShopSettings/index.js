@@ -129,7 +129,7 @@ export default class ShopSettingScreen extends BaseComponent {
       shippingCostValue: fetchData.defaultShippingCost + "",
       handlingCostValue: fetchData.defaultHandlingCost + ""
     })
-    globalData.setIsAutoCrated(fetchData.autoCreate);
+    globalData.setIsAutoCrated((Boolean)(fetchData.autoCreate));
     console.log("trackInvenory : " + this.state.trackInventory)
     console.log("taxRate : " + this.state.taxRateValue)
   }
@@ -138,7 +138,7 @@ export default class ShopSettingScreen extends BaseComponent {
     var shopInfo = {};
     shopInfo.trackInventory = this.state.trackInventory;
     shopInfo.taxOnSales = this.state.taxOnSales;
-    shopInfo.flatTaxRateType = this.state.taxTypeValue;
+    shopInfo.flatTaxRateType = this.state.taxTypeValue.toString().trim();
     shopInfo.flatTaxRate = this.state.taxRateValue;
     shopInfo.showDiscount = this.state.showDiscount;
     shopInfo.shipProducts = this.state.shipProducts;
