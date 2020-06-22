@@ -1,1 +1,0 @@
-export const MY_PROFILE = "Order Screen";
