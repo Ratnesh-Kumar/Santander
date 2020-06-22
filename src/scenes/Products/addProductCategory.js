@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform, Keyboard,Switch } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -42,6 +42,7 @@ export default class AddProductCategory extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
+      salesTaxSwitch:false
     }
     productDetails = props.productDetails;
     isUpdate = props.isUpdate ? props.isUpdate : false
@@ -445,13 +446,25 @@ export default class AddProductCategory extends BaseComponent {
   renderSalesTaxView() {
     return (
       <View style={{ marginTop: 10 }}>
-        {this.renderSwitchFields(strings('createCampaignCategories.salesTaxSwitchText'))}
+        {/*this.renderSwitchFields(strings('createCampaignCategories.salesTaxSwitchText'))*/}
+        <View
+          style={productStyle.containerStyle}>
+          <Text style={productStyle.textStyle}>{strings('createCampaignCategories.salesTaxSwitchText')}</Text>
+          <View
+            style={{ position: 'absolute', right: 10, top: 10 }}>
+            <Switch
+              value={this.state.salesTaxSwitch}
+              onValueChange={(value) => { this.setState({ salesTaxSwitch: value }) }}
+            />
+          </View>
+        </View>
       </View>
 
     )
   }
 
   renderSalesTaxInput() {
+    if(this.state.salesTaxSwitch)
     return (
       <View
         style={productStyle.priceTextInputContainer}>
