@@ -157,6 +157,7 @@ export default class ShopSettingScreen extends BaseComponent {
           {this.renderTaxBox()}
           {this.renderDiscountBox()}
           {this.renderDefaultsText()}
+          {this.renderProfitMarginTextInput()}
           {this.renderDefaultsTextInput()}
           <AppButton buttonText={strings('shopSettingsScreen.nextButtonText')} onButtonPressed={() => {
             this.handleShopSettings()
@@ -168,8 +169,8 @@ export default class ShopSettingScreen extends BaseComponent {
 
   renderDiscountBox() {
     return (
-      <View style={{ marginTop: 10 }}>
-         {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.showDiscount}
+      <View>
+        {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.showDiscount}
           onRightPressed={(value) => { console.log('showDiscount ::::', value), this.setState({ showDiscount: value }) }}
           title={strings('shopSettingsScreen.showDiscountSwitch')}
         /> 
@@ -227,7 +228,7 @@ export default class ShopSettingScreen extends BaseComponent {
     // const { trackInventory, taxOnSales } = this.state;
     return (
       <View style={{ marginTop: 10 }}>
-         {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/>
+        {/* <SwitchTextInput isDropDownVisbile={true} title={strings('shopSettingsScreen.paymentDropDownText')}/>
         <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={this.state.trackInventory}
           onRightPressed={(value) => { console.log('trackInventory ::::', value), this.setState({ trackInventory: value }) }}
           title={strings('shopSettingsScreen.taxInventory')}
@@ -264,87 +265,89 @@ export default class ShopSettingScreen extends BaseComponent {
     )
   }
   renderTaxBox() {
-    return (
-      <View
-        style={shopSettingStyle.priceTextInputContainer}>
-        <View style={shopSettingStyle.priceInputWrapper}>
-          <View style={shopSettingStyle.validFormSubView}>
-            <TextInputMaterial
-              blurText={this.state.taxTypeValue}
-              refsValue={'taxType'}
-              ref={'taxType'}
-              label={strings('shopSettingsScreen.taxTypeInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => this.setState({ taxTypeValue: text })}
-              returnKeyType={'done'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              style={shopSettingStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.taxTypeValue}
-              textInputName={this.state.taxTypeValue}
-              // errorText={strings('createCampaign.skuErrorText')}
-              underlineHeight={2}
-              keyboardType="number"
-              onSubmitEditing={event => {
-                this.refs.taxRate.focus();
-              }}
-            />
+    if (this.state.taxOnSales) {
+      return (
+        <View
+          style={shopSettingStyle.priceTextInputContainer}>
+          <View style={shopSettingStyle.priceInputWrapper}>
+            <View style={shopSettingStyle.validFormSubView}>
+              <TextInputMaterial
+                blurText={this.state.taxTypeValue}
+                refsValue={'taxType'}
+                ref={'taxType'}
+                label={strings('shopSettingsScreen.taxTypeInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => this.setState({ taxTypeValue: text })}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                style={shopSettingStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.taxTypeValue}
+                textInputName={this.state.taxTypeValue}
+                // errorText={strings('createCampaign.skuErrorText')}
+                underlineHeight={2}
+                keyboardType="number"
+                onSubmitEditing={event => {
+                  this.refs.taxRate.focus();
+                }}
+              />
+            </View>
           </View>
-        </View>
-        <View style={{ marginTop: 10 }}>
-          {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true}
+          <View style={{ marginTop: 10 }}>
+            {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true}
           onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
           title={strings('shopSettingsScreen.flatTaxSwitch')}
         /> */}
-        </View>
-        <View style={[shopSettingStyle.priceInputWrapper,]}>
-          <View style={shopSettingStyle.validFormSubView}>
-            <TextInputMaterial
-              blurText={this.state.taxRateValue}
-              refsValue={'taxRate'}
-              ref={'taxRate'}
-              label={strings('shopSettingsScreen.taxRateInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => this.setState({ taxRateValue: text })}
-              returnKeyType={'done'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              style={shopSettingStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.taxRateValue}
-              textInputName={this.state.taxRateValue}
-              // errorText={strings('createCampaign.campaignNameErrorText')}
-              underlineHeight={2}
-              keyboardType="number"
-              onSubmitEditing={event => {
-                this.refs.profitMargin.focus();
-              }}
-            />
+          </View>
+          <View style={[shopSettingStyle.priceInputWrapper,]}>
+            <View style={shopSettingStyle.validFormSubView}>
+              <TextInputMaterial
+                blurText={this.state.taxRateValue}
+                refsValue={'taxRate'}
+                ref={'taxRate'}
+                label={strings('shopSettingsScreen.taxRateInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => this.setState({ taxRateValue: text })}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                style={shopSettingStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.taxRateValue}
+                textInputName={this.state.taxRateValue}
+                // errorText={strings('createCampaign.campaignNameErrorText')}
+                underlineHeight={2}
+                keyboardType="number"
+                onSubmitEditing={event => {
+                  this.refs.profitMargin.focus();
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    );
+      );
+    }
   }
 
 
   renderDefaultsText() {
-    return (
-      <View style={{ margin: 20 }}>
-        <Text style={{ fontSize: 20, textAlign: 'left' }}>{strings('shopSettingsScreen.defaultsTitle')}</Text>
-      </View>
-    );
+    if (this.state.shipProducts || this.state.estimateProfit)
+      return (
+        <View style={{ margin: 20 }}>
+          <Text style={{ fontSize: 20, textAlign: 'left' }}>{strings('shopSettingsScreen.defaultsTitle')}</Text>
+        </View>
+      );
   }
 
-  renderDefaultsTextInput() {
-
-    return (
-      <View
-        style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
+  renderProfitMarginTextInput() {
+    if (this.state.estimateProfit)
+      return (
+        <View style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
         <View style={shopSettingStyle.inputWrapper}>
           <View style={shopSettingStyle.validFormSubView}>
             <TextInputMaterial
@@ -372,64 +375,74 @@ export default class ShopSettingScreen extends BaseComponent {
             />
           </View>
         </View>
+        </View>
+      )
+  }
 
-        <View style={[shopSettingStyle.inputWrapper, { marginTop: 20 }]}>
-          <View style={shopSettingStyle.validFormSubView}>
-            <TextInputMaterial
-              blurText={this.state.shippingCostValue}
-              refsValue={'shippingCost'}
-              ref={'shippingCost'}
-              label={strings('shopSettingsScreen.shippingCostInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => this.setState({ shippingCostValue: text })}
-              returnKeyType={'done'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              style={shopSettingStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.shippingCostValue}
-              textInputName={this.state.shippingCostValue}
-              // errorText={strings('createCampaign.campaignNameErrorText')}
-              underlineHeight={2}
-              keyboardType="number"
-              onSubmitEditing={event => {
-                this.refs.handlingCost.focus();
-              }}
-            />
+  renderDefaultsTextInput() {
+    if (this.state.shipProducts)
+      return (
+        <View
+          style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
+
+
+          <View style={[shopSettingStyle.inputWrapper, { marginTop: 20 }]}>
+            <View style={shopSettingStyle.validFormSubView}>
+              <TextInputMaterial
+                blurText={this.state.shippingCostValue}
+                refsValue={'shippingCost'}
+                ref={'shippingCost'}
+                label={strings('shopSettingsScreen.shippingCostInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => this.setState({ shippingCostValue: text })}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                style={shopSettingStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.shippingCostValue}
+                textInputName={this.state.shippingCostValue}
+                // errorText={strings('createCampaign.campaignNameErrorText')}
+                underlineHeight={2}
+                keyboardType="number"
+                onSubmitEditing={event => {
+                  this.refs.handlingCost.focus();
+                }}
+              />
+            </View>
+          </View>
+
+          <View style={[shopSettingStyle.inputWrapper, { marginTop: 20 }]}>
+            <View style={shopSettingStyle.validFormSubView}>
+              <TextInputMaterial
+                blurText={this.state.handlingCostValue}
+                refsValue={'handlingCost'}
+                ref={'handlingCost'}
+                label={strings('shopSettingsScreen.handlingCostInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => this.setState({ handlingCostValue: text })}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                style={shopSettingStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.handlingCostValue}
+                textInputName={this.state.handlingCostValue}
+                // errorText={strings('createCampaign.campaignNameErrorText')}
+                underlineHeight={2}
+                keyboardType="number"
+                onSubmitEditing={event => {
+                  Keyboard.dismiss()
+                }}
+              />
+            </View>
           </View>
         </View>
-
-        <View style={[shopSettingStyle.inputWrapper, { marginTop: 20 }]}>
-          <View style={shopSettingStyle.validFormSubView}>
-            <TextInputMaterial
-              blurText={this.state.handlingCostValue}
-              refsValue={'handlingCost'}
-              ref={'handlingCost'}
-              label={strings('shopSettingsScreen.handlingCostInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => this.setState({ handlingCostValue: text })}
-              returnKeyType={'done'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              style={shopSettingStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.handlingCostValue}
-              textInputName={this.state.handlingCostValue}
-              // errorText={strings('createCampaign.campaignNameErrorText')}
-              underlineHeight={2}
-              keyboardType="number"
-              onSubmitEditing={event => {
-                Keyboard.dismiss()
-              }}
-            />
-          </View>
-        </View>
-      </View>
-    );
+      );
   }
 }
 
