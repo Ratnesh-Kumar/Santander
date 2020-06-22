@@ -124,8 +124,8 @@ export default class BusinessProfileView extends BaseComponent {
         console.log("taxId " + responseData.party.taxId)
         this.setState({
             buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
-            businessTaxId: (this.isValidString(responseData.party.taxId.toString().trim()) ? responseData.party.taxId.toString().trim() : ""),
-            postalCode: (this.isValidString(responseData.party.postalCode.toString().trim()) ? (responseData.party.postalCode.toString().trim()) : ""),
+            businessTaxId: (this.isValidString(responseData.party.taxId) ? responseData.party.taxId.toString().trim() : ""),
+            postalCode: (this.isValidString(responseData.party.postalCode) ? (responseData.party.postalCode.toString().trim()) : ""),
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
