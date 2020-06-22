@@ -609,6 +609,7 @@ export default class AddProductScreen extends BaseComponent {
           <View style={productStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.productName}
+              isMandatory={true}
               refsValue={'productName'}
               ref={'productName'}
               label={strings('createCampaign.campaignTextInput')}

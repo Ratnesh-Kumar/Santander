@@ -491,6 +491,7 @@ export default class CampaignScreen extends BaseComponent {
           <View style={campaignStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.campaignName}
+              isMandatory={true}
               refsValue={'campaignName'}
               ref={'campaignName'}
               label={strings('createCampaign.campaignTextInput')}

@@ -546,14 +546,14 @@ export default class TextInputMaterial extends PureComponent {
             autoCapitalize={autoCapitalize}
             label={label}
             blurOnSubmit={blurOnSubmit}
-            labelColor={(labelColor === this.errorColorCode)? labelColor: this.uneditColorCode}
+            labelColor={(this.props.isMandatory)?(labelColor === this.errorColorCode)? labelColor: this.uneditColorCode : this.uneditColorCode}
             placeHolder={placeHolder}
             placeholderColor={placeholderColor}
             error=""
             refsValue={this.props.refsValue}
             onBarcodeTapped={() => { (typeof this.props.onBarcodeTapped == 'function') ? this.props.onBarcodeTapped() : '' }}
             errorColor={this.errorColorCode}
-            activeColor={(errorActiveColor === this.errorColorCode)? errorActiveColor: colorConstants.SANT_TEXT_INPUT_DEFAULT}
+            activeColor={(this.props.isMandatory)?(errorActiveColor === this.errorColorCode)? errorActiveColor: colorConstants.SANT_TEXT_INPUT_DEFAULT : colorConstants.SANT_TEXT_INPUT_DEFAULT}
             isBarcodeDisplay={this.props.isBarcodeDisplay}
             onFocus={() => {
               this.setFocus();
@@ -569,7 +569,7 @@ export default class TextInputMaterial extends PureComponent {
             value={this.props.value}
             onChangeText={text => this.changeText(text)}
             keyboardType={keyBoardType}
-            underlineColor={(errorUnderlineColor === this.errorColorCode)? errorUnderlineColor: colorConstants.SANT_TEXT_INPUT_DEFAULT}
+            underlineColor={(this.props.isMandatory)?(errorUnderlineColor === this.errorColorCode)? errorUnderlineColor: colorConstants.SANT_TEXT_INPUT_DEFAULT: colorConstants.SANT_TEXT_INPUT_DEFAULT}
             secureTextEntry={secureTextEntry}
             returnKeyType={this.props.returnKeyType}
           />
