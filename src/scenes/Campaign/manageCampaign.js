@@ -91,7 +91,7 @@ export default class ManageCampaign extends BaseComponent {
   }
 
   renderFlatList() {
-    if (this.isValidArray(campaignConstants.CAMPAIGN_ARRAY)) {
+    if (this.isValidArray(this.state.manageCampaignArr)) {
       return (
         <View>
           <FlatList
