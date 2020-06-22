@@ -142,8 +142,8 @@ export default class CreateCampaiganShare extends BaseComponent {
   renderSwitchTextInput() {
     return (
       <View style={{ marginTop: 10 }}>
-        {this.renderSwitchFields(campaignConstants.PUBLISH_WHATSAPP, strings('createCampaignShare.whatsAppText'), true)}
-        {this.renderSwitchFields(campaignConstants.PUBLISH_FACEBOOK_MESSANGER, strings('createCampaignShare.facebookText'), false)}
+        {this.renderSwitchFields(campaignConstants.PUBLISH_WHATSAPP, strings('createCampaignShare.whatsAppText'), false)}
+        {this.renderSwitchFields(campaignConstants.PUBLISH_FACEBOOK_MESSANGER, strings('createCampaignShare.facebookText'), true)}
         {this.renderSwitchFields(campaignConstants.PUBLISH_TEXT_SMS, strings('createCampaignShare.textSmsText'), false)}
         {this.renderSwitchFields(campaignConstants.PUBLISH_EMAIL, strings('createCampaignShare.emailText'), false)}
         {this.renderSwitchFields(campaignConstants.PUBLISH_FACEBOOK_PAGE, strings('createCampaignShare.facebookPageText'), true)}
