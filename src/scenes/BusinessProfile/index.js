@@ -66,7 +66,7 @@ export default class BusinessProfileView extends BaseComponent {
             valuePhone: ""
 
         }
-        shopInfo = props.shopInfo;
+        shopInfo = props.shopInfo===undefined?"":props.shopInfo;
         this.updateInfo = this.updateInfo.bind(this);
     }
 
@@ -767,7 +767,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-        console.log("######### userId : " + globalData.getUserInfo().key)
+        console.log("######### shopInfo : " + JSON.stringify(shopInfo))
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
