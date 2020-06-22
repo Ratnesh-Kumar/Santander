@@ -16,6 +16,8 @@ var isPinterestEnabled = false;
 var isTextSmsEnabled = false;
 var isWhatsAppEnable = false;
 var isTrackQuantityDisplay = false;
+var isBusinessProfileFBPage = false;
+var isBusinessProfileYelp = false;
 var userInfo = "";
 var userTokenKey = "";
 var titleCampaign = "";
@@ -254,6 +256,22 @@ export class GlobalData extends Component {
         return isFacebookMarketplaceEnabled;
     }
 
+    setBusinessProfileFBPage(flag){
+        isBusinessProfileFBPage = flag;
+    }
+
+    isBusinessProfileFBPage(){
+        return isBusinessProfileFBPage;
+    }
+
+    setBusinessProfileYelp(flag){
+        isBusinessProfileYelp = flag;
+    }
+
+    isBusinessProfileYelp(){
+        return isBusinessProfileYelp;
+    }
+
     setUserInfo(info) {
         userInfo = info;
     }
@@ -299,6 +317,8 @@ export class GlobalData extends Component {
     getShopName(){
         return shopName;
     }
+
+    
 }
 
 export default GlobalData;

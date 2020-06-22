@@ -62,6 +62,8 @@ function remoteConfigHandle(data){
         globalData.setS3SecretKey(data.awsSecretKey);
         globalData.setS3AccessKey(data.awsAccessKey);
         globalData.setTrackQuantityDisplay(data.isTrackQuantityDisplay)
+        globalData.setBusinessProfileFBPage(data.isBusinessProfileFBPage);
+        globalData.setBusinessProfileYelp(data.isBusinessProfileYelp)
     }
 }
 

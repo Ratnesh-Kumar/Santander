@@ -124,8 +124,8 @@ export default class BusinessProfileView extends BaseComponent {
         console.log("taxId " + responseData.party.taxId)
         this.setState({
             buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
-            businessTaxId: (this.isValidString(responseData.party.taxId.toString().trim()) ? responseData.party.taxId.toString().trim() : ""),
-            postalCode: (this.isValidString(responseData.party.postalCode.toString().trim()) ? (responseData.party.postalCode.toString().trim()) : ""),
+            businessTaxId: (this.isValidString(responseData.party.taxId) ? responseData.party.taxId.toString().trim() : ""),
+            postalCode: (this.isValidString(responseData.party.postalCode) ? (responseData.party.postalCode.toString().trim()) : ""),
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
@@ -711,7 +711,7 @@ export default class BusinessProfileView extends BaseComponent {
                             }}
                         />
                     </View>
-                    <View style={businessStyle.validFormSecondFieldView}>
+                    {globalData.isBusinessProfileFBPage() ? <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.yelpUrl}
                             refsValue={"fbUrl"}
@@ -735,8 +735,8 @@ export default class BusinessProfileView extends BaseComponent {
                                 this.refs.yelpUrl.focus();
                             }}
                         />
-                    </View>
-                    <View style={businessStyle.validFormSecondFieldView}>
+                    </View> : <View />}
+                    {globalData.isBusinessProfileYelp() ? <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.fbUrl}
                             refsValue={"yelpUrl"}
@@ -760,7 +760,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 this.refs.Address.focus();
                             }}
                         />
-                    </View>
+                    </View> : <View />}
                 </View>
             </KeyboardAvoidingView>
         )
