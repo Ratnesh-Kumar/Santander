@@ -44,7 +44,7 @@ export default class CampaignScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
-      isTrackQuantity: true
+      isTrackQuantity: globalData.isTrackQuantityDisplay()
     }
     campaignDetails = props.campaignDetails;
     isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false
@@ -406,7 +406,7 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View>
         <SwitchTextInput
-          defaultSwitchValue={true}
+          defaultSwitchValue={this.state.isTrackQuantity}
           onRightPressed={(flag) => { this.setState({ isTrackQuantity: flag }) }}
           title={title}
         />

@@ -15,6 +15,7 @@ var isInstagramEnabled = false;
 var isPinterestEnabled = false;
 var isTextSmsEnabled = false;
 var isWhatsAppEnable = false;
+var isTrackQuantityDisplay = false;
 var userInfo = "";
 var userTokenKey = "";
 var titleCampaign = "";
@@ -187,6 +188,14 @@ export class GlobalData extends Component {
 
     isWhatsAppEnable() {
         return isWhatsAppEnable;
+    }
+
+    setTrackQuantityDisplay(flag){
+        isTrackQuantityDisplay = flag
+    }
+
+    isTrackQuantityDisplay(){
+        return isTrackQuantityDisplay;
     }
 
     setTextSmsEnabled(flag) {

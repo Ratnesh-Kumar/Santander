@@ -42,7 +42,7 @@ export default class AddProductCategory extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
-      isTrackQuantity: true
+      isTrackQuantity: globalData.isTrackQuantityDisplay()
     }
     productDetails = props.productDetails;
     isUpdate = props.isUpdate ? props.isUpdate : false
@@ -447,6 +447,7 @@ export default class AddProductCategory extends BaseComponent {
     );
   }
   renderSwitchFields(title) {
+
     return (
       <View>
         <SwitchTextInput
