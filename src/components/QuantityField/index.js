@@ -18,7 +18,7 @@ export default class QuantityField extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            quantityValue: this.isValidString(props.quantity)?props.quantity.toString():"1"
+            quantityValue: this.isValidString(props.quantity) ? props.quantity.toString() : "1"
         }
     }
 
@@ -40,7 +40,7 @@ export default class QuantityField extends BaseComponent {
                                 </Text>
                             </View>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                {this.renderQuantityView()}
+                                {this.renderQuantityView(this.props.isVarientQuantityView, this.props.isTrackQuantity)}
                             </View>
                             <TouchableOpacity onPress={() => this.props.onButtonPressed()}>
                                 <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
@@ -56,49 +56,55 @@ export default class QuantityField extends BaseComponent {
                 <View
                     style={quantityStyle.containerStyle}>
                     <Text style={quantityStyle.textStyle}>{this.props.title}</Text>
-                    {this.renderQuantityView()}
+                    {this.renderQuantityView(this.props.isVarientQuantityView,
+                        this.props.isTrackQuantity)}
                 </View>
             );
         }
     }
 
-    renderQuantityView() {
-
-        return (
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                {this.renderMinusView()}
-                <View style={{ height: 32, width: 60, borderWidth: 1, borderColor: colorConstant.SANT_BLUE_COLOR, justifyContent: 'center', alignItems: 'center' }}>
-                    <TextInput
-                        underlineColorAndroid="transparent"
-                        keyboardType={'numeric'}
-                        style={{ fontSize: 18, paddingTop: 0, paddingBottom: 0, textAlign:'center' }}
-                        onChangeText={quantityValue => this.changeQtyValue(quantityValue)}
-                        maxLength={4}
-                        onBlur={()=>{
-                            if(!this.isValidString(this.state.quantityValue)){
-                                this.setState({
-                                    quantityValue: "1"
-                                })
-                            }
-                        }}
-                        defaultValue={1}
-                        returnKeyType={'done'}
-                        value={this.state.quantityValue}
-                        onSubmitEditing={event => {
-                        }}
-                    />
+    renderQuantityView(isVarientQuantityView, isTrackQuantity) {
+        let isShowQuantityView = true;
+        if (isVarientQuantityView && !isTrackQuantity) {
+            isShowQuantityView = false;
+        }
+        if (isShowQuantityView) {
+            return (
+                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    {this.renderMinusView()}
+                    <View style={{ height: 32, width: 60, borderWidth: 1, borderColor: colorConstant.SANT_BLUE_COLOR, justifyContent: 'center', alignItems: 'center' }}>
+                        <TextInput
+                            underlineColorAndroid="transparent"
+                            keyboardType={'numeric'}
+                            style={{ fontSize: 18, paddingTop: 0, paddingBottom: 0, textAlign: 'center' }}
+                            onChangeText={quantityValue => this.changeQtyValue(quantityValue)}
+                            maxLength={4}
+                            onBlur={() => {
+                                if (!this.isValidString(this.state.quantityValue)) {
+                                    this.setState({
+                                        quantityValue: "1"
+                                    })
+                                }
+                            }}
+                            defaultValue={1}
+                            returnKeyType={'done'}
+                            value={this.state.quantityValue}
+                            onSubmitEditing={event => {
+                            }}
+                        />
+                    </View>
+                    {this.renderPlusView()}
                 </View>
-                {this.renderPlusView()}
-            </View>
-        )
+            )
+        }
     }
 
     changeQtyValue(quantityValue) {
         // if (quantityValue > 0) {
-            this.setState({
-                quantityValue: quantityValue
-            })
-            this.props.updatedQuantity(quantityValue);
+        this.setState({
+            quantityValue: quantityValue
+        })
+        this.props.updatedQuantity(quantityValue);
         // }
 
     }
