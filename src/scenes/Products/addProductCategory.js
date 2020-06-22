@@ -56,9 +56,6 @@ export default class AddProductCategory extends BaseComponent {
     if (isUpdate) {
       this.setUpdateData();
     }
-    for (let data of TaxData) {
-      taxType.push(data['type'])
-    }
   }
 
   setUpdateData() {
@@ -537,7 +534,6 @@ export default class AddProductCategory extends BaseComponent {
                 </View>
               </View>
             </View>
-
           </View>
 
           <View style={productStyle.priceInputWrapper}>
@@ -573,6 +569,10 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   handleTaxPicker() {
+    // for (let data of TaxData) {
+    //   taxType.push(data['type'])
+    // }
+    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
     Keyboard.dismiss()
     Picker.hide()
     Picker.init({

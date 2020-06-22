@@ -21,12 +21,13 @@ import { fetchProductGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import { RNS3 } from 'react-native-aws3';
+import Picker from 'react-native-picker';
 var isUpdate = "";
 var itemId = "";
 var imageFile = {}
 var options = {}
 var productInfo = "";
-
+var weightType=[];
 export default class AddProductScreen extends BaseComponent {
 
   constructor(props) {
@@ -51,6 +52,7 @@ export default class AddProductScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
+      weightUnit:''
 
     }
     itemId = props.itemId;
@@ -198,7 +200,7 @@ export default class AddProductScreen extends BaseComponent {
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
-        "weightUnit": "lb",
+        "weightUnit": this.state.weightUnit,
         "productImage":imageFile.name,
         "productURL":globalData.getImagePathProduct()
       }
@@ -220,6 +222,7 @@ export default class AddProductScreen extends BaseComponent {
 
 
   renderWeighView() {
+    weightTitle=this.state.weightUnit==''?strings('productScreen.productWeightText'):this.state.weightUnit
     return (
       <View>
         <View style={{ paddingTop: 20, paddingLeft: 20 }}>
@@ -232,13 +235,15 @@ export default class AddProductScreen extends BaseComponent {
               <View
                 style={productStyle.containerStyleWithBorder}>
                 <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
-                  {strings('productScreen.productWeightText')}</Text>
+                  {weightTitle}</Text>
                 <View
                   style={{ position: 'absolute', right: 10, top: 10 }}>
+                    <TouchableOpacity onPress={()=>this.renderWeightPicker()}>
                   <Image
                     style={{ width: 35, height: 35 ,tintColor:colorConstant.GREY_DARK_COLOR}}
                     source={require('../.././public/images/dropDown.png')}
                   />
+                  </TouchableOpacity>
                 </View>
               </View>
             </View>
@@ -636,6 +641,35 @@ export default class AddProductScreen extends BaseComponent {
       </View>
     );
   }
+
+  renderWeightPicker(){
+    Keyboard.dismiss();
+    Picker.hide();
+    weightType=['kg','lb','oz','gram']
+    Picker.init({
+      pickerData: weightType,
+      pickerTitleText: 'Select Weight Unit',
+      pickerConfirmBtnText: 'Done',
+      pickerCancelBtnText: 'Cancel',
+      selectedValue: [weightType[0].toString().trim()],
+      pickerBg: [255, 255, 255, 1],
+
+      onPickerConfirm: data => {
+        this.setState({
+          weightUnit:data
+        })
+      },
+      onPickerCancel: data => {
+        Picker.hide();
+      },
+      onPickerSelect: data => {
+        //console.log(data);
+      }
+    });
+    Picker.show();
+  }
+  
+
 
 
   async googleSignOut() {

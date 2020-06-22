@@ -106,5 +106,17 @@ export default (styles = StyleSheet.create({
   },
   emptyNoCampaignText:{
     color: colorConstants.SANT_RED_COLOR, fontSize: 18, fontWeight:'bold'
-  }
+  },
+  containerStyleWithBorder:{
+    width:(constants.SCREEN_WIDTH-40)/2,
+    backgroundColor:colorConstants.WHITE_COLOR,
+    height:60,
+    borderColor:colorConstants.GREY_BORDER_COLOR,
+    borderWidth:2,
+    borderRadius:2,
+    borderBottomColor:colorConstants.GREY_DARK_COLOR,
+    marginRight: 20, 
+    marginTop: 5,
+    marginBottom : 5
+  },
 }));
