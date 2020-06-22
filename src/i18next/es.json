@@ -47,7 +47,7 @@
     "marginTextInput": "Margen",
     "skuTextInput": "SKU",
     "barcodeTextInput": "Código de barras",
-    "campaignNameErrorText": "Por favor ingrese una identificación de impuesto comercial válida.",
+    "campaignNameErrorText": "Por favor, introduzca un nombre de producto válido.",
     "priceErrorText": "Por favor, introduzca precio válido.",
     "salePriceErrorText": "Por favor, introduzca el precio de venta válido.",
     "costErrorText": "Por favor ingrese el costo válido.",
@@ -60,7 +60,7 @@
     "uploadImageText": "Sube foto de tu producto",
     "nextButtonText": "Próxima",
     "startRightAway": "Comience de inmediato creando una campaña \n nque también creará su primer producto",
-    "createFirstCampaign": "Crea tu primera campaña",
+    "createFirstCampaign": "Vende tu primer producto",
     "skipStep": "Salta este paso",
     "quanitytTitle": "Cantidad",
     "categoryTagTextInput": "Agregar categorías",
@@ -181,6 +181,17 @@
     "EnablePayment": "Habilitar pago",
     "Delete": "Borrar mi cuenta",
     "logout": "cerrar sesión"
+  },
+  "editOrder":{
+    "title":"Gestionar pedido",
+    "orderText":"Orden# ",
+    "productsText":"Productos",
+    "SkuText":"SKU - ",
+    "QtyText":"Cantidad - ",
+    "AmtText":"Cantidad - "
+  },
+  "orderScreen":{
+    "comingSoon":"Próximamente"
   },
   "TrackQuantityScreen": {
     "EnterTacking": "Ingrese la información de seguimiento",

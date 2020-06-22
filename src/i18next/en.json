@@ -51,7 +51,7 @@
       "marginTextInput":"Margin",
       "skuTextInput":"SKU",
       "barcodeTextInput":"Barcode",
-      "campaignNameErrorText":"Please enter valid business tax id.",
+      "campaignNameErrorText":"Please enter valid product name.",
       "priceErrorText":"Please enter valid price.",
       "salePriceErrorText":"Please enter valid sale price.",
       "costErrorText":"Please enter valid cost.",
@@ -64,7 +64,7 @@
       "uploadImageText":"Upload photo of your product",
       "nextButtonText": "Next",
       "startRightAway":"Start right away by creating a campaign\nwhich will also create your first product",
-      "createFirstCampaign": "Create your first campaign",
+      "createFirstCampaign": "Sell your First Product",
       "skipStep": "Skip this step",
       "quanitytTitle": "Quantity",
       "categoryTagTextInput": "Add Categories",
@@ -194,6 +194,9 @@
       "SkuText":"SKU - ",
       "QtyText":"Quantity - ",
       "AmtText":"Amount - "
+    },
+    "orderScreen":{
+      "comingSoon":"Coming soon"
     },
     "TrackQuantityScreen":{
       "EnterTacking":"Enter Tracking Information",

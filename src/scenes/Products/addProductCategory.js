@@ -46,7 +46,8 @@ export default class AddProductCategory extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
-      salesTaxSwitch: false
+      salesTaxSwitch:false,
+      isTrackQuantity: globalData.isTrackQuantityDisplay()
     }
     productDetails = props.productDetails;
     isUpdate = props.isUpdate ? props.isUpdate : false
@@ -344,12 +345,15 @@ export default class AddProductCategory extends BaseComponent {
 
   renderQuantityView(quantityTitle) {
     return (
-      <QuantityField isVarientQuantityView={true}
+      <QuantityField
+        isVarientQuantityView={true}
         onButtonPressed={() => {
           Actions.productVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
         }}
+        isTrackQuantity={this.state.isTrackQuantity}
         quantity={this.getVariantObj(quantityTitle).quantity}
-        title={quantityTitle} updatedQuantity={(quantity) => {
+        title={quantityTitle}
+        updatedQuantity={(quantity) => {
           let variantObj = this.getVariantObj(quantityTitle);
           variantObj.quantity = quantity;
           this.setState({
@@ -422,15 +426,26 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   renderProductQuantity() {
-    return (
-      <QuantityField title={strings('createCampaign.quanitytTitle')} quantity={productDetails.productQuantity} updatedQuantity={(quantity) => {
-        globalData.setQuantityCampaign(quantity)
-        productDetails.productQuantity = quantity
-        this.setState({
-          productQuantity: quantity
-        })
-      }} />
-    )
+    // console.log("################# isTrackQuantity : " + this.state.isTrackQuantity)
+    if (this.state.isTrackQuantity) {
+      return (
+        <QuantityField
+        title={strings('createCampaign.quanitytTitle')} 
+        quantity={productDetails.productQuantity}isTrackQuantity
+        isTrackQuantity={this.state.isTrackQuantity} 
+        updatedQuantity={(quantity) => {
+          globalData.setQuantityCampaign(quantity)
+          productDetails.productQuantity = quantity
+          this.setState({
+            productQuantity: quantity
+          })
+        }} />
+      )
+    } else {
+      return (
+        <View />
+      )
+    }
   }
 
   renderSwitchTextInput() {
@@ -441,11 +456,12 @@ export default class AddProductCategory extends BaseComponent {
     );
   }
   renderSwitchFields(title) {
+
     return (
       <View>
         <SwitchTextInput
-          defaultSwitchValue={true}
-          onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
+          defaultSwitchValue={this.state.isTrackQuantity}
+          onRightPressed={(flag) => { this.setState({ isTrackQuantity: flag }) }}
           title={title}
         />
       </View>

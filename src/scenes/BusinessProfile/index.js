@@ -711,7 +711,7 @@ export default class BusinessProfileView extends BaseComponent {
                             }}
                         />
                     </View>
-                    <View style={businessStyle.validFormSecondFieldView}>
+                    {globalData.isBusinessProfileFBPage() ? <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.yelpUrl}
                             refsValue={"fbUrl"}
@@ -735,8 +735,8 @@ export default class BusinessProfileView extends BaseComponent {
                                 this.refs.yelpUrl.focus();
                             }}
                         />
-                    </View>
-                    <View style={businessStyle.validFormSecondFieldView}>
+                    </View> : <View />}
+                    {globalData.isBusinessProfileYelp() ? <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.fbUrl}
                             refsValue={"yelpUrl"}
@@ -760,7 +760,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 this.refs.Address.focus();
                             }}
                         />
-                    </View>
+                    </View> : <View />}
                 </View>
             </KeyboardAvoidingView>
         )

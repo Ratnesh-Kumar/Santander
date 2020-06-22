@@ -37,13 +37,14 @@ export default class CampaignScreen extends BaseComponent {
       campaignQuantity: "1",
       variantsList: [],
       categoryList: [],
-      salesTax:'',
-      salesTaxType:'',
+      salesTax: '',
+      salesTaxType: '',
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
+      isTrackQuantity: globalData.isTrackQuantityDisplay()
     }
     campaignDetails = props.campaignDetails;
     isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false
@@ -77,7 +78,7 @@ export default class CampaignScreen extends BaseComponent {
         let productVariant = fetchCampaignData.productVariants;
         for (let i = 0; i < productVariant.length; i++) {
           let variant = productVariant[i];
-          if(!variant.discountinuedProduct){
+          if (!variant.discountinuedProduct) {
             let variantDetail = {};
             this.state.variantsList.push(variant.variantName)
             variantDetail.name = variant.variantName;
@@ -167,9 +168,9 @@ export default class CampaignScreen extends BaseComponent {
             variantsList: [],
             categoryList: []
           })
-        }}/>
-        <Stepper count={3} currentCount={2}/>
-        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10,marginBottom: 20  }}>
+        }} />
+        <Stepper count={3} currentCount={2} />
+        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10, marginBottom: 20 }}>
           <View>
             {this.renderSwitchTextInput()}
             {this.rendercampaignQuantity()}
@@ -215,13 +216,13 @@ export default class CampaignScreen extends BaseComponent {
     variantItem.name = variant;
     variantItem.price = "";
     variantItem.salePrice = "",
-    variantItem.barcode = "";
+      variantItem.barcode = "";
     variantItem.skuNumber = "";
-    variantItem.quantity="1"
+    variantItem.quantity = "1"
     return variantItem;
   }
-  
-  async addCampaign(){
+
+  async addCampaign() {
     this.renderActivityIndicatorShow()
     let variantList = [];
     let productListArr = [];
@@ -230,16 +231,16 @@ export default class CampaignScreen extends BaseComponent {
       variantList.push(this.getCampaignVariant(variantItem))
     }
     campaignDetails.campaignCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
-    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)    
+    campaignDetails.campaignCategoryTags = this.getCategoryTags(this.state.categoryList)
     productListArr.push(this.getProductRequestBody(campaignDetails, variantList));
-    var requestBody = this.getRequestBody(productListArr,"DRAFT");
+    var requestBody = this.getRequestBody(productListArr, "DRAFT");
     // Call API for the save campaigan as a DRAFT 
     var responseData = "";
-    if(isCampaignUpdate){
-      let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId())+campaignId;
+    if (isCampaignUpdate) {
+      let campaignUpdateURL = constants.GET_CAMPAIGN_DETAIL.replace(constants.BUISNESS_ID, globalData.getBusinessId()) + campaignId;
       responseData = await fetchCampaignPUT(campaignUpdateURL, requestBody)
       this.setCampaignID(campaignId)
-    }else{
+    } else {
       let campaignSaveURL = constants.GET_CAMPAIGN_LIST.replace(constants.BUISNESS_ID, globalData.getBusinessId());
       responseData = await fetchCampaignPOST(campaignSaveURL, requestBody)
       let campaiganIDCreated = responseData.properties[0].value.campaignId;
@@ -266,11 +267,11 @@ export default class CampaignScreen extends BaseComponent {
 
   }
 
-  createRequestBodyforPublish(productListArr){
-    let campaignRequestbody = this.getRequestBody(productListArr,"PUBLISHED");
-    if(isCampaignUpdate){
+  createRequestBodyforPublish(productListArr) {
+    let campaignRequestbody = this.getRequestBody(productListArr, "PUBLISHED");
+    if (isCampaignUpdate) {
       this.setCampaignResponse(campaignRequestbody)
-    }else{
+    } else {
       this.setCampaignResponse(campaignRequestbody)
     }
   }
@@ -307,16 +308,18 @@ export default class CampaignScreen extends BaseComponent {
       }
     }
     return (
-        <View >
-              {variantList}
-              </View>    
-        
+      <View >
+        {variantList}
+      </View>
+
     )
   }
-  
+
   renderQuantityView(quantityTitle) {
     return (
-      <QuantityField isVarientQuantityView={true}
+      <QuantityField
+        isVarientQuantityView={true}
+        isTrackQuantity={this.state.isTrackQuantity}
         onButtonPressed={() => {
           Actions.campaignVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
         }}
@@ -341,7 +344,7 @@ export default class CampaignScreen extends BaseComponent {
 
   renderCategoryTagView() {
     return (
-      <View style={{ paddingLeft:10,paddingTop: 20 }}>
+      <View style={{ paddingLeft: 10, paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView
           labelName={strings('createCampaign.categoryTagTextInput')}
@@ -369,15 +372,25 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   rendercampaignQuantity() {
-    return (
-      <QuantityField title={strings('createCampaign.quanitytTitle')} quantity={campaignDetails.campaignQuantity} updatedQuantity={(quantity) => {
-        globalData.setQuantityCampaign(quantity)
-        campaignDetails.campaignQuantity = quantity
-        this.setState({
-          campaignQuantity: quantity
-        })
-      }} />
-    )
+    if (this.state.isTrackQuantity) {
+      return (
+        <QuantityField 
+        title={strings('createCampaign.quanitytTitle')} 
+        quantity={campaignDetails.campaignQuantity} 
+        isTrackQuantity={this.state.isTrackQuantity}
+        updatedQuantity={(quantity) => {
+          globalData.setQuantityCampaign(quantity)
+          campaignDetails.campaignQuantity = quantity
+          this.setState({
+            campaignQuantity: quantity
+          })
+        }} />
+      )
+    } else {
+      return (
+        <View />
+      )
+    }
   }
 
 
@@ -393,25 +406,25 @@ export default class CampaignScreen extends BaseComponent {
     return (
       <View>
         <SwitchTextInput
-          defaultSwitchValue={true}
-          onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
+          defaultSwitchValue={this.state.isTrackQuantity}
+          onRightPressed={(flag) => { this.setState({ isTrackQuantity: flag }) }}
           title={title}
         />
       </View>
     );
   }
 
-  renderSalesTaxView(){
-    return(
-        <View style={{ marginTop: 10 }}>
+  renderSalesTaxView() {
+    return (
+      <View style={{ marginTop: 10 }}>
         {this.renderSwitchFields(strings('createCampaignCategories.salesTaxSwitchText'))}
       </View>
-     
+
     )
   }
 
-  renderSalesTaxInput(){
-    return(
+  renderSalesTaxInput() {
+    return (
       <View
         style={campaignStyle.priceTextInputContainer}>
         <View style={campaignStyle.priceInputWrapper}>
@@ -472,8 +485,8 @@ export default class CampaignScreen extends BaseComponent {
     )
   }
 
-  getRequestBody(productArr,campaignStatus){
-    return{
+  getRequestBody(productArr, campaignStatus) {
+    return {
       "campaignStatus": campaignStatus,
       "products": productArr,
     };

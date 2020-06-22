@@ -8,8 +8,10 @@ import BaseComponent from '../../BaseComponent';
 import CardView from 'react-native-cardview'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import FloatingButton from '../../components/FloatingButton';
+import { strings } from '../../i18next/i18n';
 var orderConstants = require('./orderConstants');
 var colorConstants = require('../../config/colorConstant');
+var constants = require("../../config/Constants")
 
 export default class MyOrder extends BaseComponent {
   constructor(props) {
@@ -21,15 +23,18 @@ export default class MyOrder extends BaseComponent {
   render() {
     return (
       <View style={orderStyle.container}>
-        <FloatingButton onFloatButtonPressed={()=>{
-        }}/>
+        <FloatingButton onFloatButtonPressed={() => {
+        }} />
         <Header title={orderConstants.MANAGE_ORDER} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={orderStyle.viewContainer}>
+          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: constants.SCREEN_HEIGHT / 3 }}>
+            <Text style={orderStyle.emptyNoProducttext}>{strings('orderScreen.comingSoon')}</Text>
+          </View>
           {/* <View>
             <Text>{"order.orderDate"}</Text>
           </View> */}
-          {this.renderFlatList()}
+          {/* {this.renderFlatList()} */}
         </View>
       </View>
     );

@@ -236,7 +236,7 @@ export default class AddProductScreen extends BaseComponent {
                 <View
                   style={{ position: 'absolute', right: 10, top: 10 }}>
                   <Image
-                    style={{ width: 35, height: 35 }}
+                    style={{ width: 35, height: 35 ,tintColor:colorConstant.GREY_DARK_COLOR}}
                     source={require('../.././public/images/dropDown.png')}
                   />
                 </View>
@@ -464,7 +464,7 @@ export default class AddProductScreen extends BaseComponent {
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
+              keyBoardType={'decimal-pad'}
               onSubmitEditing={event => {
                 this.refs.productSalePrice.focus();
               }}
@@ -484,7 +484,7 @@ export default class AddProductScreen extends BaseComponent {
               autoCorrect={false}
               isLoginScreen={false}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'numeric'}
+              keyBoardType={'decimal-pad'}
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
@@ -609,6 +609,7 @@ export default class AddProductScreen extends BaseComponent {
           <View style={productStyle.validFormSubView}>
             <TextInputMaterial
               blurText={this.state.productName}
+              isMandatory={true}
               refsValue={'productName'}
               ref={'productName'}
               label={strings('createCampaign.campaignTextInput')}
