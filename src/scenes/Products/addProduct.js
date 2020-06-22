@@ -464,7 +464,7 @@ export default class AddProductScreen extends BaseComponent {
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
+              keyBoardType={'decimal-pad'}
               onSubmitEditing={event => {
                 this.refs.productSalePrice.focus();
               }}
@@ -484,7 +484,7 @@ export default class AddProductScreen extends BaseComponent {
               autoCorrect={false}
               isLoginScreen={false}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'numeric'}
+              keyBoardType={'decimal-pad'}
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}

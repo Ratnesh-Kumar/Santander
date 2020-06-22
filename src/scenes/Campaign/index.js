@@ -348,8 +348,8 @@ export default class CampaignScreen extends BaseComponent {
               textInputName={this.state.campaignPriceValue}
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
-              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+              keyBoardType={'decimal-pad'}
               onSubmitEditing={event => {
                 this.refs.campaignSalePrice.focus();
               }}
@@ -368,8 +368,8 @@ export default class CampaignScreen extends BaseComponent {
               onChangeText={text => { globalData.setSalesPriceCampaign(text); this.setState({ campaignSaleValue: text }) }}
               autoCorrect={false}
               isLoginScreen={false}
-              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
+              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+              keyBoardType={'decimal-pad'}
               style={campaignStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
