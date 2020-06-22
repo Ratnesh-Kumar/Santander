@@ -15,12 +15,24 @@
       },
       "oauth_client": [
         {
+          "client_id": "605493510042-395p9k6r0hbn47vm60lvpbcitjutshjp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ecom.santander",
+            "certificate_hash": "5397ee210f756ab1328d91582938d3fac966a83c"
+          }
+        },
+        {
           "client_id": "605493510042-k36nofahnouqp53tb9rjtljgqmt8cgnb.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.ecom.santander",
             "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
           }
+        },
+        {
+          "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -53,7 +65,12 @@
           "package_name": "com.ecom.santander.preprod"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBN46O-gT2sXXEbKoYFXCzZ1OwDBhu16hw"
@@ -84,7 +101,12 @@
           "package_name": "com.ecom.santander.prod"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "605493510042-n5eqona19aaa7o6alohsp2c94lh94na3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBN46O-gT2sXXEbKoYFXCzZ1OwDBhu16hw"

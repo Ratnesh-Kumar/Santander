@@ -47,7 +47,7 @@
     "marginTextInput": "Margen",
     "skuTextInput": "SKU",
     "barcodeTextInput": "Código de barras",
-    "campaignNameErrorText": "Por favor ingrese una identificación de impuesto comercial válida.",
+    "campaignNameErrorText": "Por favor, introduzca un nombre de producto válido.",
     "priceErrorText": "Por favor, introduzca precio válido.",
     "salePriceErrorText": "Por favor, introduzca el precio de venta válido.",
     "costErrorText": "Por favor ingrese el costo válido.",
@@ -181,6 +181,17 @@
     "EnablePayment": "Habilitar pago",
     "Delete": "Borrar mi cuenta",
     "logout": "cerrar sesión"
+  },
+  "editOrder":{
+    "title":"Gestionar pedido",
+    "orderText":"Orden# ",
+    "productsText":"Productos",
+    "SkuText":"SKU - ",
+    "QtyText":"Cantidad - ",
+    "AmtText":"Cantidad - "
+  },
+  "orderScreen":{
+    "comingSoon":"Próximamente"
   },
   "TrackQuantityScreen": {
     "EnterTacking": "Ingrese la información de seguimiento",

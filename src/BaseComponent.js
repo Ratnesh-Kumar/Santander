@@ -207,6 +207,8 @@ export default class BaseComponent extends Component {
   // }
   handlerBusinessId(businessObject) {
     console.log("@@@@ Business OBject :" + JSON.stringify(businessObject));
+    globalData.setBusinessId('')
+        globalData.setShopName('')
     if (this.isValidString(businessObject)) {
       businessObject = JSON.parse(businessObject)
       if (businessObject.username == globalData.getUserInfo().username) {
