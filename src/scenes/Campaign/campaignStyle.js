@@ -119,4 +119,10 @@ export default (styles = StyleSheet.create({
     marginTop: 5,
     marginBottom : 5
   },
+  cardViewStyleRegister: {
+    backgroundColor: colorConstants.WHITE_COLOR,
+    marginTop: 30,
+    marginLeft: 5,
+    marginRight: 5
+  }
 }));

@@ -71,7 +71,7 @@ export default class HomeScreen extends BaseComponent {
             }} />
           </CardView>
 
-          {(globalData.getIsAutoCreated())?<CardView
+          {/* {(globalData.getIsAutoCreated())?<CardView
             style={homeStyle.cardViewStyle}
             cardElevation={8}
             cardMaxElevation={8}
@@ -87,10 +87,7 @@ export default class HomeScreen extends BaseComponent {
                 </Text>
               </TouchableOpacity>
             </View>
-            {/* <AppButton isLightTheme={true} buttonText={strings('screens.manageCampaigan')} onButtonPressed={() => {
-              Actions.manageCampaign()
-            }} /> */}
-          </CardView>: <View/>}
+          </CardView>: <View/>} */}
 
         </View>
         {/* <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
