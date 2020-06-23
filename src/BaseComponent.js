@@ -154,7 +154,6 @@ export default class BaseComponent extends Component {
   }
 
   getShopName(response) {
-    console.log("############# getShopName : "+JSON.stringify(response))
     if (this.isValidArray(response.properties)) {
       let shopDetail = response.properties[0];
       if (this.isValidString(shopDetail)) {
@@ -217,6 +216,7 @@ export default class BaseComponent extends Component {
       if (businessObject.username == globalData.getUserInfo().username) {
         globalData.setBusinessId(businessObject.businessId)
         globalData.setShopName(businessObject.shopName)
+        globalData.setIsAutoCreated(businessObject.autoCreate)
       }
 
     }
