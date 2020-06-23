@@ -451,7 +451,7 @@ export default class CampaignScreen extends BaseComponent {
     if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
       if (Platform.OS === 'ios') {
         this.setState({
-          handleKeyboardViewHeight: 350
+          handleKeyboardViewHeight: 200
         })
       }
       if(refName == 'campaignDescription'){

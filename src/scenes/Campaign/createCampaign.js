@@ -489,11 +489,13 @@ export default class CampaignScreen extends BaseComponent {
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
               blurText={this.state.salesTaxType}
-              refsValue={'campaignPrice'}
-              ref={'campaignPrice'}
+              refsValue={'campaignTaxType'}
+              ref={'campaignTaxType'}
               label={strings('createCampaignCategories.salesTaxTypeTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
+              onFocus={() => this.inputFocused("campaignTaxType")}
+              onBlur1={() => this.inputBlurred("campaignTaxType")}
               onChangeText={text => { this.setState({ salesTaxType: text }) }}
               returnKeyType={'next'}
               autoCorrect={false}
@@ -578,7 +580,7 @@ export default class CampaignScreen extends BaseComponent {
           handleKeyboardViewHeight: 0
         })
       }
-      if(refName === 'salesTaxPercent'){
+      if(refName === 'salesTaxPercent' || refName === 'campaignTaxType'){
         this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
       }
       if(refName === 'variantTagView'){
@@ -593,7 +595,7 @@ export default class CampaignScreen extends BaseComponent {
     if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
       if (Platform.OS === 'ios') {
         this.setState({
-          handleKeyboardViewHeight: 180
+          handleKeyboardViewHeight: 250
         })
       }
       if(refName === 'variantTagView'){
@@ -601,7 +603,7 @@ export default class CampaignScreen extends BaseComponent {
           this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
         }, 100); 
       }
-      if(refName === 'salesTaxPercent'){
+      if(refName === 'salesTaxPercent' || refName === 'campaignTaxType'){
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
         }, 100); 
