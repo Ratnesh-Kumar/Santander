@@ -152,10 +152,12 @@ export default class BusinessProfileView extends BaseComponent {
                 console.log(("fetchData BusinessId : "+businessId));
                 globalData.setShopName(shopName);
                 globalData.setBusinessId(businessId);
+                globalData.setIsAutoCreated(false)
                 let businessObj = {
                     "businessId": businessId,
                     "username": globalData.getUserInfo().username,
-                    "shopName": shopName
+                    "shopName": shopName,
+                    "autoCreate": false
                   }
                   let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
 

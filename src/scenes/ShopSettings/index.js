@@ -20,6 +20,7 @@ var shopSettingConstants = require('./ShopSettingsConstants')
 var colorConstant = require('../../config/colorConstant')
 var globalData = new GlobalData();
 var taxType = [];
+var isComingFromHomePage = false
 
 export default class ShopSettingScreen extends BaseComponent {
   constructor(props) {
@@ -41,6 +42,7 @@ export default class ShopSettingScreen extends BaseComponent {
       dialogModalText: '',
       dialogModalTitle: '',
     }
+    isComingFromHomePage = props.isComingFromHomePage;
   }
   componentDidUpdate() {
   }
@@ -157,7 +159,11 @@ export default class ShopSettingScreen extends BaseComponent {
     return (
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={shopSettingStyle.container}>
         {this.renderModal()}
-        <Header title={strings('shopSettingsScreen.ShopSettingsTitle')} isCrossIconVisible={false} />
+        <Header title={strings('shopSettingsScreen.ShopSettingsTitle')} isCrossIconVisible={false} onLeftArrowPressed={()=>{
+          if(isComingFromHomePage){
+            Actions.home()
+          }
+        }}/>
         <ScrollView keyboardShouldPersistTaps={'always'}>
           {this.renderPaymentBox()}
           {this.renderTaxBox()}

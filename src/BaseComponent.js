@@ -121,7 +121,6 @@ export default class BaseComponent extends Component {
       "locale": "en_us"
     }
     var responseData = await fetchPartyPOST(constants.CREATE_SHOP_URL, createShopBody);
-    console.log("############## responseData : " + JSON.stringify(responseData))
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
       let shopName = this.getShopName(responseData);
@@ -154,7 +153,6 @@ export default class BaseComponent extends Component {
   }
 
   getShopName(response) {
-    console.log("############# getShopName : "+JSON.stringify(response))
     if (this.isValidArray(response.properties)) {
       let shopDetail = response.properties[0];
       if (this.isValidString(shopDetail)) {
@@ -209,7 +207,6 @@ export default class BaseComponent extends Component {
   //   }
   // }
   handlerBusinessId(businessObject) {
-    console.log("@@@@ Business OBject :" + JSON.stringify(businessObject));
     globalData.setBusinessId('')
         globalData.setShopName('')
     if (this.isValidString(businessObject)) {
@@ -217,10 +214,10 @@ export default class BaseComponent extends Component {
       if (businessObject.username == globalData.getUserInfo().username) {
         globalData.setBusinessId(businessObject.businessId)
         globalData.setShopName(businessObject.shopName)
+        globalData.setIsAutoCreated(businessObject.autoCreate)
       }
 
     }
-    console.log("########## shopName(login) : " + globalData.getShopName())
     console.log("################ handlerBusinessId 4 : " + globalData.getBusinessId())
     if (!this.isValidString(globalData.getBusinessId())) {
       this.createShop()
