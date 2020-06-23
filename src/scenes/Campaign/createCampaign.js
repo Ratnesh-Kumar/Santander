@@ -30,6 +30,10 @@ var isCampaignUpdate = "";
 var campaignId = "";
 var fetchCampaignData = "";
 var taxType = [];
+var salesTaxTypeTitle = "";
+var categoriesViewScroll = 0;
+var variantViewScroll = 0;
+var salesTaxViewScroll = 0;
 export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
@@ -47,7 +51,8 @@ export default class CampaignScreen extends BaseComponent {
       dialogModalText: '',
       dialogModalTitle: '',
       isTrackQuantity: globalData.isTrackQuantityDisplay(),
-      isSalesTax: false
+      isSalesTax: false,
+      handleKeyboardViewHeight: 0,
     }
     campaignDetails = props.campaignDetails;
     isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false
@@ -162,9 +167,16 @@ export default class CampaignScreen extends BaseComponent {
   async componentDidMount() {
 
   }
+
+  onDragScroll() {
+    Keyboard.dismiss();
+    this.setState({
+      handleKeyboardViewHeight: 0
+    })
+  }
   render() {
     return (
-      <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'} >
+      <View style={campaignStyle.container} >
         {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           campaignVariantArray = [];
@@ -175,7 +187,13 @@ export default class CampaignScreen extends BaseComponent {
           })
         }} />
         <Stepper count={3} currentCount={2} />
-        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10, marginBottom: 20 }}>
+        <View style={{flex:1}}>
+        <ScrollView 
+        ref='scrollView'
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps={'always'} 
+        onScrollBeginDrag={() => this.onDragScroll()}
+        keyboardShouldPersistTaps={'always'} style={{ marginTop: 10, marginBottom: 20 }}>
           <View>
             {this.renderSwitchTextInput()}
             {this.rendercampaignQuantity()}
@@ -191,7 +209,10 @@ export default class CampaignScreen extends BaseComponent {
             this.addCampaign()
           }} />
         </ScrollView>
-      </KeyboardAvoidingView>
+        <View style={{ height: this.state.handleKeyboardViewHeight }}>
+            </View>
+        </View>
+      </View>
     );
   }
 
@@ -314,7 +335,12 @@ export default class CampaignScreen extends BaseComponent {
       }
     }
     return (
-      <View >
+      <View 
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        variantViewScroll = layout.y
+      }}
+      >
         {variantList}
       </View>
 
@@ -350,7 +376,12 @@ export default class CampaignScreen extends BaseComponent {
 
   renderCategoryTagView() {
     return (
-      <View style={{ paddingLeft: 10, paddingTop: 20 }}>
+      <View 
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        categoriesViewScroll = layout.y
+      }}
+      style={{ paddingLeft: 10, paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView
           labelName={strings('createCampaign.categoryTagTextInput')}
@@ -446,6 +477,10 @@ export default class CampaignScreen extends BaseComponent {
     if (this.state.isSalesTax)
       return (
         <View
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          salesTaxViewScroll = layout.y
+        }}
           style={campaignStyle.priceTextInputContainer}>
           {/* <View style={campaignStyle.priceInputWrapper}>
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
@@ -499,6 +534,8 @@ export default class CampaignScreen extends BaseComponent {
                 blurText={this.state.salesTax}
                 refsValue={'salesTaxPercent'}
                 ref={'salesTaxPercent'}
+                onFocus={() => this.inputFocused("salesTaxPercent")}
+                onBlur1={() => this.inputBlurred("salesTaxPercent")}
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
@@ -523,6 +560,35 @@ export default class CampaignScreen extends BaseComponent {
         </View>
       )
   }
+
+  inputBlurred(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if(refName == 'salesTaxPercent'){
+        if (Platform.OS === 'ios') {
+          this.setState({
+            handleKeyboardViewHeight: 0
+          })
+        }
+        this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
+      }
+    }
+  }
+  inputFocused(refName) {
+    console.log('######### descriptionViewScroll ::: inputFocused',salesTaxViewScroll);
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 350
+        })
+      }
+      if(refName == 'salesTaxPercent'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
+        }, 100); 
+      }
+      }
+  }
+
 
   handleTaxPicker(){
     // for (let data of TaxData) {
