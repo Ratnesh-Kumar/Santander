@@ -129,7 +129,8 @@ export default class BaseComponent extends Component {
         let businessObj = {
           "businessId": businessId,
           "username": globalData.getUserInfo().username,
-          "shopName": shopName
+          "shopName": shopName,
+          "autoCreate": globalData.getIsAutoCreated()
         }
         globalData.setBusinessId(businessId);
         globalData.setShopName(shopName);
@@ -153,12 +154,13 @@ export default class BaseComponent extends Component {
   }
 
   getShopName(response) {
+    console.log("############# getShopName : "+JSON.stringify(response))
     if (this.isValidArray(response.properties)) {
       let shopDetail = response.properties[0];
       if (this.isValidString(shopDetail)) {
         let shopValue = shopDetail.value;
         let shopname = shopValue.shopName;
-        globalData.setIsAutoCrated(shopValue.autoCreate);
+        globalData.setIsAutoCreated(shopValue.businessSettings.autoCreate);
         return shopname;
       }
     }

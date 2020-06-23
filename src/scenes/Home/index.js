@@ -24,6 +24,7 @@ export default class HomeScreen extends BaseComponent {
     }
     // console.log("############ userInfo : "+JSON.stringify(globalData.getUserInfo()))
     // console.log("############ userInfo token : "+globalData.getUserTokenKey())
+    console.log("############ userInfo token : "+globalData.getIsAutoCreated())
   }
 
   async componentDidMount(){    
