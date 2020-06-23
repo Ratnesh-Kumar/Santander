@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View , TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import homeStyle from './homeStyle';
@@ -19,17 +19,17 @@ export default class HomeScreen extends BaseComponent {
 
   constructor(props) {
     super(props)
-    this.state={
+    this.state = {
       isSignOutDisplay: false
     }
     // console.log("############ userInfo : "+JSON.stringify(globalData.getUserInfo()))
     // console.log("############ userInfo token : "+globalData.getUserTokenKey())
-    console.log("############ userInfo token : "+globalData.getIsAutoCreated())
+    // console.log("############ userInfo token : " + globalData.getIsAutoCreated())
   }
 
-  async componentDidMount(){    
+  async componentDidMount() {
     let isUserAlreadySignIn = await this.isSignedIn();
-    if(isUserAlreadySignIn){
+    if (isUserAlreadySignIn) {
       let currentUserInfo = await this.getCurrentUser();
       this.setState({
         isSignOutDisplay: isUserAlreadySignIn
@@ -50,12 +50,12 @@ export default class HomeScreen extends BaseComponent {
   render() {
     return (
       <View style={homeStyle.container}>
-        <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() =>{
+        <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() => {
           this.googleSignOut();
-        }} isCrossIconVisible={false}/>
+        }} isCrossIconVisible={false} />
         <View style={homeStyle.viewContainer}>
-           {this.renderGraphView()}
-           <CardView
+          {this.renderGraphView()}
+          <CardView
             style={homeStyle.cardViewStyle}
             cardElevation={8}
             cardMaxElevation={8}
@@ -69,7 +69,25 @@ export default class HomeScreen extends BaseComponent {
             <AppButton isLightTheme={true} buttonText={strings('screens.manageCampaigan')} onButtonPressed={() => {
               Actions.manageCampaign()
             }} />
-          </CardView> 
+          </CardView>
+
+          {/* {(globalData.getIsAutoCreated())?<CardView
+            style={homeStyle.cardViewStyle}
+            cardElevation={8}
+            cardMaxElevation={8}
+            cornerOverlap={false}
+            cornerRadius={5}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', width: constants.SCREEN_WIDTH - 40 }}>
+              <Text style={{ fontSize: 16, margin: 10 }}>
+                {"Please provide your business details."}
+              </Text>
+              <TouchableOpacity onPress={()=>{Actions.shopSetting({isComingFromHomePage: true})}}>
+                <Text style={{ fontSize: 14, margin: 10, textDecorationLine: 'underline', color: colorConstant.SANT_RED_COLOR, fontWeight: 'bold' }}>
+                  {"Business Detail"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </CardView>: <View/>} */}
 
         </View>
         {/* <View style={homeStyle.viewContainer} onTouchStart={()=>{Actions.campaign()}}>
@@ -89,9 +107,9 @@ export default class HomeScreen extends BaseComponent {
     // console.log("############# : " + RNLocalize.uses24HourClock());
   }
 
-  async googleSignOut(){
+  async googleSignOut() {
     this.googleConfiguration();
-    await this.signOut();   
+    await this.signOut();
     Actions.login();
   }
 }

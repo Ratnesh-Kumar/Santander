@@ -66,7 +66,9 @@
     "categoryTagTextInput": "Agregar categorías",
     "variantsTagTextInput": "Agregar variantes",
     "categoryTagText": "categorías",
-    "variantsTagText": "variantes"
+    "variantsTagText": "variantes",
+    "businessDetailMessage": "Proporcione los detalles de su negocio.",
+    "businessDetailTitle": "Detalles comerciales"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",

@@ -111,22 +111,22 @@ export default class AddProductScreen extends BaseComponent {
 
   setProductData(fetchData) {
     let productUrl = '';
-    if(this.isValidString(fetchData)){
+    if (this.isValidString(fetchData)) {
 
-      if(this.isValidString(fetchData.defaultDetails)){
+      if (this.isValidString(fetchData.defaultDetails)) {
         productUrl = fetchData.defaultDetails.productURL
       }
       this.setState({
         productName: fetchData.productName,
         productDescription: fetchData.productDescription,
         productPriceValue: fetchData.defaultDetails.comparePrice + "",
-        productSaleValue: fetchData.defaultDetails.productPrice+"",
+        productSaleValue: fetchData.defaultDetails.productPrice + "",
         productWeight: fetchData.defaultDetails.weight + "",
         productBarcodeValue: fetchData.defaultDetails.barCode + "",
-        productCostValue: fetchData.defaultDetails.productCost+"",
+        productCostValue: fetchData.defaultDetails.productCost + "",
         productSkuValue: fetchData.defaultDetails.sku,
-        pickedImage: (this.isValidString(productUrl))?{uri:productUrl}: productConstants.CAMERA_ICON,
-        showImage: (this.isValidString(productUrl))?true: false
+        pickedImage: (this.isValidString(productUrl)) ? { uri: productUrl } : productConstants.CAMERA_ICON,
+        showImage: (this.isValidString(productUrl)) ? true : false
       })
     }
   }
@@ -282,10 +282,10 @@ export default class AddProductScreen extends BaseComponent {
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
         "weightUnit": this.state.weightUnit,
-        "productImage":imageFile.name,
-        "productURL":globalData.getImagePathProduct()
+        "productImage": imageFile.name,
+        "productURL": globalData.getImagePathProduct()
       }
-      
+
       Actions.addProductCategory({ productDetails: productDetails, isUpdate: isUpdate, productId: itemId });
     } else {
       this.showAlert();
@@ -303,7 +303,7 @@ export default class AddProductScreen extends BaseComponent {
 
 
   renderWeighView() {
-    weightTitle=this.state.weightUnit==''?strings('productScreen.productWeightText'):this.state.weightUnit
+    let weightTitle = this.state.weightUnit == '' ? strings('productScreen.productWeightText') : this.state.weightUnit
     return (
       <View 
       onLayout={event => {
@@ -324,11 +324,11 @@ export default class AddProductScreen extends BaseComponent {
                   {weightTitle}</Text>
                 <View
                   style={{ position: 'absolute', right: 10, top: 10 }}>
-                    <TouchableOpacity onPress={()=>this.renderWeightPicker()}>
-                  <Image
-                    style={{ width: 35, height: 35 ,tintColor:colorConstant.GREY_DARK_COLOR}}
-                    source={require('../.././public/images/dropDown.png')}
-                  />
+                  <TouchableOpacity onPress={() => this.renderWeightPicker()}>
+                    <Image
+                      style={{ width: 35, height: 35, tintColor: colorConstant.GREY_DARK_COLOR }}
+                      source={require('../.././public/images/dropDown.png')}
+                    />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -471,10 +471,13 @@ export default class AddProductScreen extends BaseComponent {
                 backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                 autoCorrect={false}
                 isLoginScreen={false}
+                onBlur1={()=>{
+                  this.handleCostMarginProfit(this.state.productSaleValue, true, false, false)
+                }}
                 style={{ backgroundColor: colorConstant.GRAY_LIGHT_COLOR }}
                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                 underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                value={this.state.productCostValue}
+                value={this.isValidString(this.state.productCostValue)? this.state.productCostValue: ""}
                 textInputName={this.state.productCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
@@ -501,12 +504,15 @@ export default class AddProductScreen extends BaseComponent {
                   autoCapitalize={'none'}
                   onChangeText={text => this.setState({ productProfitValue: text })}
                   backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
+                  onBlur1={()=>{
+                    this.handleCostMarginProfit(this.state.productSaleValue, false, true, false)
+                  }}
                   autoCorrect={false}
                   isLoginScreen={false}
                   style={productStyle.input}
                   placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                   underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                  value={this.state.productProfitValue}
+                  value={this.isValidString(this.state.productProfitValue)? this.state.productProfitValue: ""}
                   textInputName={this.state.productProfitValue}
                   // errorText={strings('createCampaign.priceErrorText')}
                   underlineHeight={2}
@@ -529,7 +535,12 @@ export default class AddProductScreen extends BaseComponent {
                   label={strings('createCampaign.marginTextInput')}
                   maxLength={100}
                   autoCapitalize={'none'}
-                  onChangeText={text => this.setState({ productMarginValue: text })}
+                  onChangeText={text => {
+                    this.setState({ productMarginValue: text })
+                  }}
+                  onBlur1={()=>{
+                    this.handleCostMarginProfit(this.state.productSaleValue, false, false, true)
+                  }}
                   returnKeyType={'next'}
                   backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                   autoCorrect={false}
@@ -537,7 +548,7 @@ export default class AddProductScreen extends BaseComponent {
                   style={productStyle.input}
                   placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                   underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                  value={this.state.productMarginValue}
+                  value={this.isValidString(this.state.productMarginValue)? this.state.productMarginValue: ""}
                   textInputName={this.state.productMarginValue}
                   // errorText={strings('createCampaign.campaignNameErrorText')}
                   underlineHeight={2}
@@ -603,7 +614,11 @@ export default class AddProductScreen extends BaseComponent {
               label={strings('createCampaign.salePriceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ productSaleValue: text }) }}
+              onChangeText={text => {
+                console.log("########### text : " + text)
+                this.setState({ productSaleValue: text })
+                this.handleCostMarginProfit(text, false, false, false)
+              }}
               autoCorrect={false}
               isLoginScreen={false}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
@@ -652,11 +667,11 @@ export default class AddProductScreen extends BaseComponent {
             console.log("Failed to upload image to S3");
           }
           else {
-            console.log("imagePath1 ##### - "+response.body.postResponse.location)
+            console.log("imagePath1 ##### - " + response.body.postResponse.location)
             globalData.setImagePathProduct(response.body.postResponse.location);
-            console.log("image name  "+imageFile.name)
-            console.log("image path globalData  "+globalData.getImagePathProduct())
-            
+            console.log("image name  " + imageFile.name)
+            console.log("image path globalData  " + globalData.getImagePathProduct())
+
           }
         });
       }
@@ -666,7 +681,7 @@ export default class AddProductScreen extends BaseComponent {
   showPickedImage() {
     return (
       <TouchableOpacity onPress={() => this.pickImageHandler()} style={{ alignItems: 'center' }}>
-        <Image source={this.state.pickedImage?this.state.pickedImage:null} style={{ height: 60, width: 60, marginTop: 20 }} />
+        <Image source={this.state.pickedImage ? this.state.pickedImage : null} style={{ height: 60, width: 60, marginTop: 20 }} />
         <Text style={{ marginTop: 15, fontSize: 16 }}>{strings('createCampaign.uploadImageText')}</Text>
       </TouchableOpacity>
     )
@@ -767,11 +782,58 @@ export default class AddProductScreen extends BaseComponent {
     );
   }
 
-  renderWeightPicker(){
+  handleCostMarginProfit(salePrice, isCostHandle, isProfitHandle, isMarginHandle) {
+    var productCost = 0;
+    var productMargin = 0;
+    var productProfit = 0;
+    if (isCostHandle) {
+      productCost = this.state.productCostValue;
+      productMargin = Math.floor(this.getMargin(salePrice, this.state.productCostValue));
+      productProfit = Math.floor(this.getProfit(salePrice, this.state.productCostValue))
+    } else if (isProfitHandle) {
+      productCost = salePrice - this.state.productProfitValue;
+      productMargin = Math.floor(this.getMargin(salePrice, productCost));
+      productProfit = this.state.productProfitValue
+    } else if (isMarginHandle) {
+      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, this.state.productMarginValue));
+      productMargin = this.state.productMarginValue
+      productProfit = Math.floor(this.getProfit(salePrice, productCost))
+    } else {
+      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, 50));
+      productMargin = Math.floor(this.getMargin(salePrice, productCost));
+      productProfit = Math.floor(this.getProfit(salePrice, productCost))
+    }
+    // console.log("##################### productCost 1: " + productCost)
+    // console.log("##################### productMargin 2: " + productMargin)
+    // console.log("##################### productProfit 3: " + productProfit)
+    this.setState({
+      productCostValue: productCost + "",
+      productMarginValue: productMargin + "",
+      productProfitValue: productProfit + ""
+    })
+  }
+
+  getCostFromProfitMargin(salePrice, margin) {
+    return ((100 - margin) * salePrice) / 100
+  }
+
+  getProfit(salePrice, cost) {
+    return (salePrice - cost)
+  }
+
+  getMargin(salePrice, cost) {
+    if(this.isValidString(salePrice)){
+      return ((salePrice - cost) / salePrice) * 100
+    }
+    return 0;
+  }
+
+
+  renderWeightPicker() {
     Keyboard.dismiss();
     this.inputFocused('weightPicker')
     Picker.hide();
-    weightType=['kg','lb','oz','gram']
+    weightType = ['kg', 'lb', 'oz', 'gram']
     Picker.init({
       pickerData: weightType,
       pickerTitleText: 'Select Weight Unit',
@@ -782,7 +844,7 @@ export default class AddProductScreen extends BaseComponent {
       onPickerConfirm: data => {
         this.hidePicker()
         this.setState({
-          weightUnit:data
+          weightUnit: data
         })
       },
       onPickerCancel: data => {
