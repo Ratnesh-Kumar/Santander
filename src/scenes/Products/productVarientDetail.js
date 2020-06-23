@@ -118,7 +118,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                 value={this.state.varientCostValue}
                 textInputName={this.state.varientCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
-                onBlur1={()=>{
+                onBlur1={() => {
                   this.handleCostMarginProfit(this.state.varientSaleValue, true, false, false)
                 }}
                 underlineHeight={2}
@@ -141,7 +141,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                   label={strings('createCampaign.profitTextInput')}
                   maxLength={100}
                   autoCapitalize={'none'}
-                  onChangeText={text => {this.setState({ varientProfitValue: text })}}
+                  onChangeText={text => { this.setState({ varientProfitValue: text }) }}
                   backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                   autoCorrect={false}
                   isLoginScreen={false}
@@ -150,7 +150,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                   underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                   value={this.state.varientProfitValue}
                   textInputName={this.state.varientProfitValue}
-                  onBlur1={()=>{
+                  onBlur1={() => {
                     this.handleCostMarginProfit(this.state.varientSaleValue, false, true, false)
                   }}
                   // errorText={strings('createCampaign.priceErrorText')}
@@ -179,10 +179,10 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                   style={productStyle.input}
                   placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                   underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                  value={this.state.varientMarginValue}
+                  value={this.isValidString(this.state.varientMarginValue) ? this.state.varientMarginValue : ""}
                   textInputName={this.state.varientMarginValue}
                   // errorText={strings('createCampaign.campaignNameErrorText')}
-                  onBlur1={()=>{
+                  onBlur1={() => {
                     this.handleCostMarginProfit(this.state.varientSaleValue, false, false, true)
                   }}
                   underlineHeight={2}
@@ -306,8 +306,8 @@ export default class ProductVarientDetailScreen extends BaseComponent {
               label={strings('createCampaign.salePriceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { 
-                this.setState({ varientSaleValue: text }) 
+              onChangeText={text => {
+                this.setState({ varientSaleValue: text })
                 this.handleCostMarginProfit(text, false, false, false)
               }}
               autoCorrect={false}
@@ -372,7 +372,10 @@ export default class ProductVarientDetailScreen extends BaseComponent {
   }
 
   getMargin(salePrice, cost) {
-    return ((salePrice - cost) / salePrice) * 100
+    if (this.isValidString(salePrice)) {
+      return ((salePrice - cost) / salePrice) * 100
+    }
+    return 0;
   }
 
 }

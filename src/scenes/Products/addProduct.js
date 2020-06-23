@@ -697,7 +697,10 @@ export default class AddProductScreen extends BaseComponent {
   }
 
   getMargin(salePrice, cost) {
-    return ((salePrice - cost) / salePrice) * 100
+    if(this.isValidString(salePrice)){
+      return ((salePrice - cost) / salePrice) * 100
+    }
+    return 0;
   }
 
 
