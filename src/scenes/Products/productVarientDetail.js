@@ -24,14 +24,15 @@ export default class ProductVarientDetailScreen extends BaseComponent {
       varientSaleValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.salePrice) ? props.variantDetail.salePrice.toString() : "") : "",
       varientCostValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.productCost) ? props.variantDetail.productCost.toString() : "") : "",
       varientProfitValue: "",
+      varientMarginValue: "",
       varientSku: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.skuNumber) ? props.variantDetail.skuNumber.toString() : "") : "",
       varientBarcodeValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.barcode) ? props.variantDetail.barcode.toString() : "") : "",
     }
     variantDetails = props.variantDetail;
     // this.setUpdateData(variantDetails)
-    
+
   }
-  componentDidMount(){
+  componentDidMount() {
   }
 
   // setUpdateData(variantDetails) {
@@ -117,6 +118,9 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                 value={this.state.varientCostValue}
                 textInputName={this.state.varientCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
+                onBlur1={()=>{
+                  this.handleCostMarginProfit(this.state.varientSaleValue, true, false, false)
+                }}
                 underlineHeight={2}
                 returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
                 keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
@@ -137,7 +141,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                   label={strings('createCampaign.profitTextInput')}
                   maxLength={100}
                   autoCapitalize={'none'}
-                  onChangeText={text => this.setState({ varientProfitValue: text })}
+                  onChangeText={text => {this.setState({ varientProfitValue: text })}}
                   backgroundColor={colorConstant.GRAY_LIGHT_COLOR}
                   autoCorrect={false}
                   isLoginScreen={false}
@@ -146,6 +150,9 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                   underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                   value={this.state.varientProfitValue}
                   textInputName={this.state.varientProfitValue}
+                  onBlur1={()=>{
+                    this.handleCostMarginProfit(this.state.varientSaleValue, false, true, false)
+                  }}
                   // errorText={strings('createCampaign.priceErrorText')}
                   underlineHeight={2}
                   returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
@@ -175,6 +182,9 @@ export default class ProductVarientDetailScreen extends BaseComponent {
                   value={this.state.varientMarginValue}
                   textInputName={this.state.varientMarginValue}
                   // errorText={strings('createCampaign.campaignNameErrorText')}
+                  onBlur1={()=>{
+                    this.handleCostMarginProfit(this.state.varientSaleValue, false, false, true)
+                  }}
                   underlineHeight={2}
                   returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
                   keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
@@ -296,7 +306,10 @@ export default class ProductVarientDetailScreen extends BaseComponent {
               label={strings('createCampaign.salePriceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ varientSaleValue: text }) }}
+              onChangeText={text => { 
+                this.setState({ varientSaleValue: text }) 
+                this.handleCostMarginProfit(text, false, false, false)
+              }}
               autoCorrect={false}
               isLoginScreen={false}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
@@ -316,6 +329,50 @@ export default class ProductVarientDetailScreen extends BaseComponent {
         </View>
       </View>
     )
+  }
+
+  handleCostMarginProfit(salePrice, isCostHandle, isProfitHandle, isMarginHandle) {
+    var productCost = 0;
+    var productMargin = 0;
+    var productProfit = 0;
+    if (isCostHandle) {
+      productCost = this.state.varientCostValue;
+      productMargin = Math.floor(this.getMargin(salePrice, this.state.varientCostValue));
+      productProfit = Math.floor(this.getProfit(salePrice, this.state.varientCostValue))
+    } else if (isProfitHandle) {
+      productCost = salePrice - this.state.varientProfitValue;
+      productMargin = Math.floor(this.getMargin(salePrice, productCost));
+      productProfit = this.state.varientProfitValue
+    } else if (isMarginHandle) {
+      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, this.state.varientMarginValue));
+      productMargin = this.state.varientMarginValue
+      productProfit = Math.floor(this.getProfit(salePrice, productCost))
+    } else {
+      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, 50));
+      productMargin = Math.floor(this.getMargin(salePrice, productCost));
+      productProfit = Math.floor(this.getProfit(salePrice, productCost))
+    }
+    // console.log("##################### productCost 1: " + productCost)
+    // console.log("##################### productMargin 2: " + productMargin)
+    // console.log("##################### productProfit 3: " + productProfit)
+    this.setState({
+      varientCostValue: productCost + "",
+      varientMarginValue: productMargin + "",
+      varientProfitValue: productProfit + ""
+    })
+  }
+
+
+  getCostFromProfitMargin(salePrice, margin) {
+    return ((100 - margin) * salePrice) / 100
+  }
+
+  getProfit(salePrice, cost) {
+    return (salePrice - cost)
+  }
+
+  getMargin(salePrice, cost) {
+    return ((salePrice - cost) / salePrice) * 100
   }
 
 }

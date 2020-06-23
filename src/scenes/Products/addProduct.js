@@ -688,8 +688,6 @@ export default class AddProductScreen extends BaseComponent {
     })
   }
 
-  setMarginProfit
-
   getCostFromProfitMargin(salePrice, margin) {
     return ((100 - margin) * salePrice) / 100
   }
