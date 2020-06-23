@@ -70,7 +70,9 @@
       "categoryTagTextInput": "Add Categories",
       "variantsTagTextInput": "Add Variants",
       "categoryTagText": "CATEGORIES",
-      "variantsTagText": "VARIANTS"
+      "variantsTagText": "VARIANTS",
+      "businessDetailMessage": "Please provide your business details.",
+      "businessDetailTitle": "Business Details"
     },
     "createCampaignCategories": {
       "trackSwitchText": "Track Quantity",
