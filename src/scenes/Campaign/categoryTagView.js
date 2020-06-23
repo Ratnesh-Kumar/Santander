@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Keyboard, Image, TextInput, ScrollView, TouchableOpacity,Platform  } from 'react-native';
+import { StyleSheet, Text, View, Keyboard, Image, TextInput, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
@@ -60,14 +60,14 @@ export default class CampaignScreen extends BaseComponent {
                 }}>
                     <Image source={require('../../public/images/Close_icon.png')} style={{ height: 12, width: 12, tintColor: colorConstant.GREY_DARK_COLOR1 }} />
                 </TouchableOpacity>
-                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1,marginTop:(Platform.OS === 'ios')?-2:0 }}>{tagName}</Text>
+                <Text style={{ marginLeft: 5, color: colorConstant.GREY_DARK_COLOR1, marginTop: (Platform.OS === 'ios') ? -2 : 0 }}>{tagName}</Text>
             </View>
         );
     }
 
     renderInputText() {
         return (
-            <View style={{alignItems:'center',flexDirection:'row'}}>
+            <View style={{ alignItems: 'center', flexDirection: 'row' }}>
                 <View style={campaignStyle.inputWrapperSmall}>
                     <View style={campaignStyle.validFormSubView}>
                         <TextInputMaterial
@@ -81,7 +81,12 @@ export default class CampaignScreen extends BaseComponent {
                             returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            onFocus={() => { this.setState({ tagName: '' }) }}
+                            onFocus={() => {
+                                this.setState({ tagName: '' })
+                                if (typeof this.props.inputFocus == 'function') {
+                                    this.props.inputFocus()
+                                }
+                            }}
                             //onBlur1={() => {this.addItemToTagList()}}
                             style={campaignStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
@@ -93,30 +98,30 @@ export default class CampaignScreen extends BaseComponent {
                             keyboardType="email-address"
                             isDefaultView={true}
                             onSubmitEditing={event => {
-                                
+
                             }}
                         />
                     </View>
                 </View>
 
-               <View style={{flex:1,paddingRight:25}}>
-                <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
-                    Keyboard.dismiss()
-          this.addItemToTagList()
-          
-        }}/>
-               </View>
+                <View style={{ flex: 1, paddingRight: 25 }}>
+                    <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
+                        Keyboard.dismiss()
+                        this.addItemToTagList()
+
+                    }} />
+                </View>
             </View>
         );
     }
 
-    addItemToTagList(){
+    addItemToTagList() {
         if (this.isValidString(this.state.tagName) && this.state.tagNameList.length < 11) {
             this.state.tagNameList.push(this.state.tagName)
             this.props.updatedList(this.state.tagNameList)
             this.setState({
                 tagNameList: this.state.tagNameList,
-                tagName:''
+                tagName: ''
             })
         }
     }

@@ -4,7 +4,6 @@ import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import campaignStyle from './campaignStyle';
 import { strings } from '../../i18next/i18n';
-import * as RNLocalize from "react-native-localize";
 // import {RNFirebase, firestore} from 'react-native-firebase';
 import GlobalData from '../../utils/GlobalData';
 import BaseComponent from '../../BaseComponent';
@@ -367,6 +366,7 @@ export default class CampaignScreen extends BaseComponent {
             labelName={strings('createCampaign.variantsTagTextInput')}
             isCategoryTag={false}
             variantList={this.state.variantsList}
+            inputFocus={()=> { }}
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
               //this.updateProductVariantList(variantList)
@@ -442,7 +442,7 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   renderSalesTaxInput() {
-    salesTaxTypeTitle=this.state.salesTaxType==''?strings('createCampaignCategories.salesTaxTypeTextInput'):this.state.salesTaxType
+    let salesTaxTypeTitle=this.state.salesTaxType==''?strings('createCampaignCategories.salesTaxTypeTextInput'):this.state.salesTaxType
     if (this.state.isSalesTax)
       return (
         <View
