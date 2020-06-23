@@ -87,6 +87,11 @@ export default class CampaignScreen extends BaseComponent {
                                     this.props.inputFocus()
                                 }
                             }}
+                            onBlur1={() => {
+                                if (typeof this.props.inputBlur == 'function') {
+                                    this.props.inputBlur()
+                                }
+                            }}
                             //onBlur1={() => {this.addItemToTagList()}}
                             style={campaignStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}

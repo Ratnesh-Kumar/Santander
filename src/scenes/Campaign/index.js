@@ -24,6 +24,10 @@ var campaignId = "";
 var imageFile = {}
 var options = {}
 var isCampaignUpdate = false;
+var descriptionViewScroll = 0;
+var priceViewScroll = 0;
+var skuBarcodeViewScroll = 0;
+
 
 export default class CampaignScreen extends BaseComponent {
 
@@ -49,6 +53,7 @@ export default class CampaignScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
+      handleKeyboardViewHeight: 0,
     }
     campaignId = props.campaignId;
     isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false;
@@ -138,32 +143,50 @@ export default class CampaignScreen extends BaseComponent {
     }
   }
 
+  onDragScroll() {
+    Keyboard.dismiss();
+    this.setState({
+      handleKeyboardViewHeight: 0
+    })
+  }
+
   render() {
     return (
-      <KeyboardAvoidingView style={campaignStyle.container} behavior={'padding'}>
+      <View style={campaignStyle.container}>
         {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <Stepper count={3} currentCount={1} />
-        <View>
-          <ScrollView keyboardShouldPersistTaps={'always'} style={campaignStyle.scrollViewStyle}>
+        <View style={{flex:1}}>
+          <ScrollView 
+          ref='scrollView'
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps={'always'} 
+          onScrollBeginDrag={() => this.onDragScroll()}
+          >
+          {/* //style={campaignStyle.scrollViewStyle} */}
             {this.renderCampaignName()}
             {this.createCameraView()}
             {this.renderPriceView()}
-            {/* {this.renderCostView()} */}
             {this.renderSkuAndBarcode()}
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               this.nextButtonTapped()
             }} />
-
+            <View style={{ height: this.state.handleKeyboardViewHeight }}>
+            </View>  
           </ScrollView>
         </View>
-      </KeyboardAvoidingView>
+
+      </View>
     );
   }
 
   renderSkuAndBarcode() {
     return (
       <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        skuBarcodeViewScroll = layout.y
+      }}
         style={[campaignStyle.validFormViewContainer, { marginTop: 10 }]}>
         <View style={campaignStyle.inputWrapper}>
           <View style={campaignStyle.validFormSubView}>
@@ -172,6 +195,8 @@ export default class CampaignScreen extends BaseComponent {
               refsValue={'campaignSku'}
               ref={'campaignSku'}
               label={strings('createCampaign.skuTextInput')}
+              onFocus={() => this.inputFocused("campaignSku")}
+              onBlur1={() => this.inputBlurred("campaignSku")}
               maxLength={100}
               autoCapitalize={'none'}
               onChangeText={text => this.setState({ campaignSku: text })}
@@ -189,6 +214,9 @@ export default class CampaignScreen extends BaseComponent {
               keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
               onSubmitEditing={event => {
                 Keyboard.dismiss()
+                this.setState({
+                  handleKeyboardViewHeight: 0
+                })
                 //this.refs.campaignBarcdoe.focus();
               }}
             />
@@ -328,6 +356,10 @@ export default class CampaignScreen extends BaseComponent {
   renderPriceView() {
     return (
       <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        priceViewScroll = layout.y
+      }}
         style={campaignStyle.priceTextInputContainer}>
         <View style={campaignStyle.priceInputWrapper}>
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
@@ -335,6 +367,8 @@ export default class CampaignScreen extends BaseComponent {
               blurText={this.state.campaignPriceValue}
               refsValue={'campaignPrice'}
               ref={'campaignPrice'}
+              onFocus={() => this.inputFocused("campaignPrice")}
+              onBlur1={() => this.inputBlurred("campaignPrice")}
               label={strings('createCampaign.priceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -362,6 +396,8 @@ export default class CampaignScreen extends BaseComponent {
               blurText={this.state.campaignSaleValue}
               refsValue={'campaignSalePrice'}
               ref={'campaignSalePrice'}
+              onFocus={() => this.inputFocused("campaignSalePrice")}
+              onBlur1={() => this.inputBlurred("campaignSalePrice")}
               label={strings('createCampaign.salePriceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -385,6 +421,57 @@ export default class CampaignScreen extends BaseComponent {
         </View>
       </View>
     )
+  }
+
+  inputBlurred(refName) {
+    console.log('######### descriptionViewScroll ::: inputBlurred',descriptionViewScroll);
+    console.log('######### priceViewScroll inputBlurred :: ',priceViewScroll)
+    console.log('######### skuBarcodeViewScroll inputBlurred :: ',skuBarcodeViewScroll)
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if(refName == 'campaignDescription'){
+          this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
+      }
+      if(refName == 'campaignSalePrice' || refName == 'campaignPrice'){
+          this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
+      }
+      if(refName == 'campaignSku'){
+        if (Platform.OS === 'ios') {
+          this.setState({
+            handleKeyboardViewHeight: 0
+          })
+        }
+        this.refs.scrollView.scrollTo({ x: 0, y: skuBarcodeViewScroll, animated: true })
+      }
+    }
+  }
+  inputFocused(refName) {
+    console.log('######### descriptionViewScroll ::: inputFocused',descriptionViewScroll);
+    console.log('######### priceViewScroll inputFocused :: ',priceViewScroll)
+    console.log('######### skuBarcodeViewScroll inputFocused :: ',skuBarcodeViewScroll)
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 350
+        })
+      }
+      if(refName == 'campaignDescription'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName == 'campaignSalePrice' || refName == 'campaignPrice'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName == 'campaignSku'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: skuBarcodeViewScroll, animated: true })
+        }, 100); 
+      }
+          
+           
+      }
   }
 
   initializeOptions() {
@@ -453,7 +540,12 @@ export default class CampaignScreen extends BaseComponent {
 
   createCameraView() {
     return (
-      <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
+      <View 
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          descriptionViewScroll = layout.y
+        }}
+      style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
         <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, }}>
           {this.state.showImage === true ? this.renderImage() : this.showPickedImage()}
         </View>
@@ -464,6 +556,8 @@ export default class CampaignScreen extends BaseComponent {
               underlineColorAndroid="transparent"
               placeholder={strings('createCampaign.addDescriptionPlaceholder')}
               ref={'campaignDescription'}
+              onFocus={() => this.inputFocused("campaignDescription")}
+              onBlur={() => this.inputBlurred("campaignDescription")}
               placeholderTextColor={colorConstant.GREY_DARK_COLOR}
               autoCapitalize="none"
               style={{ fontSize: 16, textAlignVertical: 'top', paddingLeft: 10 }}

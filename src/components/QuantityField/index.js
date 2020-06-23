@@ -79,11 +79,19 @@ export default class QuantityField extends BaseComponent {
                             style={{ fontSize: 18, paddingTop: 0, paddingBottom: 0, textAlign: 'center' }}
                             onChangeText={quantityValue => this.changeQtyValue(quantityValue)}
                             maxLength={4}
+                            onFocus={() => {
+                                if (typeof this.props.inputFocus == 'function') {
+                                    this.props.inputFocus()
+                                }
+                            }}
                             onBlur={() => {
                                 if (!this.isValidString(this.state.quantityValue)) {
                                     this.setState({
                                         quantityValue: "1"
                                     })
+                                }
+                                if (typeof this.props.inputBlur == 'function') {
+                                    this.props.inputBlur()
                                 }
                             }}
                             defaultValue={1}

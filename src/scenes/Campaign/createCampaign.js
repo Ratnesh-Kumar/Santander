@@ -29,7 +29,6 @@ var isCampaignUpdate = "";
 var campaignId = "";
 var fetchCampaignData = "";
 var taxType = [];
-var salesTaxTypeTitle = "";
 var categoriesViewScroll = 0;
 var variantViewScroll = 0;
 var salesTaxViewScroll = 0;
@@ -355,7 +354,10 @@ export default class CampaignScreen extends BaseComponent {
           Actions.campaignVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
         }}
         quantity={this.getVariantObj(quantityTitle).quantity}
-        title={quantityTitle} updatedQuantity={(quantity) => {
+        inputFocus={()=> { this.inputFocused('variantQuantity') }}
+        inputBlur={()=> { this.inputBlurred('variantQuantity') } }
+        title={quantityTitle} 
+        updatedQuantity={(quantity) => {
           let variantObj = this.getVariantObj(quantityTitle);
           variantObj.quantity = quantity;
         }} />
@@ -397,7 +399,8 @@ export default class CampaignScreen extends BaseComponent {
             labelName={strings('createCampaign.variantsTagTextInput')}
             isCategoryTag={false}
             variantList={this.state.variantsList}
-            inputFocus={()=> { }}
+            inputFocus={()=> { this.inputFocused('variantTagView') }}
+            inputBlur={()=> { this.inputBlurred('variantTagView') } }
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
               //this.updateProductVariantList(variantList)
@@ -561,29 +564,51 @@ export default class CampaignScreen extends BaseComponent {
       )
   }
 
-  inputBlurred(refName) {
-    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
-      if(refName == 'salesTaxPercent'){
-        if (Platform.OS === 'ios') {
-          this.setState({
-            handleKeyboardViewHeight: 0
-          })
-        }
-        this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
-      }
-    }
+  onDragScroll() {
+    Keyboard.dismiss();
+    this.setState({
+      handleKeyboardViewHeight: 0
+    })
   }
-  inputFocused(refName) {
-    console.log('######### descriptionViewScroll ::: inputFocused',salesTaxViewScroll);
+
+  inputBlurred(refName) {
     if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
       if (Platform.OS === 'ios') {
         this.setState({
-          handleKeyboardViewHeight: 350
+          handleKeyboardViewHeight: 0
         })
       }
-      if(refName == 'salesTaxPercent'){
+      if(refName === 'salesTaxPercent'){
+        this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
+      }
+      if(refName === 'variantTagView'){
+          this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
+      }
+      if(refName === 'variantQuantity'){
+        this.refs.scrollView.scrollTo({ x: 0, y: variantViewScroll, animated: true })
+    }
+    }
+  }
+  inputFocused(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 180
+        })
+      }
+      if(refName === 'variantTagView'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'salesTaxPercent'){
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'variantQuantity'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: variantViewScroll, animated: true })
         }, 100); 
       }
       }
