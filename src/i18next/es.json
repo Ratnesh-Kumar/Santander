@@ -148,12 +148,14 @@
     "CountryText": "País",
     "IndustryTypeText": "Tipo de industria",
     "BuisnessNameTextInput": "Nombre del Negocio",
-    "BuisnessNameTextInputError": "Por favor ingrese su nombre comercial",
+    "BuisnessNameTextInputError": "Por favor, introduzca su nombre comercial",
     "BuisnessTaxIdTextInput": "ID de impuesto comercial",
     "BuisnessTaxIdTextInputError": "Ingrese su ID de impuesto de negocios",
     "WebsiteTextInput": "Sitio web",
     "FbTextInput": "Página de FB",
-    "YelpTextInput": "Gañido"
+    "YelpTextInput": "Gañido",
+    "AddressText":"HABLA A",
+    "UrlText":"INGRESAR ENLACES (URL)"
   },
   "shopSettingsScreen": {
     "ShopSettingsTitle": "Configuraciones de la tienda",
