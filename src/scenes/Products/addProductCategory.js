@@ -39,8 +39,8 @@ export default class AddProductCategory extends BaseComponent {
       productQuantity: "1",
       variantsList: [],
       categoryList: [],
-      salesTaxType: '',
-      salesTax: '',
+      salesTaxType: globalData.getSalesTaxType(),
+      salesTax: globalData.getSalesTax(),
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
       isDialogModalVisible: false,
@@ -423,7 +423,6 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   renderProductQuantity() {
-    // console.log("################# isTrackQuantity : " + this.state.isTrackQuantity)
     if (this.state.isTrackQuantity) {
       return (
         <QuantityField
@@ -485,15 +484,15 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   renderSalesTaxInput() {
-    taxTypeTitle = this.state.salesTaxType === '' ? strings('createCampaignCategories.salesTaxTypeTextInput') : this.state.salesTaxType
+    let taxTypeTitle = this.state.salesTaxType === '' ? strings('createCampaignCategories.salesTaxTypeTextInput') : this.state.salesTaxType
     if (this.state.salesTaxSwitch)
       return (
         <View
           style={productStyle.priceTextInputContainer}>
-          {/* <View style={productStyle.priceInputWrapper}>
+          <View style={productStyle.priceInputWrapper}>
           <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
-              blurText={this.state.campaignPriceValue}
+              blurText={this.state.salesTaxType}
               refsValue={'campaignPrice'}
               ref={'campaignPrice'}
               label={strings('createCampaignCategories.salesTaxTypeTextInput')}
@@ -506,8 +505,8 @@ export default class AddProductCategory extends BaseComponent {
               style={productStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.campaignPriceValue}
-              textInputName={this.state.campaignPriceValue}
+              value={this.state.salesTaxType}
+              textInputName={this.state.salesTaxType}
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
               keyboardType={'email-address'}
@@ -516,8 +515,8 @@ export default class AddProductCategory extends BaseComponent {
               }}
             />
           </View>
-        </View> */}
-          <View style={productStyle.priceInputWrapper}>
+        </View>
+          {/* <View style={productStyle.priceInputWrapper}>
             <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
               <View
                 style={productStyle.containerStyleWithBorder}>
@@ -534,7 +533,7 @@ export default class AddProductCategory extends BaseComponent {
                 </View>
               </View>
             </View>
-          </View>
+          </View> */}
 
           <View style={productStyle.priceInputWrapper}>
             <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
@@ -567,45 +566,6 @@ export default class AddProductCategory extends BaseComponent {
         </View>
       )
   }
-
-  handleTaxPicker() {
-    // for (let data of TaxData) {
-    //   taxType.push(data['type'])
-    // }
-    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
-    Keyboard.dismiss()
-    Picker.hide()
-    Picker.init({
-      pickerData: taxType,
-      pickerTitleText: 'Select Tax',
-      pickerConfirmBtnText: 'Done',
-      pickerCancelBtnText: 'Cancel',
-      selectedValue: [taxType[0].toString().trim()],
-      pickerBg: [255, 255, 255, 1],
-
-      onPickerConfirm: data => {
-        this.getTaxData(data)
-      },
-      onPickerCancel: data => {
-        Picker.hide();
-      },
-      onPickerSelect: data => {
-        //console.log(data);
-      }
-    });
-    Picker.show();
-  }
-
-  async getTaxData(data) {
-    let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
-
-    this.setState({
-      salesTax: taxRate,
-      salesTaxType: data
-
-    })
-  }
-
 
   getRequestBody(data, variantList) {
     return {

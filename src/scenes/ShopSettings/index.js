@@ -28,8 +28,8 @@ export default class ShopSettingScreen extends BaseComponent {
       profitMarginValue: '',
       shippingCostValue: '',
       handlingCostValue: '',
-      taxTypeValue: '',
-      taxRateValue: '',
+      taxTypeValue: globalData.getSalesTaxType()+"",
+      taxRateValue: globalData.getSalesTax()+"",
       trackInventory: false,
       taxOnSales: false,
       showDiscount: false,
@@ -40,9 +40,7 @@ export default class ShopSettingScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
-
     }
-   
   }
   componentDidUpdate() {
   }
@@ -55,6 +53,8 @@ export default class ShopSettingScreen extends BaseComponent {
       this.getShopData()
     }
   }
+
+  
 
   componentDidMount() {
     this.getShopData()
@@ -120,8 +120,8 @@ export default class ShopSettingScreen extends BaseComponent {
     this.setState({
       trackInventory: (Boolean)(fetchData.trackInventory),
       taxOnSales: (Boolean)(fetchData.taxOnSales),
-      taxTypeValue: fetchData.defaultTaxType,
-      taxRateValue: fetchData.flatTaxRate + "",
+      taxTypeValue: this.isValidString(fetchData.defaultTaxType)?fetchData.defaultTaxType: globalData.getSalesTaxType(),
+      taxRateValue: this.isValidString(fetchData.flatTaxRate)?fetchData.flatTaxRate+"": globalData.getSalesTax(),
       showDiscount: (Boolean)(fetchData.showDiscounts),
       shipProducts: (Boolean)(fetchData.shipProducts),
       estimateProfit: (Boolean)(fetchData.estimateProfit),
@@ -230,7 +230,6 @@ export default class ShopSettingScreen extends BaseComponent {
   }
 
   renderPaymentBox() {
-    console.log("renderPaymentBox @@@@@@@@@@@@@@@@" + this.state.taxOnSales)
     // const { trackInventory, taxOnSales } = this.state;
     return (
       <View style={{ marginTop: 10 }}>
@@ -271,12 +270,12 @@ export default class ShopSettingScreen extends BaseComponent {
     )
   }
   renderTaxBox() {
-    taxTypeTitle=this.state.taxTypeValue==''?strings('shopSettingsScreen.taxTypeInput'):this.state.taxTypeValue
+    let taxTypeTitle=this.state.taxTypeValue==''?strings('shopSettingsScreen.taxTypeInput'):this.state.taxTypeValue
     if (this.state.taxOnSales) {
       return (
         <View
           style={shopSettingStyle.priceTextInputContainer}>
-          {/* <View style={shopSettingStyle.priceInputWrapper}>
+          <View style={shopSettingStyle.priceInputWrapper}>
             <View style={shopSettingStyle.validFormSubView}>
               <TextInputMaterial
                 blurText={this.state.taxTypeValue}
@@ -302,32 +301,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 }}
               />
             </View>
-          </View> */}
-
-          <View style={shopSettingStyle.priceInputWrapper}>
-            <View style={[shopSettingStyle.priceFormSubView, { paddingRight: 15 }]}>
-              <View
-                style={shopSettingStyle.containerStyleWithBorder}>
-                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
-                  {taxTypeTitle}</Text>
-                <View
-                  style={{ position: 'absolute', right: 10, top: 10 }}>
-                  <TouchableOpacity onPress={() => this.handleTaxPicker()}>
-                    <Image
-                      style={{ width: 35, height: 35 }}
-                      source={require('../.././public/images/dropDown.png')}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
           </View>
 
           <View style={{ marginTop: 10 }}>
-            {/* <SwitchTextInput isDropDownVisbile={false} defaultSwitchValue={true}
-          onRightPressed={(value) => { console.log('SWITCH VA:UE ::::', value) }}
-          title={strings('shopSettingsScreen.flatTaxSwitch')}
-        /> */}
           </View>
           <View style={[shopSettingStyle.priceInputWrapper,]}>
             <View style={shopSettingStyle.validFormSubView}>
@@ -347,7 +323,6 @@ export default class ShopSettingScreen extends BaseComponent {
                 underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                 value={this.state.taxRateValue}
                 textInputName={this.state.taxRateValue}
-                // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
                 keyboardType="number"
                 onSubmitEditing={event => {
@@ -359,44 +334,6 @@ export default class ShopSettingScreen extends BaseComponent {
         </View>
       );
     }
-  }
-
-  handleTaxPicker(){
-    // for (let data of TaxData) {
-    //   taxType.push(data['type'])
-    // }
-    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
-    Keyboard.dismiss()
-    Picker.hide()
-    Picker.init({
-      pickerData: taxType,
-      pickerTitleText: 'Select Tax',
-      pickerConfirmBtnText: 'Done',
-      pickerCancelBtnText: 'Cancel',
-      selectedValue: [taxType[0].toString().trim()],
-      pickerBg: [255, 255, 255, 1],
-
-      onPickerConfirm: data => {
-        this.getTaxData(data)
-      },
-      onPickerCancel: data => {
-        Picker.hide();
-      },
-      onPickerSelect: data => {
-        //console.log(data);
-      }
-    });
-    Picker.show();
-  }
-
-  async getTaxData(data) {
-    let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
-
-    this.setState({
-      taxRateValue: taxRate,
-      taxTypeValue: data
-
-    })
   }
 
   renderDefaultsText() {

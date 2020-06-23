@@ -41,8 +41,8 @@ export default class CampaignScreen extends BaseComponent {
       campaignQuantity: "1",
       variantsList: [],
       categoryList: [],
-      salesTax: '',
-      salesTaxType: '',
+      salesTax: globalData.getSalesTax(),
+      salesTaxType: globalData.getSalesTaxType(),
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
       isDialogModalVisible: false,
@@ -485,7 +485,7 @@ export default class CampaignScreen extends BaseComponent {
           salesTaxViewScroll = layout.y
         }}
           style={campaignStyle.priceTextInputContainer}>
-          {/* <View style={campaignStyle.priceInputWrapper}>
+          <View style={campaignStyle.priceInputWrapper}>
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
               blurText={this.state.salesTaxType}
@@ -494,7 +494,7 @@ export default class CampaignScreen extends BaseComponent {
               label={strings('createCampaignCategories.salesTaxTypeTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { globalData.setSalesTaxType(text); this.setState({ salesTaxType: text }) }}
+              onChangeText={text => { this.setState({ salesTaxType: text }) }}
               returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
@@ -511,9 +511,9 @@ export default class CampaignScreen extends BaseComponent {
               }}
             />
           </View>
-        </View> */}
+        </View>
 
-          <View style={campaignStyle.priceInputWrapper}>
+          {/* <View style={campaignStyle.priceInputWrapper}>
             <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
               <View
                 style={campaignStyle.containerStyleWithBorder}>
@@ -530,7 +530,7 @@ export default class CampaignScreen extends BaseComponent {
                 </View>
               </View>
             </View>
-          </View>
+          </View> */}
           <View style={campaignStyle.priceInputWrapper}>
             <View style={[campaignStyle.priceFormSubView, { paddingLeft: 15 }]}>
               <TextInputMaterial
@@ -542,7 +542,7 @@ export default class CampaignScreen extends BaseComponent {
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
-                onChangeText={text => { globalData.setSalesTax(text); this.setState({ salesTax: text }) }}
+                onChangeText={text => { this.setState({ salesTax: text }) }}
                 autoCorrect={false}
                 isLoginScreen={false}
                 returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}

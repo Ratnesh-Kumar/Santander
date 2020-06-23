@@ -64,6 +64,7 @@ function remoteConfigHandle(data){
         globalData.setTrackQuantityDisplay(data.isTrackQuantityDisplay)
         globalData.setBusinessProfileFBPage(data.isBusinessProfileFBPage);
         globalData.setBusinessProfileYelp(data.isBusinessProfileYelp)
+        globalData.setSalesTaxTypeList(data.taxType)
     }
 }
 
