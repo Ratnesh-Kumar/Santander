@@ -4,6 +4,7 @@ var isFirebaseInitialize = false;
 var verifyEmail = false;
 var googleUserInfo = '';
 var isAddCampaignStart = false;
+var constants = require('../config/Constants');
 
 //Add publish remote config flag
 var isEmailEnabled = false;
@@ -40,6 +41,7 @@ var successActionStatus = 201;
 var businessId = '';
 var shopName = '';
 var shopAutoCreated = false;
+var salesTaxTypeList = [];
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -325,6 +327,34 @@ export class GlobalData extends Component {
         return shopName;
     }
 
+    setSalesTaxTypeList(list) {
+        if (this.isValidArray(list)) {
+            salesTaxTypeList = JSON.parse(list);
+            for (let i = 0; i < salesTaxTypeList.length; i++) {
+                if (constants.COUNTRY_NAME == salesTaxTypeList[i].code) {
+                    this.setSalesTax(salesTaxTypeList[i].rate);
+                    this.setSalesTaxType(salesTaxTypeList[i].type);
+                }
+            }
+        }
+    }
+    getSalesTaxTypeList() {
+        return salesTaxTypeList;
+    }
+
+    isValidArray(dataArray) {
+        if (dataArray != '' && dataArray != undefined && dataArray.length > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    isValidString(data) {
+        if (data != '' && data != undefined && data != null && data != NaN) {
+            return true;
+        }
+        return false;
+    }
 
 }
 

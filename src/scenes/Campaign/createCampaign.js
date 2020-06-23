@@ -38,8 +38,8 @@ export default class CampaignScreen extends BaseComponent {
       campaignQuantity: "1",
       variantsList: [],
       categoryList: [],
-      salesTax: '',
-      salesTaxType: '',
+      salesTax: globalData.getSalesTax(),
+      salesTaxType: globalData.getSalesTaxType(),
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
       isDialogModalVisible: false,
@@ -447,7 +447,7 @@ export default class CampaignScreen extends BaseComponent {
       return (
         <View
           style={campaignStyle.priceTextInputContainer}>
-          {/* <View style={campaignStyle.priceInputWrapper}>
+          <View style={campaignStyle.priceInputWrapper}>
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
               blurText={this.state.salesTaxType}
@@ -456,7 +456,7 @@ export default class CampaignScreen extends BaseComponent {
               label={strings('createCampaignCategories.salesTaxTypeTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { globalData.setSalesTaxType(text); this.setState({ salesTaxType: text }) }}
+              onChangeText={text => { this.setState({ salesTaxType: text }) }}
               returnKeyType={'next'}
               autoCorrect={false}
               isLoginScreen={false}
@@ -473,9 +473,9 @@ export default class CampaignScreen extends BaseComponent {
               }}
             />
           </View>
-        </View> */}
+        </View>
 
-          <View style={campaignStyle.priceInputWrapper}>
+          {/* <View style={campaignStyle.priceInputWrapper}>
             <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
               <View
                 style={campaignStyle.containerStyleWithBorder}>
@@ -492,7 +492,7 @@ export default class CampaignScreen extends BaseComponent {
                 </View>
               </View>
             </View>
-          </View>
+          </View> */}
           <View style={campaignStyle.priceInputWrapper}>
             <View style={[campaignStyle.priceFormSubView, { paddingLeft: 15 }]}>
               <TextInputMaterial
@@ -502,7 +502,7 @@ export default class CampaignScreen extends BaseComponent {
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
-                onChangeText={text => { globalData.setSalesTax(text); this.setState({ salesTax: text }) }}
+                onChangeText={text => { this.setState({ salesTax: text }) }}
                 autoCorrect={false}
                 isLoginScreen={false}
                 returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
@@ -522,43 +522,6 @@ export default class CampaignScreen extends BaseComponent {
           </View>
         </View>
       )
-  }
-
-  handleTaxPicker(){
-    // for (let data of TaxData) {
-    //   taxType.push(data['type'])
-    // }
-    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
-    Keyboard.dismiss()
-    Picker.hide()
-    Picker.init({
-      pickerData: taxType,
-      pickerTitleText: 'Select Tax',
-      pickerConfirmBtnText: 'Done',
-      pickerCancelBtnText: 'Cancel',
-      selectedValue: [taxType[0].toString().trim()],
-      pickerBg: [255, 255, 255, 1],
-
-      onPickerConfirm: data => {
-        this.getTaxData(data)
-      },
-      onPickerCancel: data => {
-        Picker.hide();
-      },
-      onPickerSelect: data => {
-        //console.log(data);
-      }
-    });
-    Picker.show();
-  }
-  async getTaxData(data) {
-    let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
-
-    this.setState({
-      salesTax: taxRate,
-      salesTaxType: data
-
-    })
   }
 
   getRequestBody(productArr, campaignStatus) {
