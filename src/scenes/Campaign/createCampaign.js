@@ -191,7 +191,7 @@ export default class CampaignScreen extends BaseComponent {
         keyboardDismissMode="interactive"
         keyboardShouldPersistTaps={'always'} 
         onScrollBeginDrag={() => this.onDragScroll()}
-        keyboardShouldPersistTaps={'always'} style={{ marginTop: 10, marginBottom: 20 }}>
+        keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
           <View>
             {this.renderSwitchTextInput()}
             {this.rendercampaignQuantity()}

@@ -27,7 +27,12 @@ var itemId = "";
 var imageFile = {}
 var options = {}
 var productInfo = "";
-var weightType = [];
+var weightType=[];
+var descriptionViewScroll = 0;
+var costViewScroll = 0;
+var priceViewScroll = 0;
+var skuBarcodeViewScroll = 0;
+var weightViewScroll = 0;
 export default class AddProductScreen extends BaseComponent {
 
   constructor(props) {
@@ -52,7 +57,8 @@ export default class AddProductScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
-      weightUnit: ''
+      weightUnit:'',
+      handleKeyboardViewHeight: 0,
 
     }
     itemId = props.itemId;
@@ -147,14 +153,25 @@ export default class AddProductScreen extends BaseComponent {
     }
   }
 
+  onDragScroll() {
+    Keyboard.dismiss();
+    this.setState({
+      handleKeyboardViewHeight: 0
+    })
+  }
+
   render() {
     return (
-      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={0}>
+      <View style={productStyle.container}>
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} />
         <Stepper count={2} currentCount={1} />
-        <View>
-          <ScrollView ref='scrollView' keyboardShouldPersistTaps={'always'} style={productStyle.scrollViewStyle}>
+        <View style={{flex:1}}>
+          <ScrollView 
+          ref='scrollView'
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps={'always'} 
+          onScrollBeginDrag={() => this.onDragScroll()}>
             {this.renderProductName()}
             {this.createCameraView()}
             {this.renderPriceView()}
@@ -164,10 +181,74 @@ export default class AddProductScreen extends BaseComponent {
             <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
               this.handleAddProduct(isUpdate)
             }} />
+            <View style={{ height: this.state.handleKeyboardViewHeight }}>
+            </View>
           </ScrollView>
         </View>
-      </KeyboardAvoidingView>
+      </View>
     );
+  }
+
+  inputBlurred(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if(refName === 'productDescription'){
+          this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
+      }
+      if(refName === 'productSalePrice' || refName === 'productPrice'){
+          this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
+      }
+      if(refName === 'productCost' || refName === 'productProfit' || refName === 'productMargin'){
+        this.refs.scrollView.scrollTo({ x: 0, y: costViewScroll, animated: true })
+      }
+      if(refName === 'productSku'){
+        this.refs.scrollView.scrollTo({ x: 0, y: skuBarcodeViewScroll, animated: true })
+      }
+      if(refName === 'productWeight' || refName === 'weightPicker'){
+        // if (Platform.OS === 'ios') {
+        //   this.setState({
+        //     handleKeyboardViewHeight: 0
+        //   })
+        // }
+        this.refs.scrollView.scrollTo({ x: 0, y: weightViewScroll, animated: true })
+      }
+
+    }
+  }
+  inputFocused(refName) {
+    console.log('######### inputFocused ****** ');
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 250
+        })
+      }
+      if(refName === 'productDescription'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'productSalePrice' || refName === 'productPrice'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'productSku'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: skuBarcodeViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'productCost' || refName === 'productProfit' || refName === 'productMargin'){
+        this.refs.scrollView.scrollTo({ x: 0, y: costViewScroll, animated: true })
+      }
+      if(refName === 'productWeight' || refName === 'weightPicker'){
+        console.log('######### weightPicker ****** ');
+        console.log('######### weightViewScroll ****** ',weightViewScroll);
+        setTimeout(() => {
+        this.refs.scrollView.scrollTo({ x: 0, y: weightViewScroll, animated: true })
+      }, 100); 
+      }   
+           
+      }
   }
   // handleUpdateProduct() {
   //   if (this.isValidString(this.state.productName)) {
@@ -224,7 +305,12 @@ export default class AddProductScreen extends BaseComponent {
   renderWeighView() {
     let weightTitle = this.state.weightUnit == '' ? strings('productScreen.productWeightText') : this.state.weightUnit
     return (
-      <View>
+      <View 
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        weightViewScroll = layout.y
+      }}
+      >
         <View style={{ paddingTop: 20, paddingLeft: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('productScreen.weightTitle')}</Text>
         </View>
@@ -254,6 +340,8 @@ export default class AddProductScreen extends BaseComponent {
                 blurText={this.state.productWeight}
                 refsValue={'productWeight'}
                 ref={'productWeight'}
+                onFocus={() => this.inputFocused("productWeight")}
+                onBlur1={() => this.inputBlurred("productWeight")}
                 label={strings('productScreen.productWeightInputText')}
                 maxLength={100}
                 autoCapitalize={'none'}
@@ -271,6 +359,11 @@ export default class AddProductScreen extends BaseComponent {
                 underlineHeight={2}
                 onSubmitEditing={event => {
                   Keyboard.dismiss()
+                  if (Platform.OS === 'ios') {
+                    this.setState({
+                      handleKeyboardViewHeight: 0
+                    })
+                  }
                   //this.refs.productCost.focus();
                 }}
               />
@@ -285,6 +378,10 @@ export default class AddProductScreen extends BaseComponent {
   renderSkuAndBarcode() {
     return (
       <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        skuBarcodeViewScroll = layout.y
+      }}
         style={[productStyle.validFormViewContainer, { marginTop: 0 }]}>
         <View style={productStyle.inputWrapper}>
           <View style={productStyle.validFormSubView}>
@@ -292,6 +389,8 @@ export default class AddProductScreen extends BaseComponent {
               blurText={this.state.productSkuValue}
               refsValue={'productSkuValue'}
               ref={'productSkuValue'}
+              onFocus={() => this.inputFocused("productSku")}
+              onBlur1={() => this.inputBlurred("productSku")}
               label={strings('createCampaign.skuTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -349,7 +448,12 @@ export default class AddProductScreen extends BaseComponent {
 
   renderCostView() {
     return (
-      <View style={{ marginTop: 20, marginBottom: 10 }}>
+      <View 
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        costViewScroll = layout.y
+      }}
+      style={{ marginTop: 20, marginBottom: 10 }}>
         <View style={{ paddingTop: 10, paddingBottom: 20, paddingLeft: 10, paddingRight: 10, backgroundColor: colorConstant.GRAY_LIGHT_COLOR }}>
           <View style={productStyle.inputWrapper}>
             <View style={productStyle.validFormSubView}>
@@ -357,6 +461,8 @@ export default class AddProductScreen extends BaseComponent {
                 blurText={this.state.productCostValue}
                 refsValue={'productCost'}
                 ref={'productCost'}
+                onFocus={() => this.inputFocused("productCost")}
+                onBlur1={() => this.inputBlurred("productCost")}
                 label={strings('createCampaign.costTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
@@ -391,6 +497,8 @@ export default class AddProductScreen extends BaseComponent {
                   blurText={this.state.productProfitValue}
                   refsValue={'productProfit'}
                   ref={'productProfit'}
+                  onFocus={() => this.inputFocused("productProfit")}
+                  onBlur1={() => this.inputBlurred("productProfit")}
                   label={strings('createCampaign.profitTextInput')}
                   maxLength={100}
                   autoCapitalize={'none'}
@@ -422,6 +530,8 @@ export default class AddProductScreen extends BaseComponent {
                   blurText={this.state.productMarginValue}
                   refsValue={'productMargin'}
                   ref={'productMargin'}
+                  onFocus={() => this.inputFocused("productMargin")}
+                  onBlur1={() => this.inputBlurred("productMargin")}
                   label={strings('createCampaign.marginTextInput')}
                   maxLength={100}
                   autoCapitalize={'none'}
@@ -459,6 +569,10 @@ export default class AddProductScreen extends BaseComponent {
   renderPriceView() {
     return (
       <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        priceViewScroll = layout.y
+      }}
         style={productStyle.priceTextInputContainer}>
         <View style={productStyle.priceInputWrapper}>
           <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
@@ -466,6 +580,8 @@ export default class AddProductScreen extends BaseComponent {
               blurText={this.state.productPriceValue}
               refsValue={'productPrice'}
               ref={'productPrice'}
+              onFocus={() => this.inputFocused("productPrice")}
+              onBlur1={() => this.inputBlurred("productPrice")}
               label={strings('createCampaign.priceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -493,6 +609,8 @@ export default class AddProductScreen extends BaseComponent {
               blurText={this.state.productSaleValue}
               refsValue={'productSalePrice'}
               ref={'productSalePrice'}
+              onFocus={() => this.inputFocused("productSalePrice")}
+              onBlur1={() => this.inputBlurred("productSalePrice")}
               label={strings('createCampaign.salePriceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -590,7 +708,12 @@ export default class AddProductScreen extends BaseComponent {
 
   createCameraView() {
     return (
-      <View style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
+      <View 
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        descriptionViewScroll = layout.y
+      }}
+      style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
         <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, }}>
           {(this.state.showImage) ? this.renderImage() : this.showPickedImage()}
         </View>
@@ -601,6 +724,8 @@ export default class AddProductScreen extends BaseComponent {
               value={this.state.productDescription}
               underlineColorAndroid="transparent"
               placeholder={strings('createCampaign.addDescriptionPlaceholder')}
+              onFocus={() => this.inputFocused("productDescription")}
+              onBlur={() => this.inputBlurred("productDescription")}
               ref={'productDescription'}
               placeholderTextColor={colorConstant.GREY_DARK_COLOR}
               autoCapitalize="none"
@@ -706,6 +831,7 @@ export default class AddProductScreen extends BaseComponent {
 
   renderWeightPicker() {
     Keyboard.dismiss();
+    this.inputFocused('weightPicker')
     Picker.hide();
     weightType = ['kg', 'lb', 'oz', 'gram']
     Picker.init({
@@ -714,15 +840,15 @@ export default class AddProductScreen extends BaseComponent {
       pickerConfirmBtnText: 'Done',
       pickerCancelBtnText: 'Cancel',
       selectedValue: [weightType[0].toString().trim()],
-      pickerBg: [255, 255, 255, 1],
-
+      pickerBg: [255, 255, 255, 1],      
       onPickerConfirm: data => {
+        this.hidePicker()
         this.setState({
           weightUnit: data
         })
       },
       onPickerCancel: data => {
-        Picker.hide();
+        this.hidePicker()
       },
       onPickerSelect: data => {
         //console.log(data);
@@ -731,6 +857,16 @@ export default class AddProductScreen extends BaseComponent {
     Picker.show();
   }
 
+  hidePicker(){
+    Picker.hide();
+    this.inputBlurred('weightPicker')
+    if (Platform.OS === 'ios') {
+          this.setState({
+            handleKeyboardViewHeight: 0
+          })
+        }
+  }
+  
 
 
 
