@@ -485,7 +485,9 @@ export default class AddProductScreen extends BaseComponent {
               label={strings('createCampaign.salePriceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ productSaleValue: text }) }}
+              onChangeText={text => { 
+                this.setState({ productSaleValue: text }) 
+              }}
               autoCorrect={false}
               isLoginScreen={false}
               returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
@@ -641,6 +643,23 @@ export default class AddProductScreen extends BaseComponent {
       </View>
     );
   }
+
+  setCostMarginProfit(salePrice, margin){
+
+  }
+
+  getCostFromProfitMargin(margin, salePrice){
+    return ( (100 - margin) * salePrice ) / 100
+  }
+
+  getProfit(salePrice, cost){
+    return (salePrice - cost)
+  }
+
+  getMargin(salePrice, cost){
+    return  ( ( salePrice - cost)  / salePrice ) *100
+  }
+  
 
   renderWeightPicker(){
     Keyboard.dismiss();

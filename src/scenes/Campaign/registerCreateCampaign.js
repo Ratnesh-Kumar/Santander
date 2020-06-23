@@ -12,6 +12,7 @@ var constants = require('../../config/Constants');
 var createCampaignConstant = require('../Campaign/campaignConstants')
 var colorConstant = require('../../config/colorConstant')
 import GlobalData from '../../utils/GlobalData';
+import campaignStyle from '../Campaign/campaignStyle';
 var globalData = new GlobalData();
 export default class CreateCampaignScene extends BaseComponent {
   render() {
@@ -42,6 +43,27 @@ export default class CreateCampaignScene extends BaseComponent {
               <Text style={{ fontSize: 18, color: colorConstant.SANT_LIGHT_BLUE, fontWeight:'bold' }}>{strings("createCampaign.skipStep")}</Text>
             </TouchableOpacity>
           </CardView>
+
+          {(globalData.getIsAutoCreated())?<CardView
+            style={campaignStyle.cardViewStyleRegister}
+            cardElevation={8}
+            cardMaxElevation={8}
+            cornerOverlap={false}
+            cornerRadius={5}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', width: constants.SCREEN_WIDTH - 40 }}>
+              <Text style={{ fontSize: 16, margin: 10 }}>
+                {strings("createCampaign.businessDetailMessage")}
+              </Text>
+              <TouchableOpacity onPress={()=>{
+                Actions.tabbar();
+                Actions.shopSetting({isComingFromHomePage: true})
+                }}>
+                <Text style={{ fontSize: 14, margin: 10, textDecorationLine: 'underline', color: colorConstant.SANT_RED_COLOR, fontWeight: 'bold' }}>
+                  {strings("createCampaign.businessDetailTitle")}
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </CardView>: <View/>}
 
         </View>
       </View>
