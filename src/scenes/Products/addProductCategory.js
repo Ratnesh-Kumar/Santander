@@ -40,7 +40,7 @@ export default class AddProductCategory extends BaseComponent {
       variantsList: [],
       categoryList: [],
       salesTaxType: globalData.getSalesTaxType(),
-      salesTax: globalData.getSalesTax(),
+      salesTax: globalData.getSalesTax()+"",
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
       isDialogModalVisible: false,

@@ -38,7 +38,7 @@ export default class CampaignScreen extends BaseComponent {
       campaignQuantity: "1",
       variantsList: [],
       categoryList: [],
-      salesTax: globalData.getSalesTax(),
+      salesTax: globalData.getSalesTax()+"",
       salesTaxType: globalData.getSalesTaxType(),
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',

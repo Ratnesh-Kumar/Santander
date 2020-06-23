@@ -88,7 +88,7 @@ export class GlobalData extends Component {
         return titleCampaign;
     }
 
-    setIsAutoCrated(flag) {
+    setIsAutoCreated(flag) {
         shopAutoCreated = flag;
     }
     getIsAutoCreated() {
