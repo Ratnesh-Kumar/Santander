@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform, Keyboard,Switch } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, ScrollView, Alert, Platform, Keyboard, Switch, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -17,6 +17,9 @@ import QuantityField from '../../components/QuantityField';
 import CreateTagView from './productTagView'
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
+
+import Picker from 'react-native-picker';
+import TaxData from '../../i18next/taxData.json';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var productConstants = require('./productConstants')
@@ -26,6 +29,7 @@ var productVariantArray = [];
 var isUpdate = "";
 var fetchProductData = "";
 var productId = "";
+var taxType = [];
 export default class AddProductCategory extends BaseComponent {
 
   constructor(props) {
@@ -52,7 +56,6 @@ export default class AddProductCategory extends BaseComponent {
     if (isUpdate) {
       this.setUpdateData();
     }
-
   }
 
   setUpdateData() {
@@ -205,6 +208,7 @@ export default class AddProductCategory extends BaseComponent {
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           productVariantArray = [];
+          Picker.hide()
           this.setState({
             variantsList: [],
             categoryList: []
@@ -222,6 +226,7 @@ export default class AddProductCategory extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('productScreen.saveButtonText')} onButtonPressed={() => {
+            Picker.hide();
             this.addProduct()
           }} />
         </ScrollView>
@@ -480,11 +485,12 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   renderSalesTaxInput() {
-    if(this.state.salesTaxSwitch)
-    return (
-      <View
-        style={productStyle.priceTextInputContainer}>
-        <View style={productStyle.priceInputWrapper}>
+    taxTypeTitle = this.state.salesTaxType === '' ? strings('createCampaignCategories.salesTaxTypeTextInput') : this.state.salesTaxType
+    if (this.state.salesTaxSwitch)
+      return (
+        <View
+          style={productStyle.priceTextInputContainer}>
+          {/* <View style={productStyle.priceInputWrapper}>
           <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
               blurText={this.state.campaignPriceValue}
@@ -510,37 +516,96 @@ export default class AddProductCategory extends BaseComponent {
               }}
             />
           </View>
-        </View>
-        <View style={productStyle.priceInputWrapper}>
-          <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
-            <TextInputMaterial
-              blurText={this.state.campaignSaleValue}
-              refsValue={'salesTaxPercent'}
-              ref={'salesTaxPercent'}
-              label={strings('createCampaignCategories.salesTaxTextInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ salesTax: text }) }}
-              autoCorrect={false}
-              isLoginScreen={false}
-              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
-              style={productStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.campaignSaleValue}
-              textInputName={this.state.campaignSaleValue}
-              // errorText={strings('createCampaign.campaignNameErrorText')}
-              underlineHeight={2}
-              onSubmitEditing={event => {
-                Keyboard.dismiss()
-              }}
-            />
+        </View> */}
+          <View style={productStyle.priceInputWrapper}>
+            <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
+              <View
+                style={productStyle.containerStyleWithBorder}>
+                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
+                  {taxTypeTitle}</Text>
+                <View
+                  style={{ position: 'absolute', right: 10, top: 10 }}>
+                  <TouchableOpacity onPress={() => this.handleTaxPicker()}>
+                    <Image
+                      style={{ width: 35, height: 35 }}
+                      source={require('../.././public/images/dropDown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
+
+          <View style={productStyle.priceInputWrapper}>
+            <View style={[productStyle.priceFormSubView, { paddingLeft: 15 }]}>
+              <TextInputMaterial
+                blurText={this.state.salesTax}
+                refsValue={'salesTaxPercent'}
+                ref={'salesTaxPercent'}
+                label={strings('createCampaignCategories.salesTaxTextInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => { this.setState({ salesTax: text }) }}
+                autoCorrect={false}
+                isLoginScreen={false}
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
+                style={productStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.salesTax}
+                textInputName={this.state.salesTax}
+                // errorText={strings('createCampaign.campaignNameErrorText')}
+                underlineHeight={2}
+                onFocus={() => { Picker.hide() }}
+                onSubmitEditing={event => {
+                  Keyboard.dismiss()
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    )
+      )
   }
+
+  handleTaxPicker() {
+    // for (let data of TaxData) {
+    //   taxType.push(data['type'])
+    // }
+    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
+    Keyboard.dismiss()
+    Picker.hide()
+    Picker.init({
+      pickerData: taxType,
+      pickerTitleText: 'Select Tax',
+      pickerConfirmBtnText: 'Done',
+      pickerCancelBtnText: 'Cancel',
+      selectedValue: [taxType[0].toString().trim()],
+      pickerBg: [255, 255, 255, 1],
+
+      onPickerConfirm: data => {
+        this.getTaxData(data)
+      },
+      onPickerCancel: data => {
+        Picker.hide();
+      },
+      onPickerSelect: data => {
+        //console.log(data);
+      }
+    });
+    Picker.show();
+  }
+
+  async getTaxData(data) {
+    let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
+
+    this.setState({
+      salesTax: taxRate,
+      salesTaxType: data
+
+    })
+  }
+
 
   getRequestBody(data, variantList) {
     return {

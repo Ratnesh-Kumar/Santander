@@ -18,6 +18,8 @@ import { color } from 'react-native-reanimated';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import { fetchCampaignPOST, fetchCampaignPUT } from '../../services/FetchData';
+import TaxData from '../../i18next/taxData.json';
+import Picker from 'react-native-picker';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -27,7 +29,7 @@ var campaignVariantArray = [];
 var isCampaignUpdate = "";
 var campaignId = "";
 var fetchCampaignData = "";
-
+var taxType = [];
 export default class CampaignScreen extends BaseComponent {
 
   constructor(props) {
@@ -44,7 +46,8 @@ export default class CampaignScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
-      isTrackQuantity: globalData.isTrackQuantityDisplay()
+      isTrackQuantity: globalData.isTrackQuantityDisplay(),
+      isSalesTax: false
     }
     campaignDetails = props.campaignDetails;
     isCampaignUpdate = props.isCampaignUpdate ? props.isCampaignUpdate : false
@@ -53,6 +56,7 @@ export default class CampaignScreen extends BaseComponent {
     if (isCampaignUpdate) {
       this.setUpdateData(fetchCampaignData);
     }
+    
   }
 
   setUpdateData(fetchCampaignData) {
@@ -164,6 +168,7 @@ export default class CampaignScreen extends BaseComponent {
         {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           campaignVariantArray = [];
+          Picker.hide()
           this.setState({
             variantsList: [],
             categoryList: []
@@ -182,6 +187,7 @@ export default class CampaignScreen extends BaseComponent {
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
             //Actions.createCampaignShare()
+            Picker.hide();
             this.addCampaign()
           }} />
         </ScrollView>
@@ -374,17 +380,17 @@ export default class CampaignScreen extends BaseComponent {
   rendercampaignQuantity() {
     if (this.state.isTrackQuantity) {
       return (
-        <QuantityField 
-        title={strings('createCampaign.quanitytTitle')} 
-        quantity={campaignDetails.campaignQuantity} 
-        isTrackQuantity={this.state.isTrackQuantity}
-        updatedQuantity={(quantity) => {
-          globalData.setQuantityCampaign(quantity)
-          campaignDetails.campaignQuantity = quantity
-          this.setState({
-            campaignQuantity: quantity
-          })
-        }} />
+        <QuantityField
+          title={strings('createCampaign.quanitytTitle')}
+          quantity={campaignDetails.campaignQuantity}
+          isTrackQuantity={this.state.isTrackQuantity}
+          updatedQuantity={(quantity) => {
+            globalData.setQuantityCampaign(quantity)
+            campaignDetails.campaignQuantity = quantity
+            this.setState({
+              campaignQuantity: quantity
+            })
+          }} />
       )
     } else {
       return (
@@ -414,23 +420,37 @@ export default class CampaignScreen extends BaseComponent {
     );
   }
 
+  renderSwitchFieldsSalesTax(title) {
+    return (
+      <View>
+        <SwitchTextInput
+          defaultSwitchValue={this.state.isSalesTax}
+          onRightPressed={(flag) => { this.setState({ isSalesTax: flag }) }}
+          title={title}
+        />
+      </View>
+    );
+  }
+
   renderSalesTaxView() {
     return (
       <View style={{ marginTop: 10 }}>
-        {this.renderSwitchFields(strings('createCampaignCategories.salesTaxSwitchText'))}
+        {this.renderSwitchFieldsSalesTax(strings('createCampaignCategories.salesTaxSwitchText'))}
       </View>
 
     )
   }
 
   renderSalesTaxInput() {
-    return (
-      <View
-        style={campaignStyle.priceTextInputContainer}>
-        <View style={campaignStyle.priceInputWrapper}>
+    salesTaxTypeTitle=this.state.salesTaxType==''?strings('createCampaignCategories.salesTaxTypeTextInput'):this.state.salesTaxType
+    if (this.state.isSalesTax)
+      return (
+        <View
+          style={campaignStyle.priceTextInputContainer}>
+          {/* <View style={campaignStyle.priceInputWrapper}>
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
-              blurText={this.state.campaignPriceValue}
+              blurText={this.state.salesTaxType}
               refsValue={'campaignPrice'}
               ref={'campaignPrice'}
               label={strings('createCampaignCategories.salesTaxTypeTextInput')}
@@ -443,8 +463,8 @@ export default class CampaignScreen extends BaseComponent {
               style={campaignStyle.input}
               placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.campaignPriceValue}
-              textInputName={this.state.campaignPriceValue}
+              value={this.state.salesTaxType}
+              textInputName={this.state.salesTaxType}
               // errorText={strings('createCampaign.priceErrorText')}
               underlineHeight={2}
               keyboardType={'email-address'}
@@ -453,36 +473,92 @@ export default class CampaignScreen extends BaseComponent {
               }}
             />
           </View>
-        </View>
-        <View style={campaignStyle.priceInputWrapper}>
-          <View style={[campaignStyle.priceFormSubView, { paddingLeft: 15 }]}>
-            <TextInputMaterial
-              blurText={this.state.campaignSaleValue}
-              refsValue={'salesTaxPercent'}
-              ref={'salesTaxPercent'}
-              label={strings('createCampaignCategories.salesTaxTextInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onChangeText={text => { globalData.setSalesTax(text); this.setState({ salesTax: text }) }}
-              autoCorrect={false}
-              isLoginScreen={false}
-              returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
-              keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
-              style={campaignStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.campaignSaleValue}
-              textInputName={this.state.campaignSaleValue}
-              // errorText={strings('createCampaign.campaignNameErrorText')}
-              underlineHeight={2}
-              onSubmitEditing={event => {
-                Keyboard.dismiss()
-              }}
-            />
+        </View> */}
+
+          <View style={campaignStyle.priceInputWrapper}>
+            <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
+              <View
+                style={campaignStyle.containerStyleWithBorder}>
+                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
+                  {salesTaxTypeTitle}</Text>
+                <View
+                  style={{ position: 'absolute', right: 10, top: 10 }}>
+                  <TouchableOpacity onPress={() => this.handleTaxPicker()}>
+                    <Image
+                      style={{ width: 35, height: 35 }}
+                      source={require('../.././public/images/dropDown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View style={campaignStyle.priceInputWrapper}>
+            <View style={[campaignStyle.priceFormSubView, { paddingLeft: 15 }]}>
+              <TextInputMaterial
+                blurText={this.state.salesTax}
+                refsValue={'salesTaxPercent'}
+                ref={'salesTaxPercent'}
+                label={strings('createCampaignCategories.salesTaxTextInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onChangeText={text => { globalData.setSalesTax(text); this.setState({ salesTax: text }) }}
+                autoCorrect={false}
+                isLoginScreen={false}
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'done'}
+                keyBoardType={(Platform.OS === 'ios') ? 'number-pad' : 'number'}
+                style={campaignStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.salesTax}
+                textInputName={this.state.salesTax}
+                // errorText={strings('createCampaign.campaignNameErrorText')}
+                underlineHeight={2}
+                onSubmitEditing={event => {
+                  Keyboard.dismiss()
+                }}
+              />
+            </View>
           </View>
         </View>
-      </View>
-    )
+      )
+  }
+
+  handleTaxPicker(){
+    // for (let data of TaxData) {
+    //   taxType.push(data['type'])
+    // }
+    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
+    Keyboard.dismiss()
+    Picker.hide()
+    Picker.init({
+      pickerData: taxType,
+      pickerTitleText: 'Select Tax',
+      pickerConfirmBtnText: 'Done',
+      pickerCancelBtnText: 'Cancel',
+      selectedValue: [taxType[0].toString().trim()],
+      pickerBg: [255, 255, 255, 1],
+
+      onPickerConfirm: data => {
+        this.getTaxData(data)
+      },
+      onPickerCancel: data => {
+        Picker.hide();
+      },
+      onPickerSelect: data => {
+        //console.log(data);
+      }
+    });
+    Picker.show();
+  }
+  async getTaxData(data) {
+    let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
+
+    this.setState({
+      salesTax: taxRate,
+      salesTaxType: data
+
+    })
   }
 
   getRequestBody(productArr, campaignStatus) {

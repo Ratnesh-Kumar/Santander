@@ -121,7 +121,7 @@ export default class BusinessProfileView extends BaseComponent {
         )
     }
     setBusinessData(responseData) {
-        console.log("taxId " + responseData.party.taxId)
+        //console.log("name :" + responseData.party.name)
         this.setState({
             buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
             businessTaxId: (this.isValidString(responseData.party.taxId) ? responseData.party.taxId.toString().trim() : ""),
@@ -146,7 +146,20 @@ export default class BusinessProfileView extends BaseComponent {
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
-                console.log(fetchData)
+                let shopName=fetchData.shopName.toString().trim();
+                let businessId =fetchData.businessSettings.businessId.toString().trim();
+                console.log("fetchData ShopName : "+shopName)
+                console.log(("fetchData BusinessId : "+businessId));
+                globalData.setShopName(shopName);
+                globalData.setBusinessId(businessId);
+                let businessObj = {
+                    "businessId": businessId,
+                    "username": globalData.getUserInfo().username,
+                    "shopName": shopName
+                  }
+                  let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
+
+
                 setTimeout(() => {
                     this.showAlert()
                 }, 100)
@@ -767,7 +780,9 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     render() {
-        console.log("######### shopInfo : " + JSON.stringify(shopInfo))
+        //console.log("######### shopInfo : " + JSON.stringify(shopInfo))
+       // console.log("######### usierId : " + globalData.getUserInfo().key)
+        //console.log("########## shopName : " +globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
@@ -792,6 +807,7 @@ export default class BusinessProfileView extends BaseComponent {
         );
     }
 
+   
     renderIndustryPicker() {
         Keyboard.dismiss()
         Picker.hide();
@@ -866,7 +882,7 @@ export default class BusinessProfileView extends BaseComponent {
         return {
             "shopName": this.state.buisnessName,
             "taxId": this.state.businessTaxId,
-            "country": this.state.country.toString(),
+            "country": this.state.country.toString().trim(),
             "bankRoutingNumber": "1-----1",
             "locale": "en_us",
             "currency": "USD",
@@ -879,7 +895,7 @@ export default class BusinessProfileView extends BaseComponent {
             "district": "Santa ----",
             "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
-            "industry": this.state.industryType.toString(),
+            "industry": this.state.industryType.toString().trim(),
             "preferredLanguage": "en_us",
             "businessSettings": {
                 "sourcePrimaryKey": "1234567890",
