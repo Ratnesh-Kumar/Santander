@@ -32,6 +32,7 @@ import PhoneInput from 'react-native-phone-input'
 var globalData = new GlobalData();
 var industryTypeData = [];
 var countryNameData = [];
+var isComingFromHomePage = false;
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -68,6 +69,7 @@ export default class BusinessProfileView extends BaseComponent {
         }
         shopInfo = props.shopInfo === undefined ? "" : props.shopInfo;
         this.updateInfo = this.updateInfo.bind(this);
+        isComingFromHomePage = props.isComingFromHomePage;
     }
 
     updateInfo() {
@@ -146,10 +148,10 @@ export default class BusinessProfileView extends BaseComponent {
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
-                let shopName=fetchData.shopName.toString().trim();
-                let businessId =fetchData.businessSettings.businessId.toString().trim();
-                console.log("fetchData ShopName : "+shopName)
-                console.log(("fetchData BusinessId : "+businessId));
+                let shopName = fetchData.shopName.toString().trim();
+                let businessId = fetchData.businessSettings.businessId.toString().trim();
+                console.log("fetchData ShopName : " + shopName)
+                console.log(("fetchData BusinessId : " + businessId));
                 globalData.setShopName(shopName);
                 globalData.setBusinessId(businessId);
                 globalData.setIsAutoCreated(false)
@@ -158,8 +160,8 @@ export default class BusinessProfileView extends BaseComponent {
                     "username": globalData.getUserInfo().username,
                     "shopName": shopName,
                     "autoCreate": false
-                  }
-                  let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
+                }
+                let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
 
 
                 setTimeout(() => {
@@ -783,13 +785,18 @@ export default class BusinessProfileView extends BaseComponent {
 
     render() {
         //console.log("######### shopInfo : " + JSON.stringify(shopInfo))
-       // console.log("######### usierId : " + globalData.getUserInfo().key)
+        // console.log("######### usierId : " + globalData.getUserInfo().key)
         //console.log("########## shopName : " +globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')}
-                    onLeftArrowPressed={() => { Picker.hide() }} />
+                    onLeftArrowPressed={() => {
+                        Picker.hide();
+                        if (isComingFromHomePage) {
+                            Actions.home()
+                        }
+                    }} />
                 <View style={businessStyle.viewContainer}>
                     <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginBottom: 20 }}>
                         {this.renderBuisnessForm()}
@@ -809,7 +816,7 @@ export default class BusinessProfileView extends BaseComponent {
         );
     }
 
-   
+
     renderIndustryPicker() {
         Keyboard.dismiss()
         Picker.hide();

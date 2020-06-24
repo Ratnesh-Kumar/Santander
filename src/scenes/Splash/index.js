@@ -28,16 +28,16 @@ export default class splashscreen extends BaseComponent {
           this.setState({ googleUserInfo: userInfo });
           globalData.setGoogleUserInfo(userInfo);
           // Actions.tabbar();
+          if (this.isValidString(userInfo.user.email)) {
+            let username = userInfo.user.email;
+            let password = userInfo.user.id;
+            await this.loginButtonTapped(username, "Tester@123")
+          }
         }
-        if (this.isValidString(userInfo.user.email)) {
-          let username = userInfo.user.email;
-          let password = userInfo.user.id;
-          await this.loginButtonTapped(username, "Tester@123")
-        }
-      }else{
+      } else {
         this.launchLogin()
       }
-    }else{
+    } else {
       this.launchLogin()
     }
   }
@@ -62,19 +62,20 @@ export default class splashscreen extends BaseComponent {
           this.handlerBusinessId(businessObject)
           Actions.tabbar();
         } else {
-            this.launchLogin()
+          this.launchLogin()
         }
-      }else{
+      } else {
         this.launchLogin()
       }
-    }else{
+    } else {
       this.launchLogin()
     }
   }
 
-  launchLogin(){
+  launchLogin() {
     setTimeout(function () {
-      Actions.login();
+      // Actions.login();
+      Actions.registerCreateCampaign()
     }, 2000);
   }
 
