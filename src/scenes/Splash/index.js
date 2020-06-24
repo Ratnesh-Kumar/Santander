@@ -74,8 +74,8 @@ export default class splashscreen extends BaseComponent {
 
   launchLogin() {
     setTimeout(function () {
-      // Actions.login();
-      Actions.registerCreateCampaign()
+      Actions.login();
+      // Actions.registerCreateCampaign()
     }, 2000);
   }
 
