@@ -18,8 +18,8 @@ import CreateTagView from './productTagView'
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 
-import Picker from 'react-native-picker';
-import TaxData from '../../i18next/taxData.json';
+//import Picker from 'react-native-picker';
+//import TaxData from '../../i18next/taxData.json';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var productConstants = require('./productConstants')
@@ -212,7 +212,7 @@ export default class AddProductCategory extends BaseComponent {
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           productVariantArray = [];
-          Picker.hide()
+          //Picker.hide()
           this.setState({
             variantsList: [],
             categoryList: []
@@ -236,7 +236,7 @@ export default class AddProductCategory extends BaseComponent {
             {this.renderSalesTaxInput()}
           </View>
           <AppButton isLightTheme={false} buttonText={strings('productScreen.saveButtonText')} onButtonPressed={() => {
-            Picker.hide();
+            //Picker.hide();
             this.addProduct()
           }} />
         </ScrollView>

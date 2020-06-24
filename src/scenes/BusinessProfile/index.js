@@ -230,8 +230,8 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderBuisnessForm() {
-        industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
-        countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
+       let industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
+       let countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
         return (
             <View style={businessStyle.validFormViewContainer}>
                 <View style={businessStyle.inputWrapper}>
@@ -549,7 +549,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={postalCode => this.setState({ postalCode })}
-                            returnKeyType={'done'}
+                            //returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -559,6 +559,8 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.postalCode}
                             //errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
                             underlineHeight={2}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                            keyBoardType={'decimal-pad'}
                             onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 Keyboard.dismiss()
