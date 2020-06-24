@@ -42,6 +42,7 @@ var businessId = '';
 var shopName = '';
 var shopAutoCreated = false;
 var salesTaxTypeList = [];
+var countryStateList = [];
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -325,6 +326,16 @@ export class GlobalData extends Component {
     }
     getShopName() {
         return shopName;
+    }
+    setCountryAndStateList(stateList){
+      if (this.isValidArray(stateList)) {
+           countryStateList = JSON.parse(stateList);
+      }
+      console.log('######## setCountryAndStateList in globalData::: ',JSON.stringify(countryStateList));
+    }
+
+    getCountryAndStateList(){
+       return countryStateList;
     }
 
     setSalesTaxTypeList(list) {

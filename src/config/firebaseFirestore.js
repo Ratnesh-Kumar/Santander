@@ -65,6 +65,7 @@ function remoteConfigHandle(data){
         globalData.setBusinessProfileFBPage(data.isBusinessProfileFBPage);
         globalData.setBusinessProfileYelp(data.isBusinessProfileYelp)
         globalData.setSalesTaxTypeList(data.taxType)
+        globalData.setCountryAndStateList(data.countryState)
     }
 }
 

@@ -78,6 +78,8 @@ export default class BusinessProfileView extends BaseComponent {
         });
     }
     componentDidMount() {
+        countryNameData = this.getCountryList();
+        console.log('####### countryList :: ',JSON.stringify(countryNameData))
         this.getBusinessData()
     }
 
@@ -511,12 +513,30 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderPinCode() {
+        let postalStateSelected = this.state.postalState === '' ? strings('BuisnessProfile.StateTextInput') : this.state.postalState
         return (
             <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
 
                 <View style={businessStyle.inputWrapperSmall}>
+                <View style={businessStyle.containerStyleWithBorder}>
+                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
+                  {postalStateSelected}</Text>
+                <View
+                  style={{ position: 'absolute', right: 10, top: 10 }}>
+                  <TouchableOpacity onPress={() => 
+                    this.renderStatePicker()}
+                    >
+                    <Image
+                      style={{ width: 35, height: 35, tintColor:colorConstant.GREY_DARK_COLOR }}
+                      source={require('../.././public/images/dropDown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+                </View>
+              </View>
+                {/* <View style={businessStyle.inputWrapperSmall}>
                     <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
+                         <TextInputMaterial
                             blurText={this.state.postalState}
                             refsValue={'State'}
                             ref={'State'}
@@ -539,9 +559,9 @@ export default class BusinessProfileView extends BaseComponent {
                             onSubmitEditing={event => {
                                 this.refs.PostalCode.focus();
                             }}
-                        />
+                        /> 
                     </View>
-                </View>
+                </View> */}
                 <View style={businessStyle.inputWrapperSmall}>
                     <View style={businessStyle.validFormSecondFieldViewZip}>
                         <TextInputMaterial
@@ -839,32 +859,66 @@ export default class BusinessProfileView extends BaseComponent {
         Picker.show();
 
     }
+    
+
+    renderStatePicker() {
+        Keyboard.dismiss()
+        Picker.hide();
+        if(this.isValidString(this.state.country)){
+            let stateNameData = this.getStateList(this.state.country);
+            Picker.init({
+                pickerData: stateNameData,
+                pickerTitleText: 'Select State',
+                pickerConfirmBtnText: 'Done',
+                pickerCancelBtnText: 'Cancel',
+                selectedValue: [stateNameData[0].toString().trim()],
+                pickerBg: [255, 255, 255, 1],
+    
+                onPickerConfirm: data => {
+                    this.setState({
+                        postalState: data
+                    })
+                },
+                onPickerCancel: data => {
+                    Picker.hide();
+                },
+                onPickerSelect: data => {
+                    //console.log(data);
+                }
+            });
+            Picker.show();
+        }
+        else{
+            alert ('Please select Country')
+        }
+    }
 
     renderCountryPicker() {
         Keyboard.dismiss()
         Picker.hide();
-        countryNameData = ['Brazil', 'Maxico', 'Poland', 'Spain', 'UK', 'US'];
-        Picker.init({
-            pickerData: countryNameData,
-            pickerTitleText: 'Select Country',
-            pickerConfirmBtnText: 'Done',
-            pickerCancelBtnText: 'Cancel',
-            selectedValue: [countryNameData[0].toString().trim()],
-            pickerBg: [255, 255, 255, 1],
+        if (this.isValidArray(countryNameData)) {
+            Picker.init({
+                pickerData: countryNameData,
+                pickerTitleText: 'Select Country',
+                pickerConfirmBtnText: 'Done',
+                pickerCancelBtnText: 'Cancel',
+                selectedValue: [countryNameData[0].toString().trim()],
+                pickerBg: [255, 255, 255, 1],
 
-            onPickerConfirm: data => {
-                this.setState({
-                    country: data
-                })
-            },
-            onPickerCancel: data => {
-                Picker.hide();
-            },
-            onPickerSelect: data => {
-                //console.log(data);
-            }
-        });
-        Picker.show();
+                onPickerConfirm: data => {
+                    this.setState({
+                        country: data
+                    })
+                },
+                onPickerCancel: data => {
+                    Picker.hide();
+                },
+                onPickerSelect: data => {
+                    //console.log(data);
+                }
+            });
+            Picker.show();
+        }
     }
 
     inputFocused(refName) {
