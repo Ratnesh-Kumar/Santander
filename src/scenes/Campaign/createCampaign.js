@@ -540,7 +540,11 @@ export default class CampaignScreen extends BaseComponent {
                 refsValue={'salesTaxPercent'}
                 ref={'salesTaxPercent'}
                 onFocus={() => this.inputFocused("salesTaxPercent")}
-                onBlur1={() => this.inputBlurred("salesTaxPercent")}
+                onBlur1={()=> {
+                  this.inputBlurred("salesTaxPercent")
+                  let tax = parseFloat(this.state.salesTax)
+                  tax = tax.toFixed(2);
+                  this.setState({ salesTax: tax+"" }) }}
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
