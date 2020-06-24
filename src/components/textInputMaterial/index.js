@@ -541,6 +541,7 @@ export default class TextInputMaterial extends PureComponent {
             testID={'textinputcomponent_field_' + label}
             accessibilityLabel={'textinputcomponent_field_' + label}
             ref="input"
+            // textStyle={{paddingLeft: 50}}
             color={this.inputTextColorCode}
             maxLength={maxLength}
             autoCapitalize={autoCapitalize}

@@ -207,7 +207,7 @@ export default class extends PureComponent {
           testID={'textinputcomponent_image_' + value}
           accessibilityLabel={'textinputcomponent_image_' + value}
           ref="input"
-          style={[inputStyle, paddingStyle]}
+          style={[inputStyle, paddingStyle, this.props.textStyle]}
           underlineColorAndroid="transparent"
           blurOnSubmit={this.props.blurOnSubmit}
           onFocus={this._handleFocus}
