@@ -154,12 +154,14 @@
       "IndustryTypeText":"Industry Type",
       "BuisnessNameTextInput":"Business Name",
       "BuisnessNameTextInputError":"Please enter your Business Name",
-      "BuisnessTaxIdTextInput":"Buisness Tax Id",
-      "BuisnessTaxIdTextInputError":"Please enter your Buisness Tax Id",
+      "BuisnessTaxIdTextInput":"Business Tax Id",
+      "BuisnessTaxIdTextInputError":"Please enter your Business Tax Id",
       "PhoneCodeTextInput":"code",
       "WebsiteTextInput":"Website",
       "FbTextInput":"FB page",
-      "YelpTextInput":"Yelp"
+      "YelpTextInput":"Yelp",
+      "AddressText":"ADDRESS",
+      "UrlText":"ENTER LINKS (URL)"
       
     },
     "shopSettingsScreen":{

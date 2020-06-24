@@ -12,8 +12,8 @@ import AppButton from '../../components/AppButton';
 import { fetchPartyGET } from '../../services/FetchData';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
-import Picker from 'react-native-picker';
-import TaxData from '../../i18next/taxData.json';
+//import Picker from 'react-native-picker';
+//import TaxData from '../../i18next/taxData.json';
 
 var constants = require('../../config/Constants');
 var shopSettingConstants = require('./ShopSettingsConstants')
@@ -276,7 +276,7 @@ export default class ShopSettingScreen extends BaseComponent {
     )
   }
   renderTaxBox() {
-    let taxTypeTitle=this.state.taxTypeValue==''?strings('shopSettingsScreen.taxTypeInput'):this.state.taxTypeValue
+    //let taxTypeTitle=this.state.taxTypeValue==''?strings('shopSettingsScreen.taxTypeInput'):this.state.taxTypeValue
     if (this.state.taxOnSales) {
       return (
         <View
@@ -321,6 +321,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ taxRateValue: text })}
+                onBlur1={()=> {let tax = parseFloat(this.state.taxRateValue)
+                  tax = tax.toFixed(2);
+                  this.setState({ taxRateValue: tax+"" }) }}
                 returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}

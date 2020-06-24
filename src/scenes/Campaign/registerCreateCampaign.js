@@ -44,7 +44,7 @@ export default class CreateCampaignScene extends BaseComponent {
             </TouchableOpacity>
           </CardView>
 
-          {(globalData.getIsAutoCreated())?<CardView
+          <CardView
             style={campaignStyle.cardViewStyleRegister}
             cardElevation={8}
             cardMaxElevation={8}
@@ -56,14 +56,14 @@ export default class CreateCampaignScene extends BaseComponent {
               </Text>
               <TouchableOpacity onPress={()=>{
                 Actions.tabbar();
-                Actions.shopSetting({isComingFromHomePage: true})
+                Actions.businessProfile({isComingFromHomePage: true})
                 }}>
                 <Text style={{ fontSize: 14, margin: 10, textDecorationLine: 'underline', color: colorConstant.SANT_RED_COLOR, fontWeight: 'bold' }}>
                   {strings("createCampaign.businessDetailTitle")}
                 </Text>
               </TouchableOpacity>
             </View>
-          </CardView>: <View/>}
+          </CardView>
 
         </View>
       </View>

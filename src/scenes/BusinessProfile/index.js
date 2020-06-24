@@ -32,6 +32,7 @@ import PhoneInput from 'react-native-phone-input'
 var globalData = new GlobalData();
 var industryTypeData = [];
 var countryNameData = [];
+var isComingFromHomePage = false;
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -68,6 +69,7 @@ export default class BusinessProfileView extends BaseComponent {
         }
         shopInfo = props.shopInfo === undefined ? "" : props.shopInfo;
         this.updateInfo = this.updateInfo.bind(this);
+        isComingFromHomePage = props.isComingFromHomePage;
     }
 
     updateInfo() {
@@ -111,7 +113,7 @@ export default class BusinessProfileView extends BaseComponent {
         return (
             <View>
                 <PhoneInput
-                    style={businessStyle.phoneInput}
+                    style={[businessStyle.phoneInput,{paddingLeft:10}]}
                     ref="phoneCountry"
                     // ref={(ref) => { this.phoneCountry = ref; }}
                     //returnKeyType={'Next'}
@@ -148,10 +150,10 @@ export default class BusinessProfileView extends BaseComponent {
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
-                let shopName=fetchData.shopName.toString().trim();
-                let businessId =fetchData.businessSettings.businessId.toString().trim();
-                console.log("fetchData ShopName : "+shopName)
-                console.log(("fetchData BusinessId : "+businessId));
+                let shopName = fetchData.shopName.toString().trim();
+                let businessId = fetchData.businessSettings.businessId.toString().trim();
+                console.log("fetchData ShopName : " + shopName)
+                console.log(("fetchData BusinessId : " + businessId));
                 globalData.setShopName(shopName);
                 globalData.setBusinessId(businessId);
                 globalData.setIsAutoCreated(false)
@@ -160,8 +162,8 @@ export default class BusinessProfileView extends BaseComponent {
                     "username": globalData.getUserInfo().username,
                     "shopName": shopName,
                     "autoCreate": false
-                  }
-                  let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
+                }
+                let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
 
 
                 setTimeout(() => {
@@ -232,18 +234,16 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderBuisnessForm() {
-        industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
-        countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
+       let industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
+       let countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
         return (
-            <KeyboardAvoidingView
-                behavior="height"
-                style={businessStyle.validFormViewContainer}>
+            <View style={businessStyle.validFormViewContainer}>
                 <View style={businessStyle.inputWrapper}>
                     <View style={businessStyle.validFormSubView}>
                         <TextInputMaterial
                             blurText={this.state.businessTaxId}
-                            refsValue={'BuisnessTaxId'}
-                            ref={"BuisnessTaxId"}
+                            refsValue={'BusinessTaxId'}
+                            ref={"BusinessTaxId"}
                             label={strings('BuisnessProfile.BuisnessTaxIdTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
@@ -349,21 +349,18 @@ export default class BusinessProfileView extends BaseComponent {
 
 
 
-            </KeyboardAvoidingView>
+            </View>
         )
 
     }
 
     renderAddressForm() {
         return (
-            <KeyboardAvoidingView
-                behavior="height"
-                style={businessStyle.validAddressViewContainer}>
-                <View style={businessStyle.inputWrapper}>
-                    <View style={businessStyle.validFormSubView}>
-                        <Text style={{ fontSize: 18 }}>Address</Text>
-                    </View>
-
+            <View>
+                <View style={[businessStyle.validFormSubView, { paddingTop: 20, paddingLeft: 20 }]}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{strings('BuisnessProfile.AddressText')}</Text>
+                </View>
+                <View style={businessStyle.validAddressViewContainer}>
                     {/* <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.fname}
@@ -442,61 +439,64 @@ export default class BusinessProfileView extends BaseComponent {
                             }}
                         />
                     </View> */}
-
-                    <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.address}
-                            refsValue={'Address'}
-                            ref={'Address'}
-                            label={strings('BuisnessProfile.AddressTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={address => this.setState({ address })}
-                            returnKeyType={'next'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.address}
-                            textInputName={this.state.address}
-                            //errorText={strings('BuisnessProfile.AddressTextInputError')}
-                            underlineHeight={2}
-                            keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
-                            onSubmitEditing={event => {
-                                this.refs.City.focus();
-                            }}
-                        />
+                    <View style={businessStyle.inputWrapper}>
+                        <View style={businessStyle.validFormSecondFieldView}>
+                            <TextInputMaterial
+                                blurText={this.state.address}
+                                refsValue={'Address'}
+                                ref={'Address'}
+                                label={strings('BuisnessProfile.AddressTextInput')}
+                                maxLength={100}
+                                autoCapitalize={'none'}
+                                onChangeText={address => this.setState({ address })}
+                                returnKeyType={'next'}
+                                autoCorrect={false}
+                                isLoginScreen={false}
+                                style={businessStyle.input}
+                                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                value={this.state.address}
+                                textInputName={this.state.address}
+                                //errorText={strings('BuisnessProfile.AddressTextInputError')}
+                                underlineHeight={2}
+                                keyboardType="email-address"
+                                onFocus={() => { Picker.hide() }}
+                                onSubmitEditing={event => {
+                                    this.refs.City.focus();
+                                }}
+                            />
+                        </View>
                     </View>
-                    <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.city}
-                            refsValue={'City'}
-                            ref={'City'}
-                            label={strings('BuisnessProfile.CityTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={city => this.setState({ city })}
-                            returnKeyType={'next'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.city}
-                            textInputName={this.state.city}
-                            //errorText={strings('BuisnessProfile.CityTextInputError')}
-                            underlineHeight={2}
-                            onFocus={() => { Picker.hide() }}
-                            keyboardType="email-address"
-                            onSubmitEditing={event => {
-                                this.refs.State.focus();
-                            }}
-                        />
+                    <View style={businessStyle.inputWrapper}>
+                        <View style={businessStyle.validFormSecondFieldView}>
+                            <TextInputMaterial
+                                blurText={this.state.city}
+                                refsValue={'City'}
+                                ref={'City'}
+                                label={strings('BuisnessProfile.CityTextInput')}
+                                maxLength={100}
+                                autoCapitalize={'none'}
+                                onChangeText={city => this.setState({ city })}
+                                returnKeyType={'next'}
+                                autoCorrect={false}
+                                isLoginScreen={false}
+                                style={businessStyle.input}
+                                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                value={this.state.city}
+                                textInputName={this.state.city}
+                                //errorText={strings('BuisnessProfile.CityTextInputError')}
+                                underlineHeight={2}
+                                onFocus={() => { Picker.hide() }}
+                                keyboardType="email-address"
+                                onSubmitEditing={event => {
+                                    this.refs.State.focus();
+                                }}
+                            />
+                        </View>
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         )
     }
 
@@ -515,8 +515,7 @@ export default class BusinessProfileView extends BaseComponent {
     renderPinCode() {
         let postalStateSelected = this.state.postalState === '' ? strings('BuisnessProfile.StateTextInput') : this.state.postalState
         return (
-            <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
-
+            <View style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperSmall}>
                 <View style={businessStyle.containerStyleWithBorder}>
                 <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
@@ -572,7 +571,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={postalCode => this.setState({ postalCode })}
-                            returnKeyType={'done'}
+                            //returnKeyType={'done'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -582,6 +581,8 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.postalCode}
                             //errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
                             underlineHeight={2}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                            keyBoardType={'decimal-pad'}
                             onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
                                 Keyboard.dismiss()
@@ -591,7 +592,7 @@ export default class BusinessProfileView extends BaseComponent {
                     </View>
 
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         )
     }
 
@@ -674,7 +675,7 @@ export default class BusinessProfileView extends BaseComponent {
     }
     renderPhone() {
         return (
-            <KeyboardAvoidingView style={businessStyle.validFormViewContainerZip}>
+            <View style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperPhoneCode}>
                     {/* <View style={businessStyle.validFormSecondFieldView}> */}
                     {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
@@ -684,7 +685,7 @@ export default class BusinessProfileView extends BaseComponent {
                     {this.renderPhoneInput()}
                     {/* </View> */}
                 </View>
-                <View style={businessStyle.inputWrapperPhone}>
+                <View style={[businessStyle.inputWrapper, { flex: 3 }]}>
                     <View style={businessStyle.validFormSecondFieldView}>
                         <TextInputMaterial
                             blurText={this.state.phone}
@@ -694,7 +695,7 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={phone => this.setState({ phone })}
-                            returnKeyType={'next'}
+                            //returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -704,114 +705,124 @@ export default class BusinessProfileView extends BaseComponent {
                             textInputName={this.state.phone}
                             //errorText={strings('BuisnessProfile.PhoneTextInputError')}
                             underlineHeight={2}
-                            keyboardType={'phone-pad'}
+                            returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                            keyBoardType={'decimal-pad'}
                             onSubmitEditing={event => {
                                 this.refs.website.focus();
                             }}
                         />
                     </View>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         )
     }
 
     renderLinks() {
         return (
-            <KeyboardAvoidingView
-                behavior="height"
-                style={businessStyle.validAddressViewContainer}>
-                <View style={businessStyle.inputWrapper}>
-                    <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.websiteUrl}
-                            refsValue={"website"}
-                            ref={"website"}
-                            label={strings('BuisnessProfile.WebsiteTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={websiteUrl => this.setState({ websiteUrl })}
-                            returnKeyType={'next'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.websiteUrl}
-                            textInputName={this.state.websiteUrl}
-                            underlineHeight={2}
-                            keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
-                            onSubmitEditing={event => {
-                                this.refs.fbUrl.focus();
-                            }}
-                        />
-                    </View>
-                    {globalData.isBusinessProfileFBPage() ? <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.yelpUrl}
-                            refsValue={"fbUrl"}
-                            ref={"fbUrl"}
-                            label={strings('BuisnessProfile.FbTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={yelpUrl => this.setState({ yelpUrl })}
-                            returnKeyType={'next'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.yelpUrl}
-                            textInputName={this.state.yelpUrl}
-                            underlineHeight={2}
-                            keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
-                            onSubmitEditing={event => {
-                                this.refs.yelpUrl.focus();
-                            }}
-                        />
-                    </View> : <View />}
-                    {globalData.isBusinessProfileYelp() ? <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
-                            blurText={this.state.fbUrl}
-                            refsValue={"yelpUrl"}
-                            ref={"yelpUrl"}
-                            label={strings('BuisnessProfile.YelpTextInput')}
-                            maxLength={100}
-                            autoCapitalize={'none'}
-                            onChangeText={fbUrl => this.setState({ fbUrl })}
-                            returnKeyType={'next'}
-                            autoCorrect={false}
-                            isLoginScreen={false}
-                            style={businessStyle.input}
-                            placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
-                            value={this.state.fbUrl}
-                            textInputName={this.state.fbUrl}
-                            underlineHeight={2}
-                            keyboardType="email-address"
-                            onFocus={() => { Picker.hide() }}
-                            onSubmitEditing={event => {
-                                this.refs.Address.focus();
-                            }}
-                        />
-                    </View> : <View />}
+            <View>
+                <View style={[businessStyle.validFormSubView, { paddingTop: 20,paddingLeft:20 }]}>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{strings('BuisnessProfile.UrlText')}</Text>
                 </View>
-            </KeyboardAvoidingView>
+                <View style={businessStyle.validAddressViewContainer}>
+                    <View style={businessStyle.inputWrapper}>
+                        <View style={businessStyle.validFormSecondFieldView}>
+                            <TextInputMaterial
+                                blurText={this.state.websiteUrl}
+                                refsValue={"website"}
+                                ref={"website"}
+                                label={strings('BuisnessProfile.WebsiteTextInput')}
+                                maxLength={100}
+                                autoCapitalize={'none'}
+                                onChangeText={websiteUrl => this.setState({ websiteUrl })}
+                                returnKeyType={'next'}
+                                autoCorrect={false}
+                                isLoginScreen={false}
+                                style={businessStyle.input}
+                                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                value={this.state.websiteUrl}
+                                textInputName={this.state.websiteUrl}
+                                underlineHeight={2}
+                                keyboardType="email-address"
+                                onFocus={() => { Picker.hide() }}
+                                onSubmitEditing={event => {
+                                    this.refs.fbUrl.focus();
+                                }}
+                            />
+                        </View>
+                        {globalData.isBusinessProfileFBPage() ? <View style={businessStyle.validFormSecondFieldView}>
+                            <TextInputMaterial
+                                blurText={this.state.yelpUrl}
+                                refsValue={"fbUrl"}
+                                ref={"fbUrl"}
+                                label={strings('BuisnessProfile.FbTextInput')}
+                                maxLength={100}
+                                autoCapitalize={'none'}
+                                onChangeText={yelpUrl => this.setState({ yelpUrl })}
+                                returnKeyType={'next'}
+                                autoCorrect={false}
+                                isLoginScreen={false}
+                                style={businessStyle.input}
+                                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                value={this.state.yelpUrl}
+                                textInputName={this.state.yelpUrl}
+                                underlineHeight={2}
+                                keyboardType="email-address"
+                                onFocus={() => { Picker.hide() }}
+                                onSubmitEditing={event => {
+                                    this.refs.yelpUrl.focus();
+                                }}
+                            />
+                        </View> : <View />}
+                        {globalData.isBusinessProfileYelp() ? <View style={businessStyle.validFormSecondFieldView}>
+                            <TextInputMaterial
+                                blurText={this.state.fbUrl}
+                                refsValue={"yelpUrl"}
+                                ref={"yelpUrl"}
+                                label={strings('BuisnessProfile.YelpTextInput')}
+                                maxLength={100}
+                                autoCapitalize={'none'}
+                                onChangeText={fbUrl => this.setState({ fbUrl })}
+                                returnKeyType={'next'}
+                                autoCorrect={false}
+                                isLoginScreen={false}
+                                style={businessStyle.input}
+                                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                value={this.state.fbUrl}
+                                textInputName={this.state.fbUrl}
+                                underlineHeight={2}
+                                keyboardType="email-address"
+                                onFocus={() => { Picker.hide() }}
+                                onSubmitEditing={event => {
+                                    this.refs.Address.focus();
+                                }}
+                            />
+                        </View> : <View />}
+                    </View>
+                </View>
+            </View>
         )
     }
 
     render() {
         //console.log("######### shopInfo : " + JSON.stringify(shopInfo))
-       // console.log("######### usierId : " + globalData.getUserInfo().key)
+        // console.log("######### usierId : " + globalData.getUserInfo().key)
         //console.log("########## shopName : " +globalData.getShopName())
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')}
-                    onLeftArrowPressed={() => { Picker.hide() }} />
+                    onLeftArrowPressed={() => {
+                        Picker.hide();
+                        if (isComingFromHomePage) {
+                            isComingFromHomePage= false;
+                            Actions.home()
+                        }
+                    }} />
                 <View style={businessStyle.viewContainer}>
-                    <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginBottom: 20 }}>
+                    <ScrollView keyboardShouldPersistTaps={'always'} style={businessStyle.scrollViewStyle}>
                         {this.renderBuisnessForm()}
                         {this.renderPhone()}
                         {this.renderLinks()}
@@ -829,7 +840,7 @@ export default class BusinessProfileView extends BaseComponent {
         );
     }
 
-   
+
     renderIndustryPicker() {
         Keyboard.dismiss()
         Picker.hide();

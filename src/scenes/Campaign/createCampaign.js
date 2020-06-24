@@ -17,8 +17,8 @@ import { color } from 'react-native-reanimated';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import { fetchCampaignPOST, fetchCampaignPUT } from '../../services/FetchData';
-import TaxData from '../../i18next/taxData.json';
-import Picker from 'react-native-picker';
+//import TaxData from '../../i18next/taxData.json';
+//import Picker from 'react-native-picker';
 var globalData = new GlobalData();
 var constants = require('../../config/Constants');
 var compaignConstants = require('./campaignConstants')
@@ -178,7 +178,7 @@ export default class CampaignScreen extends BaseComponent {
         {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           campaignVariantArray = [];
-          Picker.hide()
+          //Picker.hide()
           this.setState({
             variantsList: [],
             categoryList: []
@@ -203,7 +203,7 @@ export default class CampaignScreen extends BaseComponent {
           </View>
           <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
             //Actions.createCampaignShare()
-            Picker.hide();
+            //Picker.hide();
             this.addCampaign()
           }} />
         </ScrollView>
@@ -476,7 +476,7 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   renderSalesTaxInput() {
-    let salesTaxTypeTitle=this.state.salesTaxType==''?strings('createCampaignCategories.salesTaxTypeTextInput'):this.state.salesTaxType
+    //let salesTaxTypeTitle=this.state.salesTaxType==''?strings('createCampaignCategories.salesTaxTypeTextInput'):this.state.salesTaxType
     if (this.state.isSalesTax)
       return (
         <View
@@ -540,7 +540,11 @@ export default class CampaignScreen extends BaseComponent {
                 refsValue={'salesTaxPercent'}
                 ref={'salesTaxPercent'}
                 onFocus={() => this.inputFocused("salesTaxPercent")}
-                onBlur1={() => this.inputBlurred("salesTaxPercent")}
+                onBlur1={()=> {
+                  this.inputBlurred("salesTaxPercent")
+                  let tax = parseFloat(this.state.salesTax)
+                  tax = tax.toFixed(2);
+                  this.setState({ salesTax: tax+"" }) }}
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
@@ -617,42 +621,42 @@ export default class CampaignScreen extends BaseComponent {
   }
 
 
-  handleTaxPicker(){
-    // for (let data of TaxData) {
-    //   taxType.push(data['type'])
-    // }
-    taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
-    Keyboard.dismiss()
-    Picker.hide()
-    Picker.init({
-      pickerData: taxType,
-      pickerTitleText: 'Select Tax',
-      pickerConfirmBtnText: 'Done',
-      pickerCancelBtnText: 'Cancel',
-      selectedValue: [taxType[0].toString().trim()],
-      pickerBg: [255, 255, 255, 1],
+  // handleTaxPicker(){
+  //   // for (let data of TaxData) {
+  //   //   taxType.push(data['type'])
+  //   // }
+  //   taxType=['PL-VAT','ES-VAT','UK-VAT','MX-Sales Tax','BR-Sales Tax','US-Sales Tax','DE-VAT','AR-VAT','CL-VAT']
+  //   Keyboard.dismiss()
+  //   Picker.hide()
+  //   Picker.init({
+  //     pickerData: taxType,
+  //     pickerTitleText: 'Select Tax',
+  //     pickerConfirmBtnText: 'Done',
+  //     pickerCancelBtnText: 'Cancel',
+  //     selectedValue: [taxType[0].toString().trim()],
+  //     pickerBg: [255, 255, 255, 1],
 
-      onPickerConfirm: data => {
-        this.getTaxData(data)
-      },
-      onPickerCancel: data => {
-        Picker.hide();
-      },
-      onPickerSelect: data => {
-        //console.log(data);
-      }
-    });
-    Picker.show();
-  }
-  async getTaxData(data) {
-    let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
+  //     onPickerConfirm: data => {
+  //       this.getTaxData(data)
+  //     },
+  //     onPickerCancel: data => {
+  //       Picker.hide();
+  //     },
+  //     onPickerSelect: data => {
+  //       //console.log(data);
+  //     }
+  //   });
+  //   Picker.show();
+  // }
+  // async getTaxData(data) {
+  //   let taxRate = await TaxData.filter(obj => obj.type === data.toString().trim())[0].rate
 
-    this.setState({
-      salesTax: taxRate,
-      salesTaxType: data
+  //   this.setState({
+  //     salesTax: taxRate,
+  //     salesTaxType: data
 
-    })
-  }
+  //   })
+  // }
 
   getRequestBody(productArr, campaignStatus) {
     return {
