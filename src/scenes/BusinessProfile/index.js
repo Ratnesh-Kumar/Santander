@@ -32,6 +32,7 @@ import PhoneInput from 'react-native-phone-input'
 var globalData = new GlobalData();
 var industryTypeData = [];
 var countryNameData = [];
+var isComingFromHomePage = false;
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -68,6 +69,7 @@ export default class BusinessProfileView extends BaseComponent {
         }
         shopInfo = props.shopInfo === undefined ? "" : props.shopInfo;
         this.updateInfo = this.updateInfo.bind(this);
+        isComingFromHomePage = props.isComingFromHomePage;
     }
 
     updateInfo() {
@@ -792,8 +794,14 @@ export default class BusinessProfileView extends BaseComponent {
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
                 {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')}
-                    onLeftArrowPressed={() => { Picker.hide() }} />
-                <View>
+                    onLeftArrowPressed={() => {
+                        Picker.hide();
+                        if (isComingFromHomePage) {
+                            isComingFromHomePage= false;
+                            Actions.home()
+                        }
+                    }} />
+                <View style={businessStyle.viewContainer}>
                     <ScrollView keyboardShouldPersistTaps={'always'} style={businessStyle.scrollViewStyle}>
                         {this.renderBuisnessForm()}
                         {this.renderPhone()}

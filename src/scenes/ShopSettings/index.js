@@ -321,6 +321,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ taxRateValue: text })}
+                onBlur1={()=> {let tax = parseFloat(this.state.taxRateValue)
+                  tax = tax.toFixed(2);
+                  this.setState({ taxRateValue: tax+"" }) }}
                 returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
