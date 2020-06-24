@@ -509,7 +509,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 keyboardType="email-address"
                                 onSubmitEditing={event => {
                                     Keyboard.dismiss()
-                                   // this.refs.State.focus();
+                                    this.refs.PostalCode.focus();
                                 }}
                             />
                         </View>
