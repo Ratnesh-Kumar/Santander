@@ -36,7 +36,7 @@ export default class HomeScreen extends BaseComponent {
       })
     }
     this.displayConsole()
-    await getRemoteConfig();
+    // await getRemoteConfig();
   }
   renderGraphView() {
     return (

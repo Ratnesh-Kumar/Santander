@@ -80,7 +80,7 @@ export default class BusinessProfileView extends BaseComponent {
         });
     }
     componentDidMount() {
-        countryNameData = this.getCountryList();
+        countryNameData = globalData.getCountryList();
         console.log('####### countryList :: ',JSON.stringify(countryNameData))
         this.getBusinessData()
     }
@@ -822,7 +822,7 @@ export default class BusinessProfileView extends BaseComponent {
                         }
                     }} />
                 <View style={businessStyle.viewContainer}>
-                    <ScrollView keyboardShouldPersistTaps={'always'} style={businessStyle.scrollViewStyle}>
+                    <ScrollView keyboardShouldPersistTaps={'always'} >
                         {this.renderBuisnessForm()}
                         {this.renderPhone()}
                         {this.renderLinks()}
@@ -875,8 +875,8 @@ export default class BusinessProfileView extends BaseComponent {
     renderStatePicker() {
         Keyboard.dismiss()
         Picker.hide();
-        if(this.isValidString(this.state.country)){
-            let stateNameData = this.getStateList(this.state.country);
+        if(this.isValidString(this.state.country) && this.isValidArray(countryNameData)){
+            let stateNameData = globalData.getStateList(this.state.country);
             Picker.init({
                 pickerData: stateNameData,
                 pickerTitleText: 'Select State',
