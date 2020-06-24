@@ -30,6 +30,9 @@ var isUpdate = "";
 var fetchProductData = "";
 var productId = "";
 var taxType = [];
+var categoriesViewScroll = 0;
+var variantViewScroll = 0;
+var salesTaxViewScroll = 0;
 export default class AddProductCategory extends BaseComponent {
 
   constructor(props) {
@@ -47,7 +50,8 @@ export default class AddProductCategory extends BaseComponent {
       dialogModalText: '',
       dialogModalTitle: '',
       salesTaxSwitch:false,
-      isTrackQuantity: globalData.isTrackQuantityDisplay()
+      isTrackQuantity: globalData.isTrackQuantityDisplay(),
+      handleKeyboardViewHeight: 0,
     }
     productDetails = props.productDetails;
     isUpdate = props.isUpdate ? props.isUpdate : false
@@ -204,7 +208,7 @@ export default class AddProductCategory extends BaseComponent {
 
   render() {
     return (
-      <KeyboardAvoidingView style={productStyle.container} behavior="padding" keyboardVerticalOffset={0}>
+      <View style={productStyle.container}>
         {this.renderModal()}
         <Header title={strings('productScreen.addProduct')} isCrossIconVisible={false} onLeftArrowPressed={() => {
           productVariantArray = [];
@@ -215,7 +219,13 @@ export default class AddProductCategory extends BaseComponent {
           })
         }} />
         <Stepper count={2} currentCount={2} />
-        <ScrollView keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
+        <View style={{flex:1}}>
+        <ScrollView 
+        ref='scrollView'
+        keyboardDismissMode="interactive"
+        keyboardShouldPersistTaps={'always'} 
+        onScrollBeginDrag={() => this.onDragScroll()}
+        keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
           <View>
             {this.renderSwitchTextInput()}
             {this.renderProductQuantity()}
@@ -230,7 +240,10 @@ export default class AddProductCategory extends BaseComponent {
             this.addProduct()
           }} />
         </ScrollView>
-      </KeyboardAvoidingView>
+        <View style={{ height: this.state.handleKeyboardViewHeight }}>
+            </View>
+        </View>
+      </View>
     );
   }
 
@@ -330,7 +343,12 @@ export default class AddProductCategory extends BaseComponent {
       }
     }
     return (
-      <View>
+      <View
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        variantViewScroll = layout.y
+      }}
+      >
         {variantList}
       </View>
     )
@@ -349,6 +367,8 @@ export default class AddProductCategory extends BaseComponent {
         }}
         isTrackQuantity={this.state.isTrackQuantity}
         quantity={this.getVariantObj(quantityTitle).quantity}
+        inputFocus={()=> { this.inputFocused('variantQuantity') }}
+        inputBlur={()=> { this.inputBlurred('variantQuantity') } }
         title={quantityTitle}
         updatedQuantity={(quantity) => {
           let variantObj = this.getVariantObj(quantityTitle);
@@ -373,7 +393,12 @@ export default class AddProductCategory extends BaseComponent {
 
   renderCategoryTagView() {
     return (
-      <View style={{ paddingLeft: 10, paddingTop: 20 }}>
+      <View 
+      onLayout={event => {
+        const layout = event.nativeEvent.layout;
+        categoriesViewScroll = layout.y
+      }}
+      style={{ paddingLeft: 10, paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView
           labelName={strings('createCampaign.categoryTagTextInput')}
@@ -390,6 +415,8 @@ export default class AddProductCategory extends BaseComponent {
             labelName={strings('createCampaign.variantsTagTextInput')}
             isCategoryTag={false}
             variantList={this.state.variantsList}
+            inputFocus={()=> { this.inputFocused('variantTagView') }}
+            inputBlur={()=> { this.inputBlurred('variantTagView') } }
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
               this.updateProductVariantList(variantList)
@@ -444,6 +471,56 @@ export default class AddProductCategory extends BaseComponent {
     }
   }
 
+  onDragScroll() {
+    Keyboard.dismiss();
+    this.setState({
+      handleKeyboardViewHeight: 0
+    })
+  }
+
+  inputBlurred(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 0
+        })
+      }
+      if(refName === 'salesTaxPercent' || refName === 'productTaxType'){
+        this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
+      }
+      if(refName === 'variantTagView'){
+          this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
+      }
+      if(refName === 'variantQuantity'){
+        this.refs.scrollView.scrollTo({ x: 0, y: variantViewScroll, animated: true })
+    }
+    }
+  }
+  inputFocused(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 250
+        })
+      }
+      if(refName === 'variantTagView'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'salesTaxPercent' || refName === 'productTaxType'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
+        }, 100); 
+      }
+      if(refName === 'variantQuantity'){
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: variantViewScroll, animated: true })
+        }, 100); 
+      }
+      }
+  }
+
   renderSwitchTextInput() {
     return (
       <View style={{ marginTop: 10 }}>
@@ -488,13 +565,19 @@ export default class AddProductCategory extends BaseComponent {
     if (this.state.salesTaxSwitch)
       return (
         <View
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          salesTaxViewScroll = layout.y
+        }}
           style={productStyle.priceTextInputContainer}>
           <View style={productStyle.priceInputWrapper}>
           <View style={[productStyle.priceFormSubView, { paddingRight: 15 }]}>
             <TextInputMaterial
               blurText={this.state.salesTaxType}
-              refsValue={'campaignPrice'}
-              ref={'campaignPrice'}
+              refsValue={'productTaxType'}
+              ref={'productTaxType'}
+              onFocus={() => this.inputFocused("productTaxType")}
+              onBlur1={() => this.inputBlurred("productTaxType")}
               label={strings('createCampaignCategories.salesTaxTypeTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
@@ -541,6 +624,8 @@ export default class AddProductCategory extends BaseComponent {
                 blurText={this.state.salesTax}
                 refsValue={'salesTaxPercent'}
                 ref={'salesTaxPercent'}
+                onFocus={() => this.inputFocused("salesTaxPercent")}
+                onBlur1={() => this.inputBlurred("salesTaxPercent")}
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
@@ -556,7 +641,6 @@ export default class AddProductCategory extends BaseComponent {
                 textInputName={this.state.salesTax}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                onFocus={() => { Picker.hide() }}
                 onSubmitEditing={event => {
                   Keyboard.dismiss()
                 }}

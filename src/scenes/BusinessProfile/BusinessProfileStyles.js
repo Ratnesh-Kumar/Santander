@@ -15,22 +15,13 @@ export default (styles = StyleSheet.create({
         flex: 1
     },
     validFormViewContainer: {
-        marginTop: 50,
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop: 20,
     },
     validFormSubView: {
-        paddingLeft: 15, paddingRight: 15
+        paddingLeft: 10, paddingRight: 10
     },
-    input: {
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-        width: constants.SCREEN_WIDTH - 40,
-        height: 40,
-        marginHorizontal: 20,
-        paddingLeft: 45,
-        borderRadius: 20,
-        color: '#000000',
-        marginTop: 15,
-    },
+    
     inputWrapper: {
         width: DEVICE_WIDTH - 20,
     },
@@ -47,10 +38,10 @@ export default (styles = StyleSheet.create({
     },
 
     validFormSecondFieldView: {
-        marginTop: 15, paddingLeft: 15, paddingRight: 15
+        marginTop: 10, paddingLeft: 10, paddingRight: 10
     },
     validFormSecondFieldViewZip: {
-        marginTop: 15, paddingRight: 15
+        marginTop: 10, paddingRight: 10
     },
 
     validAddressViewContainer: {
@@ -59,13 +50,25 @@ export default (styles = StyleSheet.create({
     },
 
     validFormViewContainerZip: {
-        flex: 1,
-        marginLeft: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'
+        alignItems: 'center',
+        marginLeft: 10,
+        marginRight: 10,
+        flexDirection: 'row'
 
     },
     phoneInput: {
-        borderWidth: 1, marginLeft: 10, height: 55, borderColor: 'gray', borderBottomColor: '#257fa4', marginTop: 15
-    }
+        borderWidth: 1, marginLeft: 10, height: 55, borderColor: 'gray', borderBottomColor: '#257fa4', marginTop: 10
+    },
+    scrollViewStyle: {
+        ...Platform.select({
+            ios: {
+                marginBottom: 130
+            },
+            android: {
+                marginBottom: 80
+            }
+        })
+    },
 
 
 }))

@@ -79,9 +79,19 @@ export default class ProductTag extends BaseComponent {
                             autoCapitalize={'none'}
                             onChangeText={text => this.setState({ tagName: text })}
                             returnKeyType={'next'}
+                            onFocus={() => {
+                                this.setState({ tagName: '' })
+                                if (typeof this.props.inputFocus == 'function') {
+                                    this.props.inputFocus()
+                                }
+                            }}
+                            onBlur1={() => {
+                                if (typeof this.props.inputBlur == 'function') {
+                                    this.props.inputBlur()
+                                }
+                            }}
                             autoCorrect={false}
                             isLoginScreen={false}
-                            onFocus={() => { this.setState({ tagName: '' }) }}
                             style={productStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
