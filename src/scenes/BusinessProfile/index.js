@@ -1044,10 +1044,12 @@ export default class BusinessProfileView extends BaseComponent {
               this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
             }, 100); 
           }
-          if(refName === 'PostalCode' ){
-            this.setState({
-                handleKeyboardViewHeight: 250
-              })
+            if (refName === 'PostalCode') {
+                if (Platform.OS === 'ios') {
+                    this.setState({
+                        handleKeyboardViewHeight: 250
+                    })
+                }
             }
             setTimeout(() => {
                 this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
