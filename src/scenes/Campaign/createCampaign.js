@@ -166,12 +166,6 @@ export default class CampaignScreen extends BaseComponent {
 
   }
 
-  onDragScroll() {
-    Keyboard.dismiss();
-    this.setState({
-      handleKeyboardViewHeight: 0
-    })
-  }
   render() {
     return (
       <View style={campaignStyle.container} >
