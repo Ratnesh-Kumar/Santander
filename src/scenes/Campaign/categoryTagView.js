@@ -20,8 +20,15 @@ export default class CampaignScreen extends BaseComponent {
         super(props)
         this.state = {
             tagName: '',
-            tagNameList: (props.isCategoryTag) ? ((this.isValidArray(props.categoryList)) ? props.categoryList : []) : ((this.isValidArray(props.variantList)) ? props.variantList : [])
+            tagNameList: (props.isCategoryTag) ? ((this.isValidArray(props.categoryList)) ? props.categoryList : []) : ((this.isValidArray(props.variantList)) ? this.accessVariantList(props.variantList) : [])
         }
+    }
+    accessVariantList(variantList){
+        let newVariantList =[];
+        for(let i=0;i< variantList.length;i++){
+            newVariantList.push(variantList[i].name);
+        }
+        return newVariantList
     }
 
     async componentDidMount() {
@@ -37,6 +44,7 @@ export default class CampaignScreen extends BaseComponent {
     }
 
     renderTagContainerView() {
+    
         let tagList = [];
         for (let i = 0; i < this.state.tagNameList.length; i++) {
             tagList.push(this.renderTagView(this.state.tagNameList[i]))
@@ -121,6 +129,7 @@ export default class CampaignScreen extends BaseComponent {
     }
 
     addItemToTagList() {
+        
         if (this.isValidString(this.state.tagName) && this.state.tagNameList.length < 11) {
             this.state.tagNameList.push(this.state.tagName)
             this.props.updatedList(this.state.tagNameList)
