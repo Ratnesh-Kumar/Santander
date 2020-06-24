@@ -39,9 +39,10 @@ export default class CampaignScreen extends BaseComponent {
     this.state = {
       campaignName: '',
       campaignQuantity: "1",
+      variantListObject: [],
       variantsList: [],
       categoryList: [],
-      salesTax: globalData.getSalesTax()+"",
+      salesTax: globalData.getSalesTax() + "",
       salesTaxType: globalData.getSalesTaxType(),
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
@@ -59,7 +60,7 @@ export default class CampaignScreen extends BaseComponent {
     if (isCampaignUpdate) {
       this.setUpdateData(fetchCampaignData);
     }
-    
+
   }
 
   setUpdateData(fetchCampaignData) {
@@ -87,7 +88,7 @@ export default class CampaignScreen extends BaseComponent {
           let variant = productVariant[i];
           if (!variant.discountinuedProduct) {
             let variantDetail = {};
-            this.state.variantsList.push(variant.variantName)
+            this.state.variantsList.push({ "name": variant.variantName, "quantity": variant.quantityOnHand })
             variantDetail.name = variant.variantName;
             variantDetail.price = variant.comparePrice;
             variantDetail.barcode = variant.barCode;
@@ -179,30 +180,30 @@ export default class CampaignScreen extends BaseComponent {
           })
         }} />
         <Stepper count={3} currentCount={2} />
-        <View style={{flex:1}}>
-        <ScrollView 
-        ref='scrollView'
-        keyboardDismissMode="interactive"
-        keyboardShouldPersistTaps={'always'} 
-        onScrollBeginDrag={() => this.onDragScroll()}
-        keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
-          <View>
-            {this.renderSwitchTextInput()}
-            {this.rendercampaignQuantity()}
-            <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
-            {this.renderCategoryTagView()}
-            {this.renderVariantsQantityView()}
-            {this.renderSalesTaxView()}
-            {this.renderSalesTaxInput()}
-          </View>
-          <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
-            //Actions.createCampaignShare()
-            //Picker.hide();
-            this.addCampaign()
-          }} />
-        </ScrollView>
-        <View style={{ height: this.state.handleKeyboardViewHeight }}>
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            ref='scrollView'
+            keyboardDismissMode="interactive"
+            keyboardShouldPersistTaps={'always'}
+            onScrollBeginDrag={() => this.onDragScroll()}
+            keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
+            <View>
+              {this.renderSwitchTextInput()}
+              {this.rendercampaignQuantity()}
+              <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
+              {this.renderCategoryTagView()}
+              {this.renderVariantsQantityView()}
+              {this.renderSalesTaxView()}
+              {this.renderSalesTaxInput()}
             </View>
+            <AppButton isLightTheme={false} buttonText={strings('createCampaign.nextButtonText')} onButtonPressed={() => {
+              //Actions.createCampaignShare()
+              //Picker.hide();
+              this.addCampaign()
+            }} />
+          </ScrollView>
+          <View style={{ height: this.state.handleKeyboardViewHeight }}>
+          </View>
         </View>
       </View>
     );
@@ -226,18 +227,18 @@ export default class CampaignScreen extends BaseComponent {
   getVariantItem(variant) {
     if (this.isValidArray(campaignVariantArray)) {
       for (let i = 0; i < campaignVariantArray.length; i++) {
-        if (campaignVariantArray[i].name === variant) {
+        if (campaignVariantArray[i].name === variant.name) {
           return campaignVariantArray[i]
         }
       }
     }
     let variantItem = {};
-    variantItem.name = variant;
+    variantItem.name = variant.name;
     variantItem.price = "";
     variantItem.salePrice = "",
       variantItem.barcode = "";
     variantItem.skuNumber = "";
-    variantItem.quantity = "1"
+    variantItem.quantity = variant.quantity
     return variantItem;
   }
 
@@ -323,15 +324,15 @@ export default class CampaignScreen extends BaseComponent {
     let variantList = [];
     if (this.isValidArray(this.state.variantsList)) {
       for (let i = 0; i < this.state.variantsList.length; i++) {
-        variantList.push(this.renderQuantityView(this.state.variantsList[i]))
+        variantList.push(this.renderQuantityView(this.state.variantsList[i].name))
       }
     }
     return (
-      <View 
-      onLayout={event => {
-        const layout = event.nativeEvent.layout;
-        variantViewScroll = layout.y
-      }}
+      <View
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          variantViewScroll = layout.y
+        }}
       >
         {variantList}
       </View>
@@ -348,9 +349,9 @@ export default class CampaignScreen extends BaseComponent {
           Actions.campaignVarient({ "variantName": quantityTitle, variantDetail: this.getVariantObj(quantityTitle) })
         }}
         quantity={this.getVariantObj(quantityTitle).quantity}
-        inputFocus={()=> { this.inputFocused('variantQuantity') }}
-        inputBlur={()=> { this.inputBlurred('variantQuantity') } }
-        title={quantityTitle} 
+        inputFocus={() => { this.inputFocused('variantQuantity') }}
+        inputBlur={() => { this.inputBlurred('variantQuantity') }}
+        title={quantityTitle}
         updatedQuantity={(quantity) => {
           let variantObj = this.getVariantObj(quantityTitle);
           variantObj.quantity = quantity;
@@ -366,17 +367,25 @@ export default class CampaignScreen extends BaseComponent {
         }
       }
     }
+    if (this.isValidArray(this.state.variantsList)) {
+      for (let i = 0; i < this.state.variantsList.length; i++) {
+        if (this.state.variantsList[i].name == title) {
+          return this.state.variantsList[i];
+        }
+      }
+    }
+
     return "";
   }
 
   renderCategoryTagView() {
     return (
-      <View 
-      onLayout={event => {
-        const layout = event.nativeEvent.layout;
-        categoriesViewScroll = layout.y
-      }}
-      style={{ paddingLeft: 10, paddingTop: 20 }}>
+      <View
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          categoriesViewScroll = layout.y
+        }}
+        style={{ paddingLeft: 10, paddingTop: 20 }}>
         <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.categoryTagText')}</Text>
         <CreateTagView
           labelName={strings('createCampaign.categoryTagTextInput')}
@@ -393,16 +402,58 @@ export default class CampaignScreen extends BaseComponent {
             labelName={strings('createCampaign.variantsTagTextInput')}
             isCategoryTag={false}
             variantList={this.state.variantsList}
-            inputFocus={()=> { this.inputFocused('variantTagView') }}
-            inputBlur={()=> { this.inputBlurred('variantTagView') } }
+            inputFocus={() => { this.inputFocused('variantTagView') }}
+            inputBlur={() => { this.inputBlurred('variantTagView') }}
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
-              //this.updateProductVariantList(variantList)
-              this.setState({ variantsList: variantList })
+              this.updateVariantList(variantList)
+              this.updateCampaignVariantList(variantList)
+
             }} />
         </View>
       </View>
     )
+  }
+
+  updateVariantList(variantList) {
+    let newVariantList = [];
+    
+    for (let i = 0; i < variantList.length; i++) {
+      let variantItem = "";
+      for (let j = 0; j < this.state.variantsList.length; j++){
+        if(variantList[i] == this.state.variantsList[j].name){
+          variantItem = this.state.variantsList[j];
+          break;
+        }
+      }
+      if(!this.isValidString(variantItem)){
+        // variantItem.name= variantList[i];
+        // variantItem.quantity="";
+        newVariantList.push({"name": variantList[i], quantity: "1"})
+      }else{
+        newVariantList.push(variantItem)
+      }
+    }
+    this.setState({ variantsList: newVariantList })
+  }
+
+  updateCampaignVariantList(variantList) {
+    if (this.isValidArray(campaignVariantArray) && this.isValidArray(variantList)) {
+      for (let i = 0; i < campaignVariantArray.length; i++) {
+        let isExistFlag = false
+        for (let j = 0; j < variantList.length; j++) {
+          if (campaignVariantArray[i].name === variantList[j]) {
+            isExistFlag = true;
+          }
+        }
+        if (!isExistFlag) {
+          campaignVariantArray.splice(campaignVariantArray.indexOf(campaignVariantArray[i]), 1)
+        }
+      }
+    } else if (this.isValidArray(variantList)) {
+      campaignVariantArray = [];
+    }
+
   }
 
   rendercampaignQuantity() {
@@ -474,40 +525,40 @@ export default class CampaignScreen extends BaseComponent {
     if (this.state.isSalesTax)
       return (
         <View
-        onLayout={event => {
-          const layout = event.nativeEvent.layout;
-          salesTaxViewScroll = layout.y
-        }}
+          onLayout={event => {
+            const layout = event.nativeEvent.layout;
+            salesTaxViewScroll = layout.y
+          }}
           style={campaignStyle.priceTextInputContainer}>
           <View style={campaignStyle.priceInputWrapper}>
-          <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
-            <TextInputMaterial
-              blurText={this.state.salesTaxType}
-              refsValue={'campaignTaxType'}
-              ref={'campaignTaxType'}
-              label={strings('createCampaignCategories.salesTaxTypeTextInput')}
-              maxLength={100}
-              autoCapitalize={'none'}
-              onFocus={() => this.inputFocused("campaignTaxType")}
-              onBlur1={() => this.inputBlurred("campaignTaxType")}
-              onChangeText={text => { this.setState({ salesTaxType: text }) }}
-              returnKeyType={'next'}
-              autoCorrect={false}
-              isLoginScreen={false}
-              style={campaignStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-              underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-              value={this.state.salesTaxType}
-              textInputName={this.state.salesTaxType}
-              // errorText={strings('createCampaign.priceErrorText')}
-              underlineHeight={2}
-              keyboardType={'email-address'}
-              onSubmitEditing={event => {
-                this.refs.salesTaxPercent.focus();
-              }}
-            />
+            <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
+              <TextInputMaterial
+                blurText={this.state.salesTaxType}
+                refsValue={'campaignTaxType'}
+                ref={'campaignTaxType'}
+                label={strings('createCampaignCategories.salesTaxTypeTextInput')}
+                maxLength={100}
+                autoCapitalize={'none'}
+                onFocus={() => this.inputFocused("campaignTaxType")}
+                onBlur1={() => this.inputBlurred("campaignTaxType")}
+                onChangeText={text => { this.setState({ salesTaxType: text }) }}
+                returnKeyType={'next'}
+                autoCorrect={false}
+                isLoginScreen={false}
+                style={campaignStyle.input}
+                placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
+                value={this.state.salesTaxType}
+                textInputName={this.state.salesTaxType}
+                // errorText={strings('createCampaign.priceErrorText')}
+                underlineHeight={2}
+                keyboardType={'email-address'}
+                onSubmitEditing={event => {
+                  this.refs.salesTaxPercent.focus();
+                }}
+              />
+            </View>
           </View>
-        </View>
 
           {/* <View style={campaignStyle.priceInputWrapper}>
             <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
@@ -534,11 +585,12 @@ export default class CampaignScreen extends BaseComponent {
                 refsValue={'salesTaxPercent'}
                 ref={'salesTaxPercent'}
                 onFocus={() => this.inputFocused("salesTaxPercent")}
-                onBlur1={()=> {
+                onBlur1={() => {
                   this.inputBlurred("salesTaxPercent")
                   let tax = parseFloat(this.state.salesTax)
                   tax = tax.toFixed(2);
-                  this.setState({ salesTax: tax+"" }) }}
+                  this.setState({ salesTax: tax + "" })
+                }}
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
@@ -578,15 +630,15 @@ export default class CampaignScreen extends BaseComponent {
           handleKeyboardViewHeight: 0
         })
       }
-      if(refName === 'salesTaxPercent' || refName === 'campaignTaxType'){
+      if (refName === 'salesTaxPercent' || refName === 'campaignTaxType') {
         this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
       }
-      if(refName === 'variantTagView'){
-          this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
+      if (refName === 'variantTagView') {
+        this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
       }
-      if(refName === 'variantQuantity'){
+      if (refName === 'variantQuantity') {
         this.refs.scrollView.scrollTo({ x: 0, y: variantViewScroll, animated: true })
-    }
+      }
     }
   }
   inputFocused(refName) {
@@ -596,22 +648,22 @@ export default class CampaignScreen extends BaseComponent {
           handleKeyboardViewHeight: 250
         })
       }
-      if(refName === 'variantTagView'){
+      if (refName === 'variantTagView') {
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: categoriesViewScroll, animated: true })
-        }, 100); 
+        }, 100);
       }
-      if(refName === 'salesTaxPercent' || refName === 'campaignTaxType'){
+      if (refName === 'salesTaxPercent' || refName === 'campaignTaxType') {
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: salesTaxViewScroll, animated: true })
-        }, 100); 
+        }, 100);
       }
-      if(refName === 'variantQuantity'){
+      if (refName === 'variantQuantity') {
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: variantViewScroll, animated: true })
-        }, 100); 
+        }, 100);
       }
-      }
+    }
   }
 
 

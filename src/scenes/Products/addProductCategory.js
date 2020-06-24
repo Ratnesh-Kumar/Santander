@@ -87,7 +87,7 @@ export default class AddProductCategory extends BaseComponent {
           let variant = productVariant[i];
           if (!variant.discountinuedProduct) {
             let variantDetail = {};
-            this.state.variantsList.push(variant.variantName)
+            this.state.variantsList.push({ "name": variant.variantName, "quantity": variant.quantityOnHand })
             variantDetail.name = variant.variantName;
             variantDetail.price = variant.comparePrice;
             variantDetail.barcode = variant.barCode;
@@ -251,19 +251,19 @@ export default class AddProductCategory extends BaseComponent {
   getVariantItem(variant) {
     if (this.isValidArray(productVariantArray)) {
       for (let i = 0; i < productVariantArray.length; i++) {
-        if (productVariantArray[i].name === variant) {
+        if (productVariantArray[i].name === variant.name) {
           return productVariantArray[i]
         }
       }
     }
     let variantItem = {};
-    variantItem.name = variant;
+    variantItem.name = variant.name;
     variantItem.price = "";
     variantItem.salePrice = "",
-      variantItem.barcode = "";
+    variantItem.barcode = "";
     variantItem.skuNumber = "";
     variantItem.productCost = "";
-    variantItem.quantity = "1"
+    variantItem.quantity = variant.quantity
     return variantItem;
   }
 
@@ -339,7 +339,7 @@ export default class AddProductCategory extends BaseComponent {
     let variantList = [];
     if (this.isValidArray(this.state.variantsList)) {
       for (let i = 0; i < this.state.variantsList.length; i++) {
-        variantList.push(this.renderQuantityView(this.state.variantsList[i]))
+        variantList.push(this.renderQuantityView(this.state.variantsList[i].name))
       }
     }
     return (
@@ -388,6 +388,13 @@ export default class AddProductCategory extends BaseComponent {
         }
       }
     }
+    if (this.isValidArray(this.state.variantsList)) {
+      for (let i = 0; i < this.state.variantsList.length; i++) {
+        if (this.state.variantsList[i].name == title) {
+          return this.state.variantsList[i];
+        }
+      }
+    }
     return "";
   }
 
@@ -420,14 +427,35 @@ export default class AddProductCategory extends BaseComponent {
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
               this.updateProductVariantList(variantList)
-              this.setState({ variantsList: variantList })
+              this.updateVariantList(variantList)
             }} />
         </View>
       </View>
     )
   }
 
-
+  updateVariantList(variantList) {
+    let newVariantList = [];
+    
+    for (let i = 0; i < variantList.length; i++) {
+      let variantItem = "";
+      for (let j = 0; j < this.state.variantsList.length; j++){
+        if(variantList[i] == this.state.variantsList[j].name){
+          variantItem = this.state.variantsList[j];
+          break;
+        }
+      }
+      if(!this.isValidString(variantItem)){
+        // variantItem.name= variantList[i];
+        // variantItem.quantity="";
+        newVariantList.push({"name": variantList[i], quantity: "1"})
+      }else{
+        newVariantList.push(variantItem)
+      }
+      
+    }
+    this.setState({ variantsList: newVariantList })
+  }
 
   updateProductVariantList(variantList) {
     if (this.isValidArray(productVariantArray) && this.isValidArray(variantList)) {
