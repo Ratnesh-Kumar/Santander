@@ -629,7 +629,12 @@ export default class AddProductCategory extends BaseComponent {
                 label={strings('createCampaignCategories.salesTaxTextInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
-                onChangeText={text => { this.setState({ salesTax: text }) }}
+                onChangeText={text => { 
+                  this.setState({ salesTax: text }) 
+                }}
+                onBlur1={()=> {let tax = parseFloat(this.state.salesTax)
+                  tax = tax.toFixed(2);
+                  this.setState({ salesTax: tax+"" }) }}
                 autoCorrect={false}
                 isLoginScreen={false}
                 returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
