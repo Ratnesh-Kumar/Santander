@@ -20,7 +20,9 @@ var shopSettingConstants = require('./ShopSettingsConstants')
 var colorConstant = require('../../config/colorConstant')
 var globalData = new GlobalData();
 var taxType = [];
-var isComingFromHomePage = false
+var isComingFromHomePage = false;
+var shipProductScroll = 0;
+var estimateProfitScroll = 0;
 
 export default class ShopSettingScreen extends BaseComponent {
   constructor(props) {
@@ -41,6 +43,7 @@ export default class ShopSettingScreen extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
+      handleKeyboardViewHeight: 0,
     }
     isComingFromHomePage = props.isComingFromHomePage;
   }
@@ -153,18 +156,27 @@ export default class ShopSettingScreen extends BaseComponent {
 
   }
 
-
+  onDragScroll() {
+    Keyboard.dismiss();
+    this.setState({
+      handleKeyboardViewHeight: 0
+    })
+  }
 
   render() {
     return (
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={shopSettingStyle.container}>
+      <View behavior="padding" style={shopSettingStyle.container}>
         {this.renderModal()}
         <Header title={strings('shopSettingsScreen.ShopSettingsTitle')} isCrossIconVisible={false} onLeftArrowPressed={()=>{
           if(isComingFromHomePage){
             Actions.home()
           }
         }}/>
-        <ScrollView keyboardShouldPersistTaps={'always'}>
+        <View style={{flex:1}}>
+        <ScrollView ref='scrollView'
+          keyboardDismissMode="interactive"
+          keyboardShouldPersistTaps={'always'} 
+          onScrollBeginDrag={() => this.onDragScroll()}>
           {this.renderPaymentBox()}
           {this.renderTaxBox()}
           {this.renderDiscountBox()}
@@ -174,11 +186,47 @@ export default class ShopSettingScreen extends BaseComponent {
           <AppButton buttonText={strings('shopSettingsScreen.nextButtonText')} onButtonPressed={() => {
             this.handleShopSettings()
           }} />
+          <View style={{ height: this.state.handleKeyboardViewHeight }}>
+            </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+        </View>
+      </View>
     );
   }
 
+  inputBlurred(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (refName === 'shippingCost' || refName === 'handlingCost') {
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: shipProductScroll, animated: true })
+        }, 100);
+      }
+      if (refName === 'profitMargin') {
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: estimateProfitScroll, animated: true })
+        }, 100);
+      }
+    }
+  }
+  inputFocused(refName) {
+    if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+      if (Platform.OS === 'ios') {
+        this.setState({
+          handleKeyboardViewHeight: 250
+        })
+      }
+      if (refName === 'shippingCost' || refName === 'handlingCost') {
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: shipProductScroll, animated: true })
+        }, 100);
+      }
+      if (refName === 'profitMargin') {
+        setTimeout(() => {
+          this.refs.scrollView.scrollTo({ x: 0, y: estimateProfitScroll, animated: true })
+        }, 100);
+      }
+    }
+  }
   renderDiscountBox() {
     return (
       <View>
@@ -324,7 +372,7 @@ export default class ShopSettingScreen extends BaseComponent {
                 onBlur1={()=> {let tax = parseFloat(this.state.taxRateValue)
                   tax = tax.toFixed(2);
                   this.setState({ taxRateValue: tax+"" }) }}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -333,9 +381,16 @@ export default class ShopSettingScreen extends BaseComponent {
                 value={this.state.taxRateValue}
                 textInputName={this.state.taxRateValue}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
+                  if (this.state.estimateProfit)
                   this.refs.profitMargin.focus();
+                  else if (this.state.shipProducts)
+                  this.refs.shippingCost.focus();
+                  else
+                  Keyboard.dismiss()
                 }}
               />
             </View>
@@ -357,18 +412,25 @@ export default class ShopSettingScreen extends BaseComponent {
   renderProfitMarginTextInput() {
     if (this.state.estimateProfit)
       return (
-        <View style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
+        <View 
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          estimateProfitScroll = layout.y
+        }}
+        style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
           <View style={shopSettingStyle.inputWrapper}>
             <View style={shopSettingStyle.validFormSubView}>
               <TextInputMaterial
                 blurText={this.state.profitMarginValue}
                 refsValue={'profitMargin'}
                 ref={'profitMargin'}
+                onFocus={() => this.inputFocused("profitMargin")}
+                onBlur1={() => this.inputBlurred("profitMargin")}
                 label={strings('shopSettingsScreen.profitMarginInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ profitMarginValue: text })}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -378,9 +440,14 @@ export default class ShopSettingScreen extends BaseComponent {
                 textInputName={this.state.profitMarginValue}
                 // errorText={strings('createCampaign.skuErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
+                  if(this.state.shipProducts)
                   this.refs.shippingCost.focus();
+                  else
+                  this.onDragScroll()
                 }}
               />
             </View>
@@ -393,6 +460,11 @@ export default class ShopSettingScreen extends BaseComponent {
     if (this.state.shipProducts)
       return (
         <View
+          
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          shipProductScroll = layout.y
+        }}
           style={[shopSettingStyle.validFormViewContainer, { marginTop: 0 }]}>
 
 
@@ -402,11 +474,13 @@ export default class ShopSettingScreen extends BaseComponent {
                 blurText={this.state.shippingCostValue}
                 refsValue={'shippingCost'}
                 ref={'shippingCost'}
+                onFocus={() => this.inputFocused("shippingCost")}
+                onBlur1={() => this.inputBlurred("shippingCost")}
                 label={strings('shopSettingsScreen.shippingCostInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ shippingCostValue: text })}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -416,7 +490,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 textInputName={this.state.shippingCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
                   this.refs.handlingCost.focus();
                 }}
@@ -430,11 +506,13 @@ export default class ShopSettingScreen extends BaseComponent {
                 blurText={this.state.handlingCostValue}
                 refsValue={'handlingCost'}
                 ref={'handlingCost'}
+                onFocus={() => this.inputFocused("handlingCost")}
+                onBlur1={() => this.inputBlurred("handlingCost")}
                 label={strings('shopSettingsScreen.handlingCostInput')}
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ handlingCostValue: text })}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -444,9 +522,11 @@ export default class ShopSettingScreen extends BaseComponent {
                 textInputName={this.state.handlingCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
-                  Keyboard.dismiss()
+                  this.onDragScroll()
                 }}
               />
             </View>

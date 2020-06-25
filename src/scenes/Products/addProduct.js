@@ -122,6 +122,7 @@ export default class AddProductScreen extends BaseComponent {
         productPriceValue: fetchData.defaultDetails.comparePrice + "",
         productSaleValue: fetchData.defaultDetails.productPrice + "",
         productWeight: fetchData.defaultDetails.weight + "",
+        weightUnit: fetchData.defaultDetails.weightUnit + "",
         productBarcodeValue: fetchData.defaultDetails.barCode + "",
         productCostValue: fetchData.defaultDetails.productCost + "",
         productSkuValue: fetchData.defaultDetails.sku,
@@ -281,7 +282,7 @@ export default class AddProductScreen extends BaseComponent {
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
-        "weightUnit": this.state.weightUnit,
+        "weightUnit": this.state.weightUnit.toString().trim(),
         "productImage": imageFile.name,
         "productURL": globalData.getImagePathProduct()
       }

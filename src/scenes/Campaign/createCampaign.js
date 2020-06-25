@@ -39,6 +39,7 @@ export default class CampaignScreen extends BaseComponent {
     this.state = {
       campaignName: '',
       campaignQuantity: "1",
+      variantListObject: [],
       variantsList: [],
       categoryList: [],
       salesTax: globalData.getSalesTax() + "",
@@ -92,7 +93,7 @@ export default class CampaignScreen extends BaseComponent {
           let variant = productVariant[i];
           if (!variant.discountinuedProduct) {
             let variantDetail = {};
-            this.state.variantsList.push(variant.variantName)
+            this.state.variantsList.push({ "name": variant.variantName, "quantity": variant.quantityOnHand })
             variantDetail.name = variant.variantName;
             variantDetail.price = variant.comparePrice;
             variantDetail.barcode = variant.barCode;
@@ -231,18 +232,18 @@ export default class CampaignScreen extends BaseComponent {
   getVariantItem(variant) {
     if (this.isValidArray(campaignVariantArray)) {
       for (let i = 0; i < campaignVariantArray.length; i++) {
-        if (campaignVariantArray[i].name === variant) {
+        if (campaignVariantArray[i].name === variant.name) {
           return campaignVariantArray[i]
         }
       }
     }
     let variantItem = {};
-    variantItem.name = variant;
+    variantItem.name = variant.name;
     variantItem.price = "";
     variantItem.salePrice = "",
       variantItem.barcode = "";
     variantItem.skuNumber = "";
-    variantItem.quantity = "1"
+    variantItem.quantity = variant.quantity
     return variantItem;
   }
 
@@ -328,7 +329,7 @@ export default class CampaignScreen extends BaseComponent {
     let variantList = [];
     if (this.isValidArray(this.state.variantsList)) {
       for (let i = 0; i < this.state.variantsList.length; i++) {
-        variantList.push(this.renderQuantityView(this.state.variantsList[i]))
+        variantList.push(this.renderQuantityView(this.state.variantsList[i].name))
       }
     }
     return (
@@ -371,6 +372,14 @@ export default class CampaignScreen extends BaseComponent {
         }
       }
     }
+    if (this.isValidArray(this.state.variantsList)) {
+      for (let i = 0; i < this.state.variantsList.length; i++) {
+        if (this.state.variantsList[i].name == title) {
+          return this.state.variantsList[i];
+        }
+      }
+    }
+
     return "";
   }
 
@@ -402,12 +411,54 @@ export default class CampaignScreen extends BaseComponent {
             inputBlur={() => { this.inputBlurred('variantTagView') }}
             updatedList={(variantList) => {
               globalData.setVariantsCampaign(variantList);
-              //this.updateProductVariantList(variantList)
-              this.setState({ variantsList: variantList })
+              this.updateVariantList(variantList)
+              this.updateCampaignVariantList(variantList)
+
             }} />
         </View>
       </View>
     )
+  }
+
+  updateVariantList(variantList) {
+    let newVariantList = [];
+    
+    for (let i = 0; i < variantList.length; i++) {
+      let variantItem = "";
+      for (let j = 0; j < this.state.variantsList.length; j++){
+        if(variantList[i] == this.state.variantsList[j].name){
+          variantItem = this.state.variantsList[j];
+          break;
+        }
+      }
+      if(!this.isValidString(variantItem)){
+        // variantItem.name= variantList[i];
+        // variantItem.quantity="";
+        newVariantList.push({"name": variantList[i], quantity: "1"})
+      }else{
+        newVariantList.push(variantItem)
+      }
+    }
+    this.setState({ variantsList: newVariantList })
+  }
+
+  updateCampaignVariantList(variantList) {
+    if (this.isValidArray(campaignVariantArray) && this.isValidArray(variantList)) {
+      for (let i = 0; i < campaignVariantArray.length; i++) {
+        let isExistFlag = false
+        for (let j = 0; j < variantList.length; j++) {
+          if (campaignVariantArray[i].name === variantList[j]) {
+            isExistFlag = true;
+          }
+        }
+        if (!isExistFlag) {
+          campaignVariantArray.splice(campaignVariantArray.indexOf(campaignVariantArray[i]), 1)
+        }
+      }
+    } else if (this.isValidArray(variantList)) {
+      campaignVariantArray = [];
+    }
+
   }
 
   rendercampaignQuantity() {
@@ -669,7 +720,7 @@ export default class CampaignScreen extends BaseComponent {
         "reorderLevel": 10,
         "leadTime": 20,
         "quantityOnHand": this.isValidString(data.campaignQuantity) ? data.campaignQuantity : "1",
-        "asOfDate": "12-Jan-2019",
+        "asOfDate": this.getFormattedDate(),
         "requiredShipping": true,
         "taxable": this.state.isSalesTax,
         "taxCode": this.state.salesTaxType,
@@ -697,7 +748,7 @@ export default class CampaignScreen extends BaseComponent {
       "reorderLevel": 10,
       "leadTime": 20,
       "quantityOnHand": this.isValidString(variant.quantity) ? variant.quantity : "1",
-      "asOfDate": "12-Jan-2019",
+      "asOfDate": this.getFormattedDate(),
       "requiredShipping": true,
       "taxable": true,
       "taxCode": "CA",
