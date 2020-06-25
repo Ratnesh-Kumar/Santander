@@ -90,7 +90,7 @@ export default class extends PureComponent {
         <Text
           testID={'textinputcomponent_text_' + label}
           accessibilityLabel={'textinputcomponent_text_' + label}
-          style={{
+          style={[{
             left: '50%',
             top: 0,
             paddingRight,
@@ -99,7 +99,7 @@ export default class extends PureComponent {
             fontFamily,
             fontSize,
             fontWeight,
-          }}>
+          }, this.props.labelStyle]}>
           {label}
         </Text>
       </Animated.View>
