@@ -290,7 +290,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={(isAutoCreatedShop) ? '' : this.state.buisnessName}
                             textInputName={this.state.buisnessName}
                             //errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
