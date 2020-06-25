@@ -324,7 +324,7 @@ export default class ShopSettingScreen extends BaseComponent {
                 onBlur1={()=> {let tax = parseFloat(this.state.taxRateValue)
                   tax = tax.toFixed(2);
                   this.setState({ taxRateValue: tax+"" }) }}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -333,7 +333,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 value={this.state.taxRateValue}
                 textInputName={this.state.taxRateValue}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
                   this.refs.profitMargin.focus();
                 }}
@@ -368,7 +370,7 @@ export default class ShopSettingScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ profitMarginValue: text })}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -378,7 +380,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 textInputName={this.state.profitMarginValue}
                 // errorText={strings('createCampaign.skuErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
                   this.refs.shippingCost.focus();
                 }}
@@ -406,7 +410,7 @@ export default class ShopSettingScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ shippingCostValue: text })}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -416,7 +420,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 textInputName={this.state.shippingCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
                   this.refs.handlingCost.focus();
                 }}
@@ -434,7 +440,7 @@ export default class ShopSettingScreen extends BaseComponent {
                 maxLength={100}
                 autoCapitalize={'none'}
                 onChangeText={text => this.setState({ handlingCostValue: text })}
-                returnKeyType={'done'}
+                //returnKeyType={'done'}
                 autoCorrect={false}
                 isLoginScreen={false}
                 style={shopSettingStyle.input}
@@ -444,7 +450,9 @@ export default class ShopSettingScreen extends BaseComponent {
                 textInputName={this.state.handlingCostValue}
                 // errorText={strings('createCampaign.campaignNameErrorText')}
                 underlineHeight={2}
-                keyboardType="number"
+                //keyboardType="number"
+                returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
+                keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
                   Keyboard.dismiss()
                 }}

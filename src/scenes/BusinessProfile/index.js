@@ -1086,7 +1086,7 @@ export default class BusinessProfileView extends BaseComponent {
             "nationality": "USA",
             "address": this.state.address,
             "city": this.state.city,
-            "state": this.state.postalState,
+            "state": this.state.postalState.toString().trim(),
             "district": "Santa ----",
             "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
@@ -1111,6 +1111,7 @@ export default class BusinessProfileView extends BaseComponent {
                 "showDiscounts": data.showDiscount,
                 "shipProducts": data.shipProducts,
                 "defaultTaxType": data.flatTaxRateType,
+                "estimateProfit":data.estimateProfit,
                 "defaultPaymentType": "CREDIDCARD",
                 "txSettings": [{
                     "appTransactionType": "DEFAULT",

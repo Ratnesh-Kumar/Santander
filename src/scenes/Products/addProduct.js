@@ -281,7 +281,7 @@ export default class AddProductScreen extends BaseComponent {
         "barcode": this.state.productBarcodeValue,
         "skuNumber": this.state.productSkuValue,
         "weight": this.state.productWeight,
-        "weightUnit": this.state.weightUnit,
+        "weightUnit": this.state.weightUnit.toString().trim(),
         "productImage": imageFile.name,
         "productURL": globalData.getImagePathProduct()
       }

@@ -42,7 +42,7 @@ export default class CampaignScreen extends BaseComponent {
       campaignCostValue: '',
       campaignProfitValue: '',
       campaignMarginValue: '',
-      campaignSkuValue: '',
+      campaignSku: '',
       campaignBarcodeValue: '',
       pickedImage: compaignConstants.CAMERA_ICON,
       isBarcodeDisplay: false,
@@ -90,7 +90,7 @@ export default class CampaignScreen extends BaseComponent {
         campaignPriceValue: productItem.defaultDetails.comparePrice + "",
         campaignSaleValue: productItem.defaultDetails.productPrice + "",
         campaignBarcodeValue: productItem.defaultDetails.barCode + "",
-        campaignSkuValue: productItem.defaultDetails.sku,
+        campaignSku: productItem.defaultDetails.sku.toString().trim(),
         pickedImage: (this.isValidString(productItem.defaultDetails.productURL)) ? { uri: productItem.defaultDetails.productURL } : compaignConstants.CAMERA_ICON,
         showImage: (this.isValidString(productItem.defaultDetails.productURL)) ? true: false
       })
