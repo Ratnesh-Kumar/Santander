@@ -744,7 +744,7 @@ export default class BusinessProfileView extends BaseComponent {
                             //errorText={strings('BuisnessProfile.PhoneTextInputError')}
                             underlineHeight={2}
                             returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
-                            keyBoardType={'decimal-pad'}
+                            keyBoardType={'phone-pad'}
                             onSubmitEditing={event => {
                                 this.refs.website.focus();
                             }}
