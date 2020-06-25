@@ -116,7 +116,7 @@ export default class BaseComponent extends Component {
 
   async createShop() {
     let createShopBody = {
-      "shopName": SHOP_NAME+this.getRandomNumber(),
+      "shopName": SHOP_NAME + this.getRandomNumber(),
       "country": "US",
       "locale": "en_us"
     }
@@ -164,6 +164,13 @@ export default class BaseComponent extends Component {
     }
   }
 
+  getFormattedDate() {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let current_datetime = new Date()
+    let formatted_date = current_datetime.getDate() + "-" + months[current_datetime.getMonth()] + "-" + current_datetime.getFullYear()
+    console.log(formatted_date)
+    return formatted_date;
+  }
 
 
 
@@ -209,7 +216,7 @@ export default class BaseComponent extends Component {
   // }
   handlerBusinessId(businessObject) {
     globalData.setBusinessId('')
-        globalData.setShopName('')
+    globalData.setShopName('')
     if (this.isValidString(businessObject)) {
       businessObject = JSON.parse(businessObject)
       if (businessObject.username == globalData.getUserInfo().username) {
@@ -226,10 +233,10 @@ export default class BaseComponent extends Component {
 
   }
 
-  getRandomNumber(){
+  getRandomNumber() {
     var x = Math.floor((Math.random() * 1000) + 1)
     return x.toString()
   }
 
-  
+
 }
