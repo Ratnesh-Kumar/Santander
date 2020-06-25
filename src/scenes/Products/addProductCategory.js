@@ -76,11 +76,14 @@ export default class AddProductCategory extends BaseComponent {
         }
         this.state.categoryList = tags
       }
-
+      console.log('##########  fetchProductData.defaultDetails ::: ',JSON.stringify(fetchProductData.defaultDetails));
       productDetails.productQuantity = fetchProductData.defaultDetails.quantityOnHand;
       this.setState({
-        productQuantity: fetchProductData.defaultDetails.quantityOnHand
+        productQuantity: fetchProductData.defaultDetails.quantityOnHand,
+        salesTaxType: fetchProductData.defaultDetails.taxCode,
+        salesTaxSwitch: fetchProductData.defaultDetails.taxable,
       })
+      console.log('##########  salesTaxSwitch ::: ',this.state.salesTaxSwitch);
       if (this.isValidArray(fetchProductData.productVariants)) {
         let productVariant = fetchProductData.productVariants;
         for (let i = 0; i < productVariant.length; i++) {
@@ -278,6 +281,7 @@ export default class AddProductCategory extends BaseComponent {
     productDetails.productCategory = this.isValidArray(this.state.categoryList) ? this.state.categoryList[0] : ""
     productDetails.productCategoryTags = this.getCategoryTags(this.state.categoryList)
     var requestBody = this.getRequestBody(productDetails, variantList);
+    console.log('########### requestBody ',JSON.stringify(requestBody))
     var responseData = "";
     if (isUpdate) {
       let productUpdateURL = constants.GET_PRODUCT_DETAIL.replace(constants.PRODUCT_ID, productId) + globalData.getBusinessId();
@@ -561,6 +565,7 @@ export default class AddProductCategory extends BaseComponent {
   }
 
   renderSalesTaxInput() {
+    console.log('#########')
     let taxTypeTitle = this.state.salesTaxType === '' ? strings('createCampaignCategories.salesTaxTypeTextInput') : this.state.salesTaxType
     if (this.state.salesTaxSwitch)
       return (
@@ -682,8 +687,8 @@ export default class AddProductCategory extends BaseComponent {
         "quantityOnHand": this.isValidString(data.productQuantity) ? data.productQuantity : "1",
         "asOfDate": "12-Jan-2019",
         "requiredShipping": true,
-        "taxable": true,
-        "taxCode": "CA",
+        "taxable": this.state.salesTaxSwitch,
+        "taxCode": this.state.salesTaxType,
         "displayProduct": true,
         "comparePrice": data.productPrice,
         "productCost": data.productCost,
