@@ -337,7 +337,12 @@ export default class ShopSettingScreen extends BaseComponent {
                 returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
                 keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
+                  if (this.state.estimateProfit)
                   this.refs.profitMargin.focus();
+                  else if (this.state.shipProducts)
+                  this.refs.shippingCost.focus();
+                  else
+                  Keyboard.dismiss()
                 }}
               />
             </View>
@@ -384,7 +389,10 @@ export default class ShopSettingScreen extends BaseComponent {
                 returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
                 keyBoardType={'decimal-pad'}
                 onSubmitEditing={event => {
+                  if(this.state.shipProducts)
                   this.refs.shippingCost.focus();
+                  else
+                  Keyboard.dismiss()
                 }}
               />
             </View>
