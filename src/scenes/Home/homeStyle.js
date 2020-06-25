@@ -48,9 +48,9 @@ export default (styles = StyleSheet.create({
     alignItems: 'center', 
     width: constants.SCREEN_WIDTH - 40,
     height:constants.SCREEN_HEIGHT/3,
-    borderColor:colorConstants.GRAY_MEDIUM_COLOR,
-    borderWidth:2,
-    borderRadius:1,
+    // borderColor:colorConstants.GRAY_MEDIUM_COLOR,
+    // borderWidth:2,
+    // borderRadius:1,
     marginTop:10
   },
   cardViewStyle: {

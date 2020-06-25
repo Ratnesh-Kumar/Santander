@@ -33,6 +33,9 @@ var globalData = new GlobalData();
 var industryTypeData = [];
 var countryNameData = [];
 var isComingFromHomePage = false;
+var linkViewScroll = 0;
+var addressViewScroll = 0;
+var pincodeViewScroll = 0;
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -64,7 +67,8 @@ export default class BusinessProfileView extends BaseComponent {
             industryType: '',
             validPhone: "",
             typePhone: "",
-            valuePhone: ""
+            valuePhone: "",
+            handleKeyboardViewHeight: 0
 
         }
         shopInfo = props.shopInfo === undefined ? "" : props.shopInfo;
@@ -80,6 +84,8 @@ export default class BusinessProfileView extends BaseComponent {
         });
     }
     componentDidMount() {
+        countryNameData = globalData.getCountryList();
+        console.log('####### countryList :: ',JSON.stringify(countryNameData))
         this.getBusinessData()
     }
 
@@ -113,6 +119,7 @@ export default class BusinessProfileView extends BaseComponent {
                 <PhoneInput
                     style={[businessStyle.phoneInput,{paddingLeft:10}]}
                     ref="phoneCountry"
+                    in
                     // ref={(ref) => { this.phoneCountry = ref; }}
                     //returnKeyType={'Next'}
                     onSubmitEditing={event => {
@@ -354,7 +361,12 @@ export default class BusinessProfileView extends BaseComponent {
 
     renderAddressForm() {
         return (
-            <View>
+            <View 
+            onLayout={event => {
+                const layout = event.nativeEvent.layout;
+                addressViewScroll = layout.y
+              }}
+            >
                 <View style={[businessStyle.validFormSubView, { paddingTop: 20, paddingLeft: 20 }]}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{strings('BuisnessProfile.AddressText')}</Text>
                 </View>
@@ -458,7 +470,11 @@ export default class BusinessProfileView extends BaseComponent {
                                 //errorText={strings('BuisnessProfile.AddressTextInputError')}
                                 underlineHeight={2}
                                 keyboardType="email-address"
-                                onFocus={() => { Picker.hide() }}
+                                onFocus={() => {
+                                    Picker.hide()
+                                    this.inputFocused("Address")
+                                }}
+                                onBlur1={() => this.inputBlurred("Address")}
                                 onSubmitEditing={event => {
                                     this.refs.City.focus();
                                 }}
@@ -485,10 +501,15 @@ export default class BusinessProfileView extends BaseComponent {
                                 textInputName={this.state.city}
                                 //errorText={strings('BuisnessProfile.CityTextInputError')}
                                 underlineHeight={2}
-                                onFocus={() => { Picker.hide() }}
+                                onFocus={() => {
+                                    Picker.hide()
+                                    this.inputFocused("City")
+                                }}
+                                onBlur1={() => this.inputBlurred("City")}
                                 keyboardType="email-address"
                                 onSubmitEditing={event => {
-                                    this.refs.State.focus();
+                                    Keyboard.dismiss()
+                                    this.refs.PostalCode.focus();
                                 }}
                             />
                         </View>
@@ -511,11 +532,34 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderPinCode() {
+        let postalStateSelected = this.state.postalState === '' ? strings('BuisnessProfile.StateTextInput') : this.state.postalState
         return (
-            <View style={businessStyle.validFormViewContainerZip}>
+            <View 
+            onLayout={event => {
+                const layout = event.nativeEvent.layout;
+                pincodeViewScroll = layout.y
+              }}
+            style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperSmall}>
+                <View style={businessStyle.containerStyleWithBorder}>
+                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
+                  {postalStateSelected}</Text>
+                <View
+                  style={{ position: 'absolute', right: 10, top: 10 }}>
+                  <TouchableOpacity onPress={() => 
+                    this.renderStatePicker()}
+                    >
+                    <Image
+                      style={{ width: 35, height: 35, tintColor:colorConstant.GREY_DARK_COLOR }}
+                      source={require('../.././public/images/dropDown.png')}
+                    />
+                  </TouchableOpacity>
+                </View>
+                </View>
+              </View>
+                {/* <View style={businessStyle.inputWrapperSmall}>
                     <View style={businessStyle.validFormSecondFieldView}>
-                        <TextInputMaterial
+                         <TextInputMaterial
                             blurText={this.state.postalState}
                             refsValue={'State'}
                             ref={'State'}
@@ -538,9 +582,9 @@ export default class BusinessProfileView extends BaseComponent {
                             onSubmitEditing={event => {
                                 this.refs.PostalCode.focus();
                             }}
-                        />
+                        /> 
                     </View>
-                </View>
+                </View> */}
                 <View style={businessStyle.inputWrapperSmall}>
                     <View style={businessStyle.validFormSecondFieldViewZip}>
                         <TextInputMaterial
@@ -563,9 +607,18 @@ export default class BusinessProfileView extends BaseComponent {
                             underlineHeight={2}
                             returnKeyType={(Platform.OS === 'ios') ? 'done' : 'next'}
                             keyBoardType={'decimal-pad'}
-                            onFocus={() => { Picker.hide() }}
+                            onFocus={() => {
+                                Picker.hide()
+                                this.inputFocused("PostalCode")
+                            }}
+                            onBlur1={() => this.inputBlurred("PostalCode")}
                             onSubmitEditing={event => {
                                 Keyboard.dismiss()
+                                if (Platform.OS === 'ios') {
+                                    this.setState({
+                                        handleKeyboardViewHeight: 0
+                                    })
+                                }
 
                             }}
                         />
@@ -699,7 +752,10 @@ export default class BusinessProfileView extends BaseComponent {
 
     renderLinks() {
         return (
-            <View>
+            <View onLayout={event => {
+                const layout = event.nativeEvent.layout;
+                linkViewScroll = layout.y
+              }}>
                 <View style={[businessStyle.validFormSubView, { paddingTop: 20,paddingLeft:20 }]}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{strings('BuisnessProfile.UrlText')}</Text>
                 </View>
@@ -724,7 +780,11 @@ export default class BusinessProfileView extends BaseComponent {
                                 textInputName={this.state.websiteUrl}
                                 underlineHeight={2}
                                 keyboardType="email-address"
-                                onFocus={() => { Picker.hide() }}
+                                onFocus={() => {
+                                    Picker.hide()
+                                    this.inputFocused("website")
+                                }}
+                                onBlur1={() => this.inputBlurred("website")}
                                 onSubmitEditing={event => {
                                     this.refs.fbUrl.focus();
                                 }}
@@ -749,7 +809,11 @@ export default class BusinessProfileView extends BaseComponent {
                                 textInputName={this.state.yelpUrl}
                                 underlineHeight={2}
                                 keyboardType="email-address"
-                                onFocus={() => { Picker.hide() }}
+                                onFocus={() => {
+                                    Picker.hide()
+                                    this.inputFocused("fbUrl")
+                                }}
+                                onBlur1={() => this.inputBlurred("fbUrl")}
                                 onSubmitEditing={event => {
                                     this.refs.yelpUrl.focus();
                                 }}
@@ -774,7 +838,11 @@ export default class BusinessProfileView extends BaseComponent {
                                 textInputName={this.state.fbUrl}
                                 underlineHeight={2}
                                 keyboardType="email-address"
-                                onFocus={() => { Picker.hide() }}
+                                onFocus={() => {
+                                    Picker.hide()
+                                    this.inputFocused("yelpUrl")
+                                }}
+                                onBlur1={() => this.inputBlurred("yelpUrl")}
                                 onSubmitEditing={event => {
                                     this.refs.Address.focus();
                                 }}
@@ -791,7 +859,7 @@ export default class BusinessProfileView extends BaseComponent {
         // console.log("######### usierId : " + globalData.getUserInfo().key)
         //console.log("########## shopName : " +globalData.getShopName())
         return (
-            <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={0} style={businessStyle.renderContainer}>
+            <View style={businessStyle.renderContainer}>
                 {this.renderModal()}
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={strings('BuisnessProfile.Title')}
                     onLeftArrowPressed={() => {
@@ -802,7 +870,10 @@ export default class BusinessProfileView extends BaseComponent {
                         }
                     }} />
                 <View style={businessStyle.viewContainer}>
-                    <ScrollView keyboardShouldPersistTaps={'always'} style={businessStyle.scrollViewStyle}>
+                    <ScrollView ref='scrollView'
+                        keyboardDismissMode="interactive"
+                        keyboardShouldPersistTaps={'always'}
+                        onScrollBeginDrag={() => this.onDragScroll()}>
                         {this.renderBuisnessForm()}
                         {this.renderPhone()}
                         {this.renderLinks()}
@@ -814,9 +885,11 @@ export default class BusinessProfileView extends BaseComponent {
                             Picker.hide();
                             this.handleBusinessProfile()
                         }} />
+                        <View style={{ height: this.state.handleKeyboardViewHeight }}>
+                    </View>
                     </ScrollView>
                 </View>
-            </KeyboardAvoidingView>
+            </View>
         );
     }
 
@@ -850,45 +923,154 @@ export default class BusinessProfileView extends BaseComponent {
         Picker.show();
 
     }
+    
+
+    renderStatePicker() {
+        Keyboard.dismiss()
+        Picker.hide();
+        this.inputFocused('statePicker')
+        if(this.isValidString(this.state.country) && this.isValidArray(countryNameData)){
+            let stateNameData = globalData.getStateList(this.state.country);
+            Picker.init({
+                pickerData: stateNameData,
+                pickerTitleText: 'Select State',
+                pickerConfirmBtnText: 'Done',
+                pickerCancelBtnText: 'Cancel',
+                selectedValue: [stateNameData[0].toString().trim()],
+                pickerBg: [255, 255, 255, 1],
+    
+                onPickerConfirm: data => {
+                    this.setState({
+                        postalState: data
+                    })
+                    this.hidePicker()
+                },
+                onPickerCancel: data => {
+                    this.hidePicker()
+                },
+                onPickerSelect: data => {
+                    //console.log(data);
+                }
+            });
+            Picker.show();
+        }
+        else{
+            alert ('Please select Country')
+        }
+    }
+    hidePicker(){
+        Picker.hide();
+        this.inputBlurred('statePicker')
+        if (Platform.OS === 'ios') {
+              this.setState({
+                handleKeyboardViewHeight: 0
+              })
+            }
+      }
 
     renderCountryPicker() {
         Keyboard.dismiss()
         Picker.hide();
-        countryNameData = ['Brazil', 'Maxico', 'Poland', 'Spain', 'UK', 'US'];
-        Picker.init({
-            pickerData: countryNameData,
-            pickerTitleText: 'Select Country',
-            pickerConfirmBtnText: 'Done',
-            pickerCancelBtnText: 'Cancel',
-            selectedValue: [countryNameData[0].toString().trim()],
-            pickerBg: [255, 255, 255, 1],
+        if (this.isValidArray(countryNameData)) {
+            Picker.init({
+                pickerData: countryNameData,
+                pickerTitleText: 'Select Country',
+                pickerConfirmBtnText: 'Done',
+                pickerCancelBtnText: 'Cancel',
+                selectedValue: [countryNameData[0].toString().trim()],
+                pickerBg: [255, 255, 255, 1],
 
-            onPickerConfirm: data => {
+                onPickerConfirm: data => {
+                    this.setState({
+                        country: data
+                    })
+                },
+                onPickerCancel: data => {
+                    Picker.hide();
+                },
+                onPickerSelect: data => {
+                    //console.log(data);
+                }
+            });
+            Picker.show();
+        }
+    }
+
+    onDragScroll() {
+        Keyboard.dismiss();
+        this.setState({
+          handleKeyboardViewHeight: 0
+        })
+      }
+
+    inputBlurred(refName) {
+        if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+          if(refName === 'Address' || refName === 'City'){
+            setTimeout(() => {
+              this.refs.scrollView.scrollTo({ x: 0, y: addressViewScroll, animated: true })
+            }, 100); 
+          }
+          if(refName === 'yelpUrl' || refName === 'fbUrl' || refName === 'website'){
+            setTimeout(() => {
+              this.refs.scrollView.scrollTo({ x: 0, y: linkViewScroll, animated: true })
+            }, 100); 
+          }
+          if(refName === 'PostalCode' || refName === 'statePicker'){
+            setTimeout(() => {
+              this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
+            }, 100); 
+        }
+        }
+      }
+      inputFocused(refName) {
+        if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
+            if (Platform.OS === 'ios') {
                 this.setState({
-                    country: data
+                  handleKeyboardViewHeight: 180
                 })
-            },
-            onPickerCancel: data => {
-                Picker.hide();
-            },
-            onPickerSelect: data => {
-                //console.log(data);
+              }
+          if(refName === 'Address' || refName === 'City'){
+            setTimeout(() => {
+              this.refs.scrollView.scrollTo({ x: 0, y: addressViewScroll, animated: true })
+            }, 100); 
+          }
+          if(refName === 'yelpUrl' || refName === 'fbUrl' || refName === 'website'){
+            setTimeout(() => {
+              this.refs.scrollView.scrollTo({ x: 0, y: linkViewScroll, animated: true })
+            }, 100); 
+          }
+          if(refName === 'statePicker'){
+            setTimeout(() => {
+              this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
+            }, 100); 
+          }
+            if (refName === 'PostalCode') {
+                if (Platform.OS === 'ios') {
+                    this.setState({
+                        handleKeyboardViewHeight: 250
+                    })
+                }
             }
-        });
-        Picker.show();
-    }
+            setTimeout(() => {
+                this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
+              }, 100); 
+          }
+      }
+    
+    
 
-    inputFocused(refName) {
-        setTimeout(() => {
-            let scrollResponder = this.refs.scrollView.getScrollResponder();
-            scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
-                // eslint-disable-next-line no-undef
-                ReactNative.findNodeHandle(this.refs[refName]),
-                140, //additionalOffset
-                true,
-            );
-        }, 50);
-    }
+
+    // inputFocused(refName) {
+    //     setTimeout(() => {
+    //         let scrollResponder = this.refs.scrollView.getScrollResponder();
+    //         scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+    //             // eslint-disable-next-line no-undef
+    //             ReactNative.findNodeHandle(this.refs[refName]),
+    //             140, //additionalOffset
+    //             true,
+    //         );
+    //     }, 50);
+    // }
 
     getRequestBody(data) {
         console.log("getRequestBody :" + JSON.stringify(data))

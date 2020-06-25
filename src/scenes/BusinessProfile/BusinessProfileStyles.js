@@ -28,6 +28,17 @@ export default (styles = StyleSheet.create({
     inputWrapperSmall: {
         width: (DEVICE_WIDTH - 20) / 2,
     },
+    containerStyleWithBorder:{
+        width: (DEVICE_WIDTH - 60) / 2,
+        backgroundColor:colorConstant.WHITE_COLOR,
+        height:60,
+        borderColor:colorConstant.GREY_BORDER_COLOR,
+        borderWidth:2,
+        borderRadius:2,
+        borderBottomColor:colorConstant.GREY_DARK_COLOR,
+        marginTop: 10,
+        marginLeft:10
+      },
     inputWrapperPhoneCode: {
         flex: 1
         // width: (DEVICE_WIDTH - 20)/3,

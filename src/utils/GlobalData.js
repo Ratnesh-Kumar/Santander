@@ -42,6 +42,7 @@ var businessId = '';
 var shopName = '';
 var shopAutoCreated = false;
 var salesTaxTypeList = [];
+var countryStateList = [];
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -326,6 +327,48 @@ export class GlobalData extends Component {
     getShopName() {
         return shopName;
     }
+    setCountryAndStateList(stateList){
+      if (this.isValidArray(stateList)) {
+           countryStateList = JSON.parse(stateList);
+      }
+    }
+
+    getCountryAndStateList(){
+       return countryStateList;
+    }
+
+    getCountryList() {
+        let countryStateList = this.getCountryAndStateList();
+        let countryList = [];
+        if (this.isValidArray(countryStateList)) {
+          for (let i = 0; i < countryStateList.length; i++) {
+            countryList.push(countryStateList[i].country)
+          }
+        }
+        return countryList;
+      }
+    
+      getStateList(countryName){
+         let countryStateList = this.getCountryAndStateList();
+         let stateList = [];
+         console.log('######## countryName ::: ',countryName);
+            console.log('######## countryStateList.length ::: ',countryStateList.length);
+            if(this.isValidString(countryName) && this.isValidArray(countryStateList)){
+                for (let i = 0; i < countryStateList.length; i++) {
+                    if (countryName == countryStateList[i].country) {
+                        console.log('######## countryStateList.length ::: ',i);
+                        let stateArr = countryStateList[i].states;
+                        console.log('######## stateArr ::: ',stateArr);
+                        for (let j = 0; j < stateArr.length; j++) {
+                            stateList.push(stateArr[j])
+                        }
+                    }
+                }
+            }
+            console.log('######## stateList in Base component ::: ',JSON.stringify(stateList));
+            return stateList;
+      }
+    
 
     setSalesTaxTypeList(list) {
         if (this.isValidArray(list)) {

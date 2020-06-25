@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Image, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Constants from '../../config/Constants'
-import { TBC_COLOR } from '../../config/colorConstant';
+import { getRemoteConfig } from '../../config/firebaseFirestore';
 var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant')
 import splashStyle from './splashStyle'
@@ -20,6 +20,7 @@ export default class splashscreen extends BaseComponent {
   }
 
   async componentDidMount() {
+    await getRemoteConfig();
     let isUserAlreadySignIn = await this.isSignedIn();
     if (isUserAlreadySignIn) {
       let userInfo = await this.getCurrentUser();

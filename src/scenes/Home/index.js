@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import homeStyle from './homeStyle';
@@ -36,18 +36,29 @@ export default class HomeScreen extends BaseComponent {
       })
     }
     this.displayConsole()
-    await getRemoteConfig();
+    // await getRemoteConfig();
   }
   renderGraphView() {
     return (
       <View style={homeStyle.graphViewStyle}>
-        <Text style={{ fontSize: 16, margin: 10 }}>
-          {strings('screens.spaceforGraph')}
+        <Image 
+        style={{width: constants.SCREEN_WIDTH /3,
+          height:constants.SCREEN_HEIGHT/5, }}
+        source={require('../.././public/images/digishop_home.png')} />
+        <Text style={{ fontSize: 16,  fontWeight:'bold' }}>
+          {strings('screens.learnHow')}
         </Text>
+        <Text style={{ fontSize: 32,  fontWeight:'bold',color:colorConstant.SANT_RED_COLOR }}>
+          {strings('screens.homeScreen')}
+        </Text>
+        <Text style={{ fontSize: 16,  fontWeight:'bold'}}>
+          {strings('screens.mobileAppEffectively')}
+        </Text>
+        <View style={{height:3,marginTop:5,backgroundColor:colorConstant.GREY_DARK_COLOR,width:constants.SCREEN_WIDTH/3+40}}/>
       </View>
     );
   }
-  render() {
+  render() { 
     return (
       <View style={homeStyle.container}>
         <Header isleftArrowDisplay={false} title={strings('screens.homeScreen')} isSignOutDisplay={this.state.isSignOutDisplay} rightText={strings('screens.signOut')} onRightPressed={() => {
