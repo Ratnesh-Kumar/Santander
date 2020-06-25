@@ -121,8 +121,9 @@ export default class BusinessProfileView extends BaseComponent {
                 <PhoneInput
 
                     ref="phoneCountry"
-                    style={{ alignItems: 'center', justifyContent: 'center', paddingLeft: 15 }}
-                    flagStyle={{ width: 36, height: 24 }}
+                    style={{alignItems:'center', justifyContent:'center', paddingLeft:15}}
+                    flagStyle={{width: 36, height: 24}}
+                    disabled={true}
                     initialCountry={constants.COUNTRY_NAME.toLowerCase()}
                     //returnKeyType={'Next'}
                     value={this.state.phone}

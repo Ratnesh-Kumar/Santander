@@ -79,9 +79,14 @@ export default class CampaignScreen extends BaseComponent {
       }
 
       campaignDetails.campaignQuantity = fetchCampaignData.defaultDetails.quantityOnHand;
-      this.setState({
-        campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand
-      })
+      setTimeout(()=>{
+        this.setState({
+          campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand, 
+          salesTaxType:fetchCampaignData.defaultDetails.taxCode,
+          isSalesTax: fetchCampaignData.defaultDetails.taxable,
+        })
+      }, 100)
+      
       if (this.isValidArray(fetchCampaignData.productVariants)) {
         let productVariant = fetchCampaignData.productVariants;
         for (let i = 0; i < productVariant.length; i++) {
@@ -560,24 +565,6 @@ export default class CampaignScreen extends BaseComponent {
             </View>
           </View>
 
-          {/* <View style={campaignStyle.priceInputWrapper}>
-            <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
-              <View
-                style={campaignStyle.containerStyleWithBorder}>
-                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
-                  {salesTaxTypeTitle}</Text>
-                <View
-                  style={{ position: 'absolute', right: 10, top: 10 }}>
-                  <TouchableOpacity onPress={() => this.handleTaxPicker()}>
-                    <Image
-                      style={{ width: 35, height: 35 }}
-                      source={require('../.././public/images/dropDown.png')}
-                    />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </View> */}
           <View style={campaignStyle.priceInputWrapper}>
             <View style={[campaignStyle.priceFormSubView, { paddingLeft: 15 }]}>
               <TextInputMaterial
@@ -733,10 +720,10 @@ export default class CampaignScreen extends BaseComponent {
         "reorderLevel": 10,
         "leadTime": 20,
         "quantityOnHand": this.isValidString(data.campaignQuantity) ? data.campaignQuantity : "1",
-        "asOfDate": "12-Jan-2019",
+        "asOfDate": this.getFormattedDate(),
         "requiredShipping": true,
-        "taxable": true,
-        "taxCode": "CA",
+        "taxable": this.state.isSalesTax,
+        "taxCode": this.state.salesTaxType,
         "displayProduct": true,
         "comparePrice": data.campaignPrice,
         "productImage": data.productImage,
@@ -761,7 +748,7 @@ export default class CampaignScreen extends BaseComponent {
       "reorderLevel": 10,
       "leadTime": 20,
       "quantityOnHand": this.isValidString(variant.quantity) ? variant.quantity : "1",
-      "asOfDate": "12-Jan-2019",
+      "asOfDate": this.getFormattedDate(),
       "requiredShipping": true,
       "taxable": true,
       "taxCode": "CA",
