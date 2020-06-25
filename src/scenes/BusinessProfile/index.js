@@ -36,6 +36,7 @@ var isComingFromHomePage = false;
 var linkViewScroll = 0;
 var addressViewScroll = 0;
 var pincodeViewScroll = 0;
+var isAutoCreatedShop = "";
 //var businessData = globalData.getshopDetail();
 export default class BusinessProfileView extends BaseComponent {
     constructor(props) {
@@ -86,6 +87,7 @@ export default class BusinessProfileView extends BaseComponent {
     componentDidMount() {
         countryNameData = globalData.getCountryList();
         console.log('####### countryList :: ',JSON.stringify(countryNameData))
+        isAutoCreatedShop=globalData.getIsAutoCreated()
         this.getBusinessData()
     }
 
@@ -283,14 +285,14 @@ export default class BusinessProfileView extends BaseComponent {
                             label={strings('BuisnessProfile.BuisnessNameTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
-                            onChangeText={buisnessName => this.setState({ buisnessName })}
+                            onChangeText={buisnessName =>{isAutoCreatedShop = false , this.setState({ buisnessName })}}
                             returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
                             underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
-                            value={(globalData.getIsAutoCreated()) ? '' : this.state.buisnessName}
+                            value={(isAutoCreatedShop) ? '' : this.state.buisnessName}
                             textInputName={this.state.buisnessName}
                             //errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
                             underlineHeight={2}
