@@ -20,7 +20,7 @@ import buisnessConst from './BusinessProfileConstants';
 import Header from '../../components/Header';
 import AppButton from '../../components/AppButton';
 import SwitchTextInput from '../../components/SwitchTextInput';
-var commonConstants = require('../../config/Constants');
+var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 import GlobalData from '../../utils/GlobalData';
 import { fetchPartyPUT, fetchPartyGET } from '../../services/FetchData';
@@ -91,12 +91,12 @@ export default class BusinessProfileView extends BaseComponent {
 
     async getBusinessData() {
         this.renderActivityIndicatorShow()
-        let shopSettingUrl = commonConstants.GET_SHOP_SETTING_FULL.replace(commonConstants.BUISNESS_ID, globalData.getBusinessId())
+        let shopSettingUrl = constants.GET_SHOP_SETTING_FULL.replace(constants.BUISNESS_ID, globalData.getBusinessId())
         //console.log(globalData.getUserInfo().key)
         let responseData = await fetchPartyGET(shopSettingUrl);
         //console.log("@@@@@@@@@@@@@@@@@@@@@@ shop setting full " + JSON.stringify(responseData));
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-            if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
+            if (responseData.statusMessage == constants.SUCCESS_STATUS) {
                 if (this.isValidArray(responseData.properties)) {
                     let businessArr = responseData.properties[0].value
                     this.setBusinessData(businessArr);
@@ -115,13 +115,15 @@ export default class BusinessProfileView extends BaseComponent {
     }
     renderPhoneInput() {
         return (
-            <View>
+            <View  style={{position:'absolute', left: 10, top: 0, zIndex:999, flex:1, height:55, width: 60, alignItems:'center', justifyContent:'center'}}>
                 <PhoneInput
-                    style={[businessStyle.phoneInput,{paddingLeft:10}]}
+                   
                     ref="phoneCountry"
-                    in
-                    // ref={(ref) => { this.phoneCountry = ref; }}
+                    style={{alignItems:'center', justifyContent:'center', paddingLeft:15}}
+                    flagStyle={{width: 36, height: 24}}
+                    initialCountry={constants.COUNTRY_NAME.toLowerCase()}
                     //returnKeyType={'Next'}
+                    value={this.state.phone}
                     onSubmitEditing={event => {
                         this.refs.Phone.focus();
                     }}
@@ -146,14 +148,14 @@ export default class BusinessProfileView extends BaseComponent {
     async handleBusinessProfile() {
         //console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         this.renderActivityIndicatorShow();
-        let shopUpdateURL = commonConstants.UPDATE_SHOP.replace(commonConstants.SHOP_NAME, globalData.getShopName());;
+        let shopUpdateURL = constants.UPDATE_SHOP.replace(constants.SHOP_NAME, globalData.getShopName());;
         console.log("shopUpdateURl : " + shopUpdateURL)
         var requestBody = this.getRequestBody(shopInfo);
         console.log(requestBody)
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
         console.log("ResponseData :" + JSON.stringify(responseData))
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
-            if (responseData.statusMessage == commonConstants.SUCCESS_STATUS) {
+            if (responseData.statusMessage == constants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
                 let shopName = fetchData.shopName.toString().trim();
                 let businessId = fetchData.businessSettings.businessId.toString().trim();
@@ -168,7 +170,7 @@ export default class BusinessProfileView extends BaseComponent {
                     "shopName": shopName,
                     "autoCreate": false
                 }
-                let isDataSave = await this.setAsyncData(commonConstants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
+                let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
 
 
                 setTimeout(() => {
@@ -258,7 +260,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.businessTaxId}
                             textInputName={this.state.businessTaxId}
                             //errorText={strings('BuisnessProfile.BuisnessTaxIdTextInputError')}
@@ -286,7 +288,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={(globalData.getIsAutoCreated()) ? '' : this.state.buisnessName}
                             textInputName={this.state.buisnessName}
                             //errorText={strings('BuisnessProfile.BuisnessNameTextInputError')}
@@ -338,7 +340,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.iban}
                             textInputName={this.state.iban}
                             errorText={strings('BuisnessProfile.IBANTextInputError')}
@@ -385,7 +387,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.fname}
                             textInputName={this.state.fname}
                             errorText={strings('BuisnessProfile.FirstNameTextInputError')}
@@ -411,7 +413,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.lname}
                             textInputName={this.state.lname}
                             errorText={strings('BuisnessProfile.LastNameTextInputError')}
@@ -437,7 +439,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.nationality}
                             textInputName={this.state.nationality}
                             errorText={strings('BuisnessProfile.NationalityTextInputError')}
@@ -464,7 +466,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 isLoginScreen={false}
                                 style={businessStyle.input}
                                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                                 value={this.state.address}
                                 textInputName={this.state.address}
                                 //errorText={strings('BuisnessProfile.AddressTextInputError')}
@@ -496,7 +498,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 isLoginScreen={false}
                                 style={businessStyle.input}
                                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                                 value={this.state.city}
                                 textInputName={this.state.city}
                                 //errorText={strings('BuisnessProfile.CityTextInputError')}
@@ -572,7 +574,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.postalState}
                             textInputName={this.state.postalState}
                             //errorText={strings('BuisnessProfile.StateTextInputError')}
@@ -600,7 +602,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.postalCode}
                             textInputName={this.state.postalCode}
                             //errorText={strings('BuisnessProfile.PostalCodeTextInputError')}
@@ -664,7 +666,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.documentNum}
                             textInputName={this.state.documentNum}
                             //errorText={strings('BuisnessProfile.DocumentTextInputError')}
@@ -691,7 +693,7 @@ export default class BusinessProfileView extends BaseComponent {
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.expDate}
                             textInputName={this.state.expDate}
                             //errorText={strings('BuisnessProfile.ExpiryTextInputError')}
@@ -709,17 +711,19 @@ export default class BusinessProfileView extends BaseComponent {
     renderPhone() {
         return (
             <View style={businessStyle.validFormViewContainerZip}>
-                <View style={businessStyle.inputWrapperPhoneCode}>
+                {/* <View style={businessStyle.inputWrapperPhoneCode}>
                     {/* <View style={businessStyle.validFormSecondFieldView}> */}
                     {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
                             <Image style={{ marginLeft: 15, width: 27, height: 16 }} source={require('../../public/images/icon_flag.png')}></Image>
                             <Text style={{ paddingLeft: 20, fontSize: 16 }}>+1</Text>
                         </View> */}
-                    {this.renderPhoneInput()}
+                    {/* {this.renderPhoneInput()} */}
                     {/* </View> */}
-                </View>
-                <View style={[businessStyle.inputWrapper, { flex: 3 }]}>
-                    <View style={businessStyle.validFormSecondFieldView}>
+                {/* </View> */} 
+                <View style={[businessStyle.inputWrapper, { flex: 1 }]}>
+                
+                    <View style={[businessStyle.validFormSecondFieldView,]}>
+                    {this.renderPhoneInput()}
                         <TextInputMaterial
                             blurText={this.state.phone}
                             refsValue={'Phone'}
@@ -728,12 +732,13 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={phone => this.setState({ phone })}
-                            //returnKeyType={'next'}
+                            textStyle={{paddingLeft: 65}}
+                            labelStyle={{paddingLeft: 65}}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
                             placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                            underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                            underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                             value={this.state.phone}
                             textInputName={this.state.phone}
                             //errorText={strings('BuisnessProfile.PhoneTextInputError')}
@@ -744,7 +749,9 @@ export default class BusinessProfileView extends BaseComponent {
                                 this.refs.website.focus();
                             }}
                         />
+                        
                     </View>
+                    
                 </View>
             </View>
         )
@@ -775,7 +782,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 isLoginScreen={false}
                                 style={businessStyle.input}
                                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                                 value={this.state.websiteUrl}
                                 textInputName={this.state.websiteUrl}
                                 underlineHeight={2}
@@ -804,7 +811,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 isLoginScreen={false}
                                 style={businessStyle.input}
                                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                                 value={this.state.yelpUrl}
                                 textInputName={this.state.yelpUrl}
                                 underlineHeight={2}
@@ -833,7 +840,7 @@ export default class BusinessProfileView extends BaseComponent {
                                 isLoginScreen={false}
                                 style={businessStyle.input}
                                 placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
-                                underlineColorAndroid={commonConstants.UNDERLINE_COLOR_ANDROID}
+                                underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
                                 value={this.state.fbUrl}
                                 textInputName={this.state.fbUrl}
                                 underlineHeight={2}
