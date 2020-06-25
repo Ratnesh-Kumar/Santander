@@ -122,6 +122,7 @@ export default class AddProductScreen extends BaseComponent {
         productPriceValue: fetchData.defaultDetails.comparePrice + "",
         productSaleValue: fetchData.defaultDetails.productPrice + "",
         productWeight: fetchData.defaultDetails.weight + "",
+        weightUnit: fetchData.defaultDetails.weightUnit + "",
         productBarcodeValue: fetchData.defaultDetails.barCode + "",
         productCostValue: fetchData.defaultDetails.productCost + "",
         productSkuValue: fetchData.defaultDetails.sku,
