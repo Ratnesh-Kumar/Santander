@@ -5,7 +5,9 @@
       "signOut":"Sign Out",
       "manageScreen":"Manage and track your campaigns",
       "manageCampaigan":"Manage campaign",
-      "spaceforGraph":"Space for Graph"
+      "spaceforGraph":"Space for Graph",
+      "learnHow":"Learn how to use",
+      "mobileAppEffectively":"mobile app effectively"
     },
     "loginScreen": {
       "digiShopTitle": "DigiShop",
