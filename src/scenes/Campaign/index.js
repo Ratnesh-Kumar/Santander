@@ -90,9 +90,9 @@ export default class CampaignScreen extends BaseComponent {
         campaignPriceValue: productItem.defaultDetails.comparePrice + "",
         campaignSaleValue: productItem.defaultDetails.productPrice + "",
         campaignBarcodeValue: productItem.defaultDetails.barCode + "",
-        campaignSku: productItem.defaultDetails.sku.toString().trim(),
+        campaignSku: (this.isValidString(productItem.defaultDetails.sku)) ? productItem.defaultDetails.sku.toString().trim() : "",
         pickedImage: (this.isValidString(productItem.defaultDetails.productURL)) ? { uri: productItem.defaultDetails.productURL } : compaignConstants.CAMERA_ICON,
-        showImage: (this.isValidString(productItem.defaultDetails.productURL)) ? true: false
+        showImage: (this.isValidString(productItem.defaultDetails.productURL)) ? true : false
       })
     }
   }
@@ -156,14 +156,14 @@ export default class CampaignScreen extends BaseComponent {
         {this.renderModal()}
         <Header title={strings('createCampaign.screenTitle')} isCrossIconVisible={false} />
         <Stepper count={3} currentCount={1} />
-        <View style={{flex:1}}>
-          <ScrollView 
-          ref='scrollView'
-          keyboardDismissMode="interactive"
-          keyboardShouldPersistTaps={'always'} 
-          onScrollBeginDrag={() => this.onDragScroll()}
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            ref='scrollView'
+            keyboardDismissMode="interactive"
+            keyboardShouldPersistTaps={'always'}
+            onScrollBeginDrag={() => this.onDragScroll()}
           >
-          {/* //style={campaignStyle.scrollViewStyle} */}
+            {/* //style={campaignStyle.scrollViewStyle} */}
             {this.renderCampaignName()}
             {this.createCameraView()}
             {this.renderPriceView()}
@@ -172,7 +172,7 @@ export default class CampaignScreen extends BaseComponent {
               this.nextButtonTapped()
             }} />
             <View style={{ height: this.state.handleKeyboardViewHeight }}>
-            </View>  
+            </View>
           </ScrollView>
         </View>
 
@@ -183,10 +183,10 @@ export default class CampaignScreen extends BaseComponent {
   renderSkuAndBarcode() {
     return (
       <View
-      onLayout={event => {
-        const layout = event.nativeEvent.layout;
-        skuBarcodeViewScroll = layout.y
-      }}
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          skuBarcodeViewScroll = layout.y
+        }}
         style={[campaignStyle.validFormViewContainer, { marginTop: 10 }]}>
         <View style={campaignStyle.inputWrapper}>
           <View style={campaignStyle.validFormSubView}>
@@ -356,10 +356,10 @@ export default class CampaignScreen extends BaseComponent {
   renderPriceView() {
     return (
       <View
-      onLayout={event => {
-        const layout = event.nativeEvent.layout;
-        priceViewScroll = layout.y
-      }}
+        onLayout={event => {
+          const layout = event.nativeEvent.layout;
+          priceViewScroll = layout.y
+        }}
         style={campaignStyle.priceTextInputContainer}>
         <View style={campaignStyle.priceInputWrapper}>
           <View style={[campaignStyle.priceFormSubView, { paddingRight: 15 }]}>
@@ -424,17 +424,17 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   inputBlurred(refName) {
-    console.log('######### descriptionViewScroll ::: inputBlurred',descriptionViewScroll);
-    console.log('######### priceViewScroll inputBlurred :: ',priceViewScroll)
-    console.log('######### skuBarcodeViewScroll inputBlurred :: ',skuBarcodeViewScroll)
+    console.log('######### descriptionViewScroll ::: inputBlurred', descriptionViewScroll);
+    console.log('######### priceViewScroll inputBlurred :: ', priceViewScroll)
+    console.log('######### skuBarcodeViewScroll inputBlurred :: ', skuBarcodeViewScroll)
     if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
-      if(refName == 'campaignDescription'){
-          this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
+      if (refName == 'campaignDescription') {
+        this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
       }
-      if(refName == 'campaignSalePrice' || refName == 'campaignPrice'){
-          this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
+      if (refName == 'campaignSalePrice' || refName == 'campaignPrice') {
+        this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
       }
-      if(refName == 'campaignSku'){
+      if (refName == 'campaignSku') {
         if (Platform.OS === 'ios') {
           this.setState({
             handleKeyboardViewHeight: 0
@@ -445,33 +445,33 @@ export default class CampaignScreen extends BaseComponent {
     }
   }
   inputFocused(refName) {
-    console.log('######### descriptionViewScroll ::: inputFocused',descriptionViewScroll);
-    console.log('######### priceViewScroll inputFocused :: ',priceViewScroll)
-    console.log('######### skuBarcodeViewScroll inputFocused :: ',skuBarcodeViewScroll)
+    console.log('######### descriptionViewScroll ::: inputFocused', descriptionViewScroll);
+    console.log('######### priceViewScroll inputFocused :: ', priceViewScroll)
+    console.log('######### skuBarcodeViewScroll inputFocused :: ', skuBarcodeViewScroll)
     if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
       if (Platform.OS === 'ios') {
         this.setState({
           handleKeyboardViewHeight: 200
         })
       }
-      if(refName == 'campaignDescription'){
+      if (refName == 'campaignDescription') {
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: descriptionViewScroll, animated: true })
-        }, 100); 
+        }, 100);
       }
-      if(refName == 'campaignSalePrice' || refName == 'campaignPrice'){
+      if (refName == 'campaignSalePrice' || refName == 'campaignPrice') {
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: priceViewScroll, animated: true })
-        }, 100); 
+        }, 100);
       }
-      if(refName == 'campaignSku'){
+      if (refName == 'campaignSku') {
         setTimeout(() => {
           this.refs.scrollView.scrollTo({ x: 0, y: skuBarcodeViewScroll, animated: true })
-        }, 100); 
+        }, 100);
       }
-          
-           
-      }
+
+
+    }
   }
 
   initializeOptions() {
@@ -540,12 +540,12 @@ export default class CampaignScreen extends BaseComponent {
 
   createCameraView() {
     return (
-      <View 
+      <View
         onLayout={event => {
           const layout = event.nativeEvent.layout;
           descriptionViewScroll = layout.y
         }}
-      style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
+        style={{ marginTop: 20, marginLeft: 20, marginRight: 20 }}>
         <View style={{ height: 160, borderWidth: 1.2, borderColor: colorConstant.BLACK_COLOR, }}>
           {this.state.showImage === true ? this.renderImage() : this.showPickedImage()}
         </View>

@@ -86,8 +86,8 @@ export default class BusinessProfileView extends BaseComponent {
     }
     componentDidMount() {
         countryNameData = globalData.getCountryList();
-        console.log('####### countryList :: ',JSON.stringify(countryNameData))
-        isAutoCreatedShop=globalData.getIsAutoCreated()
+        console.log('####### countryList :: ', JSON.stringify(countryNameData))
+        isAutoCreatedShop = globalData.getIsAutoCreated()
         this.getBusinessData()
     }
 
@@ -117,12 +117,12 @@ export default class BusinessProfileView extends BaseComponent {
     }
     renderPhoneInput() {
         return (
-            <View  style={{position:'absolute', left: 10, top: 0, zIndex:999, flex:1, height:55, width: 60, alignItems:'center', justifyContent:'center'}}>
+            <View style={{ position: 'absolute', left: 10, top: 0, zIndex: 999, flex: 1, height: 55, width: 60, alignItems: 'center', justifyContent: 'center' }}>
                 <PhoneInput
-                   
+
                     ref="phoneCountry"
-                    style={{alignItems:'center', justifyContent:'center', paddingLeft:15}}
-                    flagStyle={{width: 36, height: 24}}
+                    style={{ alignItems: 'center', justifyContent: 'center', paddingLeft: 15 }}
+                    flagStyle={{ width: 36, height: 24 }}
                     initialCountry={constants.COUNTRY_NAME.toLowerCase()}
                     //returnKeyType={'Next'}
                     value={this.state.phone}
@@ -243,8 +243,8 @@ export default class BusinessProfileView extends BaseComponent {
     }
 
     renderBuisnessForm() {
-       let industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
-       let countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
+        let industryTitle = this.state.industryType === '' ? strings('BuisnessProfile.IndustryTypeText') : this.state.industryType
+        let countryTitle = this.state.country === '' ? strings('BuisnessProfile.CountryText') : this.state.country
         return (
             <View style={businessStyle.validFormViewContainer}>
                 <View style={businessStyle.inputWrapper}>
@@ -284,7 +284,7 @@ export default class BusinessProfileView extends BaseComponent {
                             label={strings('BuisnessProfile.BuisnessNameTextInput')}
                             maxLength={100}
                             autoCapitalize={'none'}
-                            onChangeText={buisnessName =>{isAutoCreatedShop = false , this.setState({ buisnessName })}}
+                            onChangeText={buisnessName => { isAutoCreatedShop = false, this.setState({ buisnessName }) }}
                             returnKeyType={'next'}
                             autoCorrect={false}
                             isLoginScreen={false}
@@ -365,11 +365,11 @@ export default class BusinessProfileView extends BaseComponent {
 
     renderAddressForm() {
         return (
-            <View 
-            onLayout={event => {
-                const layout = event.nativeEvent.layout;
-                addressViewScroll = layout.y
-              }}
+            <View
+                onLayout={event => {
+                    const layout = event.nativeEvent.layout;
+                    addressViewScroll = layout.y
+                }}
             >
                 <View style={[businessStyle.validFormSubView, { paddingTop: 20, paddingLeft: 20 }]}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{strings('BuisnessProfile.AddressText')}</Text>
@@ -538,29 +538,29 @@ export default class BusinessProfileView extends BaseComponent {
     renderPinCode() {
         let postalStateSelected = this.state.postalState === '' ? strings('BuisnessProfile.StateTextInput') : this.state.postalState
         return (
-            <View 
-            onLayout={event => {
-                const layout = event.nativeEvent.layout;
-                pincodeViewScroll = layout.y
-              }}
-            style={businessStyle.validFormViewContainerZip}>
+            <View
+                onLayout={event => {
+                    const layout = event.nativeEvent.layout;
+                    pincodeViewScroll = layout.y
+                }}
+                style={businessStyle.validFormViewContainerZip}>
                 <View style={businessStyle.inputWrapperSmall}>
-                <View style={businessStyle.containerStyleWithBorder}>
-                <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
-                  {postalStateSelected}</Text>
-                <View
-                  style={{ position: 'absolute', right: 10, top: 10 }}>
-                  <TouchableOpacity onPress={() => 
-                    this.renderStatePicker()}
-                    >
-                    <Image
-                      style={{ width: 35, height: 35, tintColor:colorConstant.GREY_DARK_COLOR }}
-                      source={require('../.././public/images/dropDown.png')}
-                    />
-                  </TouchableOpacity>
+                    <View style={businessStyle.containerStyleWithBorder}>
+                        <Text style={{ paddingLeft: 10, paddingRight: 70, textAlign: 'left', marginTop: 20, fontSize: 16 }}>
+                            {postalStateSelected}</Text>
+                        <View
+                            style={{ position: 'absolute', right: 10, top: 10 }}>
+                            <TouchableOpacity onPress={() =>
+                                this.renderStatePicker()}
+                            >
+                                <Image
+                                    style={{ width: 35, height: 35, tintColor: colorConstant.GREY_DARK_COLOR }}
+                                    source={require('../.././public/images/dropDown.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-                </View>
-              </View>
                 {/* <View style={businessStyle.inputWrapperSmall}>
                     <View style={businessStyle.validFormSecondFieldView}>
                          <TextInputMaterial
@@ -715,17 +715,17 @@ export default class BusinessProfileView extends BaseComponent {
             <View style={businessStyle.validFormViewContainerZip}>
                 {/* <View style={businessStyle.inputWrapperPhoneCode}>
                     {/* <View style={businessStyle.validFormSecondFieldView}> */}
-                    {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
+                {/* <View style={{ borderWidth: 1, height: 55, alignItems: "center", flexDirection: 'row' }}>
                             <Image style={{ marginLeft: 15, width: 27, height: 16 }} source={require('../../public/images/icon_flag.png')}></Image>
                             <Text style={{ paddingLeft: 20, fontSize: 16 }}>+1</Text>
                         </View> */}
-                    {/* {this.renderPhoneInput()} */}
-                    {/* </View> */}
-                {/* </View> */} 
+                {/* {this.renderPhoneInput()} */}
+                {/* </View> */}
+                {/* </View> */}
                 <View style={[businessStyle.inputWrapper, { flex: 1 }]}>
-                
+
                     <View style={[businessStyle.validFormSecondFieldView,]}>
-                    {this.renderPhoneInput()}
+                        {this.renderPhoneInput()}
                         <TextInputMaterial
                             blurText={this.state.phone}
                             refsValue={'Phone'}
@@ -734,8 +734,8 @@ export default class BusinessProfileView extends BaseComponent {
                             maxLength={100}
                             autoCapitalize={'none'}
                             onChangeText={phone => this.setState({ phone })}
-                            textStyle={{paddingLeft: 65}}
-                            labelStyle={{paddingLeft: 65}}
+                            textStyle={{ paddingLeft: 65 }}
+                            labelStyle={{ paddingLeft: 65 }}
                             autoCorrect={false}
                             isLoginScreen={false}
                             style={businessStyle.input}
@@ -751,9 +751,9 @@ export default class BusinessProfileView extends BaseComponent {
                                 this.refs.website.focus();
                             }}
                         />
-                        
+
                     </View>
-                    
+
                 </View>
             </View>
         )
@@ -764,8 +764,8 @@ export default class BusinessProfileView extends BaseComponent {
             <View onLayout={event => {
                 const layout = event.nativeEvent.layout;
                 linkViewScroll = layout.y
-              }}>
-                <View style={[businessStyle.validFormSubView, { paddingTop: 20,paddingLeft:20 }]}>
+            }}>
+                <View style={[businessStyle.validFormSubView, { paddingTop: 20, paddingLeft: 20 }]}>
                     <Text style={{ fontSize: 16, fontWeight: 'bold' }}>{strings('BuisnessProfile.UrlText')}</Text>
                 </View>
                 <View style={businessStyle.validAddressViewContainer}>
@@ -874,7 +874,7 @@ export default class BusinessProfileView extends BaseComponent {
                     onLeftArrowPressed={() => {
                         Picker.hide();
                         if (isComingFromHomePage) {
-                            isComingFromHomePage= false;
+                            isComingFromHomePage = false;
                             Actions.home()
                         }
                     }} />
@@ -895,7 +895,7 @@ export default class BusinessProfileView extends BaseComponent {
                             this.handleBusinessProfile()
                         }} />
                         <View style={{ height: this.state.handleKeyboardViewHeight }}>
-                    </View>
+                        </View>
                     </ScrollView>
                 </View>
             </View>
@@ -932,13 +932,13 @@ export default class BusinessProfileView extends BaseComponent {
         Picker.show();
 
     }
-    
+
 
     renderStatePicker() {
         Keyboard.dismiss()
         Picker.hide();
         this.inputFocused('statePicker')
-        if(this.isValidString(this.state.country) && this.isValidArray(countryNameData)){
+        if (this.isValidString(this.state.country) && this.isValidArray(countryNameData)) {
             let stateNameData = globalData.getStateList(this.state.country);
             Picker.init({
                 pickerData: stateNameData,
@@ -947,7 +947,7 @@ export default class BusinessProfileView extends BaseComponent {
                 pickerCancelBtnText: 'Cancel',
                 selectedValue: [stateNameData[0].toString().trim()],
                 pickerBg: [255, 255, 255, 1],
-    
+
                 onPickerConfirm: data => {
                     this.setState({
                         postalState: data
@@ -963,19 +963,19 @@ export default class BusinessProfileView extends BaseComponent {
             });
             Picker.show();
         }
-        else{
-            alert ('Please select Country')
+        else {
+            alert('Please select Country')
         }
     }
-    hidePicker(){
+    hidePicker() {
         Picker.hide();
         this.inputBlurred('statePicker')
         if (Platform.OS === 'ios') {
-              this.setState({
+            this.setState({
                 handleKeyboardViewHeight: 0
-              })
-            }
-      }
+            })
+        }
+    }
 
     renderCountryPicker() {
         Keyboard.dismiss()
@@ -1008,51 +1008,51 @@ export default class BusinessProfileView extends BaseComponent {
     onDragScroll() {
         Keyboard.dismiss();
         this.setState({
-          handleKeyboardViewHeight: 0
+            handleKeyboardViewHeight: 0
         })
-      }
+    }
 
     inputBlurred(refName) {
         if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
-          if(refName === 'Address' || refName === 'City'){
-            setTimeout(() => {
-              this.refs.scrollView.scrollTo({ x: 0, y: addressViewScroll, animated: true })
-            }, 100); 
-          }
-          if(refName === 'yelpUrl' || refName === 'fbUrl' || refName === 'website'){
-            setTimeout(() => {
-              this.refs.scrollView.scrollTo({ x: 0, y: linkViewScroll, animated: true })
-            }, 100); 
-          }
-          if(refName === 'PostalCode' || refName === 'statePicker'){
-            setTimeout(() => {
-              this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
-            }, 100); 
+            if (refName === 'Address' || refName === 'City') {
+                setTimeout(() => {
+                    this.refs.scrollView.scrollTo({ x: 0, y: addressViewScroll, animated: true })
+                }, 100);
+            }
+            if (refName === 'yelpUrl' || refName === 'fbUrl' || refName === 'website') {
+                setTimeout(() => {
+                    this.refs.scrollView.scrollTo({ x: 0, y: linkViewScroll, animated: true })
+                }, 100);
+            }
+            if (refName === 'PostalCode' || refName === 'statePicker') {
+                setTimeout(() => {
+                    this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
+                }, 100);
+            }
         }
-        }
-      }
-      inputFocused(refName) {
+    }
+    inputFocused(refName) {
         if (this.refs.scrollView !== null && this.refs.scrollView !== undefined) {
             if (Platform.OS === 'ios') {
                 this.setState({
-                  handleKeyboardViewHeight: 180
+                    handleKeyboardViewHeight: 180
                 })
-              }
-          if(refName === 'Address' || refName === 'City'){
-            setTimeout(() => {
-              this.refs.scrollView.scrollTo({ x: 0, y: addressViewScroll, animated: true })
-            }, 100); 
-          }
-          if(refName === 'yelpUrl' || refName === 'fbUrl' || refName === 'website'){
-            setTimeout(() => {
-              this.refs.scrollView.scrollTo({ x: 0, y: linkViewScroll, animated: true })
-            }, 100); 
-          }
-          if(refName === 'statePicker'){
-            setTimeout(() => {
-              this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
-            }, 100); 
-          }
+            }
+            if (refName === 'Address' || refName === 'City') {
+                setTimeout(() => {
+                    this.refs.scrollView.scrollTo({ x: 0, y: addressViewScroll, animated: true })
+                }, 100);
+            }
+            if (refName === 'yelpUrl' || refName === 'fbUrl' || refName === 'website') {
+                setTimeout(() => {
+                    this.refs.scrollView.scrollTo({ x: 0, y: linkViewScroll, animated: true })
+                }, 100);
+            }
+            if (refName === 'statePicker') {
+                setTimeout(() => {
+                    this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
+                }, 100);
+            }
             if (refName === 'PostalCode') {
                 if (Platform.OS === 'ios') {
                     this.setState({
@@ -1062,11 +1062,11 @@ export default class BusinessProfileView extends BaseComponent {
             }
             setTimeout(() => {
                 this.refs.scrollView.scrollTo({ x: 0, y: pincodeViewScroll, animated: true })
-              }, 100); 
-          }
-      }
-    
-    
+            }, 100);
+        }
+    }
+
+
 
 
     // inputFocused(refName) {
@@ -1086,7 +1086,7 @@ export default class BusinessProfileView extends BaseComponent {
         return {
             "shopName": this.state.buisnessName,
             "taxId": this.state.businessTaxId,
-            "country": this.state.country.toString().trim(),
+            "country": (this.isValidString(this.state.country)) ? this.state.country.toString().trim() : '',
             "bankRoutingNumber": "1-----1",
             "locale": "en_us",
             "currency": "USD",
@@ -1095,11 +1095,11 @@ export default class BusinessProfileView extends BaseComponent {
             "nationality": "USA",
             "address": this.state.address,
             "city": this.state.city,
-            "state": this.state.postalState.toString().trim(),
+            "state": (this.isValidString(this.state.postalState)) ? this.state.postalState.toString().trim() : '',
             "district": "Santa ----",
             "postalCode": this.state.postalCode,
             "dateFormat": "MM/DD/YY",
-            "industry": this.state.industryType.toString().trim(),
+            "industry": (this.isValidString(this.state.industryType)) ? this.state.industryType.toString().trim() : '',
             "preferredLanguage": "en_us",
             "businessSettings": {
                 "sourcePrimaryKey": "1234567890",
@@ -1120,7 +1120,7 @@ export default class BusinessProfileView extends BaseComponent {
                 "showDiscounts": data.showDiscount,
                 "shipProducts": data.shipProducts,
                 "defaultTaxType": data.flatTaxRateType,
-                "estimateProfit":data.estimateProfit,
+                "estimateProfit": data.estimateProfit,
                 "defaultPaymentType": "CREDIDCARD",
                 "txSettings": [{
                     "appTransactionType": "DEFAULT",
