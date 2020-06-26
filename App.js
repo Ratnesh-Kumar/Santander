@@ -123,7 +123,7 @@ export default class App extends Component {
           <Scene key="trackInformation" component={TrackInformation} title="Track Information" />
         </Scene>
 
-        <Scene key="shopTab" title="Shop" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
+        <Scene key="shopTab" title="Settings" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
           <Scene key="shop" component={ShopTabScreen} title="home" />
           <Scene key="businessProfile" component={BusinessProfile} title="businessProfile" duration={0} />
           <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar />

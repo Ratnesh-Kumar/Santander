@@ -30,8 +30,18 @@ export default class ProductVarientDetailScreen extends BaseComponent {
     }
     variantDetails = props.variantDetail;
     // this.setUpdateData(variantDetails)
-
+    this.getMarginFromAsync()
   }
+
+  async getMarginFromAsync(){
+    this.productMargin = await this.getAsyncData(constants.ASYNC_PROFIT_VALUE)
+    if(this.isValidString(this.productMargin)){
+      this.productMargin = JSON.parse(this.productMargin).defalutProfitMargin;
+    }else{
+      this.productMargin = "50";
+    }
+  }
+
   componentDidMount() {
   }
 
@@ -353,7 +363,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
       productMargin = this.state.varientMarginValue
       productProfit = Math.floor(this.getProfit(salePrice, productCost))
     } else {
-      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, 50));
+      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, this.productMargin));
       productMargin = Math.floor(this.getMargin(salePrice, productCost));
       productProfit = Math.floor(this.getProfit(salePrice, productCost))
     }

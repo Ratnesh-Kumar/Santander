@@ -68,7 +68,8 @@
       "startRightAway":"Start right away by creating a campaign\nwhich will also create your first product",
       "createFirstCampaign": "Sell your First Product",
       "skipStep": "Skip this step",
-      "quanitytTitle": "Quantity",
+      "quantityTitle": "QUANTITY",
+      "quantityTotal": "Total",
       "categoryTagTextInput": "Add Categories",
       "variantsTagTextInput": "Add Variants",
       "categoryTagText": "CATEGORIES",
@@ -186,6 +187,7 @@
       "estimateProfit":"Estimate profit"
     },
     "shopTab":{
+      "SettingsTitle":"Settings",
       "ShopSettingsTitle":"Shop Settings",
       "BusinessProfileTitle":"Business Profile",
       "BusinessSettings":"Business Settings",

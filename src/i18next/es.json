@@ -6,8 +6,8 @@
     "manageScreen": "Gestiona y rastrea tus campañas",
     "manageCampaigan": "Administrar campaña",
     "spaceforGraph": "Espacio para gráfico",
-    "learnHow":"Aprende cómo usar",
-    "mobileAppEffectively":"aplicación móvil de manera efectiva"
+    "learnHow": "Aprende cómo usar",
+    "mobileAppEffectively": "aplicación móvil de manera efectiva"
   },
   "loginScreen": {
     "digiShopTitle": "DigiShop",
@@ -64,7 +64,8 @@
     "startRightAway": "Comience de inmediato creando una campaña \n nque también creará su primer producto",
     "createFirstCampaign": "Vende tu primer producto",
     "skipStep": "Salta este paso",
-    "quanitytTitle": "Cantidad",
+    "quantityTitle": "Cantidad",
+    "quantityTotal": "Total",
     "categoryTagTextInput": "Agregar categorías",
     "variantsTagTextInput": "Agregar variantes",
     "categoryTagText": "categorías",
@@ -93,7 +94,7 @@
     "instagramText": "Instagram",
     "Info": "Informacion",
     "createShopErrorkey": "Por favor, introduzca información válida",
-    "previewText":"Avance"
+    "previewText": "Avance"
   },
   "registerScreen": {
     "digiShopTitle": "DigiShop",
@@ -158,8 +159,8 @@
     "WebsiteTextInput": "Sitio web",
     "FbTextInput": "Página de FB",
     "YelpTextInput": "Gañido",
-    "AddressText":"HABLA A",
-    "UrlText":"INGRESAR ENLACES (URL)"
+    "AddressText": "HABLA A",
+    "UrlText": "INGRESAR ENLACES (URL)"
   },
   "shopSettingsScreen": {
     "ShopSettingsTitle": "Configuraciones de la tienda",
@@ -181,6 +182,7 @@
     "estimateProfit": "Estimación de ganancias"
   },
   "shopTab": {
+    "SettingsTitle": "Settings",
     "ShopSettingsTitle": "Configuraciones de la tienda",
     "BusinessProfileTitle": "Perfil de trabajo",
     "BusinessSettings": "Configuraciones comerciales",
@@ -188,16 +190,16 @@
     "Delete": "Borrar mi cuenta",
     "logout": "cerrar sesión"
   },
-  "editOrder":{
-    "title":"Gestionar pedido",
-    "orderText":"Orden# ",
-    "productsText":"Productos",
-    "SkuText":"SKU - ",
-    "QtyText":"Cantidad - ",
-    "AmtText":"Cantidad - "
+  "editOrder": {
+    "title": "Gestionar pedido",
+    "orderText": "Orden# ",
+    "productsText": "Productos",
+    "SkuText": "SKU - ",
+    "QtyText": "Cantidad - ",
+    "AmtText": "Cantidad - "
   },
-  "orderScreen":{
-    "comingSoon":"Próximamente"
+  "orderScreen": {
+    "comingSoon": "Próximamente"
   },
   "TrackQuantityScreen": {
     "EnterTacking": "Ingrese la información de seguimiento",
@@ -207,7 +209,7 @@
   },
   "manageCampaignScreen": {
     "ManageCampaign": "Administrar campaña",
-    "errorNoCampaignFound":"No se encontró campaña",
+    "errorNoCampaignFound": "No se encontró campaña",
     "Info": "Informacion"
   },
   "productScreen": {
@@ -218,8 +220,8 @@
     "weightTitle": "Peso",
     "productWeightInputText": "Peso",
     "productWeightText": "lb",
-    "errorNoProductFound":"Ningún producto encontrado",
-    "errorPleasetryAgain":"¡Error! Inténtalo de nuevo",
+    "errorNoProductFound": "Ningún producto encontrado",
+    "errorPleasetryAgain": "¡Error! Inténtalo de nuevo",
     "Info": "Informacion"
   },
   "variantCampaign": {
