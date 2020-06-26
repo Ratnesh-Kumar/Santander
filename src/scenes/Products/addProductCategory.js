@@ -103,6 +103,8 @@ export default class AddProductCategory extends BaseComponent {
             variantDetail.salePrice = variant.productPrice;
             variantDetail.productCost = variant.productCost;
             variantDetail.quantity = variant.quantityOnHand;
+            variantDetail.productProfit = variant.profit;
+            variantDetail.productMargin = variant.margin;
             variantDetail.discountinuedProduct = variant.discountinuedProduct;
             productVariantArray.push(variantDetail)
           }
@@ -171,6 +173,8 @@ export default class AddProductCategory extends BaseComponent {
           productVariantArray[i].skuNumber = variantInfo.skuNumber;
           productVariantArray[i].productCost = variantInfo.productCost;
           productVariantArray[i].quantity = variantInfo.quantity;
+          productVariantArray[i].productProfit = variantInfo.productProfit;
+          productVariantArray[i].productMargin = variantInfo.productMargin;
           return true
         }
       }
@@ -190,6 +194,8 @@ export default class AddProductCategory extends BaseComponent {
           productVariantArray[i].skuNumber = variantInfo.skuNumber;
           productVariantArray[i].productCost = variantInfo.productCost;
           productVariantArray[i].quantity = variantInfo.quantity;
+          productVariantArray[i].productProfit = variantInfo.productProfit;
+          productVariantArray[i].productMargin = variantInfo.productMargin;
         }
       }
       if (!isUpdatedFlag) {
@@ -275,6 +281,8 @@ export default class AddProductCategory extends BaseComponent {
       variantItem.barcode = "";
     variantItem.skuNumber = "";
     variantItem.productCost = "";
+    variantItem.productProfit = "";
+    variantItem.productMargin = "";
     variantItem.quantity = variant.quantity
     return variantItem;
   }
@@ -763,6 +771,8 @@ export default class AddProductCategory extends BaseComponent {
       "displayProduct": true,
       "comparePrice": variant.price,
       "productCost": variant.productCost,
+      "margin": variant.productMargin,
+      "profit": variant.productProfit,
       "defaultProfitMargetSet": !this.isValidString(variant.productCost)
     }
   }

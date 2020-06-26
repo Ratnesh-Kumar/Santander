@@ -23,8 +23,8 @@ export default class ProductVarientDetailScreen extends BaseComponent {
       varientPriceValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.price) ? props.variantDetail.price.toString() : "") : "",
       varientSaleValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.salePrice) ? props.variantDetail.salePrice.toString() : "") : "",
       varientCostValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.productCost) ? props.variantDetail.productCost.toString() : "") : "",
-      varientProfitValue: "",
-      varientMarginValue: "",
+      varientProfitValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.productProfit) ? props.variantDetail.productProfit.toString() : "") : "",
+      varientMarginValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.productMargin) ? props.variantDetail.productMargin.toString() : "") : "",
       varientSku: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.skuNumber) ? props.variantDetail.skuNumber.toString() : "") : "",
       varientBarcodeValue: (this.isValidString(props.variantDetail)) ? (this.isValidString(props.variantDetail.barcode) ? props.variantDetail.barcode.toString() : "") : "",
     }
@@ -95,6 +95,8 @@ export default class ProductVarientDetailScreen extends BaseComponent {
       "barcode": this.state.varientBarcodeValue,
       "skuNumber": this.state.varientSku,
       "productCost": this.state.varientCostValue,
+      "productProfit": this.state.varientProfitValue,
+      "productMargin": this.state.varientMarginValue,
       "salePrice": this.state.varientSaleValue
     }
     // Alert.alert('varient Detail Saved')
