@@ -162,19 +162,24 @@ export default class BusinessProfileView extends BaseComponent {
                 let fetchData = responseData.properties[0].value;
                 let shopName = fetchData.shopName.toString().trim();
                 let businessId = fetchData.businessSettings.businessId.toString().trim();
+                let defalutProfitMargin =fetchData.businessSettings.defaultProfitMargin.toString().trim();
                 console.log("fetchData ShopName : " + shopName)
                 console.log(("fetchData BusinessId : " + businessId));
                 globalData.setShopName(shopName);
                 globalData.setBusinessId(businessId);
                 globalData.setIsAutoCreated(false)
+                globalData.setDefaultProfitMargin(defalutProfitMargin);
                 let businessObj = {
                     "businessId": businessId,
                     "username": globalData.getUserInfo().username,
                     "shopName": shopName,
-                    "autoCreate": false
+                    "autoCreate": false,
+                }
+                let shopObj={
+                    "defalutProfitMargin":defalutProfitMargin
                 }
                 let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
-
+                let isShopDataSave =await this.setAsyncData(constants.ASYNC_PROFIT_VALUE,JSON.stringify(shopObj))
 
                 setTimeout(() => {
                     this.showAlert()
@@ -299,7 +304,7 @@ export default class BusinessProfileView extends BaseComponent {
                             keyboardType="email-address"
                             onFocus={() => { Picker.hide() }}
                             onSubmitEditing={event => {
-                                this.refs.phoneCountry.focus();
+                                this.refs.Phone.focus();
                             }}
                         />
                     </View>

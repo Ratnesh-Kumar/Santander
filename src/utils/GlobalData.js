@@ -43,6 +43,7 @@ var shopName = '';
 var shopAutoCreated = false;
 var salesTaxTypeList = [];
 var countryStateList = [];
+var defaultProfitMargin =0;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -397,6 +398,13 @@ export class GlobalData extends Component {
             return true;
         }
         return false;
+    }
+
+    setDefaultProfitMargin(text){
+        defaultProfitMargin=text
+    }
+    getDefaultProfitMargin(){
+        return defaultProfitMargin;
     }
 
 }

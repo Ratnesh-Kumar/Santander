@@ -77,3 +77,4 @@ export const GET_CAMPAIGN_DETAIL = BASE_TRANSACTION_SERVICE_URL+"/v1/party/"+BUI
 
 //Async const
 export const ASYNC_BUSINESS_ID = "async_business_id"
+export const ASYNC_PROFIT_VALUE = "async_profit_value";

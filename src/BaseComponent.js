@@ -124,6 +124,7 @@ export default class BaseComponent extends Component {
     if (this.isValidString(responseData) && responseData.statusMessage === constants.CREATE_SHOP_STATUS) {
       let businessId = this.getBusinessId(responseData);
       let shopName = this.getShopName(responseData);
+      let defaultProfitMargin= this.getProfitMargin(responseData)
       if (this.isValidString(businessId)) {
         let businessObj = {
           "businessId": businessId,
@@ -131,11 +132,17 @@ export default class BaseComponent extends Component {
           "shopName": shopName,
           "autoCreate": globalData.getIsAutoCreated()
         }
+        let shopObj={
+          "defaultProfitMargin":defaultProfitMargin
+        }
         globalData.setBusinessId(businessId);
         globalData.setShopName(shopName);
+        globalData.setDefaultProfitMargin(defaultProfitMargin);
         console.log("############# createShop businessId : " + businessId);
         console.log("########### shopName : " + shopName);
+        console.log("########### defaultProfit : " + defaultProfitMargin);
         let isDataSave = await this.setAsyncData(constants.ASYNC_BUSINESS_ID, JSON.stringify(businessObj));
+        let isShopDataSave =await this.setAsyncData(constants.ASYNC_PROFIT_VALUE,JSON.stringify(shopObj))
       }
 
     }
@@ -160,6 +167,17 @@ export default class BaseComponent extends Component {
         let shopname = shopValue.shopName;
         globalData.setIsAutoCreated(shopValue.businessSettings.autoCreate);
         return shopname;
+      }
+    }
+  }
+
+  getProfitMargin(response){
+    if (this.isValidArray(response.properties)) {
+      let shopDetail = response.properties[0];
+      if (this.isValidString(shopDetail)) {
+        let shopValue = shopDetail.value;
+        let profitValue = shopValue.businessSettings.defaultProfitMargin
+        return profitValue;
       }
     }
   }
@@ -231,6 +249,14 @@ export default class BaseComponent extends Component {
       this.createShop()
     }
 
+  }
+  handlerProfitValue(shopObj){
+    //globalData.setDefaultProfitMargin('')
+    if (this.isValidString(shopObj)) {
+      shopObj = JSON.parse(shopObj)
+       globalData.setDefaultProfitMargin(shopObj.defaultProfitMargin) 
+    }
+    console.log(' ##### handlerDefaultProfit : '+globalData.getDefaultProfitMargin())
   }
 
   getRandomNumber() {
