@@ -83,6 +83,7 @@ export default class AddProductCategory extends BaseComponent {
         this.setState({
           salesTaxType: fetchProductData.defaultDetails.taxCode,
           salesTaxSwitch: fetchProductData.defaultDetails.taxable,
+          salesTax:fetchProductData.defaultDetails.taxPercentage,
           productQuantity: fetchProductData.defaultDetails.quantityOnHand,
         })
       }, 100)
@@ -721,12 +722,15 @@ export default class AddProductCategory extends BaseComponent {
         "requiredShipping": true,
         "taxable": this.state.salesTaxSwitch,
         "taxCode": this.state.salesTaxType,
+        "taxPercentage":this.state.salesTax,
         "displayProduct": true,
         "comparePrice": data.productPrice,
         "productCost": data.productCost,
+        "margin":data.productMargin,
+        "profit": data.productProfit,
         "defaultProfitMargetSet": !this.isValidString(data.productCost),
         "productImage": data.productImage,
-        "productURL": data.productURL
+        "productURL": data.productURL,
       },
       "productVariants": variantList,
       "extensions": []
