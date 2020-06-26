@@ -13,6 +13,7 @@ import { Text } from 'native-base';
 import CardView from 'react-native-cardview'
 import BaseComponent from '../../BaseComponent';
 var colorConstant = require('../../config/colorConstant')
+var constants = require('../../config/Constants');
 
 export default class QuantityField extends BaseComponent {
     constructor(props) {
@@ -36,7 +37,8 @@ export default class QuantityField extends BaseComponent {
                     >
                         <View style={{ flexDirection: 'row', backgroundColor: colorConstant.WHITE_COLOR, padding: 10 }}>
                             <View style>
-                                <Text style={{ paddingTop: 5, color: colorConstant.BLACK_COLOR, fontSize: 16, position: 'absolute' }}>{this.props.title}
+                                <Text style={{ paddingTop: 5, width: constants.SCREEN_WIDTH/4 - 30, color: colorConstant.BLACK_COLOR, fontSize: 16, position: 'absolute' }}
+                                 numberOfLines={1} ellipsizeMode={'tail'}>{this.props.title}
                                 </Text>
                             </View>
                             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
