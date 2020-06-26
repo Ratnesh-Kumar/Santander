@@ -66,11 +66,11 @@ export default class AddProductScreen extends BaseComponent {
     this.getMarginFromAsync()
   }
 
-  async getMarginFromAsync(){
+  async getMarginFromAsync() {
     this.productMargin = await this.getAsyncData(constants.ASYNC_PROFIT_VALUE)
-    if(this.isValidString(this.productMargin)){
-      this.productMargin = JSON.parse(this.productMargin).defalutProfitMargin;
-    }else{
+    if (this.isValidString(this.productMargin)) {
+      this.productMargin = JSON.parse(this.productMargin).defaultProfitMargin;
+    } else {
       this.productMargin = "50";
     }
   }
@@ -600,8 +600,8 @@ export default class AddProductScreen extends BaseComponent {
               label={strings('createCampaign.priceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { 
-                this.setState({ productPriceValue: text }) 
+              onChangeText={text => {
+                this.setState({ productPriceValue: text })
                 this.handleCostMarginProfit(text, false, false, false)
               }}
               autoCorrect={false}
@@ -801,40 +801,43 @@ export default class AddProductScreen extends BaseComponent {
   }
 
   handleCostMarginProfit(salePrice, isCostHandle, isProfitHandle, isMarginHandle) {
-    var productCost = 0;
-    var productMargin = 0;
-    var productProfit = 0;
-    if (isCostHandle) {
-      productCost = this.state.productCostValue;
-      productMargin = this.getMargin(salePrice, this.state.productCostValue);
-      productProfit = this.getProfit(salePrice, this.state.productCostValue)
-    } else if (isProfitHandle) {
-      productCost = salePrice - this.state.productProfitValue;
-      productMargin = this.getMargin(salePrice, productCost);
-      productProfit = this.state.productProfitValue
-    } else if (isMarginHandle) {
-      productCost = this.getCostFromProfitMargin(salePrice, this.state.productMarginValue);
-      productMargin = this.state.productMarginValue
-      productProfit = this.getProfit(salePrice, productCost)
-    } else {
-      productCost = this.getCostFromProfitMargin(salePrice, this.productMargin);
-      productMargin = this.getMargin(salePrice, productCost);
-      productProfit = this.getProfit(salePrice, productCost);
+    if (this.isValidString(this.productMargin)) {
+      var productCost = 0;
+      var productMargin = 0;
+      var productProfit = 0;
+      if (isCostHandle) {
+        productCost = this.state.productCostValue;
+        productMargin = this.getMargin(salePrice, this.state.productCostValue);
+        productProfit = this.getProfit(salePrice, this.state.productCostValue)
+      } else if (isProfitHandle) {
+        productCost = salePrice - this.state.productProfitValue;
+        productMargin = this.getMargin(salePrice, productCost);
+        productProfit = this.state.productProfitValue
+      } else if (isMarginHandle) {
+        productCost = this.getCostFromProfitMargin(salePrice, this.state.productMarginValue);
+        productMargin = this.state.productMarginValue
+        productProfit = this.getProfit(salePrice, productCost)
+      } else {
+        productCost = this.getCostFromProfitMargin(salePrice, this.productMargin);
+        productMargin = this.getMargin(salePrice, productCost);
+        productProfit = this.getProfit(salePrice, productCost);
+      }
+      
+      let floatProductCost = parseFloat(productCost)
+      floatProductCost = floatProductCost.toFixed(2);
+      let floatProductMargin = parseFloat(productMargin)
+      floatProductMargin = floatProductMargin.toFixed(2);
+      let floatProductProfit = parseFloat(productProfit)
+      floatProductProfit = floatProductProfit.toFixed(2);
+      // console.log("##################### productCost 1: " + productCost)
+      // console.log("##################### productMargin 2: " + productMargin)
+      // console.log("##################### productProfit 3: " + productProfit)
+      this.setState({
+        productCostValue: this.isValidString(floatProductCost)?floatProductCost + "":"",
+        productMarginValue: this.isValidString(floatProductMargin)?floatProductMargin + "":"",
+        productProfitValue: this.isValidString(floatProductProfit)?floatProductProfit + "":""
+      })
     }
-    // console.log("##################### productCost 1: " + productCost)
-    // console.log("##################### productMargin 2: " + productMargin)
-    // console.log("##################### productProfit 3: " + productProfit)
-    let floatProductCost = parseFloat(productCost)
-    floatProductCost = floatProductCost.toFixed(2);
-    let floatProductMargin = parseFloat(productMargin)
-    floatProductMargin = floatProductMargin.toFixed(2);
-    let floatProductProfit = parseFloat(productProfit)
-    floatProductProfit = floatProductProfit.toFixed(2);
-    this.setState({
-      productCostValue: floatProductCost + "",
-      productMarginValue: floatProductMargin + "",
-      productProfitValue: floatProductProfit + ""
-    })
   }
 
   getCostFromProfitMargin(salePrice, margin) {

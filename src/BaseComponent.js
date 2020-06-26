@@ -67,7 +67,7 @@ export default class BaseComponent extends Component {
   }
 
   isValidString(data) {
-    if (data != '' && data != undefined && data != null && data != NaN) {
+    if (data != '' && data != undefined && data != null && data != NaN && data != "NaN") {
       return true;
     }
     return false;

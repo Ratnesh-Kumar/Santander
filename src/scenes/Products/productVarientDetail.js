@@ -36,7 +36,7 @@ export default class ProductVarientDetailScreen extends BaseComponent {
   async getMarginFromAsync(){
     this.productMargin = await this.getAsyncData(constants.ASYNC_PROFIT_VALUE)
     if(this.isValidString(this.productMargin)){
-      this.productMargin = JSON.parse(this.productMargin).defalutProfitMargin;
+      this.productMargin = JSON.parse(this.productMargin).defaultProfitMargin;
     }else{
       this.productMargin = "50";
     }
@@ -375,9 +375,9 @@ export default class ProductVarientDetailScreen extends BaseComponent {
     let floatProductProfit = parseFloat(productProfit)
     floatProductProfit = floatProductProfit.toFixed(2);
     this.setState({
-      varientCostValue: floatProductCost + "",
-      varientMarginValue: floatProductMargin + "",
-      varientProfitValue: floatProductProfit + ""
+      varientCostValue: this.isValidString(floatProductCost)?floatProductCost + "":"",
+      varientMarginValue: this.isValidString(floatProductMargin)?floatProductMargin + "":"",
+      varientProfitValue: this.isValidString(floatProductProfit)?floatProductProfit + "":""
     })
   }
 
