@@ -99,7 +99,7 @@ export default class AddProductScreen extends BaseComponent {
   renderActivityIndicatorShow() {
     this.setState({
       isActivityIndicatorVisible: true,
-      activityIndicatorText: 'Loading...'
+      activityIndicatorText: strings('common.loading')
     });
   }
 
@@ -667,7 +667,7 @@ export default class AddProductScreen extends BaseComponent {
   }
   pickImageHandler = () => {
     this.initializeOptions();
-    ImagePicker.showImagePicker({ title: "Pick an Image", maxWidth: 800, maxHeight: 600 }, res => {
+    ImagePicker.showImagePicker({ title: strings('createCampaign.pickImage'), maxWidth: 800, maxHeight: 600 }, res => {
       if (res.didCancel) {
         console.log("User cancelled!");
       } else if (res.error) {
@@ -863,9 +863,9 @@ export default class AddProductScreen extends BaseComponent {
     weightType = ['kg', 'lb', 'oz', 'gram']
     Picker.init({
       pickerData: weightType,
-      pickerTitleText: 'Select Weight Unit',
-      pickerConfirmBtnText: 'Done',
-      pickerCancelBtnText: 'Cancel',
+      pickerTitleText: strings('productScreen.SelectWeightUnit'),
+      pickerConfirmBtnText: strings('common.done'),
+      pickerCancelBtnText: strings('common.cancel'),
       selectedValue: [weightType[0].toString().trim()],
       pickerBg: [255, 255, 255, 1],
       onPickerConfirm: data => {

@@ -116,7 +116,7 @@ export default class ProductTag extends BaseComponent {
                     </View>
                 </View>
                 <View style={{ flex: 1, paddingRight: 25 }}>
-                    <AppButton isLightTheme={true} buttonText={"Add"} onButtonPressed={() => {
+                    <AppButton isLightTheme={true} buttonText={strings('productScreen.Add')} onButtonPressed={() => {
                         Keyboard.dismiss()
                         this.addItemToTagList()
                     }} />

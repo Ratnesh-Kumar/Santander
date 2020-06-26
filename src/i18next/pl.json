@@ -1,7 +1,12 @@
 {
   "common": {
     "information": "Informacja",
-    "ok":"Dobrze"
+    "ok":"Dobrze",
+    "no":"NIE",
+    "loading":"Ładowanie...",
+    "done":"Gotowe",
+    "cancel":"Anuluj",
+    "alert":"Alarm"
   },
   "tabs": {
     "homeTab": "Dom",
@@ -35,7 +40,9 @@
     "PasswordTextInputError": "Wprowad� swoje has�o",
     "Info": "Informacja",
     "ValidInformation": "Podaj prawid�owe informacje.",
-    "LoginError": "B��d logowania"
+    "LoginError": "B��d logowania",
+    "userNameOrPasswordEmpty":"Pole Nazwa użytkownika lub Hasło jest puste",
+    "userNameOrPasswordWrong":"Nazwa użytkownika lub hasło jest nieprawidłowe"
   },
   "forgotScreen": {
     "forgotTitle": "Zapomnia�e� has�a",
@@ -45,7 +52,10 @@
     "UserTextInputError": "Wprowad� sw�j email",
     "ScreenTitle": "Digishop",
     "PasswordResetError": "b��d resetowania has�a",
-    "PasswordResetSuccess": "Link do resetu has�a zosta� z powodzeniem wys�any na Tw�j adres email"
+    "PasswordResetSuccess": "Link do resetu has�a zosta� z powodzeniem wys�any na Tw�j adres email",
+    "passwordResetFailed":"Błąd procesu resetowania hasła",
+    "passwordResetSuccessful":"Resetowanie hasła powiodło się",
+    "enterCorrectEmail":"Wpisz poprawny adres e-mail"
   },
   "termsScreen": {
     "termsTitle": "Regulamin",
@@ -84,7 +94,10 @@
     "businessDetailMessage": "Podaj dane swojej firmy.",
     "businessDetailTitle": "Dane biznesowe",
     "campaignErrorMessage": "Podaj prawidłowy tytuł kampanii.",
-    "campaignErrorTitle": "Informacja"
+    "campaignErrorTitle": "Informacja",
+    "saveCampaignDraft":"Twoja kampania została pomyślnie dodana jako wersja robocza. Czy chcesz to opublikować?",
+    "publish":"PUBLIKOWAĆ",
+    "pickImage":"Wybierz obraz"
   },
   "createCampaignCategories": {
     "trackSwitchText": "�led� ilo�ci",
@@ -107,7 +120,8 @@
     "instagramText": "Instagram",
     "Info": "Informacja",
     "createShopErrorkey": "Prosz� wprowadzi� poprawne informacje",
-    "previewText": "Podgl�d"
+    "previewText": "Podgl�d",
+    "campaignPublishSuccess":"Twoja kampania została pomyślnie opublikowana."
   },
   "registerScreen": {
     "digiShopTitle": "DigiShop",
@@ -171,7 +185,14 @@
     "PhoneCodeTextInput": "kod",
     "WebsiteTextInput": "Strona www",
     "FbTextInput": "Strona Facebook",
-    "YelpTextInput": "Yelp"
+    "YelpTextInput": "Yelp",
+    "AddressText": "ADRES",
+    "UrlText": "WPROWADŹ LINKI (URL)",
+    "dataSaved":"Dane zostały pomyślnie zapisane.",
+    "selectCountry":"Wybierz kraj",
+    "selectStatePicker":"Wybierz stan",
+    "selectIndustryTypePicker":"Wybierz typ branży",
+    "selectCountryPicker":"Wybierz kraj"
   },
   "shopSettingsScreen": {
     "ShopSettingsTitle": "Ustawienia sklepu",
@@ -193,6 +214,7 @@
     "estimateProfit": "Oszacuj zysk"
   },
   "shopTab": {
+    "SettingsTitle": "Ustawienia",
     "ShopSettingsTitle": "Ustawienia sklepu",
     "BusinessProfileTitle": "Profil biznesowy",
     "BusinessSettings": "Konfiguracja firmy",
@@ -229,7 +251,11 @@
     "errorNoProductFound": "Nie znaleziono produktu",
     "errorPleasetryAgain": "B��d! Spr�buj jeszcze raz",
     "Info": "Informacja",
-    "productErrorMessage":"Podaj prawidłową nazwę produktu."
+    "productErrorMessage":"Podaj prawidłową nazwę produktu.",
+    "SelectWeightUnit":"Seleccionar unidad de peso",
+    "productUpdated":"Su producto se actualizó con éxito.",
+    "productAdded":"Su producto fue agregado con éxito.",
+    "Add":"Añadir"
   },
   "variantCampaign": {
     "title": "Szczeg�y wariantu",

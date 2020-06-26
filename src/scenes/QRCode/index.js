@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Actions } from 'react-native-router-flux';
+import { strings } from '../../i18next/i18n';
 var constants = require('../../config/Constants');
 var createReactClass = require('create-react-class');
 var isBarcodeRead = false;
@@ -48,7 +49,7 @@ var QRCodeScreen = createReactClass({
   getDefaultProps: function () {
     return {
       cancelButtonVisible: false,
-      cancelButtonTitle: 'Cancel',
+      cancelButtonTitle: strings('common.cancel'),
     };
   },
 

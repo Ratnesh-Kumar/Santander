@@ -1,7 +1,12 @@
 {
   "common": {
     "information": "Information",
-    "ok":"Ok"
+    "ok":"Ok",
+    "no":"NO",
+    "loading":"Loading...",
+    "done":"Done",
+    "cancel":"Cancel",
+    "alert":"Alert"
   },
   "tabs": {
     "homeTab": "Home",
@@ -37,7 +42,9 @@
     "PasswordTextInputError": "Please enter your password",
     "Info": "Info",
     "ValidInformation": "Please provide valid information.",
-    "LoginError": "Login Error"
+    "LoginError": "Login Error",
+    "userNameOrPasswordEmpty":"Either Username or Password Field is empty",
+    "userNameOrPasswordWrong":"Either Username or Password is wrong"
   },
   "forgotScreen": {
     "forgotTitle": "Forgot Password",
@@ -47,7 +54,10 @@
     "UserTextInputError": "Please enter your email",
     "ScreenTitle": "Digishop",
     "PasswordResetError": "password reset error",
-    "PasswordResetSuccess": "Reset link successfully sent to your Email"
+    "PasswordResetSuccess": "Reset link successfully sent to your Email",
+    "passwordResetFailed":"Password Reset Process Failed",
+    "passwordResetSuccessful":"Password Reset Successful",
+    "enterCorrectEmail":"Enter correct email address"
   },
   "termsScreen": {
     "termsTitle": "Terms And Condtions",
@@ -87,7 +97,12 @@
     "businessDetailMessage": "Please provide your business details.",
     "businessDetailTitle": "Business Details",
     "campaignErrorMessage": "Please provide valid campaign title.",
-    "campaignErrorTitle": "Information"
+    "campaignErrorTitle": "Information",
+    "saveCampaignDraft":"Your campaign successfully added as a draft. Do you want to publish it ?",
+    "publish":"PUBLISH",
+    "pickImage":"Pick an Image"
+    
+    
   },
   "createCampaignCategories": {
     "trackSwitchText": "Track Quantity",
@@ -110,7 +125,8 @@
     "instagramText": "Instagram",
     "Info": "Info",
     "createShopErrorkey": "Please enter valid Information",
-    "previewText": "Preview"
+    "previewText": "Preview",
+    "campaignPublishSuccess":"You campaign successfully published."
   },
   "registerScreen": {
     "digiShopTitle": "DigiShop",
@@ -176,7 +192,12 @@
     "FbTextInput": "FB page",
     "YelpTextInput": "Yelp",
     "AddressText": "ADDRESS",
-    "UrlText": "ENTER LINKS (URL)"
+    "UrlText": "ENTER LINKS (URL)",
+    "dataSaved":"Data Successfully Saved.",
+    "selectCountry":"Please select Country",
+    "selectStatePicker":"Select State",
+    "selectIndustryTypePicker":"Select Industry Type",
+    "selectCountryPicker":"Select Country"
   },
   "shopSettingsScreen": {
     "ShopSettingsTitle": "Shop Settings",
@@ -239,7 +260,11 @@
     "errorNoProductFound": "No Product Found",
     "errorPleasetryAgain": "Error! Please try again",
     "Info": "Info",
-    "productErrorMessage":"Please provide valid product name."
+    "productErrorMessage":"Please provide valid product name.",
+    "SelectWeightUnit":"Select Weight Unit",
+    "productUpdated":"Your product successfully updated.",
+    "productAdded":"Your product successfully added.",
+    "Add":"Add"
   },
   "variantCampaign": {
     "title": "Variant detail",

@@ -58,7 +58,7 @@ export default class RegisterView extends BaseComponent {
     renderActivityIndicatorShow() {
         this.setState({
             isActivityIndicatorVisible: true,
-            activityIndicatorText: 'Loading...'
+            activityIndicatorText: strings('common.loading')
         });
     }
 

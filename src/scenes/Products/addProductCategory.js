@@ -117,7 +117,7 @@ export default class AddProductCategory extends BaseComponent {
   renderActivityIndicatorShow() {
     this.setState({
       isActivityIndicatorVisible: true,
-      activityIndicatorText: 'Loading...'
+      activityIndicatorText: strings('common.loading')
     });
   }
 
@@ -340,11 +340,11 @@ export default class AddProductCategory extends BaseComponent {
 
   showAlert() {
     Alert.alert(
-      'Info',
-      (isUpdate) ? 'Your product successfully updated.' : 'Your product successfully added.',
+      strings('common.information'),
+      (isUpdate) ? strings('productScreen.productUpdated') : strings('productScreen.productAdded'),
       [
         {
-          text: 'OK', onPress: () => {
+          text: strings('common.ok'), onPress: () => {
             Actions.manageProduct({ type: 'reset' });
             setTimeout(() => {
               Actions.refresh({ isRefresh: true });
