@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, Image, TextInput, ScrollView, Alert, TouchableOpacity, Keyboard, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform, Image, TextInput, ScrollView, Alert, TouchableOpacity, Keyboard, ImageBackground, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Header from '../../components/Header';
 import productStyle from './productStyle';
@@ -63,6 +63,16 @@ export default class AddProductScreen extends BaseComponent {
     }
     itemId = props.itemId;
     isUpdate = props.isUpdate ? props.isUpdate : false;
+    this.getMarginFromAsync()
+  }
+
+  async getMarginFromAsync(){
+    this.productMargin = await this.getAsyncData(constants.ASYNC_PROFIT_VALUE)
+    if(this.isValidString(this.productMargin)){
+      this.productMargin = JSON.parse(this.productMargin).defalutProfitMargin;
+    }else{
+      this.productMargin = "50";
+    }
   }
 
   componentDidMount() {
@@ -803,7 +813,7 @@ export default class AddProductScreen extends BaseComponent {
       productMargin = this.state.productMarginValue
       productProfit = this.getProfit(salePrice, productCost)
     } else {
-      productCost = this.getCostFromProfitMargin(salePrice, 50);
+      productCost = this.getCostFromProfitMargin(salePrice, this.productMargin);
       productMargin = this.getMargin(salePrice, productCost);
       productProfit = this.getProfit(salePrice, productCost);
     }

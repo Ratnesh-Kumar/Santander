@@ -181,6 +181,7 @@
     "estimateProfit": "Estimación de ganancias"
   },
   "shopTab": {
+    "SettingsTitle":"Settings",
     "ShopSettingsTitle": "Configuraciones de la tienda",
     "BusinessProfileTitle": "Perfil de trabajo",
     "BusinessSettings": "Configuraciones comerciales",

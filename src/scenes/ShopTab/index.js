@@ -14,7 +14,7 @@ export default class ShopTabScreen extends Component {
     this.renderListArray()
     return (
       <View style={shopStyle.container}>
-        <Header title={shopConstants.SETTINGS_SCREEN} />
+        <Header title={strings('shopTab.ShopSettingsTitle')} />
         {/* <View style={shopStyle.viewContainer} onTouchStart={()=>{Actions.shopSetting()}}>
           <Text style={shopStyle.welcome}>{strings('shopTab.ShopSettingsTitle')}</Text>
         </View> */}
@@ -28,7 +28,7 @@ export default class ShopTabScreen extends Component {
   }
   renderListArray() {
     listArr = [
-        { title:strings('shopTab.ShopSettingsTitle') , imageResource: shopConstants.SHOP_SETTING , key:shopConstants.FLATLIST_KEY_SHOP},
+        { title:strings('shopTab.SettingsTitle') , imageResource: shopConstants.SHOP_SETTING , key:shopConstants.FLATLIST_KEY_SHOP},
         { title: strings('shopTab.BusinessProfileTitle'), imageResource: shopConstants.BUSINESS_PROFILE , key:shopConstants.FLATLIST_KEY_BUSINESS },
         // { title: strings('shopTab.BusinessSettings'), imageResource: shopConstants.BUSINESS_SETTING , key:shopConstants.FLATLIST_KEY_BUSINESS_SETTING },
         { title: strings('shopTab.EnablePayment'), imageResource: shopConstants.ENABLE_PAYMENT , key:shopConstants.FLATLIST_KEY_ENABLE },

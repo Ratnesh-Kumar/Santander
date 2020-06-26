@@ -186,6 +186,7 @@
       "estimateProfit":"Estimate profit"
     },
     "shopTab":{
+      "SettingsTitle":"Settings",
       "ShopSettingsTitle":"Shop Settings",
       "BusinessProfileTitle":"Business Profile",
       "BusinessSettings":"Business Settings",
