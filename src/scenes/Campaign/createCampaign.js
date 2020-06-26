@@ -193,8 +193,11 @@ export default class CampaignScreen extends BaseComponent {
             onScrollBeginDrag={() => this.onDragScroll()}
             keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
             <View>
-              {this.renderSwitchTextInput()}
+              <View style={{ paddingLeft: 10, paddingTop: 20 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.quantityTitle')}</Text>
+              </View>
               {this.rendercampaignQuantity()}
+              {this.renderSwitchTextInput()}
               <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
               {this.renderCategoryTagView()}
               {this.renderVariantsQantityView()}
@@ -465,7 +468,7 @@ export default class CampaignScreen extends BaseComponent {
     if (this.state.isTrackQuantity) {
       return (
         <QuantityField
-          title={strings('createCampaign.quanitytTitle')}
+          title={strings('createCampaign.quantityTotal')}
           quantity={campaignDetails.campaignQuantity}
           isTrackQuantity={this.state.isTrackQuantity}
           updatedQuantity={(quantity) => {

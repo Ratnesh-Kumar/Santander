@@ -43,7 +43,7 @@ export default class AddProductCategory extends BaseComponent {
       variantsList: [],
       categoryList: [],
       salesTaxType: globalData.getSalesTaxType(),
-      salesTax: (this.isValidString(globalData.getSalesTax()))?globalData.getSalesTax() + "": "0.0",
+      salesTax: (this.isValidString(globalData.getSalesTax())) ? globalData.getSalesTax() + "" : "0.0",
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
       isDialogModalVisible: false,
@@ -57,7 +57,7 @@ export default class AddProductCategory extends BaseComponent {
     isUpdate = props.isUpdate ? props.isUpdate : false
     productId = props.productId
     fetchProductData = this.getProductDetail();
-    this.setUpdateData =  this.setUpdateData.bind(this)
+    this.setUpdateData = this.setUpdateData.bind(this)
     if (isUpdate) {
       this.setUpdateData()
     }
@@ -79,14 +79,14 @@ export default class AddProductCategory extends BaseComponent {
       }
       productDetails.productQuantity = fetchProductData.defaultDetails.quantityOnHand;
 
-      setTimeout(()=>{
+      setTimeout(() => {
         this.setState({
           salesTaxType: fetchProductData.defaultDetails.taxCode,
           salesTaxSwitch: fetchProductData.defaultDetails.taxable,
           productQuantity: fetchProductData.defaultDetails.quantityOnHand,
         })
       }, 100)
-      
+
 
       if (this.isValidArray(fetchProductData.productVariants)) {
         let productVariant = fetchProductData.productVariants;
@@ -234,8 +234,12 @@ export default class AddProductCategory extends BaseComponent {
             onScrollBeginDrag={() => this.onDragScroll()}
             keyboardShouldPersistTaps={'always'} style={{ marginTop: 10 }}>
             <View>
-              {this.renderSwitchTextInput()}
+              <View style={{ paddingLeft: 10, paddingTop: 20 }}>
+                <Text style={{ fontSize: 16, fontWeight: 'bold', paddingLeft: 10 }}>{strings('createCampaign.quantityTitle')}</Text>
+              </View>
               {this.renderProductQuantity()}
+              {this.renderSwitchTextInput()}
+
               <View style={{ height: 0.7, backgroundColor: "#b8b2b2", marginTop: 10, width: "100%" }} />
               {this.renderCategoryTagView()}
               {this.renderVariantsQantityView()}
@@ -267,7 +271,7 @@ export default class AddProductCategory extends BaseComponent {
     variantItem.name = variant.name;
     variantItem.price = "";
     variantItem.salePrice = "",
-    variantItem.barcode = "";
+      variantItem.barcode = "";
     variantItem.skuNumber = "";
     variantItem.productCost = "";
     variantItem.quantity = variant.quantity
@@ -443,23 +447,23 @@ export default class AddProductCategory extends BaseComponent {
 
   updateVariantList(variantList) {
     let newVariantList = [];
-    
+
     for (let i = 0; i < variantList.length; i++) {
       let variantItem = "";
-      for (let j = 0; j < this.state.variantsList.length; j++){
-        if(variantList[i] == this.state.variantsList[j].name){
+      for (let j = 0; j < this.state.variantsList.length; j++) {
+        if (variantList[i] == this.state.variantsList[j].name) {
           variantItem = this.state.variantsList[j];
           break;
         }
       }
-      if(!this.isValidString(variantItem)){
+      if (!this.isValidString(variantItem)) {
         // variantItem.name= variantList[i];
         // variantItem.quantity="";
-        newVariantList.push({"name": variantList[i], quantity: "1"})
-      }else{
+        newVariantList.push({ "name": variantList[i], quantity: "1" })
+      } else {
         newVariantList.push(variantItem)
       }
-      
+
     }
     this.setState({ variantsList: newVariantList })
   }
@@ -488,7 +492,7 @@ export default class AddProductCategory extends BaseComponent {
     if (this.state.isTrackQuantity) {
       return (
         <QuantityField
-          title={strings('createCampaign.quanitytTitle')}
+          title={strings('createCampaign.quantityTotal')}
           quantity={productDetails.productQuantity}
           // quantity={this.state.productQuantity}
           isTrackQuantity={this.state.isTrackQuantity}
