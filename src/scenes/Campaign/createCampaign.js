@@ -84,6 +84,7 @@ export default class CampaignScreen extends BaseComponent {
           campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand,
           salesTaxType: fetchCampaignData.defaultDetails.taxCode,
           isSalesTax: fetchCampaignData.defaultDetails.taxable,
+          salesTax:fetchCampaignData.defaultDetails.taxPercentage,
         })
       }, 100)
 
@@ -727,6 +728,7 @@ export default class CampaignScreen extends BaseComponent {
         "requiredShipping": true,
         "taxable": this.state.isSalesTax,
         "taxCode": this.state.salesTaxType,
+        "taxPercentage":this.state.salesTax,
         "displayProduct": true,
         "comparePrice": data.campaignPrice,
         "productImage": data.productImage,
