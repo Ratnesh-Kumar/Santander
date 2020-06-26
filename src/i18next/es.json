@@ -1,4 +1,14 @@
 {
+  "common": {
+    "information": "Información",
+    "ok":"Okay"
+  },
+  "tabs": {
+    "homeTab": "Hogar",
+    "productTab": "Producto",
+    "orderTab": "Orden",
+    "settingTab": "Configuraciones"
+  },
   "screens": {
     "homeScreen": "DigiShop",
     "addCampaign": "Añadir campaña",
@@ -71,7 +81,9 @@
     "categoryTagText": "categorías",
     "variantsTagText": "variantes",
     "businessDetailMessage": "Proporcione los detalles de su negocio.",
-    "businessDetailTitle": "Detalles comerciales"
+    "businessDetailTitle": "Detalles comerciales",
+    "campaignErrorMessage": "Proporcione un título de campaña válido.",
+    "campaignErrorTitle": "Información"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",
@@ -222,7 +234,8 @@
     "productWeightText": "lb",
     "errorNoProductFound": "Ningún producto encontrado",
     "errorPleasetryAgain": "¡Error! Inténtalo de nuevo",
-    "Info": "Informacion"
+    "Info": "Informacion",
+    "productErrorMessage":"Proporcione un nombre de producto válido."
   },
   "variantCampaign": {
     "title": "Detalle variante",

@@ -308,10 +308,10 @@ export default class AddProductScreen extends BaseComponent {
   }
   showAlert() {
     Alert.alert(
-      'Info',
-      'Please provide valid product name.',
+      strings("common.information"),
+      strings("productScreen.productErrorMessage"),
       [
-        { text: 'OK' },
+        { text: strings("common.ok") },
       ]
     );
   }
