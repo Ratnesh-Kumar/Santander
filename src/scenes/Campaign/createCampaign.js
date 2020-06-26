@@ -42,7 +42,7 @@ export default class CampaignScreen extends BaseComponent {
       variantListObject: [],
       variantsList: [],
       categoryList: [],
-      salesTax: globalData.getSalesTax() + "",
+      salesTax: (this.isValidString(globalData.getSalesTax())) ? globalData.getSalesTax() + "" : "0.0",
       salesTaxType: globalData.getSalesTaxType(),
       isActivityIndicatorVisible: false,
       activityIndicatorText: '',
@@ -79,14 +79,14 @@ export default class CampaignScreen extends BaseComponent {
       }
 
       campaignDetails.campaignQuantity = fetchCampaignData.defaultDetails.quantityOnHand;
-      setTimeout(()=>{
+      setTimeout(() => {
         this.setState({
-          campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand, 
-          salesTaxType:fetchCampaignData.defaultDetails.taxCode,
+          campaignQuantity: fetchCampaignData.defaultDetails.quantityOnHand,
+          salesTaxType: fetchCampaignData.defaultDetails.taxCode,
           isSalesTax: fetchCampaignData.defaultDetails.taxable,
         })
       }, 100)
-      
+
       if (this.isValidArray(fetchCampaignData.productVariants)) {
         let productVariant = fetchCampaignData.productVariants;
         for (let i = 0; i < productVariant.length; i++) {
@@ -422,20 +422,20 @@ export default class CampaignScreen extends BaseComponent {
 
   updateVariantList(variantList) {
     let newVariantList = [];
-    
+
     for (let i = 0; i < variantList.length; i++) {
       let variantItem = "";
-      for (let j = 0; j < this.state.variantsList.length; j++){
-        if(variantList[i] == this.state.variantsList[j].name){
+      for (let j = 0; j < this.state.variantsList.length; j++) {
+        if (variantList[i] == this.state.variantsList[j].name) {
           variantItem = this.state.variantsList[j];
           break;
         }
       }
-      if(!this.isValidString(variantItem)){
+      if (!this.isValidString(variantItem)) {
         // variantItem.name= variantList[i];
         // variantItem.quantity="";
-        newVariantList.push({"name": variantList[i], quantity: "1"})
-      }else{
+        newVariantList.push({ "name": variantList[i], quantity: "1" })
+      } else {
         newVariantList.push(variantItem)
       }
     }

@@ -151,6 +151,7 @@ export default class CampaignScreen extends BaseComponent {
   }
 
   render() {
+    console.log("######### profitMargin : "+globalData.getDefaultProfitMargin())
     return (
       <View style={campaignStyle.container}>
         {this.renderModal()}
