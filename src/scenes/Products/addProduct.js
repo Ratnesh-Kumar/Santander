@@ -586,7 +586,10 @@ export default class AddProductScreen extends BaseComponent {
               label={strings('createCampaign.priceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ productPriceValue: text }) }}
+              onChangeText={text => { 
+                this.setState({ productPriceValue: text }) 
+                this.handleCostMarginProfit(text, false, false, false)
+              }}
               autoCorrect={false}
               isLoginScreen={false}
               style={productStyle.input}
@@ -789,28 +792,34 @@ export default class AddProductScreen extends BaseComponent {
     var productProfit = 0;
     if (isCostHandle) {
       productCost = this.state.productCostValue;
-      productMargin = Math.floor(this.getMargin(salePrice, this.state.productCostValue));
-      productProfit = Math.floor(this.getProfit(salePrice, this.state.productCostValue))
+      productMargin = this.getMargin(salePrice, this.state.productCostValue);
+      productProfit = this.getProfit(salePrice, this.state.productCostValue)
     } else if (isProfitHandle) {
       productCost = salePrice - this.state.productProfitValue;
-      productMargin = Math.floor(this.getMargin(salePrice, productCost));
+      productMargin = this.getMargin(salePrice, productCost);
       productProfit = this.state.productProfitValue
     } else if (isMarginHandle) {
-      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, this.state.productMarginValue));
+      productCost = this.getCostFromProfitMargin(salePrice, this.state.productMarginValue);
       productMargin = this.state.productMarginValue
-      productProfit = Math.floor(this.getProfit(salePrice, productCost))
+      productProfit = this.getProfit(salePrice, productCost)
     } else {
-      productCost = Math.floor(this.getCostFromProfitMargin(salePrice, 50));
-      productMargin = Math.floor(this.getMargin(salePrice, productCost));
-      productProfit = Math.floor(this.getProfit(salePrice, productCost))
+      productCost = this.getCostFromProfitMargin(salePrice, 50);
+      productMargin = this.getMargin(salePrice, productCost);
+      productProfit = this.getProfit(salePrice, productCost);
     }
     // console.log("##################### productCost 1: " + productCost)
     // console.log("##################### productMargin 2: " + productMargin)
     // console.log("##################### productProfit 3: " + productProfit)
+    let floatProductCost = parseFloat(productCost)
+    floatProductCost = floatProductCost.toFixed(2);
+    let floatProductMargin = parseFloat(productMargin)
+    floatProductMargin = floatProductMargin.toFixed(2);
+    let floatProductProfit = parseFloat(productProfit)
+    floatProductProfit = floatProductProfit.toFixed(2);
     this.setState({
-      productCostValue: productCost + "",
-      productMarginValue: productMargin + "",
-      productProfitValue: productProfit + ""
+      productCostValue: floatProductCost + "",
+      productMarginValue: floatProductMargin + "",
+      productProfitValue: floatProductProfit + ""
     })
   }
 

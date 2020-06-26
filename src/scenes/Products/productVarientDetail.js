@@ -279,7 +279,10 @@ export default class ProductVarientDetailScreen extends BaseComponent {
               label={strings('createCampaign.priceTextInput')}
               maxLength={100}
               autoCapitalize={'none'}
-              onChangeText={text => { this.setState({ varientPriceValue: text }) }}
+              onChangeText={text => {
+                this.setState({ varientPriceValue: text })
+                this.handleCostMarginProfit(text, false, false, false)
+              }}
               autoCorrect={false}
               isLoginScreen={false}
               style={productStyle.input}
@@ -355,10 +358,16 @@ export default class ProductVarientDetailScreen extends BaseComponent {
     // console.log("##################### productCost 1: " + productCost)
     // console.log("##################### productMargin 2: " + productMargin)
     // console.log("##################### productProfit 3: " + productProfit)
+    let floatProductCost = parseFloat(productCost)
+    floatProductCost = floatProductCost.toFixed(2);
+    let floatProductMargin = parseFloat(productMargin)
+    floatProductMargin = floatProductMargin.toFixed(2);
+    let floatProductProfit = parseFloat(productProfit)
+    floatProductProfit = floatProductProfit.toFixed(2);
     this.setState({
-      varientCostValue: productCost + "",
-      varientMarginValue: productMargin + "",
-      varientProfitValue: productProfit + ""
+      varientCostValue: floatProductCost + "",
+      varientMarginValue: floatProductMargin + "",
+      varientProfitValue: floatProductProfit + ""
     })
   }
 
