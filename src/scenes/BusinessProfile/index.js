@@ -28,7 +28,7 @@ import ActivityIndicatorView from '../../components/activityindicator/ActivityIn
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import Picker from 'react-native-picker';
 import PhoneInput from 'react-native-phone-input'
-
+var businessConstants = require('./BusinessProfileConstants')
 var globalData = new GlobalData();
 var industryTypeData = [];
 var countryNameData = [];
@@ -94,9 +94,9 @@ export default class BusinessProfileView extends BaseComponent {
     async getBusinessData() {
         this.renderActivityIndicatorShow()
         let shopSettingUrl = constants.GET_SHOP_SETTING_FULL.replace(constants.BUISNESS_ID, globalData.getBusinessId())
-       //console.log("######### shopSettingUrl",shopSettingUrl)
+        // console.log("######### shopSettingUrl",shopSettingUrl)
         let responseData = await fetchPartyGET(shopSettingUrl);
-        //console.log("@@@@@@@@@@@@@@@@@@@@@@ shopSettingUrl response " + JSON.stringify(responseData));
+        // console.log("@@@@@@@@@@@@@@@@@@@@@@ shopSettingUrl response " + JSON.stringify(responseData));
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == constants.SUCCESS_STATUS) {
                 if (this.isValidArray(responseData.properties)) {
@@ -135,15 +135,35 @@ export default class BusinessProfileView extends BaseComponent {
         )
     }
     setBusinessData(responseData) {
+        //for links 
+        let FbURL = "";
+        let YelpURL = "";
+        let WebURL = "";
+        if (this.isValidArray(responseData.party.contacts)) {
+            if (this.isValidArray(responseData.party.contacts[0].contactDetails)) {
+                let linkArr = responseData.party.contacts[0].contactDetails;
+                for (let i = 0; i < linkArr.length; i++) {
+                    if (linkArr[i].contactLabel === businessConstants.LINKS_FB) {
+                        FbURL = linkArr[i].contactInfo
+                    }
+                    if (linkArr[i].contactLabel === businessConstants.LINKS_WEB) {
+                        WebURL = linkArr[i].contactInfo
+                    }
+                    if (linkArr[i].contactLabel === businessConstants.LINKS_YELP) {
+                        YelpURL = linkArr[i].contactInfo
+                    }
+                }
+            }
+        }
         this.setState({
             buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
             businessTaxId: (this.isValidString(responseData.party.taxId) ? responseData.party.taxId.toString().trim() : ""),
             postalCode: (this.isValidString(responseData.party.postalCode) ? (responseData.party.postalCode.toString().trim()) : ""),
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
             phone: (this.isValidString(responseData.party.phoneNumber) ? responseData.party.phoneNumber : ""),
-            websiteUrl: (this.isValidString(responseData.party.website) ? responseData.party.website : ""),
-            fbUrl: (this.isValidString(responseData.party.fbPage) ? responseData.party.fbPage : ""),
-            yelpUrl: (this.isValidString(responseData.party.yelp) ? responseData.party.yelp : ""),
+            websiteUrl: WebURL,
+            fbUrl: FbURL,
+            yelpUrl: YelpURL,
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
             country: (this.isValidString(responseData.party.country) ? responseData.party.country : ""),
