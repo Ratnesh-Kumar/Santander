@@ -44,6 +44,7 @@ var shopAutoCreated = false;
 var salesTaxTypeList = [];
 var countryStateList = [];
 var defaultProfitMargin =0;
+var selectedTab = 1;
 export class GlobalData extends Component {
     constructor() {
         super();
@@ -405,6 +406,14 @@ export class GlobalData extends Component {
     }
     getDefaultProfitMargin(){
         return defaultProfitMargin;
+    }
+
+    setSelectedTab(tabNumber){
+        selectedTab = tabNumber;
+    }
+
+    getSelectedTab(){
+        return selectedTab;
     }
 
 }

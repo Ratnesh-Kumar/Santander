@@ -4,6 +4,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CardView from 'react-native-cardview';
+import { Actions } from 'react-native-router-flux'
 import {
   StyleSheet,
   Image,
@@ -11,7 +12,11 @@ import {
   View,
   Text,
   Platform,
+  TouchableOpacity,
+  TouchableHighlight
 } from 'react-native';
+import GlobalData from './utils/GlobalData'
+var globalData = new GlobalData();
 var colorConstants = require('./config/colorConstant')
 
 
@@ -59,23 +64,29 @@ const styles = StyleSheet.create({
 });
 
 const TabIcon = props => (
-  <View style={props.focused ? styles.selectedViewContainer : styles.viewContainer}>
-    <Image
-      style={styles.container}
-      source={getTabIcon(props)}
-    //style={{tintColor:'black'}}
-    />
-    <Text
-      style={{
-        fontSize: 12,
-        fontWeight: 'bold',
-        fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
-        color: props.focused ? colorConstants.SANT_RED_COLOR : colorConstants.GREY_DARK_COLOR_A,
-        textAlign: 'center',
-      }}>
-      {props.title}
-    </Text>
-  </View>
+  <TouchableHighlight onPress={() => { tabPressed(props.tabTitle) }}
+    underlayColor='transparent'
+    style={props.focused ? styles.selectedViewContainer : styles.viewContainer}>
+    <View>
+      <View style={{justifyContent:'center', alignItems:'center'}}>
+      <Image
+        style={styles.container}
+        source={getTabIcon(props)}
+      //style={{tintColor:'black'}}
+      />
+      </View>
+      <Text
+        style={{
+          fontSize: 12,
+          fontWeight: 'bold',
+          fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
+          color: props.focused ? colorConstants.SANT_RED_COLOR : colorConstants.GREY_DARK_COLOR_A,
+          textAlign: 'center',
+        }}>
+        {props.title}
+      </Text>
+    </View>
+  </TouchableHighlight>
 );
 
 function getTabIcon(props) {
@@ -102,6 +113,22 @@ function getTabIcon(props) {
   }
 
 }
+function tabPressed(title) {
+  if (title == "Home") {
+    // globalData.setSelectedTab(1);
+    Actions.home({ type: 'reset' });
+  } else if (title == "Products") {
+    // globalData.setSelectedTab(2);
+    Actions.manageProduct({ type: 'reset' });
+  } else if (title == "Order") {
+    // globalData.setSelectedTab(3);
+    Actions.myOrder({ type: 'reset', refresh: {} });
+  } else if (title == "Settings") {
+    // globalData.setSelectedTab(4);
+    Actions.shop({ type: 'reset' });
+  }
+}
+
 TabIcon.propTypes = propTypes;
 
 export default TabIcon;
