@@ -165,7 +165,7 @@ export default class ManageProducts extends BaseComponent {
   renderActivityIndicatorShow() {
     this.setState({
       isActivityIndicatorVisible: true,
-      activityIndicatorText: 'Loading...'
+      activityIndicatorText: strings('common.loading')
     });
   }
 

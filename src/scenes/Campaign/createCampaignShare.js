@@ -132,10 +132,10 @@ export default class CreateCampaiganShare extends BaseComponent {
 
   showAlert() {
     Alert.alert(
-      'Information',
-      'You campaign successfully published.',
+      strings("common.information"),
+      strings("createCampaignShare.campaignPublishSuccess"),
       [
-        { text: 'OK', onPress: () => Actions.home() },
+        { text: strings("common.ok"), onPress: () => Actions.home() },
       ]
     );
   }

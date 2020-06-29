@@ -42,7 +42,7 @@ export default class ForgotPassword extends Component {
   renderActivityIndicatorShow() {
     this.setState({
       isActivityIndicatorVisible: true,
-      activityIndicatorText: 'Loading...'
+      activityIndicatorText: strings('common.loading')
     });
   }
 
@@ -57,7 +57,7 @@ export default class ForgotPassword extends Component {
     this.setState({
       isDialogModalVisible: true,
       dialogModalText: message,
-      dialogModalTitle: 'Password Reset Process Failed'
+      dialogModalTitle: strings('forgotScreen.passwordResetFailed')
     });
     message = '';
   }
@@ -65,7 +65,7 @@ export default class ForgotPassword extends Component {
     this.setState({
       isDialogModalVisible: true,
       dialogModalText: message,
-      dialogModalTitle: 'Password Reset Successful',
+      dialogModalTitle: strings('forgotScreen.passwordResetSuccessful'),
       username:''
     });
     message = '';
@@ -137,7 +137,7 @@ export default class ForgotPassword extends Component {
       this.renderActivityIndicatorHide()
     }
     else{
-      Alert.alert("Alert","Enter correct email address")
+      Alert.alert(strings('common.alert'),strings('forgotScreen.enterCorrectEmail'))
     }
   }
 

@@ -6,6 +6,7 @@ import {
   GoogleAnalyticsTracker,
   GoogleAnalyticsSettings,
 } from 'react-native-google-analytics-bridge';
+import { strings } from './src/i18next/i18n';
 import LoginScreen from './src/scenes/Login';
 import ForgotPasswordScreen from './src/scenes/ForgotPassword';
 import TermsScreen from './src/scenes/TermsAndPrivacy';
@@ -98,7 +99,7 @@ export default class App extends Component {
 
 
         {/* Tab and it's scenes */}
-        <Scene key="homeTab" title="Home" icon={TabIcon} initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
+        <Scene key="homeTab" title={strings("tabs.homeTab")} tabTitle="Home" icon={TabIcon} initial={true} resource={require('./src/public/images/tab_home.png')} hideNavBar>
           <Scene key="home" component={HomeScreen} title="Blue" hideNavBar />
           <Scene key="campaign" component={Campaign} title="Blue" hideNavBar />
           <Scene key="createCampaign" component={CreateCampaign} title="Blue" hideNavBar />
@@ -109,7 +110,7 @@ export default class App extends Component {
           <Scene key="browser" component={Browser} title="Facebook Share" duration={0} />
         </Scene>
 
-        <Scene key="productTab" title="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
+        <Scene key="productTab" title={strings("tabs.productTab")} tabTitle="Products" icon={TabIcon} resource={require('./src/public/images/tab_save.png')} hideNavBar>
           {/* <Scene key="favourit" component={FavouriteScreen} title="Blue" hideNavBar /> */}
           <Scene key="manageProduct" component={ManageProduct} title="Blue" hideNavBar />
           <Scene key="addProduct" component={AddProduct} title="Blue" hideNavBar />
@@ -117,13 +118,13 @@ export default class App extends Component {
           <Scene key="productVarient" component={ProductVarientDetail} title="Varient Detail" hideNavBar />
         </Scene>
 
-        <Scene key="orderTab" title="Order" icon={TabIcon} resource={require('./src/public/images/tab_shop.png')} hideNavBar>
+        <Scene key="orderTab" title={strings("tabs.orderTab")} tabTitle="Order" icon={TabIcon} resource={require('./src/public/images/tab_shop.png')} hideNavBar>
           <Scene key="myOrder" component={MyOrder} title="home" />
           <Scene key="editOrder" component={EditOrder} title="editOrder" />
           <Scene key="trackInformation" component={TrackInformation} title="Track Information" />
         </Scene>
 
-        <Scene key="shopTab" title="Settings" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
+        <Scene key="shopTab" title={strings("tabs.settingTab")} tabTitle="Settings" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>
           <Scene key="shop" component={ShopTabScreen} title="home" />
           <Scene key="businessProfile" component={BusinessProfile} title="businessProfile" duration={0} />
           <Scene key="shopSetting" component={ShopSettingScreen} title="Shop Settings" hideNavBar />

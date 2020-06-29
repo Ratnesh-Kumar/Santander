@@ -80,23 +80,23 @@ const TabIcon = props => (
 
 function getTabIcon(props) {
   if (props.focused) {
-    if (props.title == "Home") {
+    if (props.tabTitle == "Home") {
       return require('./public/images/home_tab_select_icon.png')
-    } else if (props.title == "Products") {
+    } else if (props.tabTitle == "Products") {
       return require('./public/images/product_tab_select_icon.png')
-    } else if (props.title == "Order") {
+    } else if (props.tabTitle == "Order") {
       return require('./public/images/order_tab_select_icon.png')
-    } else if (props.title == "Settings") {
+    } else if (props.tabTitle == "Settings") {
       return require('./public/images/setting_tab_select_icon.png')
     }
   } else {
-    if (props.title == "Home") {
+    if (props.tabTitle == "Home") {
       return require('./public/images/home_tab_icon.png')
-    } else if (props.title == "Products") {
+    } else if (props.tabTitle == "Products") {
       return require('./public/images/product_tab_icon.png')
-    } else if (props.title == "Order") {
+    } else if (props.tabTitle == "Order") {
       return require('./public/images/order_tab_icon.png')
-    } else if (props.title == "Settings") {
+    } else if (props.tabTitle == "Settings") {
       return require('./public/images/setting_tab_icon.png')
     }
   }

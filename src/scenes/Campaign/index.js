@@ -629,10 +629,10 @@ export default class CampaignScreen extends BaseComponent {
       Actions.createCampaign({ campaignDetails: campaignDetails, isCampaignUpdate: isCampaignUpdate, campaignId: campaignId });
     } else {
       Alert.alert(
-        'Info',
-        'Please provide valid campaign title.',
+        strings("common.information"),
+        strings("createCampaign.campaignErrorMessage"),
         [
-          { text: 'OK' },
+          { text: 'common.ok' },
         ]
       );
     }

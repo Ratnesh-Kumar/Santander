@@ -222,7 +222,7 @@ export default class LoginView extends BaseComponent {
   renderActivityIndicatorShow() {
     this.setState({
       isActivityIndicatorVisible: true,
-      activityIndicatorText: 'Loading...'
+      activityIndicatorText: strings('common.loading')
     });
   }
 
@@ -468,12 +468,12 @@ export default class LoginView extends BaseComponent {
     //   .filtered('user_name =$0 && user_password=$1', username, password);
 
     if (this.state.username === '' || this.state.password === '') {
-      Alert.alert('Alert', 'Either Username or Password Field is empty');
+      Alert.alert(strings('common.alert'), strings('loginScreen.userNameOrPasswordEmpty'));
       return;
     } else if (user_details.length > 0) {
       Actions.tabbar();
     } else {
-      Alert.alert('Alert', 'Either Username or Password is wrong');
+      Alert.alert(strings('common.alert'), strings('loginScreen.userNameOrPasswordWrong'));
     }
   }
 

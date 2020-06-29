@@ -1,4 +1,19 @@
 {
+  "common": {
+    "information": "Información",
+    "ok":"Okay",
+    "no":"NO",
+    "loading":"Cargando...",
+    "done":"Hecho",
+    "cancel":"Cancelar",
+    "alert":"Alerta"
+  },
+  "tabs": {
+    "homeTab": "Hogar",
+    "productTab": "Producto",
+    "orderTab": "Orden",
+    "settingTab": "Configuraciones"
+  },
   "screens": {
     "homeScreen": "DigiShop",
     "addCampaign": "Añadir campaña",
@@ -21,9 +36,15 @@
     "TermsConditionTitle2": "Y han reconocido \n nuestrar",
     "TermsConditionSubTitle": " intimidad",
     "TermsConditionSubTitle1": "declaración",
+    "UserTextInput": "Nombre de usuario",
+    "UserTextInputError": "Por favor ingrese su nombre de usuario / correo electrónico",
+    "PasswordTextInput": "Contraseña",
+    "PasswordTextInputError": "Por favor, introduzca su contraseña",
     "Info": "Informacion",
     "ValidInformation": "Por favor proporcione información válida.",
-    "LoginError": "Error de inicio de sesión"
+    "LoginError": "Error de inicio de sesión",
+    "userNameOrPasswordEmpty":"El campo Nombre de usuario o Contraseña está vacío",
+    "userNameOrPasswordWrong":"El nombre de usuario o la contraseña son incorrectos"
   },
   "forgotScreen": {
     "forgotTitle": "olvidadoTítulo",
@@ -33,7 +54,11 @@
     "UserTextInputError": "Por favor introduzca su correo electrónico",
     "ScreenTitle": "Digishop",
     "PasswordResetError": "error de restablecimiento de contraseña",
-    "PasswordResetSuccess": "Restablecer enlace enviado correctamente a su correo electrónico"
+    "PasswordResetSuccess": "Restablecer enlace enviado correctamente a su correo electrónico",
+    "passwordResetFailed":"El proceso de restablecimiento de contraseña falló",
+    "passwordResetSuccessful":"Restablecimiento de contraseña exitoso",
+    "enterCorrectEmail":"Ingrese la dirección de correo electrónico correcta"
+
   },
   "termsScreen": {
     "termsTitle": "Términos y condiciones",
@@ -71,7 +96,12 @@
     "categoryTagText": "categorías",
     "variantsTagText": "variantes",
     "businessDetailMessage": "Proporcione los detalles de su negocio.",
-    "businessDetailTitle": "Detalles comerciales"
+    "businessDetailTitle": "Detalles comerciales",
+    "campaignErrorMessage": "Proporcione un título de campaña válido.",
+    "campaignErrorTitle": "Información",
+    "saveCampaignDraft":"Su campaña se agregó correctamente como borrador. ¿Quieres publicarlo?",
+    "publish":"PUBLICAR",
+    "pickImage":"Elige una imagen"
   },
   "createCampaignCategories": {
     "trackSwitchText": "Cantidad de seguimiento",
@@ -94,7 +124,8 @@
     "instagramText": "Instagram",
     "Info": "Informacion",
     "createShopErrorkey": "Por favor, introduzca información válida",
-    "previewText": "Avance"
+    "previewText": "Avance",
+    "campaignPublishSuccess":"Tu campaña se publicó con éxito."
   },
   "registerScreen": {
     "digiShopTitle": "DigiShop",
@@ -160,7 +191,12 @@
     "FbTextInput": "Página de FB",
     "YelpTextInput": "Gañido",
     "AddressText": "HABLA A",
-    "UrlText": "INGRESAR ENLACES (URL)"
+    "UrlText": "INGRESAR ENLACES (URL)",
+    "dataSaved":"Datos guardados con éxito.",
+    "selectCountry":"Por favor seleccione país",
+    "selectStatePicker":"Seleccione estado",
+    "selectIndustryTypePicker":"Seleccione tipo de industria",
+    "selectCountryPicker":"Seleccionar país"
   },
   "shopSettingsScreen": {
     "ShopSettingsTitle": "Configuraciones de la tienda",
@@ -182,7 +218,7 @@
     "estimateProfit": "Estimación de ganancias"
   },
   "shopTab": {
-    "SettingsTitle": "Settings",
+    "SettingsTitle": "Configuraciones",
     "ShopSettingsTitle": "Configuraciones de la tienda",
     "BusinessProfileTitle": "Perfil de trabajo",
     "BusinessSettings": "Configuraciones comerciales",
@@ -222,7 +258,12 @@
     "productWeightText": "lb",
     "errorNoProductFound": "Ningún producto encontrado",
     "errorPleasetryAgain": "¡Error! Inténtalo de nuevo",
-    "Info": "Informacion"
+    "Info": "Informacion",
+    "productErrorMessage":"Proporcione un nombre de producto válido.",
+    "SelectWeightUnit":"Seleccionar unidad de peso",
+    "productUpdated":"Su producto se actualizó con éxito.",
+    "productAdded":"Su producto fue agregado con éxito.",
+    "Add":"Añadir"
   },
   "variantCampaign": {
     "title": "Detalle variante",

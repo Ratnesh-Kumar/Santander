@@ -196,11 +196,11 @@ export default class BusinessProfileView extends BaseComponent {
 
     showAlert() {
         Alert.alert(
-            'Info',
-            'Data Successfully Saved.',
+            strings('common.information'),
+            strings('BuisnessProfile.dataSaved'),
             [
                 {
-                    text: 'OK', onPress: () => {
+                    text: strings('common.ok'), onPress: () => {
                         Actions.shop({ type: 'reset' });
                         setTimeout(() => {
                             Actions.refresh({ isRefresh: true });
@@ -214,7 +214,7 @@ export default class BusinessProfileView extends BaseComponent {
     renderActivityIndicatorShow() {
         this.setState({
             isActivityIndicatorVisible: true,
-            activityIndicatorText: 'Loading...'
+            activityIndicatorText: strings('common.loading')
         });
     }
 
@@ -915,9 +915,9 @@ export default class BusinessProfileView extends BaseComponent {
         industryTypeData = ['Auto Repair', 'Bars', 'Coffee $ Tea', 'Delivery', 'General Constrator', 'Hair Salons', 'Hardware Stores', 'Heating and Cooling', 'Home Goods Store', 'Jewellery', 'Liquor Store', 'Painter', 'Plumber', 'Professional', 'Real Estate Agents', 'Restaurnts', 'Retail Stores'];
         Picker.init({
             pickerData: industryTypeData,
-            pickerTitleText: 'Select Industry Type',
-            pickerConfirmBtnText: 'Done',
-            pickerCancelBtnText: 'Cancel',
+            pickerTitleText: strings('BuisnessProfile.selectIndustryTypePicker'),
+            pickerConfirmBtnText: strings('common.done'),
+            pickerCancelBtnText: strings('common.cancel'),
             selectedValue: [industryTypeData[0].toString().trim()],
             pickerBg: [255, 255, 255, 1],
 
@@ -948,9 +948,9 @@ export default class BusinessProfileView extends BaseComponent {
             let stateNameData = globalData.getStateList(this.state.country);
             Picker.init({
                 pickerData: stateNameData,
-                pickerTitleText: 'Select State',
-                pickerConfirmBtnText: 'Done',
-                pickerCancelBtnText: 'Cancel',
+                pickerTitleText: strings('BuisnessProfile.selectStatePicker'),
+                pickerConfirmBtnText: strings('common.done'),
+                pickerCancelBtnText: strings('common.cancel'),
                 selectedValue: [stateNameData[0].toString().trim()],
                 pickerBg: [255, 255, 255, 1],
 
@@ -970,7 +970,7 @@ export default class BusinessProfileView extends BaseComponent {
             Picker.show();
         }
         else {
-            alert('Please select Country')
+            alert(strings('BuisnessProfile.selectCountry'))
         }
     }
     hidePicker() {
@@ -989,9 +989,9 @@ export default class BusinessProfileView extends BaseComponent {
         if (this.isValidArray(countryNameData)) {
             Picker.init({
                 pickerData: countryNameData,
-                pickerTitleText: 'Select Country',
-                pickerConfirmBtnText: 'Done',
-                pickerCancelBtnText: 'Cancel',
+                pickerTitleText: strings('BuisnessProfile.selectCountryPicker'),
+                pickerConfirmBtnText: strings('common.done'),
+                pickerCancelBtnText: strings('common.cancel'),
                 selectedValue: [countryNameData[0].toString().trim()],
                 pickerBg: [255, 255, 255, 1],
 

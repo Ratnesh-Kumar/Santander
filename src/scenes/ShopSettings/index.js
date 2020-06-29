@@ -69,7 +69,7 @@ export default class ShopSettingScreen extends BaseComponent {
   renderActivityIndicatorShow() {
     this.setState({
       isActivityIndicatorVisible: true,
-      activityIndicatorText: 'Loading...'
+      activityIndicatorText: strings('common.loading')
     });
   }
 

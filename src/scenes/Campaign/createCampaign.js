@@ -307,16 +307,16 @@ export default class CampaignScreen extends BaseComponent {
 
   showAlert() {
     Alert.alert(
-      'Info',
-      'Your campaign successfully added as a draft. Do you want to publish it ?',
+      strings("common.information"),
+      strings("createCampaign.saveCampaignDraft"),
       [
         {
-          text: 'PUBLISH', onPress: () => {
+          text: strings("createCampaign.publish"), onPress: () => {
             Actions.createCampaignShare()
           }
         },
         {
-          text: 'NO', onPress: () => {
+          text: strings("common.no"), onPress: () => {
             this.setCampaignID("")
             this.setCampaignResponse("")
             Actions.manageCampaign({ type: 'reset' });
