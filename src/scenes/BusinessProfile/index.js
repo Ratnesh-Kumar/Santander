@@ -94,9 +94,9 @@ export default class BusinessProfileView extends BaseComponent {
     async getBusinessData() {
         this.renderActivityIndicatorShow()
         let shopSettingUrl = constants.GET_SHOP_SETTING_FULL.replace(constants.BUISNESS_ID, globalData.getBusinessId())
-        //console.log(globalData.getUserInfo().key)
+       //console.log("######### shopSettingUrl",shopSettingUrl)
         let responseData = await fetchPartyGET(shopSettingUrl);
-        //console.log("@@@@@@@@@@@@@@@@@@@@@@ shop setting full " + JSON.stringify(responseData));
+        //console.log("@@@@@@@@@@@@@@@@@@@@@@ shopSettingUrl response " + JSON.stringify(responseData));
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == constants.SUCCESS_STATUS) {
                 if (this.isValidArray(responseData.properties)) {
@@ -135,12 +135,15 @@ export default class BusinessProfileView extends BaseComponent {
         )
     }
     setBusinessData(responseData) {
-        //console.log("name :" + responseData.party.name)
         this.setState({
             buisnessName: (this.isValidString(responseData.party.name) ? responseData.party.name : ""),
             businessTaxId: (this.isValidString(responseData.party.taxId) ? responseData.party.taxId.toString().trim() : ""),
             postalCode: (this.isValidString(responseData.party.postalCode) ? (responseData.party.postalCode.toString().trim()) : ""),
             postalState: (this.isValidString(responseData.party.state) ? responseData.party.state : ""),
+            phone: (this.isValidString(responseData.party.phoneNumber) ? responseData.party.phoneNumber : ""),
+            websiteUrl: (this.isValidString(responseData.party.website) ? responseData.party.website : ""),
+            fbUrl: (this.isValidString(responseData.party.fbPage) ? responseData.party.fbPage : ""),
+            yelpUrl: (this.isValidString(responseData.party.yelp) ? responseData.party.yelp : ""),
             address: (this.isValidString(responseData.party.address) ? responseData.party.address : ""),
             city: (this.isValidString(responseData.party.city) ? responseData.party.city : ""),
             country: (this.isValidString(responseData.party.country) ? responseData.party.country : ""),
@@ -152,11 +155,8 @@ export default class BusinessProfileView extends BaseComponent {
         //console.log("######### shopName(BusinessProfile) : " + globalData.getShopName())
         this.renderActivityIndicatorShow();
         let shopUpdateURL = constants.UPDATE_SHOP.replace(constants.SHOP_NAME, globalData.getShopName());;
-        console.log("shopUpdateURl : " + shopUpdateURL)
         var requestBody = this.getRequestBody(shopInfo);
-        console.log(requestBody)
         let responseData = await fetchPartyPUT(shopUpdateURL, requestBody);
-        console.log("ResponseData :" + JSON.stringify(responseData))
         if (this.isValidString(responseData) && this.isValidString(responseData.statusMessage)) {
             if (responseData.statusMessage == constants.SUCCESS_STATUS) {
                 let fetchData = responseData.properties[0].value;
@@ -1100,6 +1100,10 @@ export default class BusinessProfileView extends BaseComponent {
             "lastName": "Smith 2",
             "nationality": "USA",
             "address": this.state.address,
+            "phoneNumber":(this.isValidString(this.state.phone)) ? this.state.phone.toString().trim() : '',
+            "website":(this.isValidString(this.state.websiteUrl)) ? this.state.websiteUrl.toString().trim() : '',
+            "fbPage":(this.isValidString(this.state.fbUrl)) ? this.state.fbUrl.toString().trim() : '',
+            "yelp":(this.isValidString(this.state.yelpUrl)) ? this.state.yelpUrl.toString().trim() : '',
             "city": this.state.city,
             "state": (this.isValidString(this.state.postalState)) ? this.state.postalState.toString().trim() : '',
             "district": "Santa ----",
