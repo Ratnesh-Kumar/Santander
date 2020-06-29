@@ -6,7 +6,8 @@
     "loading":"Cargando...",
     "done":"Hecho",
     "cancel":"Cancelar",
-    "alert":"Alerta"
+    "alert":"Alerta",
+    "search":"Buscar"
   },
   "tabs": {
     "homeTab": "Hogar",
@@ -263,7 +264,8 @@
     "SelectWeightUnit":"Seleccionar unidad de peso",
     "productUpdated":"Su producto se actualizó con éxito.",
     "productAdded":"Su producto fue agregado con éxito.",
-    "Add":"Añadir"
+    "Add":"Añadir",
+    "QuantityText":"Cantidad - "
   },
   "variantCampaign": {
     "title": "Detalle variante",

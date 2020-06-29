@@ -737,7 +737,7 @@ export default class AddProductScreen extends BaseComponent {
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>
-          <View style={{ backgroundColor: colorConstant.SANT_LIGHT_SKY_BLUE, borderWidth: 1, borderColor: colorConstant.SANT_MEDIUM_SKY_BLUE, height: 80, marginTop: 10 }}>
+          <View style={{  borderWidth: 1, borderColor: 'gray', height: 80, marginTop: 10 }}>
             <TextInput
               value={this.state.productDescription}
               underlineColorAndroid="transparent"
@@ -752,6 +752,8 @@ export default class AddProductScreen extends BaseComponent {
               maxLength={250}
               returnKeyType={'next'}
               numberOfLines={3}
+              underlineHeight={2}
+              underlineColor={colorConstant.SANT_TEXT_INPUT_DEFAULT}
               onChangeText={text => { this.setState({ productDescription: text }) }}
               onSubmitEditing={event => {
                 this.refs.productPrice.focus();
@@ -783,7 +785,7 @@ export default class AddProductScreen extends BaseComponent {
               autoCorrect={false}
               isLoginScreen={false}
               style={productStyle.input}
-              placeholderTextColor={colorConstant.PLACEHOLDER_TEXT_COLOR}
+              placeholderTextColor={colorConstant.GREY_DARK_COLOR}
               underlineColorAndroid={constants.UNDERLINE_COLOR_ANDROID}
               value={this.state.productName}
               textInputName={this.state.productName}

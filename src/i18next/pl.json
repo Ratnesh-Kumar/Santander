@@ -6,7 +6,8 @@
     "loading":"Ładowanie...",
     "done":"Gotowe",
     "cancel":"Anuluj",
-    "alert":"Alarm"
+    "alert":"Alarm",
+    "search":"Szukaj"
   },
   "tabs": {
     "homeTab": "Dom",
@@ -255,7 +256,8 @@
     "SelectWeightUnit":"Seleccionar unidad de peso",
     "productUpdated":"Su producto se actualizó con éxito.",
     "productAdded":"Su producto fue agregado con éxito.",
-    "Add":"Añadir"
+    "Add":"Añadir",
+    "QuantityText":"Ilość - "
   },
   "variantCampaign": {
     "title": "Szczeg�y wariantu",

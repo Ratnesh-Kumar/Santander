@@ -552,7 +552,7 @@ export default class CampaignScreen extends BaseComponent {
         </View>
         <View style={{ marginTop: 20 }}>
           <Text style={{ fontSize: 20 }}>{strings('createCampaign.addDescriptionTitle')}</Text>
-          <View style={{ backgroundColor: colorConstant.SANT_LIGHT_SKY_BLUE, borderWidth: 1, borderColor: colorConstant.SANT_MEDIUM_SKY_BLUE, height: 80, marginTop: 10 }}>
+          <View style={{  borderWidth: 1, borderColor: 'gray', height: 80, marginTop: 10 }}>
             <TextInput
               underlineColorAndroid="transparent"
               placeholder={strings('createCampaign.addDescriptionPlaceholder')}
@@ -564,6 +564,8 @@ export default class CampaignScreen extends BaseComponent {
               style={{ fontSize: 16, textAlignVertical: 'top', paddingLeft: 10 }}
               multiline={true}
               maxLength={250}
+              underlineHeight={2}
+              underlineColor={colorConstant.SANT_TEXT_INPUT_DEFAULT}
               numberOfLines={3}
               value={this.state.campaignDescription}
               onChangeText={text => { globalData.setdescriptionCampaign(text); this.setState({ campaignDescription: text }) }}

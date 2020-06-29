@@ -6,7 +6,8 @@
     "loading":"Loading...",
     "done":"Done",
     "cancel":"Cancel",
-    "alert":"Alert"
+    "alert":"Alert",
+    "search":"Search"
   },
   "tabs": {
     "homeTab": "Home",
@@ -82,7 +83,7 @@
     "skuErrorText": "Please enter valid sku.",
     "barcodeErrorText": "Please enter valid barcode.",
     "addDescriptionTitle": "Add Description",
-    "addDescriptionPlaceholder": "add description",
+    "addDescriptionPlaceholder": "Add description",
     "uploadImageText": "Upload photo of your product",
     "nextButtonText": "Next",
     "startRightAway": "Start right away by creating a campaign\nwhich will also create your first product",
@@ -264,7 +265,8 @@
     "SelectWeightUnit":"Select Weight Unit",
     "productUpdated":"Your product successfully updated.",
     "productAdded":"Your product successfully added.",
-    "Add":"Add"
+    "Add":"Add",
+    "QuantityText":"Qty - "
   },
   "variantCampaign": {
     "title": "Variant detail",

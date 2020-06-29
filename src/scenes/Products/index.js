@@ -95,7 +95,7 @@ export default class ManageProducts extends BaseComponent {
           Actions.addProduct()
         }}/>
         <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
-        <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
+        <SearchBar placeholder={strings('common.search')} onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={{ margin: 10}}>
           {this.renderFlatList()}
         </View>
@@ -144,7 +144,7 @@ export default class ManageProducts extends BaseComponent {
                 </View>
                 <View style={{flex:1,flexDirection:'row'}}>
                 <View style={{ flex: 1, justifyContent: 'center', }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{"Quantity - " + item.defaultDetails.quantityOnHand}</Text>                
+                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{strings('productScreen.QuantityText') + item.defaultDetails.quantityOnHand}</Text>                
                   </View>
                 <View style={{ justifyContent: 'center', }}>
 
