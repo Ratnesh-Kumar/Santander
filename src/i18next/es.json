@@ -275,7 +275,7 @@
     "title":"Agregar cliente",
     "emailTextInput":"Email",
     "companyTextInput":"Empresa",
-    "customerIsExcemptText":"Customer is tax exempt",
-    "buttonText":"Save"
+    "customerIsExcemptText":"El cliente está exento de impuestos",
+    "buttonText":"Salvar"
   }
 }

@@ -1,0 +1,104 @@
+import { StyleSheet, Dimensions } from 'react-native';
+var colorConstant = require('../../config/colorConstant')
+var constants = require('../../config/Constants')
+const DEVICE_WIDTH = Dimensions.get('window').width;
+const MARGIN = 50;
+
+export default (styles = StyleSheet.create({
+
+    renderContainer: {
+        flex: 1, backgroundColor: colorConstant.WHITE_COLOR
+    },
+    viewContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flex: 1
+    },
+    validFormViewContainer: {
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    validFormSubView: {
+        paddingLeft: 10, paddingRight: 10
+    },
+
+    inputWrapper: {
+        width: DEVICE_WIDTH - 20,
+    },
+    inputWrapperSmall: {
+        width: (DEVICE_WIDTH - 20) / 2,
+    },
+    containerStyleWithBorder: {
+        width: (DEVICE_WIDTH - 60) / 2,
+        backgroundColor: colorConstant.WHITE_COLOR,
+        height: 60,
+        borderColor: colorConstant.GREY_BORDER_COLOR,
+        borderWidth: 2,
+        borderRadius: 2,
+        borderBottomColor: colorConstant.GREY_DARK_COLOR,
+        marginTop: 10,
+        marginLeft: 10
+    },
+    inputWrapperPhoneCode: {
+        flex: 1
+        // width: (DEVICE_WIDTH - 20)/3,
+    },
+    inputWrapperPhone: {
+        flex: 3
+        // width: (DEVICE_WIDTH - 150),
+    },
+
+    validFormSecondFieldView: {
+        marginTop: 10, paddingLeft: 10, paddingRight: 10
+    },
+    validFormSecondFieldViewZip: {
+        marginTop: 10, paddingRight: 10
+    },
+
+    validAddressViewContainer: {
+        marginTop: 10,
+        alignItems: 'center'
+    },
+
+    validFormViewContainerZip: {
+        alignItems: 'center',
+        marginLeft: 10,
+        marginRight: 10,
+        flexDirection: 'row'
+
+    },
+    phoneInput: {
+        borderWidth: 1, marginLeft: 10, height: 55, borderColor: 'gray', borderBottomColor: '#257fa4', marginTop: 10
+    },
+    scrollViewStyle: {
+        ...Platform.select({
+            ios: {
+                marginBottom: 130
+            },
+            android: {
+                marginBottom: 80
+            }
+        })
+    },
+    containerStyle: {
+        width: constants.SCREEN_WIDTH - 40,
+        backgroundColor: colorConstant.WHITE_COLOR,
+        height: 50,
+        //borderColor:colorConstants.GREY_BORDER_COLOR,
+        //borderWidth:2,
+        //borderRadius:2,
+        //borderBottomColor:colorConstants.GREY_DARK_COLOR,
+        marginRight: 20,
+        marginLeft: 20,
+        marginTop: 5,
+        marginBottom: 5
+    },
+    textStyle: {
+        paddingLeft: 5,
+        paddingRight: 70,
+        textAlign: 'left',
+        marginTop: 20,
+        fontSize: 16
+    },
+
+}))

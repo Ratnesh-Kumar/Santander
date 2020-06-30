@@ -31,7 +31,10 @@ import ManageProduct from './src/scenes/Products';
 import AddProduct from './src/scenes/Products/addProduct';
 import AddProductCategory from './src/scenes/Products/addProductCategory';
 import VarientDetail from './src/scenes/Campaign/varientDetail';
-import ProductVarientDetail from './src/scenes/Products/productVarientDetail'
+import ProductVarientDetail from './src/scenes/Products/productVarientDetail';
+import AddCustomer from './src/scenes/Customer/addCustomer';
+import ManageCustomer from './src/scenes/Customer/index';
+import AddDiscount from './src/scenes/Customer/addDiscount';
 import {
   StyleSheet
 } from 'react-native'
@@ -122,6 +125,9 @@ export default class App extends Component {
           <Scene key="myOrder" component={MyOrder} title="home" />
           <Scene key="editOrder" component={EditOrder} title="editOrder" />
           <Scene key="trackInformation" component={TrackInformation} title="Track Information" />
+          <Scene key="addCustomer" component={AddCustomer} title="Add Customer" />
+          <Scene key="manageCustomer" component={ManageCustomer} title="manage Customer"/>
+          <Scene key="addDiscount" component={AddDiscount} title="Add Discount"/>
         </Scene>
 
         <Scene key="shopTab" title={strings("tabs.settingTab")} tabTitle="Settings" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>

@@ -264,10 +264,10 @@
     "saveButtonText": "Zapisz"
   },
   "addCustomer":{
-    "title":"Add Customer",
-    "emailTextInput":"Email",
-    "companyTextInput":"Company",
-    "customerIsExcemptText":"Customer is tax exempt",
-    "buttonText":"Save"
+    "title":"Dodaj klienta",
+    "emailTextInput":"E-mail",
+    "companyTextInput":"Firma",
+    "customerIsExcemptText":"Klient jest zwolniony z podatku",
+    "buttonText":"Zapisać"
   }
 }
