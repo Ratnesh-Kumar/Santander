@@ -45,6 +45,7 @@ export const BUISNESS_ID="#BusinessId";
 //API urls
 export const COUNTRY_NAME = RNLocalize.getCountry();
 export const DEVICE_LOCALE = RNLocalize.getLocales()[0].languageTag;
+export const LOCALE_LANGUAGE_CODE = RNLocalize.getLocales()[0].languageCode;
 export const BASE_URL = "http://3.135.192.164";
 export const IDENTITY_SERVICE_PORT =":8096";
 export const PARTY_SERVICE_PORT =":8094";

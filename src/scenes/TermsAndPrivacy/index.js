@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { strings } from '../../i18next/i18n';
 import termsStyle from './termsAndPrivacyStyle';
 import Header from '../../components/Header';
-import { getTermsAndConditions, getPrivacyPolicy } from '../../config/firebaseFirestore';
+import { getTermsAndConditions, getPrivacyPolicy, getCountryState } from '../../config/firebaseFirestore';
 import { Text } from 'native-base';
 var constants = require('../../config/Constants');
 
@@ -22,37 +22,36 @@ export default class TermsScreen extends Component {
     };
   }
 
-  async componentDidMount(){
+  async componentDidMount() {
     let termStr = "";
-    if(this.props.selectedTitle === 'terms'){
-      termStr = await getTermsAndConditions(constants.LOCALE_EN);
+    if (this.props.selectedTitle === 'terms') {
+      termStr = await getTermsAndConditions(constants.LOCALE_LANGUAGE_CODE);
     }
-    else{
-      termStr = await getPrivacyPolicy(constants.LOCALE_EN)
+    else {
+      termStr = await getPrivacyPolicy(constants.LOCALE_LANGUAGE_CODE)
     }
-    this.setState({termsString:termStr })
-    
+    this.setState({ termsString: termStr })
   }
-  
+
   render() {
     let title = this.props.selectedTitle === 'terms' ? strings('termsScreen.termsTitle') : strings('termsScreen.privacyTitle')
     return (
       <View style={termsStyle.renderContainer}>
-        <Header isleftArrowDisplay={true} title={title} isCrossIconVisible={true}/>
+        <Header isleftArrowDisplay={true} title={title} isCrossIconVisible={true} />
         {this.renderScrollView()}
       </View>
     );
   }
 
-  renderScrollView(){
-    return(
+  renderScrollView() {
+    return (
       <ScrollView style={termsStyle.textScrollView}>
-        <Text style={{textAlign:'justify'}}>{this.state.termsString}</Text>
-      </ScrollView>  
+        <Text style={{ textAlign: 'justify' }}>{this.state.termsString}</Text>
+      </ScrollView>
     );
   }
 
-  
+
 }
 TermsScreen.propTypes = {
   source: PropTypes.number.isRequired,

@@ -7,6 +7,7 @@ var globalData = new GlobalData();
 const DOCUMENT_TERMS_AND_COND = "termsAndConditions"
 const DOCUMENT_PRIVACY_POLICY = "privacyPolicy";
 const DOCUMENT_REMOTE_CONFIG = "remoteConfig";
+const DOCUMENT_COUNTRY_STATE = "countryState";
 
 const firebaseConfig = {
     clientId: '605493510042-1kthn40k3mfdtd7884841bth69ovbumb.apps.googleusercontent.com',
@@ -87,6 +88,21 @@ export function getTermsAndConditions(locale) {
 export function getPrivacyPolicy(locale) {
     return new Promise(function (resolve, reject) {
         getFirestoreCollection().doc(DOCUMENT_PRIVACY_POLICY)
+            .get()
+            .then(documentSnapshot => {
+                if (documentSnapshot.exists) {
+                    var data = documentSnapshot.get(locale);
+                    resolve(data)
+                }else{
+                    resolve("");
+                }
+            });
+    });
+}
+
+export function getCountryState(locale) {
+    return new Promise(function (resolve, reject) {
+        getFirestoreCollection().doc(DOCUMENT_COUNTRY_STATE)
             .get()
             .then(documentSnapshot => {
                 if (documentSnapshot.exists) {
