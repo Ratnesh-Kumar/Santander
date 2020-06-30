@@ -42,10 +42,10 @@ export default class HomeScreen extends BaseComponent {
     return (
       <View style={homeStyle.graphViewStyle}>
         <Image 
-        style={{width: constants.SCREEN_WIDTH /3,
+        style={{width: constants.SCREEN_WIDTH /2,
           height:constants.SCREEN_HEIGHT/5, }}
-        source={require('../.././public/images/digishop_home.png')} />
-        <Text style={{ fontSize: 16,  fontWeight:'bold' }}>
+        source={require('../.././public/images/digishop_latest.jpg')} />
+        <Text style={{ paddingTop:10,fontSize: 16,  fontWeight:'bold' }}>
           {strings('screens.learnHow')}
         </Text>
         <Text style={{ fontSize: 32,  fontWeight:'bold',color:colorConstant.SANT_RED_COLOR }}>
