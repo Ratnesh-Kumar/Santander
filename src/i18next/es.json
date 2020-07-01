@@ -68,7 +68,7 @@
   "createCampaign": {
     "screenTitle": "Crear campaña",
     "campaignTextInput": "Título",
-    "priceTextInput": "Precio",
+    "priceTextInput": "Precio de lista",
     "salePriceTextInput": "Precio de venta",
     "costTextInput": "Costo (opcional)",
     "profitTextInput": "Lucro",
@@ -283,5 +283,12 @@
   "variantCampaign": {
     "title": "Detalle variante",
     "saveButtonText": "Salvar"
+  },
+  "addCustomer":{
+    "title":"Agregar cliente",
+    "emailTextInput":"Email",
+    "companyTextInput":"Empresa",
+    "customerIsExcemptText":"Customer is tax exempt",
+    "buttonText":"Save"
   }
 }

@@ -65,8 +65,8 @@
   "createCampaign": {
     "screenTitle": "Utw�rz kampani�",
     "campaignTextInput": "Nazwa",
-    "priceTextInput": "Cena",
-    "salePriceTextInput": "Cena sprzeda�y",
+    "priceTextInput": "Cena katalogowa",
+    "salePriceTextInput": "Cena sprzedaży",
     "costTextInput": "Koszt (Opcjonalnie)",
     "profitTextInput": "Zysk",
     "marginTextInput": "Mar�a",
@@ -262,5 +262,12 @@
   "variantCampaign": {
     "title": "Szczeg�y wariantu",
     "saveButtonText": "Zapisz"
+  },
+  "addCustomer":{
+    "title":"Add Customer",
+    "emailTextInput":"Email",
+    "companyTextInput":"Company",
+    "customerIsExcemptText":"Customer is tax exempt",
+    "buttonText":"Save"
   }
 }

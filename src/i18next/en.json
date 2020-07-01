@@ -67,8 +67,8 @@
   "createCampaign": {
     "screenTitle": "Create Campaign",
     "campaignTextInput": "Title",
-    "priceTextInput": "Price",
-    "salePriceTextInput": "Sale Price",
+    "priceTextInput": "List Price",
+    "salePriceTextInput": "Sales Price",
     "costTextInput": "Cost (Optional)",
     "profitTextInput": "Profit",
     "marginTextInput": "Margin",
@@ -284,5 +284,14 @@
   "variantCampaign": {
     "title": "Variant detail",
     "saveButtonText": "Save"
+  },
+  "addCustomer":{
+    "title":"Add Customer",
+    "emailTextInput":"Email",
+    "companyTextInput":"Company",
+    "customerIsExcemptText":"Customer is tax exempt",
+    "buttonText":"Save"
+  
   }
+
 }
