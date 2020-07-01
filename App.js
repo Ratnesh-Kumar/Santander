@@ -23,6 +23,7 @@ import RegisterScreen from './src/scenes/Register';
 import QRCode from './src/scenes/QRCode';
 import Browser from './src/components/Browser';
 import MyOrder from './src/scenes/MyOrder';
+import CreateOrder from './src/scenes/MyOrder/createOrder';
 import EditOrder from './src/scenes/MyOrder/editOrder';
 import ManageCampaign from './src/scenes/Campaign/manageCampaign';
 import TrackInformation from './src/scenes/MyOrder/trackInformation';
@@ -121,7 +122,9 @@ export default class App extends Component {
         <Scene key="orderTab" title={strings("tabs.orderTab")} tabTitle="Order" icon={TabIcon} resource={require('./src/public/images/tab_shop.png')} hideNavBar>
           <Scene key="myOrder" component={MyOrder} title="home" />
           <Scene key="editOrder" component={EditOrder} title="editOrder" />
+          <Scene key="createOrder" component={CreateOrder} title="editOrder" />
           <Scene key="trackInformation" component={TrackInformation} title="Track Information" />
+          <Scene key="manageProduct" component={ManageProduct} title="Blue" hideNavBar />
         </Scene>
 
         <Scene key="shopTab" title={strings("tabs.settingTab")} tabTitle="Settings" icon={TabIcon} resource={require('./src/public/images/tabbar_more.png')} hideNavBar>

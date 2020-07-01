@@ -139,4 +139,40 @@ export default (styles = StyleSheet.create({
     marginTop: 5,
     marginBottom : 5
   },
+  modalcontainer: {
+    alignItems: 'center',
+    borderRadius: 5,
+    flex:1,
+  },
+  modaltopContainer: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginTop:constants.SCREEN_HEIGHT/4
+  },
+  modalHorizontalLine: {
+    height: 0.4,
+    opacity: 0.7,
+    backgroundColor: colorConstants.BLACK_COLOR,
+  },
+  categoryText: {
+    fontSize: 16,
+    paddingBottom: 5,
+    paddingTop:15,
+    paddingLeft:15,
+    color: 'black',
+    fontWeight: 'bold',
+  },
+  variantQuantityText:{
+    fontSize: 14,
+    paddingBottom: 15,
+    paddingLeft:15,
+    color: 'black',
+  },
+  variantCategoryText:{
+    fontSize: 18,
+    paddingBottom: 15,
+    paddingTop:15,
+    paddingLeft:15,
+    color: 'black',
+  }
 }));

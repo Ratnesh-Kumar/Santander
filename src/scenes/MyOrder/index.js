@@ -24,17 +24,18 @@ export default class MyOrder extends BaseComponent {
     return (
       <View style={orderStyle.container}>
         <FloatingButton onFloatButtonPressed={() => {
+          Actions.createOrder()
         }} />
         <Header title={orderConstants.MANAGE_ORDER} isleftArrowDisplay={false} />
         <SearchBar onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={orderStyle.viewContainer}>
-          <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: constants.SCREEN_HEIGHT / 3 }}>
+          {/* <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: constants.SCREEN_HEIGHT / 3 }}>
             <Text style={orderStyle.emptyNoProducttext}>{strings('orderScreen.comingSoon')}</Text>
-          </View>
+          </View> */}
           {/* <View>
             <Text>{"order.orderDate"}</Text>
           </View> */}
-          {/* {this.renderFlatList()} */}
+          {this.renderFlatList()}
         </View>
       </View>
     );

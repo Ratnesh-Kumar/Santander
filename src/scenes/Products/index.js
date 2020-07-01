@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import CardView from 'react-native-cardview';
 import PropTypes from 'prop-types';
+import Modal from 'react-native-modal';
 import productStyle from './productStyle';
 import Header from '../../components/Header';
 import SwitchTextInput from '../../components/SwitchTextInput';
@@ -31,7 +32,8 @@ var globalData = new GlobalData();
 var colorConstants = require('../../config/colorConstant');
 var itemId="";
 var isUpdate="";
-
+var isComingFromOrderScreen = false;
+var selectedProductItemRow = {};
 export default class ManageProducts extends BaseComponent {
   constructor(props) {
     super(props);
@@ -42,8 +44,10 @@ export default class ManageProducts extends BaseComponent {
       isDialogModalVisible: false,
       dialogModalText: '',
       dialogModalTitle: '',
+      isProductVariantModalVisible:false,
       productArr:[]
     };
+    isComingFromOrderScreen = this.isValidString(props.isComingFromOrders) ? props.isComingFromOrders : false;
     this.setProductDetail("");
   }
 
@@ -91,16 +95,27 @@ export default class ManageProducts extends BaseComponent {
     return (
       <View style={productStyle.container}>
         {this.renderModal()}
-        <FloatingButton onFloatButtonPressed={()=>{
-          Actions.addProduct()
-        }}/>
-        <Header isleftArrowDisplay={true} title={strings('productScreen.manageProducts')} isCrossIconVisible={false} isleftArrowDisplay={false} />
+        {this.renderProductVariantModal()}
+        {this.showFloatingButton()}
+        <Header isleftArrowDisplay={true} 
+        title={isComingFromOrderScreen?strings('productScreen.addProduct'):strings('productScreen.manageProducts')} 
+        isCrossIconVisible={false} isleftArrowDisplay={false} />
         <SearchBar placeholder={strings('common.search')} onSearchPressed={(searchText) => { this.setState({ searchText: searchText }) }} />
         <View style={{ margin: 10}}>
           {this.renderFlatList()}
         </View>
       </View>
     );
+  }
+
+  showFloatingButton(){
+    if(!isComingFromOrderScreen){
+      return(
+        <FloatingButton onFloatButtonPressed={()=>{
+          Actions.addProduct()
+        }}/>
+      );
+    }
   }
 
   renderFlatList() {
@@ -128,39 +143,145 @@ export default class ManageProducts extends BaseComponent {
 
   renderItemView = (item, index) => {
     if (this.isValidString(item)) {
-      return (
-        <TouchableOpacity onPress={() => {Actions.addProduct({itemId:item.entityId,isUpdate:true}) }}>
-          <View style={{ padding: 10 }}>
-
-            <CardView
-              cardElevation={(Platform.OS === 'ios') ? 3 : 8}
-              cardMaxElevation={(Platform.OS === 'ios') ? 3 : 8}
-              corderOverlap={false}
-            >
-              <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
-                <View style={{flex:1}}>
-                  <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productFamily}</Text>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
-                </View>
-                <View style={{flex:1,flexDirection:'row'}}>
-                <View style={{ flex: 1, justifyContent: 'center', }}>
-                  <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17,}}>{strings('productScreen.QuantityText') + item.defaultDetails.quantityOnHand}</Text>                
-                  </View>
-                <View style={{ justifyContent: 'center', }}>
-
-                  <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
-
-                </View>
-                </View>
-              </View>
-
-            </CardView>
-
+      if (isComingFromOrderScreen) {
+        return (
+          <View>
+            {this.renderProductListFromOrder(item)}
           </View>
-        </TouchableOpacity>
-      )
+        );
+      }
+      else {
+        return (
+          <TouchableOpacity onPress={() => { Actions.addProduct({ itemId: item.entityId, isUpdate: true }) }}>
+            <View style={{ padding: 10 }}>
+              <CardView
+                cardElevation={(Platform.OS === 'ios') ? 3 : 8}
+                cardMaxElevation={(Platform.OS === 'ios') ? 3 : 8}
+                corderOverlap={false}
+              >
+                <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{item.productFamily}</Text>
+                    <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
+                  </View>
+                  <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, justifyContent: 'center', }}>
+                      <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 17, }}>{strings('productScreen.QuantityText') + item.defaultDetails.quantityOnHand}</Text>
+                    </View>
+                    <View style={{ justifyContent: 'center', }}>
+                      <Image source={require('../../public/images/right_arrow.png')} style={{ height: 32, width: 24 }} />
+                    </View>
+                  </View>
+                </View>
+              </CardView>
+            </View>
+          </TouchableOpacity>
+        )
+      }
     }
   }
+
+  renderProductListFromOrder(item){
+    let productVariantsQuantity =  this.calculateVariant(item);
+    return (
+      <TouchableOpacity onPress={() => {
+        this.setState({
+          isProductVariantModalVisible:true,
+        })
+        selectedProductItemRow = item
+       }}>
+        <View style={{ padding: 10 }}>
+          <CardView
+            cardElevation={(Platform.OS === 'ios') ? 3 : 8}
+            cardMaxElevation={(Platform.OS === 'ios') ? 3 : 8}
+            corderOverlap={false}
+          >
+            <View style={{ flexDirection: 'row', backgroundColor: colorConstants.WHITE_COLOR, paddingTop: 10, paddingLeft: 10, paddingBottom: 10 }}>
+              <View style={{flex:1}}>
+                <Text style={{ color: colorConstants.BLACK_COLOR, fontSize: 18, fontWeight: 'bold' }}>{item.productName}</Text>
+                <Text style={{ color: colorConstants.GREY_DARK_COLOR1 }}>{productVariantsQuantity}</Text>
+              </View>
+            </View>
+          </CardView>
+        </View>
+      </TouchableOpacity>
+    )
+  }
+
+  calculateVariant(items){
+    let variantCount = 0;
+    let variantQuantityCount = 0;
+    if (this.isValidArray(items.productVariants)) {
+      variantCount = items.productVariants.length;
+      let productVariant = items.productVariants;
+      for (let i = 0; i < productVariant.length; i++) {
+        variantQuantityCount = variantQuantityCount + productVariant[i].quantityOnHand;
+      }
+    }
+    let completeStr = variantQuantityCount.toString()+' available'+' - '+variantCount.toString()+' variants'
+    return completeStr;
+  }
+
+  renderProductVariantModal() {
+    return (
+      <Modal
+        isVisible={this.state.isProductVariantModalVisible}
+        onBackButtonPress={() => {
+          this.setState({ isProductVariantModalVisible: false });
+        }}>
+        <View style={productStyle.modalcontainer}>
+          <View style={productStyle.modaltopContainer}>
+            {this.renderProductvariants()}
+          </View>
+        </View>
+      </Modal>
+    );
+  }
+
+  renderVariantRow(variantDict){
+    return (
+      <TouchableOpacity 
+      onPress={()=> 
+        { 
+        this.setState({isProductVariantModalVisible: false});
+        setTimeout(() => {
+          Actions.pop()
+          Actions.refresh({ productInfo: variantDict })
+        }, 100)}
+      }
+      >
+        <Text style={productStyle.categoryText}>
+          {variantDict.variantName}
+        </Text>
+        <Text style={productStyle.variantQuantityText}>
+          {variantDict.quantityOnHand+' available'}
+        </Text>
+        <View style={productStyle.modalHorizontalLine} />
+      </TouchableOpacity>
+    );
+  }
+  renderProductvariants() {
+    let variantListView = [];
+    if(this.isValidString(selectedProductItemRow)){
+      if (this.isValidArray(selectedProductItemRow.productVariants)) {
+        let selectedProductVariantArr = selectedProductItemRow.productVariants
+        for (let i = 0; i < selectedProductVariantArr.length; i++) {
+          variantListView.push(this.renderVariantRow(selectedProductVariantArr[i]))
+        }
+      }
+    }
+    return (
+      <View style={{width:constants.SCREEN_WIDTH/1.5}}>
+        <Text style={productStyle.variantCategoryText}>
+          {'Colors'}
+        </Text>
+        <View style={productStyle.modalHorizontalLine} />
+        {variantListView}
+      </View>
+    )
+  }
+
+  
 
   renderActivityIndicatorShow() {
     this.setState({

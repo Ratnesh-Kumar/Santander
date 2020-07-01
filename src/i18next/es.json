@@ -235,6 +235,19 @@
     "QtyText": "Cantidad - ",
     "AmtText": "Cantidad - "
   },
+  "createOrder": {
+    "title": "Crear orden",
+    "itemText": "ARTÍCULOS",
+    "Customertext": "CLIENTES",
+    "addItemText": "Añadir Producto",
+    "addCustomertext": "Agregar cliente",
+    "Pricetext": "PRECIO",
+    "Notetext": "NOTES",
+    "SkuText": "SKU - ",
+    "QtyText": "Cantidad - ",
+    "AmtText": "Cantidad - ",
+    "addNotesPlaceholder":"Add Notes"
+  },
   "orderScreen": {
     "comingSoon": "Próximamente"
   },
