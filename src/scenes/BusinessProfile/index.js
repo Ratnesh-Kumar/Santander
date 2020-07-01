@@ -24,6 +24,7 @@ var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 import GlobalData from '../../utils/GlobalData';
 import { fetchPartyPUT, fetchPartyGET } from '../../services/FetchData';
+import { getCountryState } from '../../config/firebaseFirestore';
 import ActivityIndicatorView from '../../components/activityindicator/ActivityIndicator';
 import DialogModalView from '../../components/modalcomponent/DialogModal';
 import Picker from 'react-native-picker';
@@ -84,9 +85,10 @@ export default class BusinessProfileView extends BaseComponent {
             valuePhone: this.phone.getValue()
         });
     }
-    componentDidMount() {
+    async componentDidMount() {
+        let countryList = await getCountryState(constants.LOCALE_LANGUAGE_CODE);
+        globalData.setCountryAndStateList(countryList)
         countryNameData = globalData.getCountryList();
-        console.log('####### countryList :: ', JSON.stringify(countryNameData))
         isAutoCreatedShop = globalData.getIsAutoCreated()
         this.getBusinessData()
     }

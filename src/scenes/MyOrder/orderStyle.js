@@ -25,6 +25,22 @@ export default (styles = StyleSheet.create({
     flexDirection:'row',
     
   },
+  subviews:{
+    marginLeft:20,marginRight:20
+  },
+  horizontalLine:{
+    height:3,
+    backgroundColor:colorConstant.GREY_BORDER_COLOR
+  },
+  subtitleheaderText:{
+    fontSize:18,textAlign:'left',marginTop:10
+  },
+  addView:{
+    height:100,alignItems:'flex-end',justifyContent: 'center'
+  },
+  subViewTitleText:{
+    fontSize:18,textAlign:'right',color:colorConstant.SANT_LIGHT_BLUE
+  },
   addressText:{
     fontSize:14,paddingTop:5
   },
