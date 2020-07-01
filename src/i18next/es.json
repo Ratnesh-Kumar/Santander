@@ -276,6 +276,8 @@
     "emailTextInput":"Email",
     "companyTextInput":"Empresa",
     "customerIsExcemptText":"El cliente está exento de impuestos",
-    "buttonText":"Salvar"
+    "buttonText":"Salvar",
+    "AmountRadioText":"Por $ Cantidad",
+    "PercentRadioText":"Por %"
   }
 }

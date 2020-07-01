@@ -277,7 +277,9 @@
     "emailTextInput":"Email",
     "companyTextInput":"Company",
     "customerIsExcemptText":"Customer is tax exempt",
-    "buttonText":"Save"
+    "buttonText":"Save",
+    "AmountRadioText":"By $ Amount",
+    "PercentRadioText":"By %"
   
   }
 

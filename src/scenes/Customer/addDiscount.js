@@ -18,6 +18,7 @@ import { strings } from '../../i18next/i18n';
 import { Actions } from 'react-native-router-flux';
 import GlobalData from '../../utils/GlobalData';
 import customerStyle from './customerStyles';
+import RadioButton from '../../components/RadioButton'
 var constants = require('../../config/Constants');
 var colorConstant = require('../../config/colorConstant');
 var customerConstants = require('./customerConstant')
@@ -27,17 +28,51 @@ export default class AddDiscount extends BaseComponent {
     constructor(props) {
         super(props);
         this.state = {
-            amount:'',
-            reason:''
+            amount: '',
+            reason: '',
+            isAmount: true,
+            isPercentage: false
         }
     }
     render() {
         return (
             <View style={customerStyle.renderContainer}>
                 <Header isleftArrowDisplay={true} isCrossIconVisible={false} title={'Add Discount'} />
-                <View  style={{ marginTop: 10 }}>
+                <View style={{ marginTop: 10 }}>
+                    {this.renderRadioButtons()}
                     {this.renderAmount()}
                     <AppButton buttonText={'Add Discount'} onButtonPressed={() => { }} />
+                </View>
+            </View>
+        )
+    }
+
+    renderRadioButtons() {
+        return (
+            <View style={{ flexDirection: 'row', paddingLeft: 20 }}>
+                <RadioButton
+                    isSelected={this.state.isAmount}
+                    size={14}
+                    innerColor={this.state.isAmount ? '#ec0000' : ''}
+                    outerColor={this.state.isAmount ? '#ec0000' : 'gray'}
+                    onPress={() => this.setState({
+                        isAmount: true,
+                        isPercentage: false
+                    })}
+                    title={strings('addCustomer.AmountRadioText')}
+                />
+                <View style={{ paddingLeft: 20 }}>
+                    <RadioButton
+                        isSelected={this.state.isPercentage}
+                        size={14}
+                        innerColor={this.state.isPercentage ? '#ec0000' : ''}
+                        outerColor={this.state.isPercentage ? '#ec0000' : 'gray'}
+                        onPress={() => this.setState({
+                            isPercentage: true,
+                            isAmount: false
+                        })}
+                        title={strings('addCustomer.PercentRadioText')}
+                    />
                 </View>
             </View>
         )
@@ -48,7 +83,7 @@ export default class AddDiscount extends BaseComponent {
             <View style={customerStyle.validAddressViewContainer}>
                 <View style={customerStyle.inputWrapper}>
                     <View style={customerStyle.validFormSecondFieldView}>
-                    <TextInputMaterial
+                        <TextInputMaterial
                             blurText={this.state.amount}
                             refsValue={'Amount'}
                             ref={'Amount'}
@@ -67,8 +102,8 @@ export default class AddDiscount extends BaseComponent {
                             //errorText={strings('BuisnessProfile.FirstNameTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => {  }}
-                            
+                            onFocus={() => { }}
+
                             onSubmitEditing={event => {
                                 this.refs.Reason.focus();
                             }}
@@ -77,7 +112,7 @@ export default class AddDiscount extends BaseComponent {
                 </View>
                 <View style={customerStyle.inputWrapper}>
                     <View style={customerStyle.validFormSecondFieldView}>
-                    <TextInputMaterial
+                        <TextInputMaterial
                             blurText={this.state.reason}
                             refsValue={'Reason'}
                             ref={'Reason'}
@@ -96,7 +131,7 @@ export default class AddDiscount extends BaseComponent {
                             //errorText={strings('BuisnessProfile.FirstNameTextInputError')}
                             underlineHeight={2}
                             keyboardType="email-address"
-                            onFocus={() => {  }}
+                            onFocus={() => { }}
                             onSubmitEditing={event => {
                                 Keyboard.dismiss()
                             }}
